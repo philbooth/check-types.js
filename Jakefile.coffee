@@ -3,35 +3,35 @@
 {exec} = require 'child_process'
 
 desc 'Minify the source code for deployment.'
-task 'minify', [ 'prepare', 'jslint', 'jstest' ], ->
+task 'minify', [ 'jstest' ], ->
   runTask minify, 'Minifying javascript...'
 , async: true
 
 desc 'Run the unit tests against the compiled output.'
-task 'jstest', [ 'prepare', 'compile' ], ->
+task 'jstest', [ 'jslint' ], ->
   process.env.NODE_PATH = './build'
   runTask test, 'Testing javascript...'
 , async: true
 
-desc 'Run the unit tests against the source code.'
-task 'cstest', [ 'prepare' ], ->
-  process.env.NODE_PATH = './src'
-  runTask test, 'Testing coffeescript...'
+desc 'Lint the compiled output.'
+task 'jslint', [ 'compile' ], ->
+  runTask jslint, 'Linting javascript...'
 , async: true
 
-desc 'Lint the compiled output.'
-task 'jslint', [ 'prepare', 'compile' ], ->
-  runTask jslint, 'Linting javascript...'
+desc 'Compile the source coffeescript into javascript.'
+task 'compile', [ 'cstest' ], ->
+  runTask compile, 'Compiling coffeescript...'
+, async: true
+
+desc 'Run the unit tests against the source code.'
+task 'cstest', [ 'cslint' ], ->
+  process.env.NODE_PATH = './src'
+  runTask test, 'Testing coffeescript...'
 , async: true
 
 desc 'Lint the source code.'
 task 'cslint', [ 'prepare' ], ->
   runTask cslint, 'Linting coffeescript...'
-, async: true
-
-desc 'Compile the source coffeescript into javascript.'
-task 'compile', [ 'prepare', 'cslint', 'cstest' ], ->
-  runTask compile, 'Compiling coffeescript...'
 , async: true
 
 desc 'Install dependencies.'
