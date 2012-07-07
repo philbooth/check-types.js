@@ -1,0 +1,46 @@
+{
+    "indentation": {
+        "value": 2,
+        "level": "error"
+    },
+    "max_line_length": {
+        "value": 120,
+        "level": "warn"
+    },
+    "camel_case_classes": {
+        "level": "error"
+    },
+    "no_trailing_semicolons": {
+        "level": "error"
+    },
+    "no_implicit_braces": {
+        "level": "ignore"
+    },
+    "no_implicit_parens": {
+        "level": "ignore"
+    },
+    "no_tabs": {
+        "level": "error"
+    },
+    "no_trailing_whitespace": {
+        "level": "error"
+    },
+    "no_plusplus": {
+        "level": "error"
+    },
+    "no_throwing_strings": {
+        "level": "error"
+    },
+    "no_backticks": {
+        "level": "error"
+    },
+    "line_endings": {
+        "value": "unix",
+        "level": "error"
+    },
+    "cyclomatic_complexity": {
+        "value": 10,
+        "level": "error"
+    }
+}
+
