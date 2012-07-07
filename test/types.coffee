@@ -257,3 +257,54 @@ suite 'require:', ->
     assert.throws ->
       types.verifyInstance Object, {}
 
+  test 'quacksLike function is defined', ->
+    assert.isFunction types.quacksLike
+
+  test 'quacksLike without arguments throws', ->
+    assert.throws ->
+      types.quacksLike()
+
+  test 'quacksLike with two object arguments does not throw', ->
+    assert.doesNotThrow ->
+      types.quacksLike {}, {}
+
+  test 'quacksLike with function first argument throws', ->
+    functionArgument = ->
+    assert.throws ->
+      types.quacksLike functionArgument, {}
+
+  test 'quacksLike with null first argument throws', ->
+    assert.throws ->
+      types.quacksLike null, {}
+
+  test 'quacksLike with function second argument throws', ->
+    assert.throws ->
+      types.quacksLike {}, ->
+
+  test 'quacksLike with null second argument throws', ->
+    assert.throws ->
+      types.quacksLike {}, null
+
+  test 'quacksLike with two empty object arguments returns true', ->
+    assert.isTrue types.quacksLike({}, {})
+
+  test 'quacksLike with foo bar properties returns false', ->
+    assert.isFalse types.quacksLike({ foo: {} }, { bar: {} })
+
+  test 'quacksLike with foo foo properties returns true', ->
+    assert.isTrue types.quacksLike({ foo: {} }, { foo: {} })
+
+  test 'quacksLike with bar baz second properties returns false', ->
+    assert.isFalse types.quacksLike({ foo: {}, bar: {} }, { foo: {}, baz: {} })
+
+  test 'quacksLike with bar bar second properties returns true', ->
+    firstFunction = ->
+    secondFunction = ->
+    assert.isTrue types.quacksLike({ foo: firstFunction, bar: {} }, { foo: secondFunction, bar: {} })
+
+  test 'quacksLike with differently typed bar bar second properties returns false', ->
+    firstFunction = ->
+    secondFunction = ->
+    thirdFunction = ->
+    assert.isFalse types.quacksLike({ foo: firstFunction, bar: {} }, { foo: secondFunction, bar: thirdFunction })
+

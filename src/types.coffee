@@ -56,6 +56,16 @@ isInstance = (arg, prototype) ->
     return true
   false
 
+quacksLike = (arg, duck) ->
+  verifyObject arg
+  verifyObject duck
+  for own property of duck
+    if arg.hasOwnProperty(property) isnt true
+      return false
+    if typeof arg[property] isnt typeof duck[property]
+      return false
+  true
+
 module.exports = {
   verifyUnemptyString
   isUnemptyString
@@ -69,5 +79,6 @@ module.exports = {
   isFunction
   verifyInstance
   isInstance
+  quacksLike
 }
 
