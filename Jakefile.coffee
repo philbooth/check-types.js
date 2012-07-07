@@ -55,6 +55,9 @@ jslint = ->
 cslint = ->
   runCommand commands.cslint
 
+compile = ->
+  runCommand commands.compile
+
 prepare = ->
   runCommand commands.prepare
 
