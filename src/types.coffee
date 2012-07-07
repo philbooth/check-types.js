@@ -1,20 +1,23 @@
 'use strict'
 
-verifyUnemptyString = (arg, msg) ->
-  if isUnemptyString(arg) is false
-    throw new Error msg || 'Invalid string'
+quacksLike = (arg, duck) ->
+  verifyObject arg
+  verifyObject duck
+  for own property of duck
+    if arg.hasOwnProperty(property) isnt true
+      return false
+    if typeof arg[property] isnt typeof duck[property]
+      return false
+  true
 
-isUnemptyString = (arg) ->
-  if isString(arg) and arg isnt ''
-    return true
-  false
+verifyInstance = (arg, prototype, msg) ->
+  if isInstance(arg, prototype) is false
+    throw new Error msg || 'Invalid type'
 
-verifyString = (arg, msg) ->
-  if isString(arg) is false
-    throw new Error msg || 'Invalid string'
-
-isString = (arg) ->
-  if typeof arg is 'string'
+isInstance = (arg, prototype) ->
+  if typeof arg is 'undefined' or arg is null
+    return false
+  if isFunction(prototype) and arg instanceof prototype
     return true
   false
 
@@ -45,40 +48,37 @@ isFunction = (arg) ->
     return true
   false
 
-verifyInstance = (arg, prototype, msg) ->
-  if isInstance(arg, prototype) is false
-    throw new Error msg || 'Invalid type'
+verifyUnemptyString = (arg, msg) ->
+  if isUnemptyString(arg) is false
+    throw new Error msg || 'Invalid string'
 
-isInstance = (arg, prototype) ->
-  if typeof arg is 'undefined' or arg is null
-    return false
-  if isFunction(prototype) and arg instanceof prototype
+isUnemptyString = (arg) ->
+  if isString(arg) and arg isnt ''
     return true
   false
 
-quacksLike = (arg, duck) ->
-  verifyObject arg
-  verifyObject duck
-  for own property of duck
-    if arg.hasOwnProperty(property) isnt true
-      return false
-    if typeof arg[property] isnt typeof duck[property]
-      return false
-  true
+verifyString = (arg, msg) ->
+  if isString(arg) is false
+    throw new Error msg || 'Invalid string'
+
+isString = (arg) ->
+  if typeof arg is 'string'
+    return true
+  false
 
 module.exports = {
-  verifyUnemptyString
-  isUnemptyString
-  verifyString
-  isString
+  quacksLike
+  verifyInstance
+  isInstance
   verifyObject
   isObject
   verifyArray
   isArray
   verifyFunction
   isFunction
-  verifyInstance
-  isInstance
-  quacksLike
+  verifyUnemptyString
+  isUnemptyString
+  verifyString
+  isString
 }
 
