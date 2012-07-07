@@ -3,7 +3,7 @@
 {exec} = require 'child_process'
 
 desc 'Minify the source code for deployment.'
-task 'minify', [ 'jslint', 'jstest' ], ->
+task 'minify', [ 'prepare', 'jslint', 'jstest' ], ->
   runTask minify, 'Minifying javascript...'
 , async: true
 
@@ -64,7 +64,6 @@ prepare = ->
 runCommand = (command) ->
   exec command, { cwd: __dirname }, (error, stdout, stderr) ->
     console.log stdout
-    console.log stderr
     if typeof error is 'object' && error isnt null
       console.log error.message
       process.exit 1
