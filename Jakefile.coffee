@@ -73,7 +73,7 @@ after = () ->
 
 commands =
   minify: './node_modules/.bin/uglifyjs --lift-vars --output ./build/types.min.js ./build/types.js'
-  test: './node_modules/.bin/mocha --compilers coffee:coffee-script --ui tdd --reporter spec --colors --slow 10 ./test/types.coffee'
+  test: './node_modules/.bin/mocha --compilers coffee:coffee-script --ui tdd --reporter spec --colors --slow 50 ./test/types.coffee'
   jslint: './node_modules/.bin/jshint ./build/types.js --config config/jshint.json'
   cslint: './node_modules/.bin/coffeelint -f config/coffeelint.json ./src/types.coffee'
   compile: './node_modules/.bin/coffee -c -o ./build/types.js ./src/types.coffee'
