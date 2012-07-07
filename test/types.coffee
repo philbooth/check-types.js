@@ -4,7 +4,7 @@
 
 module = 'types'
 
-suite 'no setup:'
+suite 'no setup:', ->
   test 'require does not throw', ->
     assert.doesNotThrow ->
       require 'types'
