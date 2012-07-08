@@ -8,14 +8,9 @@ task 'minify', [ 'jstest' ], ->
 , async: true
 
 desc 'Run the unit tests against the compiled output.'
-task 'jstest', [ 'jslint' ], ->
+task 'jstest', [ 'compile' ], ->
   process.env.NODE_PATH = './build'
   runTask test, 'Testing javascript...'
-, async: true
-
-desc 'Lint the compiled output.'
-task 'jslint', [ 'compile' ], ->
-  runTask jslint, 'Linting javascript...'
 , async: true
 
 desc 'Compile the source coffeescript into javascript.'
@@ -24,14 +19,14 @@ task 'compile', [ 'cstest' ], ->
 , async: true
 
 desc 'Run the unit tests against the source code.'
-task 'cstest', [ 'cslint' ], ->
+task 'cstest', [ 'lint' ], ->
   process.env.NODE_PATH = './src'
   runTask test, 'Testing coffeescript...'
 , async: true
 
 desc 'Lint the source code.'
-task 'cslint', [ 'prepare' ], ->
-  runTask cslint, 'Linting coffeescript...'
+task 'lint', [ 'prepare' ], ->
+  runTask lint, 'Linting coffeescript...'
 , async: true
 
 desc 'Install dependencies.'
@@ -49,11 +44,8 @@ minify = ->
 test = ->
   runCommand commands.test
 
-jslint = ->
-  runCommand commands.jslint
-
-cslint = ->
-  runCommand commands.cslint
+lint = ->
+  runCommand commands.lint
 
 compile = ->
   runCommand commands.compile
@@ -76,8 +68,7 @@ after = () ->
 commands =
   minify: './node_modules/.bin/uglifyjs --no-copyright --lift-vars --output ./build/types.min.js ./build/types.js'
   test: './node_modules/.bin/mocha --compilers coffee:coffee-script --ui tdd --reporter spec --colors --slow 50 ./test/types.coffee'
-  jslint: './node_modules/.bin/jshint ./build/types.js --config config/jshint.json'
-  cslint: './node_modules/.bin/coffeelint -f config/coffeelint.json ./src/types.coffee'
+  lint: './node_modules/.bin/coffeelint -f config/coffeelint.json ./src/types.coffee'
   compile: './node_modules/.bin/coffee -c -o ./build ./src/types.coffee'
   prepare: 'npm install'
 

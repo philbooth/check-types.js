@@ -2,29 +2,36 @@
 (function() {
   'use strict';
 
-  var isArray, isFunction, isInstance, isObject, isString, isUnemptyString, verifyArray, verifyFunction, verifyInstance, verifyObject, verifyString, verifyUnemptyString;
+  var isArray, isFunction, isInstance, isObject, isString, isUnemptyString, quacksLike, verifyArray, verifyFunction, verifyInstance, verifyObject, verifyString, verifyUnemptyString,
+    __hasProp = {}.hasOwnProperty;
 
-  verifyUnemptyString = function(arg, msg) {
-    if (isUnemptyString(arg) === false) {
-      throw new Error(msg || 'Invalid string');
+  quacksLike = function(arg, duck) {
+    var property;
+    verifyObject(arg);
+    verifyObject(duck);
+    for (property in duck) {
+      if (!__hasProp.call(duck, property)) continue;
+      if (arg.hasOwnProperty(property) !== true) {
+        return false;
+      }
+      if (typeof arg[property] !== typeof duck[property]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  verifyInstance = function(arg, prototype, msg) {
+    if (isInstance(arg, prototype) === false) {
+      throw new Error(msg || 'Invalid type');
     }
   };
 
-  isUnemptyString = function(arg) {
-    if (isString(arg) && arg !== '') {
-      return true;
+  isInstance = function(arg, prototype) {
+    if (typeof arg === 'undefined' || arg === null) {
+      return false;
     }
-    return false;
-  };
-
-  verifyString = function(arg, msg) {
-    if (isString(arg) === false) {
-      throw new Error(msg || 'Invalid string');
-    }
-  };
-
-  isString = function(arg) {
-    if (typeof arg === 'string') {
+    if (isFunction(prototype) && arg instanceof prototype) {
       return true;
     }
     return false;
@@ -69,35 +76,46 @@
     return false;
   };
 
-  verifyInstance = function(arg, prototype, msg) {
-    if (isInstance(arg, prototype) === false) {
-      throw new Error(msg || 'Invalid type');
+  verifyUnemptyString = function(arg, msg) {
+    if (isUnemptyString(arg) === false) {
+      throw new Error(msg || 'Invalid string');
     }
   };
 
-  isInstance = function(arg, prototype) {
-    if (typeof arg === 'undefined' || arg === null) {
-      return false;
+  isUnemptyString = function(arg) {
+    if (isString(arg) && arg !== '') {
+      return true;
     }
-    if (isFunction(prototype) && arg instanceof prototype) {
+    return false;
+  };
+
+  verifyString = function(arg, msg) {
+    if (isString(arg) === false) {
+      throw new Error(msg || 'Invalid string');
+    }
+  };
+
+  isString = function(arg) {
+    if (typeof arg === 'string') {
       return true;
     }
     return false;
   };
 
   module.exports = {
-    verifyUnemptyString: verifyUnemptyString,
-    isUnemptyString: isUnemptyString,
-    verifyString: verifyString,
-    isString: isString,
+    quacksLike: quacksLike,
+    verifyInstance: verifyInstance,
+    isInstance: isInstance,
     verifyObject: verifyObject,
     isObject: isObject,
     verifyArray: verifyArray,
     isArray: isArray,
     verifyFunction: verifyFunction,
     isFunction: isFunction,
-    verifyInstance: verifyInstance,
-    isInstance: isInstance
+    verifyUnemptyString: verifyUnemptyString,
+    isUnemptyString: isUnemptyString,
+    verifyString: verifyString,
+    isString: isString
   };
 
 }).call(this);
