@@ -5,98 +5,98 @@
   var isArray, isFunction, isInstance, isObject, isString, isUnemptyString, quacksLike, verifyArray, verifyFunction, verifyInstance, verifyObject, verifyString, verifyUnemptyString,
     __hasProp = {}.hasOwnProperty;
 
-  quacksLike = function(arg, duck) {
+  quacksLike = function(thing, duck) {
     var property;
-    verifyObject(arg);
+    verifyObject(thing);
     verifyObject(duck);
     for (property in duck) {
       if (!__hasProp.call(duck, property)) continue;
-      if (arg.hasOwnProperty(property) !== true) {
+      if (thing.hasOwnProperty(property) !== true) {
         return false;
       }
-      if (typeof arg[property] !== typeof duck[property]) {
+      if (typeof thing[property] !== typeof duck[property]) {
         return false;
       }
     }
     return true;
   };
 
-  verifyInstance = function(arg, prototype, msg) {
-    if (isInstance(arg, prototype) === false) {
+  verifyInstance = function(thing, prototype, msg) {
+    if (isInstance(thing, prototype) === false) {
       throw new Error(msg || 'Invalid type');
     }
   };
 
-  isInstance = function(arg, prototype) {
-    if (typeof arg === 'undefined' || arg === null) {
+  isInstance = function(thing, prototype) {
+    if (typeof thing === 'undefined' || thing === null) {
       return false;
     }
-    if (isFunction(prototype) && arg instanceof prototype) {
+    if (isFunction(prototype) && thing instanceof prototype) {
       return true;
     }
     return false;
   };
 
-  verifyObject = function(arg, msg) {
-    if (isObject(arg) === false) {
+  verifyObject = function(thing, msg) {
+    if (isObject(thing) === false) {
       throw new Error(msg || 'Invalid object');
     }
   };
 
-  isObject = function(arg) {
-    if (typeof arg === 'object' && arg !== null && isArray(arg) === false) {
+  isObject = function(thing) {
+    if (typeof thing === 'object' && thing !== null && isArray(thing) === false) {
       return true;
     }
     return false;
   };
 
-  verifyArray = function(arg, msg) {
-    if (isArray(arg) === false) {
+  verifyArray = function(thing, msg) {
+    if (isArray(thing) === false) {
       throw new Error(msg || 'Invalid array');
     }
   };
 
-  isArray = function(arg) {
-    if (Object.prototype.toString.call(arg) === '[object Array]') {
+  isArray = function(thing) {
+    if (Object.prototype.toString.call(thing) === '[object Array]') {
       return true;
     }
     return false;
   };
 
-  verifyFunction = function(arg, msg) {
-    if (isFunction(arg) === false) {
+  verifyFunction = function(thing, msg) {
+    if (isFunction(thing) === false) {
       throw new Error(msg || 'Invalid function');
     }
   };
 
-  isFunction = function(arg) {
-    if (typeof arg === 'function') {
+  isFunction = function(thing) {
+    if (typeof thing === 'function') {
       return true;
     }
     return false;
   };
 
-  verifyUnemptyString = function(arg, msg) {
-    if (isUnemptyString(arg) === false) {
+  verifyUnemptyString = function(thing, msg) {
+    if (isUnemptyString(thing) === false) {
       throw new Error(msg || 'Invalid string');
     }
   };
 
-  isUnemptyString = function(arg) {
-    if (isString(arg) && arg !== '') {
+  isUnemptyString = function(thing) {
+    if (isString(thing) && thing !== '') {
       return true;
     }
     return false;
   };
 
-  verifyString = function(arg, msg) {
-    if (isString(arg) === false) {
+  verifyString = function(thing, msg) {
+    if (isString(thing) === false) {
       throw new Error(msg || 'Invalid string');
     }
   };
 
-  isString = function(arg) {
-    if (typeof arg === 'string') {
+  isString = function(thing) {
+    if (typeof thing === 'string') {
       return true;
     }
     return false;
