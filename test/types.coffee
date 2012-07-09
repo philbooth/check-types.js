@@ -33,9 +33,8 @@ suite 'require:', ->
       types.quacksLike {}, {}
 
   test 'quacksLike with function first argument throws', ->
-    functionArgument = ->
     assert.throws ->
-      types.quacksLike functionArgument, {}
+      types.quacksLike (->), {}
 
   test 'quacksLike with null first argument throws', ->
     assert.throws ->
@@ -62,15 +61,10 @@ suite 'require:', ->
     assert.isFalse types.quacksLike({ foo: {}, bar: {} }, { foo: {}, baz: {} })
 
   test 'quacksLike with bar bar second properties returns true', ->
-    firstFunction = ->
-    secondFunction = ->
-    assert.isTrue types.quacksLike({ foo: firstFunction, bar: {} }, { foo: secondFunction, bar: {} })
+    assert.isTrue types.quacksLike({ foo: (->), bar: {} }, { foo: (->), bar: {} })
 
   test 'quacksLike with differently typed bar bar second properties returns false', ->
-    firstFunction = ->
-    secondFunction = ->
-    thirdFunction = ->
-    assert.isFalse types.quacksLike({ foo: firstFunction, bar: {} }, { foo: secondFunction, bar: thirdFunction })
+    assert.isFalse types.quacksLike({ foo: (->), bar: {} }, { foo: (->), bar: (->) })
 
   test 'verifyInstance with new Error and Error does not throw', ->
     assert.doesNotThrow ->
