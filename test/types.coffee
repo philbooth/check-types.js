@@ -7,16 +7,16 @@ module = 'types'
 suite 'no setup:', ->
   test 'require does not throw', ->
     assert.doesNotThrow ->
-      require 'types'
+      require module
 
   test 'require returns object', ->
-    assert.isObject require('types')
+    assert.isObject require(module)
 
 suite 'require:', ->
   types = null
 
   setup ->
-    types = require 'types'
+    types = require module
 
   teardown ->
     types = null
