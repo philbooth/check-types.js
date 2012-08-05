@@ -11,7 +11,7 @@ A small coffeescript library for checking types and throwing exceptions.
 Import the module using `require`, referencing either
 the raw coffeescript (`src/types.coffee`, *5 kb*), the
 compiled javascript (`build/types.js`, *2.9 kb*) or
-minified javascript (`src/types.min.js` *1.2 kb*).
+minified javascript (`build/types.min.js` *1.2 kb*).
 
 To call the library in a browser environment, use [OneJS]
 or [Browserify].
