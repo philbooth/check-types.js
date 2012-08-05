@@ -32,12 +32,12 @@ quacksLike = (thing, duck) ->
 # @param thing {object}       The object to test.
 # @param prototype {function} The prototype that the
 #                             test is against.
-# @param [msg] {string}       An optional error message
+# @param [message] {string}   An optional error message
 #                             to set on the thrown Error.
 #
-verifyInstance = (thing, prototype, msg) ->
+verifyInstance = (thing, prototype, message) ->
   if isInstance(thing, prototype) is false
-    throw new Error msg || 'Invalid type'
+    throw new Error message || 'Invalid type'
 
 ##
 # Public function `types.isInstance`.
@@ -62,13 +62,13 @@ isInstance = (thing, prototype) ->
 # Throws an exception unless something is a non-null,
 # non-array object.
 #
-# @param thing          The thing to test.
-# @param [msg] {string} An optional error message
-#                       to set on the thrown Error.
+# @param thing              The thing to test.
+# @param [message] {string} An optional error message
+#                           to set on the thrown Error.
 #
-verifyObject = (thing, msg) ->
+verifyObject = (thing, message) ->
   if isObject(thing) is false
-    throw new Error msg || 'Invalid object'
+    throw new Error message || 'Invalid object'
 
 ##
 # Public function `types.isObject`.
@@ -88,13 +88,13 @@ isObject = (thing) ->
 #
 # Throws an exception unless something is an array.
 #
-# @param thing          The thing to test.
-# @param [msg] {string} An optional error message
-#                       to set on the thrown Error.
+# @param thing              The thing to test.
+# @param [message] {string} An optional error message
+#                           to set on the thrown Error.
 #
-verifyArray = (thing, msg) ->
+verifyArray = (thing, message) ->
   if isArray(thing) is false
-    throw new Error msg || 'Invalid array'
+    throw new Error message || 'Invalid array'
 
 ##
 # Public function `types.isArray`.
@@ -113,13 +113,13 @@ isArray = (thing) ->
 #
 # Throws an exception unless something is function.
 #
-# @param thing          The thing to test.
-# @param [msg] {string} An optional error message
-#                       to set on the thrown Error.
+# @param thing              The thing to test.
+# @param [message] {string} An optional error message
+#                           to set on the thrown Error.
 #
-verifyFunction = (thing, msg) ->
+verifyFunction = (thing, message) ->
   if isFunction(thing) is false
-    throw new Error msg || 'Invalid function'
+    throw new Error message || 'Invalid function'
 
 ##
 # Public function `types.isFunction`.
@@ -138,13 +138,13 @@ isFunction = (thing) ->
 #
 # Throws an exception unless something is a non-empty string.
 #
-# @param thing          The thing to test.
-# @param [msg] {string} An optional error message
-#                       to set on the thrown Error.
+# @param thing              The thing to test.
+# @param [message] {string} An optional error message
+#                           to set on the thrown Error.
 #
-verifyUnemptyString = (thing, msg) ->
+verifyUnemptyString = (thing, message) ->
   if isUnemptyString(thing) is false
-    throw new Error msg || 'Invalid string'
+    throw new Error message || 'Invalid string'
 
 ##
 # Public function `types.isUnemptyString`.
@@ -163,13 +163,13 @@ isUnemptyString = (thing) ->
 #
 # Throws an exception unless something is a string.
 #
-# @param thing          The thing to test.
-# @param [msg] {string} An optional error message
-#                       to set on the thrown Error.
+# @param thing              The thing to test.
+# @param [message] {string} An optional error message
+#                           to set on the thrown Error.
 #
-verifyString = (thing, msg) ->
+verifyString = (thing, message) ->
   if isString(thing) is false
-    throw new Error msg || 'Invalid string'
+    throw new Error message || 'Invalid string'
 
 ##
 # Public function `types.isString`.
