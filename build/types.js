@@ -21,9 +21,9 @@
     return true;
   };
 
-  verifyInstance = function(thing, prototype, msg) {
+  verifyInstance = function(thing, prototype, message) {
     if (isInstance(thing, prototype) === false) {
-      throw new Error(msg || 'Invalid type');
+      throw new Error(message || 'Invalid type');
     }
   };
 
@@ -37,9 +37,9 @@
     return false;
   };
 
-  verifyObject = function(thing, msg) {
+  verifyObject = function(thing, message) {
     if (isObject(thing) === false) {
-      throw new Error(msg || 'Invalid object');
+      throw new Error(message || 'Invalid object');
     }
   };
 
@@ -50,9 +50,9 @@
     return false;
   };
 
-  verifyArray = function(thing, msg) {
+  verifyArray = function(thing, message) {
     if (isArray(thing) === false) {
-      throw new Error(msg || 'Invalid array');
+      throw new Error(message || 'Invalid array');
     }
   };
 
@@ -63,9 +63,9 @@
     return false;
   };
 
-  verifyFunction = function(thing, msg) {
+  verifyFunction = function(thing, message) {
     if (isFunction(thing) === false) {
-      throw new Error(msg || 'Invalid function');
+      throw new Error(message || 'Invalid function');
     }
   };
 
@@ -76,9 +76,9 @@
     return false;
   };
 
-  verifyUnemptyString = function(thing, msg) {
+  verifyUnemptyString = function(thing, message) {
     if (isUnemptyString(thing) === false) {
-      throw new Error(msg || 'Invalid string');
+      throw new Error(message || 'Invalid string');
     }
   };
 
@@ -89,9 +89,9 @@
     return false;
   };
 
-  verifyString = function(thing, msg) {
+  verifyString = function(thing, message) {
     if (isString(thing) === false) {
-      throw new Error(msg || 'Invalid string');
+      throw new Error(message || 'Invalid string');
     }
   };
 
