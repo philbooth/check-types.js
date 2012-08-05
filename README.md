@@ -9,8 +9,8 @@ A small coffeescript library for checking types and throwing exceptions.
 `npm install check-types`
 
 Import the module using `require`, referencing either
-the raw coffeescript (`src/types.coffee`, *1.8 kb*), the
-compiled javascript (`build/types.js`, *2.8 kb*) or
+the raw coffeescript (`src/types.coffee`, *5 kb*), the
+compiled javascript (`build/types.js`, *2.9 kb*) or
 minified javascript (`src/types.min.js` *1.2 kb*).
 
 To call the library in a browser environment, use [OneJS]
