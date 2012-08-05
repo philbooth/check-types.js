@@ -1,5 +1,18 @@
 'use strict'
 
+##
+# Public function `types.quacksLike`.
+#
+# Tests whether an object 'quacks like a duck'.
+# Returns `true` if the first argument has all of
+# the properties of the second, archetypal argument
+# (the 'duck'). Returns `false` otherwise. If either
+# argument is not an object, an exception is thrown.
+#
+# @param thing {object} The object to test.
+# @param duck {object}  The archetypal object, or 'duck'
+#                       that the test is against.
+#
 quacksLike = (thing, duck) ->
   verifyObject thing
   verifyObject duck
@@ -10,10 +23,32 @@ quacksLike = (thing, duck) ->
       return false
   true
 
+##
+# Public function `types.verifyInstance`.
+#
+# Throws an exception if an object is not an instance
+# of a prototype.
+#
+# @param thing {object}       The object to test.
+# @param prototype {function} The prototype that the
+#                             test is against.
+# @param [msg] {string}       An optional error message
+#                             to set on the thrown Error.
+#
 verifyInstance = (thing, prototype, msg) ->
   if isInstance(thing, prototype) is false
     throw new Error msg || 'Invalid type'
 
+##
+# Public function `types.isInstance`.
+#
+# Returns `true` if an object is an instance of a prototype,
+# `false` otherwise.
+#
+# @param thing {object}       The object to test.
+# @param prototype {function} The prototype that the
+#                             test is against.
+#
 isInstance = (thing, prototype) ->
   if typeof thing is 'undefined' or thing is null
     return false
@@ -21,46 +56,128 @@ isInstance = (thing, prototype) ->
     return true
   false
 
+##
+# Public function `types.verifyObject`.
+#
+# Throws an exception unless something is a non-null,
+# non-array object.
+#
+# @param thing          The thing to test.
+# @param [msg] {string} An optional error message
+#                       to set on the thrown Error.
+#
 verifyObject = (thing, msg) ->
   if isObject(thing) is false
     throw new Error msg || 'Invalid object'
 
+##
+# Public function `types.isObject`.
+#
+# Returns `true` if something is a non-null, non-array
+# object, `false` otherwise.
+#
+# @param thing          The thing to test.
+#
 isObject = (thing) ->
   if typeof thing is 'object' and thing isnt null and isArray(thing) is false
     return true
   false
 
+##
+# Public function `types.verifyArray`.
+#
+# Throws an exception unless something is an array.
+#
+# @param thing          The thing to test.
+# @param [msg] {string} An optional error message
+#                       to set on the thrown Error.
+#
 verifyArray = (thing, msg) ->
   if isArray(thing) is false
     throw new Error msg || 'Invalid array'
 
+##
+# Public function `types.isArray`.
+#
+# Returns `true` something is an array, `false` otherwise.
+#
+# @param thing          The thing to test.
+#
 isArray = (thing) ->
   if Object.prototype.toString.call(thing) is '[object Array]'
     return true
   false
 
+##
+# Public function `types.verifyFunction`.
+#
+# Throws an exception unless something is function.
+#
+# @param thing          The thing to test.
+# @param [msg] {string} An optional error message
+#                       to set on the thrown Error.
+#
 verifyFunction = (thing, msg) ->
   if isFunction(thing) is false
     throw new Error msg || 'Invalid function'
 
+##
+# Public function `types.isFunction`.
+#
+# Returns `true` if something is function, `false` otherwise.
+#
+# @param thing          The thing to test.
+#
 isFunction = (thing) ->
   if typeof thing is 'function'
     return true
   false
 
+##
+# Public function `types.verifyUnemptyString`.
+#
+# Throws an exception unless something is a non-empty string.
+#
+# @param thing          The thing to test.
+# @param [msg] {string} An optional error message
+#                       to set on the thrown Error.
+#
 verifyUnemptyString = (thing, msg) ->
   if isUnemptyString(thing) is false
     throw new Error msg || 'Invalid string'
 
+##
+# Public function `types.isUnemptyString`.
+#
+# Throws an exception unless something is a non-empty string.
+#
+# @param thing          The thing to test.
+#
 isUnemptyString = (thing) ->
   if isString(thing) and thing isnt ''
     return true
   false
 
+##
+# Public function `types.verifyString`.
+#
+# Throws an exception unless something is a string.
+#
+# @param thing          The thing to test.
+# @param [msg] {string} An optional error message
+#                       to set on the thrown Error.
+#
 verifyString = (thing, msg) ->
   if isString(thing) is false
     throw new Error msg || 'Invalid string'
 
+##
+# Public function `types.isString`.
+#
+# Returns `true` if something is a string, `false` otherwise.
+#
+# @param thing          The thing to test.
+#
 isString = (thing) ->
   if typeof thing is 'string'
     return true
