@@ -28,6 +28,9 @@
         "chai": "1.1.x",
         "uglify-js": "1.3.x"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "scripts": {
+        "test": "jake jstest"
+    }
 }
 
