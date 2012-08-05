@@ -85,10 +85,10 @@ Throws an exception unless something is a string.
 ### Dependencies
 
 The build environment relies on [Node.js][node], [NPM], [Jake],
-[CoffeeLint], [Mocha], [Chai] and [UglifyJS]. Assuming
-that you already have Node.js and NPM set up, you just need to
-run `npm install` to install all of the dependencies as listed
-in `package.json`.
+[CoffeeScript], [CoffeeLint], [Mocha], [Chai] and [UglifyJS].
+Assuming that you already have Node.js and NPM set up, you just
+need to run `npm install` to install all of the dependencies as
+listed in `package.json`.
 
 ### Unit tests
 
