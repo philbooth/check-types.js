@@ -95,8 +95,8 @@ listed in `package.json`.
 The unit tests are in `test/types.coffee`. You can run them
 with the command `npm test` or `jake jstest`.
 
-[ci-image]: https://secure.travis-ci.org/philbooth/vagueTime.js.png?branch=master
-[ci-status]: http://travis-ci.org/#!/philbooth/vagueTime.js
+[ci-image]: https://secure.travis-ci.org/philbooth/types.coffee.png?branch=master
+[ci-status]: http://travis-ci.org/#!/philbooth/types.coffee
 [onejs]: https://github.com/azer/onejs
 [browserify]: https://github.com/substack/node-browserify
 [node]: http://nodejs.org/
