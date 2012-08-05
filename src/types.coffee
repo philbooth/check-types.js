@@ -149,7 +149,8 @@ verifyUnemptyString = (thing, message) ->
 ##
 # Public function `types.isUnemptyString`.
 #
-# Throws an exception unless something is a non-empty string.
+# Returns `true` if something is a non-empty string, `false`
+# otherwise.
 #
 # @param thing          The thing to test.
 #
