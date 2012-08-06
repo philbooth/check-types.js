@@ -184,6 +184,33 @@ isString = (thing) ->
     return true
   false
 
+##
+# Public function `types.verifyNumber`.
+#
+# Throws an exception unless something is a number (also excluding NaN).
+#
+# @param thing              The thing to test.
+# @param [message] {string} An optional error message
+#                           to set on the thrown Error.
+#
+verifyNumber = (thing, message) ->
+  if isNumber(thing) is false
+    throw new Error message || 'Invalid number'
+
+##
+# Public function `types.isNumber`.
+#
+# Returns `true` if something a number other than NaN, `false` otherwise.
+#
+# @param thing          The thing to test.
+#
+isNumber = (thing) ->
+  if isNaN(thing) is true
+    return false
+  if typeof thing is 'number'
+    return true
+  false
+
 module.exports = {
   quacksLike
   verifyInstance
@@ -198,5 +225,7 @@ module.exports = {
   isUnemptyString
   verifyString
   isString
+  verifyNumber
+  isNumber
 }
 
