@@ -2,7 +2,7 @@
 (function() {
   'use strict';
 
-  var isArray, isFunction, isInstance, isObject, isString, isUnemptyString, quacksLike, verifyArray, verifyFunction, verifyInstance, verifyObject, verifyString, verifyUnemptyString,
+  var isArray, isFunction, isInstance, isNumber, isObject, isString, isUnemptyString, quacksLike, verifyArray, verifyFunction, verifyInstance, verifyNumber, verifyObject, verifyString, verifyUnemptyString,
     __hasProp = {}.hasOwnProperty;
 
   quacksLike = function(thing, duck) {
@@ -102,6 +102,22 @@
     return false;
   };
 
+  verifyNumber = function(thing, message) {
+    if (isNumber(thing) === false) {
+      throw new Error(message || 'Invalid number');
+    }
+  };
+
+  isNumber = function(thing) {
+    if (isNaN(thing) === true) {
+      return false;
+    }
+    if (typeof thing === 'number') {
+      return true;
+    }
+    return false;
+  };
+
   module.exports = {
     quacksLike: quacksLike,
     verifyInstance: verifyInstance,
@@ -115,7 +131,9 @@
     verifyUnemptyString: verifyUnemptyString,
     isUnemptyString: isUnemptyString,
     verifyString: verifyString,
-    isString: isString
+    isString: isString,
+    verifyNumber: verifyNumber,
+    isNumber: isNumber
   };
 
 }).call(this);
