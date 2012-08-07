@@ -8,75 +8,88 @@ A small coffeescript library for checking types and throwing exceptions.
 
 `npm install check-types`
 
-Import the module using `require`, referencing either
-the raw coffeescript (`src/types.coffee`, *5 kb*), the
-compiled javascript (`build/types.js`, *2.9 kb*) or
-minified javascript (`build/types.min.js` *1.2 kb*).
+## Usage
+
+### Importing the module
+
+#### JavaScript
+
+```
+require('check-types');
+```
+
+#### CoffeeScript
+
+```
+require 'check-types'
+```
+
+#### Browser
 
 To call the library in a browser environment, use [OneJS]
 or [Browserify].
 
-## Usage
+### Calling the exported functions
 
-types.coffee exports a number of different functions:
+A number of different functions are exported:
 
-### quacksLike (thing, duck)
+#### quacksLike (thing, duck)
 
 Tests whether an object 'quacks like a duck'. Returns `true`
 if the first argument has all of the properties of the second,
 archetypal argument (the 'duck'). Returns `false` otherwise.
 If either argument is not an object, an exception is thrown.
 
-### isInstance (thing, prototype)
+#### isInstance (thing, prototype)
 
 Returns `true` if an object is an instance of a prototype,
 `false` otherwise.
 
-### verifyInstance (thing, prototype, message)
+#### verifyInstance (thing, prototype, message)
 
 Throws an exception if an object is not an instance of a
 prototype.
 
-### isObject (thing)
+#### isObject (thing)
 
 Returns `true` if something is a non-null, non-array object,
 `false` otherwise.
 
-### verifyObject (thing, message)
+#### verifyObject (thing, message)
 
 Throws an exception unless something is a non-null, non-array
 object.
 
-### isArray (thing)
+#### isArray (thing)
 
 Returns `true` something is an array, `false` otherwise.
 
-### verifyArray (thing, message)
+#### verifyArray (thing, message)
 
 Throws an exception unless something is an array.
 
-### isFunction (thing)
+#### isFunction (thing)
 
 Returns `true` if something is function, `false` otherwise.
 
-### verifyFunction (thing, message)
+#### verifyFunction (thing, message)
 
 Throws an exception unless something is function.
 
-### isUnemptyString (thing)
+#### isUnemptyString (thing)
 
 Returns `true` if something is a non-empty string, `false`
 otherwise.
 
-### verifyUnemptyString (thing, message)
+#### verifyUnemptyString (thing, message)
 
 Throws an exception unless something is a non-empty string.
 
-### isString (thing)
+#### isString (thing)
 
 Returns `true` if something is a string, `false` otherwise.
 
-### verifyString (thing, message)
+#### verifyString (thing, message)
 
 Throws an exception unless something is a string.
 
