@@ -108,10 +108,10 @@ instance, `NaN` is not considered a number.
 ### Dependencies
 
 The build environment relies on [Node.js][node], [NPM], [Jake],
-[CoffeeScript], [CoffeeLint], [Mocha], [Chai] and [UglifyJS].
-Assuming that you already have Node.js and NPM set up, you just
-need to run `npm install` to install all of the dependencies as
-listed in `package.json`.
+[CoffeeScript], [CoffeeLint], [Mocha] and [Chai].  Assuming that
+you already have Node.js and NPM set up, you just need to run
+`npm install` to install all of the dependencies as listed in
+`package.json`.
 
 ### Unit tests
 
