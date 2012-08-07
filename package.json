@@ -7,10 +7,10 @@
         "name": "Phil Booth",
         "email": "pmbooth@gmail.com"
     },
-    "main": "./src/types.coffee",
+    "main": "./src/check-types.coffee",
     "repository": {
         "type": "git",
-        "url": "https://github.com/philbooth/types.coffee"
+        "url": "https://github.com/philbooth/check-types.coffee"
     },
     "keywords": [
         "types",

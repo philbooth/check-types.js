@@ -1,7 +1,7 @@
 'use strict'
 
 ##
-# Public function `types.quacksLike`.
+# Public function `quacksLike`.
 #
 # Tests whether an object 'quacks like a duck'.
 # Returns `true` if the first argument has all of
@@ -24,7 +24,7 @@ quacksLike = (thing, duck) ->
   true
 
 ##
-# Public function `types.verifyInstance`.
+# Public function `verifyInstance`.
 #
 # Throws an exception if an object is not an instance
 # of a prototype.
@@ -40,7 +40,7 @@ verifyInstance = (thing, prototype, message) ->
     throw new Error message || 'Invalid type'
 
 ##
-# Public function `types.isInstance`.
+# Public function `isInstance`.
 #
 # Returns `true` if an object is an instance of a prototype,
 # `false` otherwise.
@@ -57,7 +57,7 @@ isInstance = (thing, prototype) ->
   false
 
 ##
-# Public function `types.verifyObject`.
+# Public function `verifyObject`.
 #
 # Throws an exception unless something is a non-null,
 # non-array object.
@@ -71,7 +71,7 @@ verifyObject = (thing, message) ->
     throw new Error message || 'Invalid object'
 
 ##
-# Public function `types.isObject`.
+# Public function `isObject`.
 #
 # Returns `true` if something is a non-null, non-array
 # object, `false` otherwise.
@@ -84,7 +84,7 @@ isObject = (thing) ->
   false
 
 ##
-# Public function `types.verifyArray`.
+# Public function `verifyArray`.
 #
 # Throws an exception unless something is an array.
 #
@@ -97,7 +97,7 @@ verifyArray = (thing, message) ->
     throw new Error message || 'Invalid array'
 
 ##
-# Public function `types.isArray`.
+# Public function `isArray`.
 #
 # Returns `true` something is an array, `false` otherwise.
 #
@@ -109,7 +109,7 @@ isArray = (thing) ->
   false
 
 ##
-# Public function `types.verifyFunction`.
+# Public function `verifyFunction`.
 #
 # Throws an exception unless something is function.
 #
@@ -122,7 +122,7 @@ verifyFunction = (thing, message) ->
     throw new Error message || 'Invalid function'
 
 ##
-# Public function `types.isFunction`.
+# Public function `isFunction`.
 #
 # Returns `true` if something is function, `false` otherwise.
 #
@@ -134,7 +134,7 @@ isFunction = (thing) ->
   false
 
 ##
-# Public function `types.verifyUnemptyString`.
+# Public function `verifyUnemptyString`.
 #
 # Throws an exception unless something is a non-empty string.
 #
@@ -147,7 +147,7 @@ verifyUnemptyString = (thing, message) ->
     throw new Error message || 'Invalid string'
 
 ##
-# Public function `types.isUnemptyString`.
+# Public function `isUnemptyString`.
 #
 # Returns `true` if something is a non-empty string, `false`
 # otherwise.
@@ -160,7 +160,7 @@ isUnemptyString = (thing) ->
   false
 
 ##
-# Public function `types.verifyString`.
+# Public function `verifyString`.
 #
 # Throws an exception unless something is a string.
 #
@@ -173,7 +173,7 @@ verifyString = (thing, message) ->
     throw new Error message || 'Invalid string'
 
 ##
-# Public function `types.isString`.
+# Public function `isString`.
 #
 # Returns `true` if something is a string, `false` otherwise.
 #
@@ -185,7 +185,7 @@ isString = (thing) ->
   false
 
 ##
-# Public function `types.verifyNumber`.
+# Public function `verifyNumber`.
 #
 # Throws an exception unless something is a number (also excluding NaN).
 #
@@ -198,7 +198,7 @@ verifyNumber = (thing, message) ->
     throw new Error message || 'Invalid number'
 
 ##
-# Public function `types.isNumber`.
+# Public function `isNumber`.
 #
 # Returns `true` if something a number other than NaN, `false` otherwise.
 #

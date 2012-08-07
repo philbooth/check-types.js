@@ -2,11 +2,6 @@
 
 {exec} = require 'child_process'
 
-desc 'Minify the source code for deployment.'
-task 'minify', [ 'jstest' ], ->
-  runTask minify, 'Minifying javascript...'
-, async: true
-
 desc 'Run the unit tests against the compiled output.'
 task 'jstest', [ 'compile' ], ->
   process.env.NODE_PATH = './build'
@@ -66,10 +61,9 @@ after = () ->
   complete()
 
 commands =
-  minify: './node_modules/.bin/uglifyjs --no-copyright --lift-vars --output ./build/types.min.js ./build/types.js'
-  test: './node_modules/.bin/mocha --compilers coffee:coffee-script --ui tdd --reporter spec --colors --slow 50 ./test/types.coffee'
-  lint: './node_modules/.bin/coffeelint -f config/coffeelint.json ./src/types.coffee'
-  compile: './node_modules/.bin/coffee -c -o ./build ./src/types.coffee'
+  test: './node_modules/.bin/mocha --compilers coffee:coffee-script --ui tdd --reporter spec --colors --slow 50 ./test/check-types.coffee'
+  lint: './node_modules/.bin/coffeelint -f config/coffeelint.json ./src/check-types.coffee'
+  compile: './node_modules/.bin/coffee -c -o ./build ./src/check-types.coffee'
   prepare: 'npm install'
 
 originalNodePath = process.env.NODE_PATH

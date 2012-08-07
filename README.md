@@ -1,4 +1,4 @@
-# types.coffee
+# check-types.coffee
 
 A small coffeescript library for checking types and throwing exceptions.
 
@@ -115,11 +115,11 @@ listed in `package.json`.
 
 ### Unit tests
 
-The unit tests are in `test/types.coffee`. You can run them
+The unit tests are in `test/check-types.coffee`. You can run them
 with the command `npm test` or `jake jstest`.
 
-[ci-image]: https://secure.travis-ci.org/philbooth/types.coffee.png?branch=master
-[ci-status]: http://travis-ci.org/#!/philbooth/types.coffee
+[ci-image]: https://secure.travis-ci.org/philbooth/check-types.coffee.png?branch=master
+[ci-status]: http://travis-ci.org/#!/philbooth/check-types.coffee
 [onejs]: https://github.com/azer/onejs
 [browserify]: https://github.com/substack/node-browserify
 [node]: http://nodejs.org/

@@ -2,7 +2,7 @@
 
 {assert} = require 'chai'
 
-module = 'types'
+module = 'check-types'
 
 suite 'no setup:', ->
   test 'require does not throw', ->
