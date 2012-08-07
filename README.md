@@ -93,6 +93,16 @@ Returns `true` if something is a string, `false` otherwise.
 
 Throws an exception unless something is a string.
 
+### isNumber (thing)
+
+Returns `true` if something is a number, `false` otherwise. In
+this instance, `NaN` is not considered a number.
+
+### verifyNumber (thing, message)
+
+Throws an exception unless something is a number. In this
+instance, `NaN` is not considered a number.
+
 ## Development
 
 ### Dependencies

@@ -302,3 +302,51 @@ suite 'require:', ->
   test 'isString with object returns false', ->
     assert.isFalse types.isString({})
 
+  test 'verifyNumber function is defined', ->
+    assert.isFunction types.verifyNumber
+
+  test 'verifyNumber with whole number does not throw', ->
+    assert.doesNotThrow ->
+      types.verifyNumber 1
+
+  test 'verifyNumber with decimal number does not throw', ->
+    assert.doesNotThrow ->
+      types.verifyNumber 1.2
+
+  test 'verifyNumber with Infinity does not throw', ->
+    assert.doesNotThrow ->
+      types.verifyNumber Infinity
+
+  test 'verifyNumber with NaN throws', ->
+    assert.throws ->
+      types.verifyNumber NaN
+
+  test 'verifyNumber with null throws', ->
+    assert.throws ->
+      types.verifyNumber null
+
+  test 'verifyNumber with object throws', ->
+    assert.throws ->
+      types.verifyNumber {}
+
+  test 'isNumber function is defined', ->
+    assert.isFunction types.isNumber
+
+  test 'isNumber with whole number returns true', ->
+    assert.isTrue types.isNumber(1)
+
+  test 'isNumber with decimal number returns true', ->
+    assert.isTrue types.isNumber(1.2)
+
+  test 'isNumber with Infinity returns true', ->
+    assert.isTrue types.isNumber(Infinity)
+
+  test 'isNumber with NaN returns false', ->
+    assert.isFalse types.isNumber(NaN)
+
+  test 'isNumber with null returns false', ->
+    assert.isFalse types.isNumber(null)
+
+  test 'isNumber with object returns false', ->
+    assert.isFalse types.isNumber({})
+
