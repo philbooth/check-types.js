@@ -15,13 +15,13 @@ A small coffeescript library for checking types and throwing exceptions.
 #### JavaScript
 
 ```
-require('check-types');
+var check = require('check-types');
 ```
 
 #### CoffeeScript
 
 ```
-require 'check-types'
+check = require 'check-types'
 ```
 
 #### Browser
