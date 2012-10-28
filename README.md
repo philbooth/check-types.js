@@ -8,7 +8,9 @@ A small JavaScript library for checking types and throwing exceptions.
 
 ### Node.js
 
-`npm install check-types`
+```
+npm install check-types
+```
 
 ### Browser
 
@@ -26,7 +28,9 @@ var check = require('check-types');
 
 #### Browser
 
+```
 <script type="text/javascript" src=".../check-types.js/src/check-types.min.js"></script>
+```
 
 ### Calling the exported functions
 
