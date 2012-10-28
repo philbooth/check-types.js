@@ -34,7 +34,7 @@
     },
     "license": "MIT",
     "scripts": {
-        "test": "jake jstest"
+        "test": "jake test"
     }
 }
 
