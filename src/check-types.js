@@ -21,11 +21,11 @@
         isNumber: isNumber
     };
 
-    //if (typeof window === 'undefined') {
+    if (typeof window === 'undefined') {
         module.exports = functions;
-    //} else {
-    //    window.check = functions;
-    //}
+    } else {
+        window.check = functions;
+    }
 
     /**
      * Public function `quacksLike`.
