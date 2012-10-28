@@ -467,6 +467,18 @@
             });
         });
 
+        test('verifyNumber with string zero throws', function () {
+            assert.throws(function () {
+                types.verifyNumber('0');
+            });
+        });
+
+        test('verifyNumber with empty string throws', function () {
+            assert.throws(function () {
+                types.verifyNumber('');
+            });
+        });
+
         test('isNumber function is defined', function () {
             assert.isFunction(types.isNumber);
         });
