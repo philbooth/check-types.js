@@ -494,6 +494,14 @@
         test('isNumber with object returns false', function () {
             assert.isFalse(types.isNumber({}));
         });
+
+        test('isNumber with string zero returns false', function () {
+            assert.isFalse(types.isNumber('0'));
+        });
+
+        test('isNumber with empty string returns false', function () {
+            assert.isFalse(types.isNumber(''));
+        });
     });
 }());
 
