@@ -1,8 +1,8 @@
 {
     "name": "check-types",
-    "version": "0.1.6",
+    "version": "0.2.0",
     "author": "Phil Booth <pmbooth@gmail.com>",
-    "description": "a small library for checking types and throwing exceptions",
+    "description": "A small library for checking types and throwing exceptions.",
     "contributors": [
         {
             "name": "Phil Booth",
@@ -13,10 +13,10 @@
             "email": "info@rowanmanning.co.uk"
         }
     ],
-    "main": "./src/check-types.coffee",
+    "main": "./src/check-types.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/philbooth/check-types.coffee"
+        "url": "https://github.com/philbooth/check-types.js"
     },
     "keywords": [
         "types",
@@ -27,11 +27,10 @@
     ],
     "devDependencies": {
         "jake": "0.3.x",
-        "minimatch": "0.2.x",
-        "coffee-script": "1.3.x",
-        "coffeelint": "0.4.x",
+        "jshint": "0.7.x",
         "mocha": "1.2.x",
-        "chai": "1.1.x"
+        "chai": "1.1.x",
+        "uglify-js": "1.3.x"
     },
     "license": "MIT",
     "scripts": {
