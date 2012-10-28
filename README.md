@@ -1,33 +1,32 @@
-# check-types.coffee
+# check-types.js
 
-A small coffeescript library for checking types and throwing exceptions.
+A small JavaScript library for checking types and throwing exceptions.
 
 [![Build status][ci-image]][ci-status]
 
 ## Installation
 
+### Node.js
+
 `npm install check-types`
+
+### Browser
+
+git clone git@github.com:philbooth/check-types.js.git
 
 ## Usage
 
-### Importing the module
+### Loading the library
 
-#### JavaScript
+#### Node.js
 
 ```
 var check = require('check-types');
 ```
 
-#### CoffeeScript
-
-```
-check = require 'check-types'
-```
-
 #### Browser
 
-To call the library in a browser environment, use [OneJS]
-or [Browserify].
+<script type="text/javascript" src=".../check-types.js/src/check-types.min.js"></script>
 
 ### Calling the exported functions
 
@@ -108,7 +107,7 @@ instance, `NaN` is not considered a number.
 ### Dependencies
 
 The build environment relies on [Node.js][node], [NPM], [Jake],
-[CoffeeScript], [CoffeeLint], [Mocha] and [Chai].  Assuming that
+[JSHint], [Mocha] and [Chai].  Assuming that
 you already have Node.js and NPM set up, you just need to run
 `npm install` to install all of the dependencies as listed in
 `package.json`.
@@ -125,8 +124,8 @@ with the command `npm test` or `jake jstest`.
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jake]: https://github.com/mde/jake
-[coffeescript]: http://coffeescript.org/
-[coffeelint]: https://github.com/clutchski/coffeelint
+[jshint]: https://github.com/jshint/node-jshint
 [mocha]: http://visionmedia.github.com/mocha
 [chai]: http://chaijs.com/
+[uglifyjs]: https://github.com/mishoo/UglifyJS
 
