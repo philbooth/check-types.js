@@ -40,10 +40,13 @@ A number of different functions are exported:
 
 #### check.quacksLike (thing, duck)
 
-Tests whether an object 'quacks like a duck'. Returns `true`
-if the first argument has all of the properties of the second,
-archetypal argument (the 'duck'). Returns `false` otherwise.
-If either argument is not an object, an exception is thrown.
+Tests whether an object 'quacks like a duck'.
+Returns `true`
+if the first argument has all of the properties
+of the second, archetypal argument (the 'duck').
+Returns `false` otherwise.
+If either argument is not an object,
+an exception is thrown.
 
 #### check.isInstance (thing, prototype)
 
@@ -52,8 +55,7 @@ Returns `true` if an object is an instance of a prototype,
 
 #### check.verifyInstance (thing, prototype, message)
 
-Throws an exception if an object is not an instance of a
-prototype.
+Throws an exception if an object is not an instance of a prototype.
 
 #### check.isObject (thing)
 
@@ -62,12 +64,12 @@ Returns `true` if something is a non-null, non-array object,
 
 #### check.verifyObject (thing, message)
 
-Throws an exception unless something is a non-null, non-array
-object.
+Throws an exception unless something is a non-null, non-array object.
 
 #### check.isArray (thing)
 
-Returns `true` something is an array, `false` otherwise.
+Returns `true` something is an array,
+`false` otherwise.
 
 #### check.verifyArray (thing, message)
 
@@ -75,7 +77,8 @@ Throws an exception unless something is an array.
 
 #### check.isFunction (thing)
 
-Returns `true` if something is function, `false` otherwise.
+Returns `true` if something is function,
+`false` otherwise.
 
 #### check.verifyFunction (thing, message)
 
@@ -83,8 +86,8 @@ Throws an exception unless something is function.
 
 #### check.isUnemptyString (thing)
 
-Returns `true` if something is a non-empty string, `false`
-otherwise.
+Returns `true` if something is a non-empty string,
+`false` otherwise.
 
 #### check.verifyUnemptyString (thing, message)
 
@@ -92,7 +95,8 @@ Throws an exception unless something is a non-empty string.
 
 #### check.isString (thing)
 
-Returns `true` if something is a string, `false` otherwise.
+Returns `true` if something is a string,
+`false` otherwise.
 
 #### check.verifyString (thing, message)
 
@@ -100,28 +104,35 @@ Throws an exception unless something is a string.
 
 #### check.isNumber (thing)
 
-Returns `true` if something is a number, `false` otherwise. In
-this instance, `NaN` is not considered a number.
+Returns `true` if something is a number,
+`false` otherwise.
+In this instance, `NaN` is not considered a number.
 
 #### check.verifyNumber (thing, message)
 
-Throws an exception unless something is a number. In this
-instance, `NaN` is not considered a number.
+Throws an exception unless something is a number.
+In this instance, `NaN` is not considered a number.
 
 ## Development
 
 ### Dependencies
 
-The build environment relies on [Node.js][node], [NPM], [Jake],
-[JSHint], [Mocha] and [Chai].  Assuming that
-you already have Node.js and NPM set up, you just need to run
-`npm install` to install all of the dependencies as listed in
-`package.json`.
+The build environment relies on
+[Node.js][node],
+[NPM],
+[Jake],
+[JSHint],
+[Mocha],
+[Chai] and
+[UglifyJS].
+Assuming that you already have Node.js and NPM set up,
+you just need to run `npm install` to
+install all of the dependencies as listed in `package.json`.
 
 ### Unit tests
 
-The unit tests are in `test/check-types.coffee`. You can run them
-with the command `npm test` or `jake jstest`.
+The unit tests are in `test/check-types.coffee`.
+You can run them with the command `npm test` or `jake jstest`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js

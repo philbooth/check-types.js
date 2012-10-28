@@ -475,7 +475,7 @@
 
         test('verifyNumber with empty string throws', function () {
             assert.throws(function () {
-                types.verifyNumber('');
+                types.verifyNumber(' x');
             });
         });
 
