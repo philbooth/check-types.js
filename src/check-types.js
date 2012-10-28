@@ -47,12 +47,14 @@
         verifyObject(duck);
 
         for (property in duck) {
-            if (thing.hasOwnProperty(property) === false) {
-                return false;
-            }
+            if (duck.hasOwnProperty(property)) {
+                if (thing.hasOwnProperty(property) === false) {
+                    return false;
+                }
 
-            if (typeof thing[property] !== typeof duck[property]) {
-                return false;
+                if (typeof thing[property] !== typeof duck[property]) {
+                    return false;
+                }
             }
         }
 
