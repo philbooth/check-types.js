@@ -38,72 +38,72 @@ var check = require('check-types');
 
 A number of different functions are exported:
 
-#### quacksLike (thing, duck)
+#### check.quacksLike (thing, duck)
 
 Tests whether an object 'quacks like a duck'. Returns `true`
 if the first argument has all of the properties of the second,
 archetypal argument (the 'duck'). Returns `false` otherwise.
 If either argument is not an object, an exception is thrown.
 
-#### isInstance (thing, prototype)
+#### check.isInstance (thing, prototype)
 
 Returns `true` if an object is an instance of a prototype,
 `false` otherwise.
 
-#### verifyInstance (thing, prototype, message)
+#### check.verifyInstance (thing, prototype, message)
 
 Throws an exception if an object is not an instance of a
 prototype.
 
-#### isObject (thing)
+#### check.isObject (thing)
 
 Returns `true` if something is a non-null, non-array object,
 `false` otherwise.
 
-#### verifyObject (thing, message)
+#### check.verifyObject (thing, message)
 
 Throws an exception unless something is a non-null, non-array
 object.
 
-#### isArray (thing)
+#### check.isArray (thing)
 
 Returns `true` something is an array, `false` otherwise.
 
-#### verifyArray (thing, message)
+#### check.verifyArray (thing, message)
 
 Throws an exception unless something is an array.
 
-#### isFunction (thing)
+#### check.isFunction (thing)
 
 Returns `true` if something is function, `false` otherwise.
 
-#### verifyFunction (thing, message)
+#### check.verifyFunction (thing, message)
 
 Throws an exception unless something is function.
 
-#### isUnemptyString (thing)
+#### check.isUnemptyString (thing)
 
 Returns `true` if something is a non-empty string, `false`
 otherwise.
 
-#### verifyUnemptyString (thing, message)
+#### check.verifyUnemptyString (thing, message)
 
 Throws an exception unless something is a non-empty string.
 
-#### isString (thing)
+#### check.isString (thing)
 
 Returns `true` if something is a string, `false` otherwise.
 
-#### verifyString (thing, message)
+#### check.verifyString (thing, message)
 
 Throws an exception unless something is a string.
 
-#### isNumber (thing)
+#### check.isNumber (thing)
 
 Returns `true` if something is a number, `false` otherwise. In
 this instance, `NaN` is not considered a number.
 
-#### verifyNumber (thing, message)
+#### check.verifyNumber (thing, message)
 
 Throws an exception unless something is a number. In this
 instance, `NaN` is not considered a number.
