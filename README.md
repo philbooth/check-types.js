@@ -123,8 +123,8 @@ you already have Node.js and NPM set up, you just need to run
 The unit tests are in `test/check-types.coffee`. You can run them
 with the command `npm test` or `jake jstest`.
 
-[ci-image]: https://secure.travis-ci.org/philbooth/check-types.coffee.png?branch=master
-[ci-status]: http://travis-ci.org/#!/philbooth/check-types.coffee
+[ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
+[ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [onejs]: https://github.com/azer/onejs
 [browserify]: https://github.com/substack/node-browserify
 [node]: http://nodejs.org/
