@@ -1,0 +1,30 @@
+{
+    "name": "check-types.js",
+    "version": "0.2.1",
+    "author": "Phil Booth <pmbooth@gmail.com>",
+    "description": "A small JavaScript library for checking types and throwing exceptions.",
+    "contributors": [
+        {
+            "name": "Phil Booth",
+            "email": "pmbooth@gmail.com"
+        },
+        {
+            "name": "Rowan Manning",
+            "email": "info@rowanmanning.co.uk"
+        }
+    ],
+    "main": "./src/check-types.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/philbooth/check-types.js"
+    },
+    "keywords": [
+        "types",
+        "type-checking",
+        "duck-typing",
+        "arguments",
+        "parameters"
+    ],
+    "license": "MIT"
+}
+
