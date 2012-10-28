@@ -14,7 +14,9 @@ npm install check-types
 
 ### Browser
 
+```
 git clone git@github.com:philbooth/check-types.js.git
+```
 
 ## Usage
 
