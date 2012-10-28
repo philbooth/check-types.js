@@ -1,3 +1,8 @@
+/**
+ * This module exports functions for checking types
+ * and throwing exceptions.
+ */
+
 /*globals window, module */
 
 (function () {
