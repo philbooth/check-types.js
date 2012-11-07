@@ -26,7 +26,7 @@
         isNumber: isNumber
     };
 
-    if (typeof module != 'undefined' && typeof module.exports != 'undefined') {
+    if (module && module.exports) {
         module.exports = functions;
     } else {
         window.check = functions;
