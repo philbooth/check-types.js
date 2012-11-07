@@ -11,6 +11,9 @@
         {
             "name": "Rowan Manning",
             "email": "info@rowanmanning.co.uk"
+        },
+        {
+            "name": "Forbes Lindesay"
         }
     ],
     "main": "src/check-types.js",
