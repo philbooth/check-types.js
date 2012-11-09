@@ -1,6 +1,6 @@
 {
     "name": "check-types",
-    "version": "0.2.3",
+    "version": "0.2.5",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A small library for checking types and throwing exceptions.",
     "contributors": [
