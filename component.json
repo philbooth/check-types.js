@@ -1,6 +1,6 @@
 {
     "name": "check-types.js",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A small JavaScript library for checking types and throwing exceptions.",
     "contributors": [
@@ -16,9 +16,9 @@
             "name": "Forbes Lindesay"
         }
     ],
-    "main": "src/check-types.js",
+    "main": "src/check-types.min.js",
     "scripts": [
-        "src/check-types.js"
+        "src/check-types.min.js"
     ],
     "repository": {
         "type": "git",
