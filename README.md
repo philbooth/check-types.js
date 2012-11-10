@@ -131,7 +131,7 @@ install all of the dependencies as listed in `package.json`.
 
 ### Unit tests
 
-The unit tests are in `test/check-types.coffee`.
+The unit tests are in `test/check-types.js`.
 You can run them with the command `npm test` or `jake jstest`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
