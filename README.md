@@ -48,6 +48,11 @@ Returns `false` otherwise.
 If either argument is not an object,
 an exception is thrown.
 
+#### check.quacksLike (thing, duck, message)
+
+Throws an exception
+if an object does not 'quack like a duck'.
+
 #### check.isInstance (thing, prototype)
 
 Returns `true` if an object is an instance of a prototype,
@@ -136,8 +141,6 @@ You can run them with the command `npm test` or `jake jstest`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
-[onejs]: https://github.com/azer/onejs
-[browserify]: https://github.com/substack/node-browserify
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jake]: https://github.com/mde/jake
