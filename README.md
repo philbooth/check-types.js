@@ -48,7 +48,7 @@ Returns `false` otherwise.
 If either argument is not an object,
 an exception is thrown.
 
-#### check.quacksLike (thing, duck, message)
+#### check.verifyQuack (thing, duck, message)
 
 Throws an exception
 if an object does not 'quack like a duck'.
