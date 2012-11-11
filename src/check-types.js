@@ -9,6 +9,7 @@
     'use strict';
 
     var functions = {
+        verifyQuack: verifyQuack,
         quacksLike: quacksLike,
         verifyInstance: verifyInstance,
         isInstance: isInstance,
@@ -33,6 +34,26 @@
     }
 
     /**
+     * Public function `verifyQuack`.
+     *
+     * Throws an exception if an object does not share
+     * the properties of a second, archetypal object
+     * (i.e. doesn't 'quack like a duck').
+     *
+     * @param thing {object}     The object to test.
+     * @param duck {object}      The archetypal object,
+     *                           or 'duck', that the test
+     *                           is against.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyQuack (thing, duck, message) {
+        if (quacksLike(thing, duck) === false) {
+            throw new Error(message || 'Invalid type');
+        }
+    }
+
+    /**
      * Public function `quacksLike`.
      *
      * Tests whether an object 'quacks like a duck'.
@@ -42,8 +63,9 @@
      * argument is not an object, an exception is thrown.
      *
      * @param thing {object} The object to test.
-     * @param duck {object}  The archetypal object, or 'duck'
-     *                       that the test is against.
+     * @param duck {object}  The archetypal object, or
+     *                       'duck', that the test is
+     *                       against.
      */
     function quacksLike (thing, duck) {
         var property;

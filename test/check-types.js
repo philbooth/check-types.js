@@ -29,6 +29,46 @@
             types = undefined;
         });
 
+        test('verifyQuack function is defined', function () {
+            assert.isFunction(types.verifyQuack);
+        });
+
+        test('verifyQuack with two empty object arguments does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyQuack({}, {});
+            });
+        });
+
+        test('verifyQuack with foo bar properties throws', function () {
+            assert.throws(function () {
+                types.verifyQuack({ foo: {} }, { bar: {} });
+            });
+        });
+
+        test('verifyQuack with foo foo properties does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyQuack({ foo: {} }, { foo: {} });
+            });
+        });
+
+        test('verifyQuack with bar baz second properties throws', function () {
+            assert.throws(function () {
+                types.verifyQuack({ foo: {}, bar: {} }, { foo: {}, baz: {} });
+            });
+        });
+
+        test('verifyQuack with bar bar second properties does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyQuack({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: {} });
+            });
+        });
+
+        test('verifyQuack with differently typed bar bar second properties throws', function () {
+            assert.throws(function () {
+                types.verifyQuack({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: (function () {}) });
+            });
+        });
+
         test('quacksLike function is defined', function () {
             assert.isFunction(types.quacksLike);
         });
