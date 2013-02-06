@@ -138,13 +138,13 @@ greater than zero.
 #### check.isNegativeNumber (thing)
 
 Returns `true` if something is a number
-lesser than zero,
+less than zero,
 `false` otherwise.
 
 #### check.verifyNegativeNumber (thing, message)
 
 Throws an exception unless something is a number
-lesser than zero.
+less than zero.
 
 #### check.isNumber (thing)
 
