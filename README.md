@@ -1,6 +1,6 @@
 # check-types.js
 
-A small JavaScript library for checking types and throwing exceptions.
+A tiny JavaScript library for checking types and throwing exceptions.
 
 [![Build status][ci-image]][ci-status]
 
