@@ -1,5 +1,5 @@
 {
-    "name": "check-types.js",
+    "name": "check-types",
     "version": "0.4.2",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tiny JavaScript library for checking types and throwing exceptions.",
