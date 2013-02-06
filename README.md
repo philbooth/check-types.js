@@ -18,6 +18,12 @@ npm install check-types
 git clone git@github.com:philbooth/check-types.js.git
 ```
 
+Or use one of the growing number of package managers, such as
+[Jam][jam],
+[Bower][bower]
+(the package name for both is `check-types`)
+or [Component][component] (`philbooth/check-types.js`).
+
 ## Usage
 
 ### Loading the library
@@ -33,12 +39,6 @@ var check = require('check-types');
 ```
 <script type="text/javascript" src=".../check-types.js/src/check-types.min.js"></script>
 ```
-
-Or use one of the growing number of package managers, such as
-[Jam][jam],
-[Bower][bower]
-(the package name for both is `check-types`)
-or [Component][component] (`philbooth/check-types.js`).
 
 ### Calling the exported functions
 
