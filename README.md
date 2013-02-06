@@ -34,6 +34,12 @@ var check = require('check-types');
 <script type="text/javascript" src=".../check-types.js/src/check-types.min.js"></script>
 ```
 
+Or use one of the growing number of package managers, such as
+[Jam][jam],
+[Bower][bower]
+(the package name for both is `check-types`)
+or [Component][component] (`philbooth/check-types.js`).
+
 ### Calling the exported functions
 
 A number of different functions are exported:
@@ -174,6 +180,9 @@ You can run them with the command `npm test` or `jake jstest`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
+[jam]: http://jamjs.org/
+[bower]: https://github.com/twitter/bower
+[component]: https://github.com/component/component
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jake]: https://github.com/mde/jake
