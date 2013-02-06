@@ -71,6 +71,17 @@ Returns `true` if something is a non-null, non-array object,
 
 Throws an exception unless something is a non-null, non-array object.
 
+#### check.isLength (thing, length)
+
+Returns `true` if something has a length property
+that matches the specified length,
+`false` otherwise.
+
+#### check.verifyLength (thing, length, message)
+
+Throws an exception unless something has a length property
+matching the specified length.
+
 #### check.isArray (thing)
 
 Returns `true` something is an array,
@@ -106,6 +117,28 @@ Returns `true` if something is a string,
 #### check.verifyString (thing, message)
 
 Throws an exception unless something is a string.
+
+#### check.isPositiveNumber (thing)
+
+Returns `true` if something is a number
+greater than zero,
+`false` otherwise.
+
+#### check.verifyPositiveNumber (thing, message)
+
+Throws an exception unless something is a number
+greater than zero.
+
+#### check.isNegativeNumber (thing)
+
+Returns `true` if something is a number
+lesser than zero,
+`false` otherwise.
+
+#### check.verifyNegativeNumber (thing, message)
+
+Throws an exception unless something is a number
+lesser than zero.
 
 #### check.isNumber (thing)
 
