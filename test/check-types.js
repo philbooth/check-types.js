@@ -255,6 +255,74 @@
             assert.isFalse(types.isObject([]));
         });
 
+        test('verifyLength function is defined', function () {
+            assert.isFunction(types.verifyLength);
+        });
+
+        test('verifyLength with matching undefined length does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyLength({});
+            });
+        });
+
+        test('verifyLength with contrasting undefined length throws', function () {
+            assert.throws(function () {
+                types.verifyLength({}, 42);
+            });
+        });
+
+        test('verifyLength with matching length on array does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyLength([ 1, 2, 3], 3);
+            });
+        });
+
+        test('verifyLength with contrasting length on array throws', function () {
+            assert.throws(function () {
+                types.verifyLength([ 2, 3], 3);
+            });
+        });
+
+        test('verifyLength with matching length on object does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyLength({ length: 4 }, 4);
+            });
+        });
+
+        test('verifyLength with contrasting length on object throws', function () {
+            assert.throws(function () {
+                types.verifyLength({ length: 5 }, 4);
+            });
+        });
+
+        test('isLength function is defined', function () {
+            assert.isFunction(types.isLength);
+        });
+
+        test('isLength with matching undefined length returns true', function () {
+            assert.isTrue(types.isLength({}));
+        });
+
+        test('isLength with contrasting undefined length returns false', function () {
+            assert.isFalse(types.isLength({}, 7));
+        });
+
+        test('isLength with matching length on array returns true', function () {
+            assert.isTrue(types.isLength([ 'foo', 'bar' ], 2));
+        });
+
+        test('isLength with contrasting length on array returns false', function () {
+            assert.isFalse(types.isLength([ 'foo', 'bar', 'baz' ], 2));
+        });
+
+        test('isLength with matching length on object returns true', function () {
+            assert.isTrue(types.isLength({ length: 1 }, 1));
+        });
+
+        test('isLength with contrasting length on object returns false', function () {
+            assert.isFalse(types.isLength({ length: 1 }, 2));
+        });
+
         test('verifyArray function is defined', function () {
             assert.isFunction(types.verifyArray);
         });
@@ -467,25 +535,233 @@
             assert.isFalse(types.isString({}));
         });
 
+        test('verifyPositiveNumber function is defined', function () {
+            assert.isFunction(types.verifyPositiveNumber);
+        });
+
+        test('verifyPositiveNumber with positive integer does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyPositiveNumber(1);
+            });
+        });
+
+        test('verifyPositiveNumber with negative integer throws', function () {
+            assert.throws(function () {
+                types.verifyPositiveNumber(-1);
+            });
+        });
+
+        test('verifyPositiveNumber with positive fraction does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyPositiveNumber(1/2);
+            });
+        });
+
+        test('verifyPositiveNumber with negative fraction throws', function () {
+            assert.throws(function () {
+                types.verifyPositiveNumber(-1/2);
+            });
+        });
+
+        test('verifyPositiveNumber with positive infinity does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyPositiveNumber(Infinity);
+            });
+        });
+
+        test('verifyPositiveNumber with negative infinity throws', function () {
+            assert.throws(function () {
+                types.verifyPositiveNumber(-Infinity);
+            });
+        });
+
+        test('verifyPositiveNumber with NaN throws', function () {
+            assert.throws(function () {
+                types.verifyPositiveNumber(NaN);
+            });
+        });
+
+        test('verifyPositiveNumber with object throws', function () {
+            assert.throws(function () {
+                types.verifyPositiveNumber({});
+            });
+        });
+
+        test('verifyPositiveNumber with string throws', function () {
+            assert.throws(function () {
+                types.verifyPositiveNumber('1');
+            });
+        });
+
+        test('isPositiveNumber function is defined', function () {
+            assert.isFunction(types.isPositiveNumber);
+        });
+
+        test('isPositiveNumber with positive integer returns true', function () {
+            assert.isTrue(types.isPositiveNumber(1));
+        });
+
+        test('isPositiveNumber with negative integer returns false', function () {
+            assert.isFalse(types.isPositiveNumber(-1));
+        });
+
+        test('isPositiveNumber with positive fraction returns true', function () {
+            assert.isTrue(types.isPositiveNumber(1/2));
+        });
+
+        test('isPositiveNumber with negative fraction returns false', function () {
+            assert.isFalse(types.isPositiveNumber(-1/2));
+        });
+
+        test('isPositiveNumber with positive infinity returns true', function () {
+            assert.isTrue(types.isPositiveNumber(Infinity));
+        });
+
+        test('isPositiveNumber with negative infinity returns false', function () {
+            assert.isFalse(types.isPositiveNumber(-Infinity));
+        });
+
+        test('isPositiveNumber with NaN returns false', function () {
+            assert.isFalse(types.isPositiveNumber(NaN));
+        });
+
+        test('isPositiveNumber with object returns false', function () {
+            assert.isFalse(types.isPositiveNumber({}));
+        });
+
+        test('isPositiveNumber with string returns false', function () {
+            assert.isFalse(types.isPositiveNumber('1'));
+        });
+
+        test('verifyNegativeNumber function is defined', function () {
+            assert.isFunction(types.verifyNegativeNumber);
+        });
+
+        test('verifyNegativeNumber with positive integer throws', function () {
+            assert.throws(function () {
+                types.verifyNegativeNumber(1);
+            });
+        });
+
+        test('verifyNegativeNumber with negative integer does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyNegativeNumber(-1);
+            });
+        });
+
+        test('verifyNegativeNumber with positive fraction throws', function () {
+            assert.throws(function () {
+                types.verifyNegativeNumber(1/2);
+            });
+        });
+
+        test('verifyNegativeNumber with negative fraction does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyNegativeNumber(-1/2);
+            });
+        });
+
+        test('verifyNegativeNumber with positive infinity throws', function () {
+            assert.throws(function () {
+                types.verifyNegativeNumber(Infinity);
+            });
+        });
+
+        test('verifyNegativeNumber with negative infinity does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyNegativeNumber(-Infinity);
+            });
+        });
+
+        test('verifyNegativeNumber with NaN throws', function () {
+            assert.throws(function () {
+                types.verifyNegativeNumber(NaN);
+            });
+        });
+
+        test('verifyNegativeNumber with object throws', function () {
+            assert.throws(function () {
+                types.verifyNegativeNumber({});
+            });
+        });
+
+        test('verifyNegativeNumber with string throws', function () {
+            assert.throws(function () {
+                types.verifyNegativeNumber('-1');
+            });
+        });
+
+        test('isNegativeNumber function is defined', function () {
+            assert.isFunction(types.isNegativeNumber);
+        });
+
+        test('isNegativeNumber with positive integer returns false', function () {
+            assert.isFalse(types.isNegativeNumber(1));
+        });
+
+        test('isNegativeNumber with negative integer returns true', function () {
+            assert.isTrue(types.isNegativeNumber(-1));
+        });
+
+        test('isNegativeNumber with positive fraction returns false', function () {
+            assert.isFalse(types.isNegativeNumber(1/2));
+        });
+
+        test('isNegativeNumber with negative fraction returns true', function () {
+            assert.isTrue(types.isNegativeNumber(-1/2));
+        });
+
+        test('isNegativeNumber with positive infinity returns false', function () {
+            assert.isFalse(types.isNegativeNumber(Infinity));
+        });
+
+        test('isNegativeNumber with negative infinity returns true', function () {
+            assert.isTrue(types.isNegativeNumber(-Infinity));
+        });
+
+        test('isNegativeNumber with NaN returns false', function () {
+            assert.isFalse(types.isNegativeNumber(NaN));
+        });
+
+        test('isNegativeNumber with object returns false', function () {
+            assert.isFalse(types.isNegativeNumber({}));
+        });
+
+        test('isNegativeNumber with string returns false', function () {
+            assert.isFalse(types.isNegativeNumber('1'));
+        });
+
         test('verifyNumber function is defined', function () {
             assert.isFunction(types.verifyNumber);
         });
 
-        test('verifyNumber with whole number does not throw', function () {
+        test('verifyNumber with positive integer does not throw', function () {
             assert.doesNotThrow(function () {
                 types.verifyNumber(1);
             });
         });
 
-        test('verifyNumber with decimal number does not throw', function () {
+        test('verifyNumber with negative integer does not throw', function () {
             assert.doesNotThrow(function () {
-                types.verifyNumber(1.2);
+                types.verifyNumber(-1);
             });
         });
 
-        test('verifyNumber with Infinity does not throw', function () {
+        test('verifyNumber with fraction does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyNumber(1/2);
+            });
+        });
+
+        test('verifyNumber with positive infinity does not throw', function () {
             assert.doesNotThrow(function () {
                 types.verifyNumber(Infinity);
+            });
+        });
+
+        test('verifyNumber with negative infinity does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyNumber(-Infinity);
             });
         });
 
@@ -495,27 +771,15 @@
             });
         });
 
-        test('verifyNumber with null throws', function () {
-            assert.throws(function () {
-                types.verifyNumber(null);
-            });
-        });
-
         test('verifyNumber with object throws', function () {
             assert.throws(function () {
                 types.verifyNumber({});
             });
         });
 
-        test('verifyNumber with string zero throws', function () {
+        test('verifyNumber with string throws', function () {
             assert.throws(function () {
-                types.verifyNumber('0');
-            });
-        });
-
-        test('verifyNumber with empty string throws', function () {
-            assert.throws(function () {
-                types.verifyNumber(' x');
+                types.verifyNumber('1');
             });
         });
 
@@ -523,12 +787,16 @@
             assert.isFunction(types.isNumber);
         });
 
-        test('isNumber with whole number returns true', function () {
+        test('isNumber with positive integer returns true', function () {
             assert.isTrue(types.isNumber(1));
         });
 
-        test('isNumber with decimal number returns true', function () {
-            assert.isTrue(types.isNumber(1.2));
+        test('isNumber with negative integer returns true', function () {
+            assert.isTrue(types.isNumber(-1));
+        });
+
+        test('isNumber with fraction returns true', function () {
+            assert.isTrue(types.isNumber(1/2));
         });
 
         test('isNumber with Infinity returns true', function () {
@@ -539,20 +807,12 @@
             assert.isFalse(types.isNumber(NaN));
         });
 
-        test('isNumber with null returns false', function () {
-            assert.isFalse(types.isNumber(null));
-        });
-
         test('isNumber with object returns false', function () {
             assert.isFalse(types.isNumber({}));
         });
 
-        test('isNumber with string zero returns false', function () {
-            assert.isFalse(types.isNumber('0'));
-        });
-
-        test('isNumber with empty string returns false', function () {
-            assert.isFalse(types.isNumber(''));
+        test('isNumber with string returns false', function () {
+            assert.isFalse(types.isNumber('1'));
         });
     });
 }());

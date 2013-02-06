@@ -15,6 +15,8 @@
         isInstance: isInstance,
         verifyObject: verifyObject,
         isObject: isObject,
+        verifyLength: verifyLength,
+        isLength: isLength,
         verifyArray: verifyArray,
         isArray: isArray,
         verifyFunction: verifyFunction,
@@ -23,6 +25,10 @@
         isUnemptyString:isUnemptyString,
         verifyString: verifyString,
         isString: isString,
+        verifyPositiveNumber: verifyPositiveNumber,
+        isPositiveNumber: isPositiveNumber,
+        verifyNegativeNumber: verifyNegativeNumber,
+        isNegativeNumber: isNegativeNumber,
         verifyNumber: verifyNumber,
         isNumber: isNumber
     };
@@ -161,6 +167,39 @@
     }
 
     /**
+     * Public function `verifyLength`.
+     *
+     * Throws an exception unless something is a non-null,
+     * non-array object.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyLength (thing, length, message) {
+        if (isLength(thing, length) === false) {
+            throw new Error(message || 'Invalid length');
+        }
+    }
+
+    /**
+     * Public function `isLength`.
+     *
+     * Returns `true` if something is has a length property
+     * matching the specified value, `false` otherwise.
+     *
+     * @param thing  The thing to test.
+     * @param length The required length to test against.
+     */
+    function isLength (thing, length) {
+        if (thing && thing.length === length) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Public function `verifyArray`.
      *
      * Throws an exception unless something is an array.
@@ -282,6 +321,66 @@
     }
 
     /**
+     * Public function `verifyPositiveNumber`.
+     *
+     * Throws an exception unless something is a positive number.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyPositiveNumber (thing, message) {
+        if (isPositiveNumber(thing) === false) {
+            throw new Error(message || 'Invalid number');
+        }
+    }
+
+    /**
+     * Public function `isPositiveNumber`.
+     *
+     * Returns `true` if something is a positive number, `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isPositiveNumber (thing) {
+        if (isNumber(thing) && thing > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Public function `verifyNegativeNumber`.
+     *
+     * Throws an exception unless something is a positive number.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyNegativeNumber (thing, message) {
+        if (isNegativeNumber(thing) === false) {
+            throw new Error(message || 'Invalid number');
+        }
+    }
+
+    /**
+     * Public function `isNegativeNumber`.
+     *
+     * Returns `true` if something is a positive number, `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isNegativeNumber (thing) {
+        if (isNumber(thing) && thing < 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Public function `verifyNumber`.
      *
      * Throws an exception unless something is a number (also excluding NaN).
@@ -299,16 +398,12 @@
     /**
      * Public function `isNumber`.
      *
-     * Returns `true` if something a number other than NaN, `false` otherwise.
+     * Returns `true` if something is a number other than NaN, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
     function isNumber (thing) {
-        if (isNaN(thing) === true) {
-            return false;
-        }
-
-        if (typeof thing === 'number') {
+        if (typeof thing === 'number' && isNaN(thing) === false) {
             return true;
         }
 
