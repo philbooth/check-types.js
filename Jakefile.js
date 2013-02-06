@@ -7,7 +7,7 @@
     var exec = require('child_process').exec,
 
     commands = {
-        minify: './node_modules/.bin/uglifyjs --no-copyright --lift-vars --output ./src/check-types.min.js ./src/check-types.js',
+        minify: './node_modules/.bin/uglifyjs ./src/check-types.js --compress --output ./src/check-types.min.js',
         test: './node_modules/.bin/mocha --ui tdd --reporter spec --colors --slow 50 ./test/check-types.js',
         lint: './node_modules/.bin/jshint ./src/check-types.js --config config/jshint.json',
         prepare: 'npm install'
