@@ -33,10 +33,10 @@
         isNumber: isNumber
     };
 
-    if (module && module.exports) {
-        module.exports = functions;
-    } else {
+    if (typeof module === 'undefined' || module === null) {
         window.check = functions;
+    } else {
+        module.exports = functions;
     }
 
     /**
@@ -159,11 +159,7 @@
      * @param thing          The thing to test.
      */
     function isObject (thing) {
-        if (typeof thing === 'object' && thing !== null && isArray(thing) === false) {
-            return true;
-        }
-
-        return false;
+        return typeof thing === 'object' && thing !== null && isArray(thing) === false;
     }
 
     /**
@@ -192,11 +188,7 @@
      * @param length The required length to test against.
      */
     function isLength (thing, length) {
-        if (thing && thing.length === length) {
-            return true;
-        }
-
-        return false;
+        return thing && thing.length === length;
     }
 
     /**
@@ -222,11 +214,7 @@
      * @param thing          The thing to test.
      */
     function isArray (thing) {
-        if (Object.prototype.toString.call(thing) === '[object Array]') {
-            return true;
-        }
-
-        return false;
+        return Object.prototype.toString.call(thing) === '[object Array]';
     }
 
     /**
@@ -252,11 +240,7 @@
      * @param thing          The thing to test.
      */
     function isFunction (thing) {
-        if (typeof thing === 'function') {
-            return true;
-        }
-
-        return false;
+        return typeof thing === 'function';
     }
 
     /**
@@ -283,11 +267,7 @@
      * @param thing          The thing to test.
      */
     function isUnemptyString (thing) {
-        if (isString(thing) && thing !== '') {
-            return true;
-        }
-
-        return false;
+        return isString(thing) && thing !== '';
     }
 
     /**
@@ -313,11 +293,7 @@
      * @param thing          The thing to test.
      */
     function isString (thing) {
-        if (typeof thing === 'string') {
-            return true;
-        }
-
-        return false;
+        return typeof thing === 'string';
     }
 
     /**
@@ -338,16 +314,13 @@
     /**
      * Public function `isPositiveNumber`.
      *
-     * Returns `true` if something is a positive number, `false` otherwise.
+     * Returns `true` if something is a positive number,
+     * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
     function isPositiveNumber (thing) {
-        if (isNumber(thing) && thing > 0) {
-            return true;
-        }
-
-        return false;
+        return isNumber(thing) && thing > 0;
     }
 
     /**
@@ -368,22 +341,19 @@
     /**
      * Public function `isNegativeNumber`.
      *
-     * Returns `true` if something is a positive number, `false` otherwise.
+     * Returns `true` if something is a positive number,
+     * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
     function isNegativeNumber (thing) {
-        if (isNumber(thing) && thing < 0) {
-            return true;
-        }
-
-        return false;
+        return isNumber(thing) && thing < 0;
     }
 
     /**
      * Public function `verifyNumber`.
      *
-     * Throws an exception unless something is a number (also excluding NaN).
+     * Throws an exception unless something is a number, excluding NaN.
      *
      * @param thing              The thing to test.
      * @param [message] {string} An optional error message
@@ -398,16 +368,13 @@
     /**
      * Public function `isNumber`.
      *
-     * Returns `true` if something is a number other than NaN, `false` otherwise.
+     * Returns `true` if something is a number other than NaN,
+     * `false` otherwise.
      *
-     * @param thing          The thing to test.
+     * @param thing The thing to test.
      */
     function isNumber (thing) {
-        if (typeof thing === 'number' && isNaN(thing) === false) {
-            return true;
-        }
-
-        return false;
+        return typeof thing === 'number' && isNaN(thing) === false;
     }
 }());
 
