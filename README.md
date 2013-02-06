@@ -37,7 +37,7 @@ var check = require('check-types');
 Or use one of the growing number of package managers, such as
 [Jam][jam],
 [Bower][bower]
-(the package name for both is `check-types`)
+(the package name for both is `check-types.js`)
 or [Component][component] (`philbooth/check-types.js`).
 
 ### Calling the exported functions
