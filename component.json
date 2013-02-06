@@ -1,20 +1,12 @@
 {
     "name": "check-types.js",
-    "version": "0.3.1",
+    "version": "0.4.2",
     "author": "Phil Booth <pmbooth@gmail.com>",
-    "description": "A small JavaScript library for checking types and throwing exceptions.",
+    "description": "A tiny JavaScript library for checking types and throwing exceptions.",
     "contributors": [
-        {
-            "name": "Phil Booth",
-            "email": "pmbooth@gmail.com"
-        },
-        {
-            "name": "Rowan Manning",
-            "email": "info@rowanmanning.co.uk"
-        },
-        {
-            "name": "Forbes Lindesay"
-        }
+        { "name": "Phil Booth", "email": "pmbooth@gmail.com" },
+        { "name": "Rowan Manning", "email": "info@rowanmanning.co.uk" },
+        { "name": "Forbes Lindesay" }
     ],
     "main": "src/check-types.min.js",
     "scripts": [
