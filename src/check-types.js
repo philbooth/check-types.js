@@ -136,6 +136,33 @@
     }
 
     /**
+     * Public function `verifyEmptyObject`.
+     *
+     * Throws an exception unless something is an empty, non-null,
+     * non-array object.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyEmptyObject (thing, message) {
+        if (isEmptyObject(thing) === false) {
+            throw new Error(message || 'Invalid empty object');
+        }
+    }
+
+    /**
+     * Public function `isEmptyObject`.
+     *
+     * Returns `true` if something is an empty, non-null, non-array object, `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isEmptyObject (thing) {
+        return functions.isObject (thing) === true && Object.keys(thing).length === 0;
+    }
+
+    /**
      * Public function `verifyObject`.
      *
      * Throws an exception unless something is a non-null,
@@ -161,17 +188,6 @@
      */
     function isObject (thing) {
         return typeof thing === 'object' && thing !== null && isArray(thing) === false;
-    }
-
-    /**
-     * Public function `isEmptyObject`.
-     *
-     * Returns `true` if something is an object and is {}, `false` otherwise.
-     *
-     * @param thing          The thing to test.
-     */
-    function isEmptyObject (thing) {
-        return functions.isObject (thing) === true && Object.keys(thing).length === 0;
     }
 
     /**
