@@ -68,6 +68,15 @@ Returns `true` if an object is an instance of a prototype,
 
 Throws an exception if an object is not an instance of a prototype.
 
+#### check.isEmptyObject (thing)
+
+Returns `true` if something is a non-empty, non-null, non-array object,
+`false` otherwise.
+
+#### check.verifyEmptyObject (thing, message)
+
+Throws an exception unless something is a non-empty, non-null, non-array object.
+
 #### check.isObject (thing)
 
 Returns `true` if something is a non-null, non-array object,
