@@ -207,6 +207,60 @@
             assert.isFalse(types.isInstance(Object, {}));
         });
 
+        test('verifyEmptyObject function is defined', function () {
+            assert.isFunction(types.verifyEmptyObject);
+        });
+
+        test('verifyEmptyObject with empty object does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyEmptyObject({});
+            });
+        });
+
+        test('verifyEmptyObject with non-empty object throws', function () {
+            assert.throws(function () {
+                types.verifyEmptyObject({ foo: 'bar' });
+            });
+        });
+
+        test('verifyEmptyObject with null throws', function () {
+            assert.throws(function () {
+                types.verifyEmptyObject(null);
+            });
+        });
+
+        test('verifyEmptyObject with string throws', function () {
+            assert.throws(function () {
+                types.verifyEmptyObject('{}');
+            });
+        });
+
+        test('verifyEmptyObject with array throws', function () {
+            assert.throws(function () {
+                types.verifyEmptyObject([]);
+            });
+        });
+
+        test('isEmptyObject function is defined', function () {
+            assert.isFunction(types.isEmptyObject);
+        });
+
+        test('isEmptyObject with empty object returns true', function () {
+            assert.isTrue(types.isEmptyObject({}));
+        });
+
+        test('isEmptyObject with empty array returns false', function () {
+            assert.isFalse(types.isEmptyObject([]));
+        });
+
+        test('isEmptyObject with null returns false', function () {
+            assert.isFalse(types.isEmptyObject(null));
+        });
+
+        test('isEmptyObject with non-empty object returns false', function () {
+            assert.isFalse(types.isEmptyObject({ foo: 'bar' }));
+        });
+
         test('verifyObject function is defined', function () {
             assert.isFunction(types.verifyObject);
         });
@@ -253,26 +307,6 @@
 
         test('isObject with array returns false', function () {
             assert.isFalse(types.isObject([]));
-        });
-
-        test('isEmptyObject function is defined', function () {
-            assert.isFunction(types.isEmptyObject);
-        });
-
-        test('isEmptyObject with {} returns true', function () {
-            assert.isTrue(types.isEmptyObject({}));
-        });
-
-        test('isEmptyObject with [] returns false', function () {
-            assert.isFalse(types.isEmptyObject([]));
-        });
-
-        test('isEmptyObject with null returns false', function () {
-            assert.isFalse(types.isEmptyObject(null));
-        });
-
-        test('isEmptyObject with undefined returns false', function () {
-            assert.isFalse(types.isEmptyObject(undefined));
         });
 
         test('verifyLength function is defined', function () {
