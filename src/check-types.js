@@ -160,7 +160,19 @@
      * @param thing          The thing to test.
      */
     function isEmptyObject (thing) {
-        return functions.isObject (thing) === true && Object.keys(thing).length === 0;
+        var property;
+
+        if (isObject(thing)) {
+            for (property in thing) {
+                if (thing.hasOwnProperty(property)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
