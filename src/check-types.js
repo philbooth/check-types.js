@@ -15,6 +15,7 @@
         isInstance: isInstance,
         verifyObject: verifyObject,
         isObject: isObject,
+        isEmptyObject: isEmptyObject,
         verifyLength: verifyLength,
         isLength: isLength,
         verifyArray: verifyArray,
@@ -160,6 +161,17 @@
      */
     function isObject (thing) {
         return typeof thing === 'object' && thing !== null && isArray(thing) === false;
+    }
+
+    /**
+     * Public function `isEmptyObject`.
+     *
+     * Returns `true` if something is an object and is {}, `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isEmptyObject (thing) {
+        return functions.isObject (thing) === true && Object.keys(thing).length === 0;
     }
 
     /**

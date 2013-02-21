@@ -255,6 +255,26 @@
             assert.isFalse(types.isObject([]));
         });
 
+        test('isEmptyObject function is defined', function () {
+            assert.isFunction(types.isEmptyObject);
+        });
+
+        test('isEmptyObject with {} returns true', function () {
+            assert.isTrue(types.isEmptyObject({}));
+        });
+
+        test('isEmptyObject with [] returns false', function () {
+            assert.isFalse(types.isEmptyObject([]));
+        });
+
+        test('isEmptyObject with null returns false', function () {
+            assert.isFalse(types.isEmptyObject(null));
+        });
+
+        test('isEmptyObject with undefined returns false', function () {
+            assert.isFalse(types.isEmptyObject(undefined));
+        });
+
         test('verifyLength function is defined', function () {
             assert.isFunction(types.verifyLength);
         });
