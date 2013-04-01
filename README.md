@@ -6,39 +6,40 @@ A tiny JavaScript library for checking types and throwing exceptions.
 
 ## Installation
 
-### Node.js
+### Via NPM
 
 ```
 npm install check-types
 ```
 
-### Browser
+### Via Jam
+
+```
+jam install check-types
+```
+
+### Via Git
 
 ```
 git clone git@github.com:philbooth/check-types.js.git
 ```
 
-Or use one of the growing number of package managers, such as
-[Jam][jam],
-[Bower][bower]
-(the package name for both is `check-types`)
-or [Component][component] (`philbooth/check-types.js`).
-
 ## Usage
 
 ### Loading the library
 
-#### Node.js
-
-```
-var check = require('check-types');
-```
-
-#### Browser
-
-```
-<script type="text/javascript" src=".../check-types.js/src/check-types.min.js"></script>
-```
+Both
+CommonJS
+(e.g.
+if you're running on [Node.js][node]
+or in the browser with [Browserify])
+and AMD
+(e.g. if you're using [Require.js][require])
+loading styles are supported.
+If neither system is detected,
+the library defaults to
+exporting it's interface globally
+as `check`.
 
 ### Calling the exported functions
 
@@ -171,7 +172,7 @@ In this instance, `NaN` is not considered a number.
 ### Dependencies
 
 The build environment relies on
-[Node.js][node],
+Node.js,
 [NPM],
 [Jake],
 [JSHint],
@@ -189,10 +190,9 @@ You can run them with the command `npm test` or `jake jstest`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
-[jam]: http://jamjs.org/
-[bower]: https://github.com/twitter/bower
-[component]: https://github.com/component/component
 [node]: http://nodejs.org/
+[browserify]: http://browserify.org/
+[require]: http://requirejs.org/
 [npm]: https://npmjs.org/
 [jake]: https://github.com/mde/jake
 [jshint]: https://github.com/jshint/node-jshint
