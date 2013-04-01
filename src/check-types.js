@@ -3,9 +3,9 @@
  * and throwing exceptions.
  */
 
-/*globals window, module */
+/*globals define, module */
 
-(function () {
+(function (globals) {
     'use strict';
 
     var functions = {
@@ -35,11 +35,7 @@
         isNumber: isNumber
     };
 
-    if (typeof module === 'undefined' || module === null) {
-        window.check = functions;
-    } else {
-        module.exports = functions;
-    }
+    exportFunctions();
 
     /**
      * Public function `verifyQuack`.
@@ -417,5 +413,17 @@
     function isNumber (thing) {
         return typeof thing === 'number' && isNaN(thing) === false;
     }
-}());
+
+    function exportFunctions () {
+        if (typeof define === 'function' && define.amd) {
+            define(function () {
+                return functions;
+            });
+        } else if (typeof module === 'object' || module !== null) {
+            module.exports = functions;
+        } else {
+            window.check = functions;
+        }
+    }
+}(this));
 
