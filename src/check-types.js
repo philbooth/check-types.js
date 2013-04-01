@@ -422,7 +422,7 @@
         } else if (typeof module === 'object' || module !== null) {
             module.exports = functions;
         } else {
-            window.check = functions;
+            globals.check = functions;
         }
     }
 }(this));
