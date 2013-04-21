@@ -14,55 +14,39 @@ commands = {
 
 desc('Minify the source code for deployment.');
 task('minify', function () {
-    runTask(minify, 'Minifying...');
+    runTask('minify', 'Minifying...');
 }, {
     async: true
 });
 
 desc('Run the unit tests.');
 task('test', function () {
-    runTask(test, 'Testing...');
+    runTask('test', 'Testing...');
 }, {
     async: true
 });
 
 desc('Lint the source code.');
 task('lint', function () {
-    runTask(lint, 'Linting...');
+    runTask('lint', 'Linting...');
 }, {
     async: true
 });
 
 desc('Install dependencies.');
 task('prepare', function () {
-    runTask(prepare, 'Preparing the build environment...');
+    runTask('prepare', 'Preparing the build environment...');
 }, {
     async: true
 });
 
-function runTask (operation, message) {
+function runTask (command, message) {
     console.log(message);
-    operation();
-}
-
-function minify () {
-    runCommand(commands.minify);
-}
-
-function test () {
-    runCommand(commands.test);
-}
-
-function lint () {
-    runCommand(commands.lint);
-}
-
-function prepare () {
-    runCommand(commands.prepare);
+    runCommand(command);
 }
 
 function runCommand (command) {
-    exec(command, { cwd: __dirname }, function (error, stdout, stderr) {
+    exec(commands[command], { cwd: __dirname }, function (error, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         if (typeof error === 'object' && error !== null) {
