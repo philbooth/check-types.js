@@ -868,6 +868,86 @@
         test('isNumber with string returns false', function () {
             assert.isFalse(types.isNumber('1'));
         });
+
+        test('isOddNumber with string returns false', function () {
+            assert.isFalse(types.isOddNumber('1'));
+        });
+
+        test('isOddNumber with odd number returns true', function () {
+            assert.isTrue(types.isOddNumber(1));
+        });
+
+        test('isOddNumber with even number returns false', function () {
+            assert.isFalse(types.isOddNumber(2));
+        });
+
+        test('isOddNumber with alternative odd number returns true', function () {
+            assert.isTrue(types.isOddNumber(3));
+        });
+
+        test('isOddNumber with negative odd number returns true', function () {
+            assert.isTrue(types.isOddNumber(-5));
+        });
+
+        test('isOddNumber with negative even number returns false', function () {
+            assert.isFalse(types.isOddNumber(-4));
+        });
+
+        test('isOddNumber with floating point number returns false', function () {
+            assert.isFalse(types.isEvenNumber(3.5));
+        });
+
+        test('verifyOddNumber with odd number does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyOddNumber(-7);
+            });
+        });
+
+        test('verifyOddNumber with even number throws', function () {
+            assert.throws(function () {
+                types.verifyOddNumber(8);
+            });
+        });
+
+        test('isEvenNumber with string returns false', function () {
+            assert.isFalse(types.isEvenNumber('2'));
+        });
+
+        test('isEvenNumber with odd number returns false', function () {
+            assert.isFalse(types.isEvenNumber(1));
+        });
+
+        test('isEvenNumber with even number returns true', function () {
+            assert.isTrue(types.isEvenNumber(2));
+        });
+
+        test('isEvenNumber with alternative even number returns true', function () {
+            assert.isTrue(types.isEvenNumber(4));
+        });
+
+        test('isEvenNumber with negative odd number returns false', function () {
+            assert.isFalse(types.isEvenNumber(-5));
+        });
+
+        test('isEvenNumber with negative even number returns true', function () {
+            assert.isTrue(types.isEvenNumber(-6));
+        });
+
+        test('isEvenNumber with floating point number returns false', function () {
+            assert.isFalse(types.isEvenNumber(2.4));
+        });
+
+        test('verifyEvenNumber with odd number throws', function () {
+            assert.throws(function () {
+                types.verifyEvenNumber(7);
+            });
+        });
+
+        test('verifyEvenNumber with even number does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyEvenNumber(-8);
+            });
+        });
     });
 }());
 

@@ -27,6 +27,10 @@
         isUnemptyString:isUnemptyString,
         verifyString: verifyString,
         isString: isString,
+        verifyEvenNumber: verifyEvenNumber,
+        isEvenNumber: isEvenNumber,
+        verifyOddNumber: verifyOddNumber,
+        isOddNumber: isOddNumber,
         verifyPositiveNumber: verifyPositiveNumber,
         isPositiveNumber: isPositiveNumber,
         verifyNegativeNumber: verifyNegativeNumber,
@@ -331,6 +335,60 @@
      */
     function isString (thing) {
         return typeof thing === 'string';
+    }
+
+    /**
+     * Public function `verifyOddNumber`.
+     *
+     * Throws an exception unless something is an odd number.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyOddNumber (thing, message) {
+        if (isOddNumber(thing) === false) {
+            throw new Error(message || 'Invalid number');
+        }
+    }
+
+    /**
+     * Public function `isOddNumber`.
+     *
+     * Returns `true` if something is an odd number,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isOddNumber (thing) {
+        return isNumber(thing) && (thing % 2 === 1 || thing % 2 === -1);
+    }
+
+    /**
+     * Public function `verifyEvenNumber`.
+     *
+     * Throws an exception unless something is an even number.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyEvenNumber (thing, message) {
+        if (isEvenNumber(thing) === false) {
+            throw new Error(message || 'Invalid number');
+        }
+    }
+
+    /**
+     * Public function `isEvenNumber`.
+     *
+     * Returns `true` if something is an even number,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isEvenNumber (thing) {
+        return isNumber(thing) && thing % 2 === 0;
     }
 
     /**
