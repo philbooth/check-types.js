@@ -38,7 +38,7 @@ and AMD
 loading styles are supported.
 If neither system is detected,
 the library defaults to
-exporting it's interface globally
+exporting its interface globally
 as `check`.
 
 ### Calling the exported functions
