@@ -156,6 +156,24 @@ less than zero,
 Throws an exception unless something is a number
 less than zero.
 
+#### check.isEvenNumber (thing)
+
+Returns `true` if something is an even number,
+`false` otherwise.
+
+#### check.verifyEvenNumber (thing, message)
+
+Throws an exception unless something is an even number.
+
+#### check.isOddNumber (thing)
+
+Returns `true` if something is an even number,
+`false` otherwise.
+
+#### check.verifyOddNumber (thing, message)
+
+Throws an exception unless something is an even number.
+
 #### check.isNumber (thing)
 
 Returns `true` if something is a number,
