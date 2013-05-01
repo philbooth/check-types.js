@@ -178,12 +178,12 @@ Throws an exception unless something is an even number.
 
 Returns `true` if something is a number,
 `false` otherwise.
-In this instance, `NaN` is not considered a number.
+In this case, `NaN` is not considered a number.
 
 #### check.verifyNumber (thing, message)
 
 Throws an exception unless something is a number.
-In this instance, `NaN` is not considered a number.
+In this case, `NaN` is not considered a number.
 
 ## Development
 
@@ -204,7 +204,7 @@ install all of the dependencies as listed in `package.json`.
 ### Unit tests
 
 The unit tests are in `test/check-types.js`.
-You can run them with the command `npm test` or `jake jstest`.
+You can run them with the command `npm test` or `jake test`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
