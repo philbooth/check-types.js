@@ -58,8 +58,12 @@
      *                           to set on the thrown Error.
      */
     function verifyQuack (thing, duck, message) {
-        if (quacksLike(thing, duck) === false) {
-            throw new Error(message || 'Invalid type');
+        verify(quacksLike, [ thing, duck ], message, 'Invalid type');
+    }
+
+    function verify (fn, args, message, defaultMessage) {
+        if (fn.apply(null, args) === false) {
+            throw new Error(message || defaultMessage);
         }
     }
 
@@ -111,9 +115,7 @@
      *                             to set on the thrown Error.
      */
     function verifyInstance (thing, prototype, message) {
-        if (isInstance(thing, prototype) === false) {
-            throw new Error(message || 'Invalid type');
-        }
+        verify(isInstance, [ thing, prototype ], message, 'Invalid type');
     }
 
     /**
@@ -149,9 +151,7 @@
      *                           to set on the thrown Error.
      */
     function verifyEmptyObject (thing, message) {
-        if (isEmptyObject(thing) === false) {
-            throw new Error(message || 'Invalid empty object');
-        }
+        verify(isEmptyObject, [ thing ], message, 'Invalid object');
     }
 
     /**
@@ -188,9 +188,7 @@
      *                           to set on the thrown Error.
      */
     function verifyObject (thing, message) {
-        if (isObject(thing) === false) {
-            throw new Error(message || 'Invalid object');
-        }
+        verify(isObject, [ thing ], message, 'Invalid object');
     }
 
     /**
@@ -216,9 +214,7 @@
      *                           to set on the thrown Error.
      */
     function verifyLength (thing, length, message) {
-        if (isLength(thing, length) === false) {
-            throw new Error(message || 'Invalid length');
-        }
+        verify(isLength, [ thing, length ], message, 'Invalid length');
     }
 
     /**
@@ -244,9 +240,7 @@
      *                           to set on the thrown Error.
      */
     function verifyArray (thing, message) {
-        if (isArray(thing) === false) {
-            throw new Error(message || 'Invalid array');
-        }
+        verify(isArray, [ thing ], message, 'Invalid array');
     }
 
     /**
@@ -274,9 +268,7 @@
      *                           to set on the thrown Error.
      */
     function verifyDate (thing, message) {
-        if (isDate(thing) === false) {
-            throw new Error(message || 'Invalid date');
-        }
+        verify(isDate, [ thing ], message, 'Invalid date');
     }
 
     /**
@@ -300,9 +292,7 @@
      *                           to set on the thrown Error.
      */
     function verifyFunction (thing, message) {
-        if (isFunction(thing) === false) {
-            throw new Error(message || 'Invalid function');
-        }
+        verify(isFunction, [ thing ], message, 'Invalid function');
     }
 
     /**
@@ -326,9 +316,7 @@
      *                           to set on the thrown Error.
      */
     function verifyUnemptyString (thing, message) {
-        if (isUnemptyString(thing) === false) {
-            throw new Error(message || 'Invalid string');
-        }
+        verify(isUnemptyString, [ thing ], message, 'Invalid string');
     }
 
     /**
@@ -353,9 +341,7 @@
      *                           to set on the thrown Error.
      */
     function verifyString (thing, message) {
-        if (isString(thing) === false) {
-            throw new Error(message || 'Invalid string');
-        }
+        verify(isString, [ thing ], message, 'Invalid string');
     }
 
     /**
@@ -379,9 +365,7 @@
      *                           to set on the thrown Error.
      */
     function verifyOddNumber (thing, message) {
-        if (isOddNumber(thing) === false) {
-            throw new Error(message || 'Invalid number');
-        }
+        verify(isOddNumber, [ thing ], message, 'Invalid number');
     }
 
     /**
@@ -406,9 +390,7 @@
      *                           to set on the thrown Error.
      */
     function verifyEvenNumber (thing, message) {
-        if (isEvenNumber(thing) === false) {
-            throw new Error(message || 'Invalid number');
-        }
+        verify(isEvenNumber, [ thing ], message, 'Invalid number');
     }
 
     /**
@@ -433,9 +415,7 @@
      *                           to set on the thrown Error.
      */
     function verifyPositiveNumber (thing, message) {
-        if (isPositiveNumber(thing) === false) {
-            throw new Error(message || 'Invalid number');
-        }
+        verify(isPositiveNumber, [ thing ], message, 'Invalid number');
     }
 
     /**
@@ -460,9 +440,7 @@
      *                           to set on the thrown Error.
      */
     function verifyNegativeNumber (thing, message) {
-        if (isNegativeNumber(thing) === false) {
-            throw new Error(message || 'Invalid number');
-        }
+        verify(isNegativeNumber, [ thing ], message, 'Invalid number');
     }
 
     /**
@@ -487,9 +465,7 @@
      *                           to set on the thrown Error.
      */
     function verifyNumber (thing, message) {
-        if (isNumber(thing) === false) {
-            throw new Error(message || 'Invalid number');
-        }
+        verify(isNumber, [ thing ], message, 'Invalid number');
     }
 
     /**
