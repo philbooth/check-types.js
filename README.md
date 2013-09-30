@@ -6,29 +6,29 @@ A tiny JavaScript library
 for checking types
 and throwing exceptions.
 
-## Why would I want one of those?
+## Why would I want such a thing?
 
 Writing explicit conditions
 in your functions
 for checking arguments
 and throwing exceptions
 is a task that
-becomes tiresome quickly
+swiftly becomes tiresome
 and adds complexity
 to your codebase.
 
-The purpose of `check-types.js`
+The purpose of check-types.js
 is to remove this burden
 from JavaScript application developers
 in an efficient and robust manner.
 
-## How big is it?
+## How tiny is it?
 
-14.3 kb unminified, 2.2 kb minified, 0.8 kb minified + gzipped
+14.3 kb unminified with comments, 2.2 kb minified, 0.8 kb minified + gzipped.
 
 ## How do I install it?
 
-Any of the following:
+Any of the following will do:
 
 ```
 npm install check-types
@@ -44,18 +44,16 @@ git clone git@github.com:philbooth/check-types.js.git
 
 ## How do I use it?
 
-### Loading the library
-
 If you are running in
 [Node.js][node],
 [Browserify]
 or another CommonJS-style
 environment,
 you can `require`
-trier.js like so:
+check-types.js like so:
 
 ```javascript
-var trier = require('trier');
+var check = require('check-types');
 ```
 
 It also the supports
@@ -65,191 +63,147 @@ preferred by [Require.js][require]:
 ```javascript
 require.config({
     paths: {
-        trier: 'trier/src/trier'
+        check: 'check-types.js/src/check-types'
     }
 });
 
-require([ 'trier' ], function (trier) {
+require([ 'check' ], function (check) {
 });
 ```
 
 If you are
-including trier.js
+including check-types.js
 with an HTML `<script>` tag,
 or neither of the above environments
 are detected,
-trier.js will just export its interface globally
-as `trier`.
-
-Both
-CommonJS
-(e.g.
-if you're running on [Node.js][node]
-or in the browser with [Browserify])
-and AMD
-(e.g. if you're using [Require.js][require])
-loading styles are supported.
-If neither system is detected,
-the library defaults to
-exporting its interface globally
+check-types.js will just export its interface globally
 as `check`.
 
-### Calling the exported functions
+Once you have loaded the library
+in your application,
+a whole bunch of functions are available
+to call:
 
-A number of different functions are exported:
+* `check.quacksLike(thing, duck)`:
+  Tests whether an object 'quacks like a duck'.
+  Returns `true`
+  if the first argument has all of the properties
+  of the second, archetypal argument (the 'duck').
+  Returns `false` otherwise.
+  If either argument is not an object,
+  an exception is thrown.
 
-#### check.quacksLike (thing, duck)
+* `check.verifyQuack(thing, duck, message)`:
+  Throws an exception
+  if an object does not 'quack like a duck'.
 
-Tests whether an object 'quacks like a duck'.
-Returns `true`
-if the first argument has all of the properties
-of the second, archetypal argument (the 'duck').
-Returns `false` otherwise.
-If either argument is not an object,
-an exception is thrown.
+* `check.isInstance(thing, prototype)`:
+  Returns `true` if an object is an instance of a prototype,
+  `false` otherwise.
 
-#### check.verifyQuack (thing, duck, message)
+* `check.verifyInstance(thing, prototype, message)`:
+  Throws an exception if an object is not an instance of a prototype.
 
-Throws an exception
-if an object does not 'quack like a duck'.
+* `check.isEmptyObject(thing)`:
+  Returns `true` if something is an empty, non-null, non-array object,
+  `false` otherwise.
 
-#### check.isInstance (thing, prototype)
+* `check.verifyEmptyObject(thing, message)`:
+  Throws an exception unless something is an empty, non-null, non-array object.
 
-Returns `true` if an object is an instance of a prototype,
-`false` otherwise.
+* `check.isObject(thing)`:
+  Returns `true` if something is a non-null, non-array, non-date object,
+  `false` otherwise.
 
-#### check.verifyInstance (thing, prototype, message)
+* `check.verifyObject(thing, message)`:
+  Throws an exception unless something is a non-null, non-array, non-date object.
 
-Throws an exception if an object is not an instance of a prototype.
+* `check.isLength(thing, length)`:
+  Returns `true` if something has a length property
+  that matches the specified length,
+  `false` otherwise.
 
-#### check.isEmptyObject (thing)
+* `check.verifyLength(thing, length, message)`:
+  Throws an exception unless something has a length property
+  matching the specified length.
 
-Returns `true` if something is an empty, non-null, non-array object,
-`false` otherwise.
+* `check.isArray(thing)`:
+  Returns `true` something is an array,
+  `false` otherwise.
 
-#### check.verifyEmptyObject (thing, message)
+* `check.verifyArray(thing, message)`:
+  Throws an exception unless something is an array.
 
-Throws an exception unless something is an empty, non-null, non-array object.
+* `check.isDate(thing)`:
+  Returns `true` something is a date,
+  `false` otherwise.
 
-#### check.isObject (thing)
+* `check.verifyDate(thing, message)`:
+  Throws an exception unless something is a date.
 
-Returns `true` if something is a non-null, non-array, non-date object,
-`false` otherwise.
+* `check.isFunction(thing)`:
+  Returns `true` if something is function,
+  `false` otherwise.
 
-#### check.verifyObject (thing, message)
+* `check.verifyFunction(thing, message)`:
+  Throws an exception unless something is function.
 
-Throws an exception unless something is a non-null, non-array, non-date object.
+* `check.isUnemptyString(thing)`:
+  Returns `true` if something is a non-empty string,
+  `false` otherwise.
 
-#### check.isLength (thing, length)
+* `check.verifyUnemptyString(thing, message)`:
+  Throws an exception unless something is a non-empty string.
 
-Returns `true` if something has a length property
-that matches the specified length,
-`false` otherwise.
+* `check.isString(thing)`:
+  Returns `true` if something is a string,
+  `false` otherwise.
 
-#### check.verifyLength (thing, length, message)
+* `check.verifyString(thing, message)`:
+  Throws an exception unless something is a string.
 
-Throws an exception unless something has a length property
-matching the specified length.
+* `check.isPositiveNumber(thing)`:
+  Returns `true` if something is a number
+  greater than zero,
+  `false` otherwise.
 
-#### check.isArray (thing)
+* `check.verifyPositiveNumber(thing, message)`:
+  Throws an exception unless something is a number
+  greater than zero.
 
-Returns `true` something is an array,
-`false` otherwise.
+* `check.isNegativeNumber(thing)`:
+  Returns `true` if something is a number
+  less than zero,
+  `false` otherwise.
 
-#### check.verifyArray (thing, message)
+* `check.verifyNegativeNumber(thing, message)`:
+  Throws an exception unless something is a number
+  less than zero.
 
-Throws an exception unless something is an array.
+* `check.isEvenNumber(thing)`:
+  Returns `true` if something is an even number,
+  `false` otherwise.
 
-#### check.isDate (thing)
+* `check.verifyEvenNumber(thing, message)`:
+  Throws an exception unless something is an even number.
 
-Returns `true` something is a date,
-`false` otherwise.
+* `check.isOddNumber(thing)`:
+  Returns `true` if something is an even number,
+  `false` otherwise.
 
-#### check.verifyDate (thing, message)
+* `check.verifyOddNumberthing, message)`:
+  Throws an exception unless something is an even number.
 
-Throws an exception unless something is a date.
+* `check.isNumber(thing)`:
+  Returns `true` if something is a number,
+  `false` otherwise.
+  In this case, `NaN` is not considered a number.
 
-#### check.isFunction (thing)
+* `check.verifyNumber(thing, message)`:
+  Throws an exception unless something is a number.
+  In this case, `NaN` is not considered a number.
 
-Returns `true` if something is function,
-`false` otherwise.
-
-#### check.verifyFunction (thing, message)
-
-Throws an exception unless something is function.
-
-#### check.isUnemptyString (thing)
-
-Returns `true` if something is a non-empty string,
-`false` otherwise.
-
-#### check.verifyUnemptyString (thing, message)
-
-Throws an exception unless something is a non-empty string.
-
-#### check.isString (thing)
-
-Returns `true` if something is a string,
-`false` otherwise.
-
-#### check.verifyString (thing, message)
-
-Throws an exception unless something is a string.
-
-#### check.isPositiveNumber (thing)
-
-Returns `true` if something is a number
-greater than zero,
-`false` otherwise.
-
-#### check.verifyPositiveNumber (thing, message)
-
-Throws an exception unless something is a number
-greater than zero.
-
-#### check.isNegativeNumber (thing)
-
-Returns `true` if something is a number
-less than zero,
-`false` otherwise.
-
-#### check.verifyNegativeNumber (thing, message)
-
-Throws an exception unless something is a number
-less than zero.
-
-#### check.isEvenNumber (thing)
-
-Returns `true` if something is an even number,
-`false` otherwise.
-
-#### check.verifyEvenNumber (thing, message)
-
-Throws an exception unless something is an even number.
-
-#### check.isOddNumber (thing)
-
-Returns `true` if something is an even number,
-`false` otherwise.
-
-#### check.verifyOddNumber (thing, message)
-
-Throws an exception unless something is an even number.
-
-#### check.isNumber (thing)
-
-Returns `true` if something is a number,
-`false` otherwise.
-In this case, `NaN` is not considered a number.
-
-#### check.verifyNumber (thing, message)
-
-Throws an exception unless something is a number.
-In this case, `NaN` is not considered a number.
-
-## Development
-
-### Dependencies
+## How do I set up the build environment?
 
 The build environment relies on
 Node.js,
@@ -262,8 +216,6 @@ Node.js,
 Assuming that you already have Node.js and NPM set up,
 you just need to run `npm install` to
 install all of the dependencies as listed in `package.json`.
-
-### Unit tests
 
 The unit tests are in `test/check-types.js`.
 You can run them with the command `npm test` or `jake test`.
