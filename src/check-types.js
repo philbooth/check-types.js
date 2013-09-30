@@ -21,6 +21,8 @@
         isLength: isLength,
         verifyArray: verifyArray,
         isArray: isArray,
+        verifyDate: verifyDate,
+        isDate: isDate,
         verifyFunction: verifyFunction,
         isFunction: isFunction,
         verifyUnemptyString: verifyUnemptyString,
@@ -260,6 +262,32 @@
         }
 
         return Object.prototype.toString.call(thing) === '[object Array]';
+    }
+
+    /**
+     * Public function `verifyDate`.
+     *
+     * Throws an exception unless something is a date.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyDate (thing, message) {
+        if (isDate(thing) === false) {
+            throw new Error(message || 'Invalid date');
+        }
+    }
+
+    /**
+     * Public function `isDate`.
+     *
+     * Returns `true` something is a date, `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isDate (thing) {
+        return Object.prototype.toString.call(thing) === '[object Date]';
     }
 
     /**

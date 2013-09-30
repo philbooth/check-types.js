@@ -425,6 +425,44 @@
             assert.isFalse(types.isArray({}));
         });
 
+        test('verifyDate function is defined', function () {
+            assert.isFunction(types.verifyDate);
+        });
+
+        test('verifyDate with date does not throw', function () {
+            assert.doesNotThrow(function () {
+                types.verifyDate(new Date());
+            });
+        });
+
+        test('verifyDate with object throws', function () {
+            assert.throws(function () {
+                types.verifyDate({});
+            });
+        });
+
+        test('verifyDate with string throws', function () {
+            assert.throws(function () {
+                types.verifyDate('new Date()');
+            });
+        });
+
+        test('isDate function is defined', function () {
+            assert.isFunction(types.isDate);
+        });
+
+        test('isDate with date returns true', function () {
+            assert.isTrue(types.isDate(new Date()));
+        });
+
+        test('isDate with object returns false', function () {
+            assert.isFalse(types.isDate({}));
+        });
+
+        test('isDate with string returns false', function () {
+            assert.isFalse(types.isDate('new Date()'));
+        });
+
         test('verifyFunction function is defined', function () {
             assert.isFunction(types.verifyFunction);
         });
