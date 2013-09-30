@@ -181,7 +181,7 @@
      * Public function `verifyObject`.
      *
      * Throws an exception unless something is a non-null,
-     * non-array object.
+     * non-array, non-date object.
      *
      * @param thing              The thing to test.
      * @param [message] {string} An optional error message
@@ -196,8 +196,8 @@
     /**
      * Public function `isObject`.
      *
-     * Returns `true` if something is a non-null, non-array
-     * object, `false` otherwise.
+     * Returns `true` if something is a non-null, non-array,
+     * non-date object, `false` otherwise.
      *
      * @param thing          The thing to test.
      */

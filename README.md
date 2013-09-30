@@ -80,12 +80,12 @@ Throws an exception unless something is an empty, non-null, non-array object.
 
 #### check.isObject (thing)
 
-Returns `true` if something is a non-null, non-array object,
+Returns `true` if something is a non-null, non-array, non-date object,
 `false` otherwise.
 
 #### check.verifyObject (thing, message)
 
-Throws an exception unless something is a non-null, non-array object.
+Throws an exception unless something is a non-null, non-array, non-date object.
 
 #### check.isLength (thing, length)
 
@@ -106,6 +106,15 @@ Returns `true` something is an array,
 #### check.verifyArray (thing, message)
 
 Throws an exception unless something is an array.
+
+#### check.isDate (thing)
+
+Returns `true` something is a date,
+`false` otherwise.
+
+#### check.verifyDate (thing, message)
+
+Throws an exception unless something is a date.
 
 #### check.isFunction (thing)
 
