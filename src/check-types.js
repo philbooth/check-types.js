@@ -202,7 +202,7 @@
      * @param thing          The thing to test.
      */
     function isObject (thing) {
-        return typeof thing === 'object' && thing !== null && isArray(thing) === false;
+        return typeof thing === 'object' && thing !== null && isArray(thing) === false && isDate(thing) === false;
     }
 
     /**

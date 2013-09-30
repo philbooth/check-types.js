@@ -289,6 +289,12 @@
             });
         });
 
+        test('verifyObject with date throws', function () {
+            assert.throws(function () {
+                types.verifyObject(new Date());
+            });
+        });
+
         test('isObject function is defined', function () {
             assert.isFunction(types.isObject);
         });
@@ -307,6 +313,10 @@
 
         test('isObject with array returns false', function () {
             assert.isFalse(types.isObject([]));
+        });
+
+        test('isObject with date returns false', function () {
+            assert.isFalse(types.isObject(new Date()));
         });
 
         test('verifyLength function is defined', function () {
