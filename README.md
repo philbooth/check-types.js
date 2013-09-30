@@ -2,31 +2,84 @@
 
 [![Build status][ci-image]][ci-status]
 
-A tiny JavaScript library for checking types and throwing exceptions.
+A tiny JavaScript library
+for checking types
+and throwing exceptions.
 
-## Installation
+## Why would I want one of those?
 
-### Via NPM
+Writing explicit conditions
+in your functions
+for checking arguments
+and throwing exceptions
+is a task that
+becomes tiresome quickly
+and adds complexity
+to your codebase.
+
+The purpose of `check-types.js`
+is to remove this burden
+from JavaScript application developers
+in an efficient and robust manner.
+
+## How big is it?
+
+14.3 kb unminified, 2.2 kb minified, 0.8 kb minified + gzipped
+
+## How do I install it?
+
+Any of the following:
 
 ```
 npm install check-types
-```
 
-### Via Jam
-
-```
 jam install check-types
-```
 
-### Via Git
+bower install check-types
 
-```
+component install philbooth/check-types.js
+
 git clone git@github.com:philbooth/check-types.js.git
 ```
 
-## Usage
+## How do I use it?
 
 ### Loading the library
+
+If you are running in
+[Node.js][node],
+[Browserify]
+or another CommonJS-style
+environment,
+you can `require`
+trier.js like so:
+
+```javascript
+var trier = require('trier');
+```
+
+It also the supports
+the AMD-style format
+preferred by [Require.js][require]:
+
+```javascript
+require.config({
+    paths: {
+        trier: 'trier/src/trier'
+    }
+});
+
+require([ 'trier' ], function (trier) {
+});
+```
+
+If you are
+including trier.js
+with an HTML `<script>` tag,
+or neither of the above environments
+are detected,
+trier.js will just export its interface globally
+as `trier`.
 
 Both
 CommonJS
