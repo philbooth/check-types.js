@@ -255,6 +255,10 @@
      * @param thing          The thing to test.
      */
     function isArray (thing) {
+        if (Array.isArray) {
+            return Array.isArray(thing);
+        }
+
         return Object.prototype.toString.call(thing) === '[object Array]';
     }
 
