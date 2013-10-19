@@ -997,13 +997,13 @@
             });
         });
 
-        test('map with null object throws', function() {
+        test('map with invalid object throws', function() {
             assert.throws(function () {
                 types.map(null, { foo: types.isString });
             });
         });
 
-        test('map with null predicates throws', function() {
+        test('map with invalid predicates throws', function() {
             assert.throws(function() {
                 types.map({ foo: 'test' }, null);
             });
@@ -1025,6 +1025,12 @@
         test('map with unmatched predicates returns undefined for property', function() {
             var result = types.map({ bar: 33 }, { foo: types.isString });
             assert.deepEqual(result, { foo: undefined });
+        });
+
+        test('map with nested objects and predicates returns the predicates results', function() {
+            var result = types.map({ foo: { bar: 20 } },
+                                   { foo: { bar: types.isEvenNumber } });
+            assert.deepEqual(result, { foo: { bar: true } });
         });
     });
 }());

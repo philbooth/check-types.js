@@ -512,9 +512,19 @@
 
         for (property in predicates) {
             if (predicates.hasOwnProperty(property)) {
-                result[property] = thing.hasOwnProperty(property) ?
-                    predicates[property](thing[property]) :
-                    undefined;
+                var predicate = predicates[property];
+
+                if (isFunction(predicate)) {
+                    result[property] = thing.hasOwnProperty(property) ?
+                        predicate(thing[property]) :
+                        undefined;
+                }
+
+                else if (isObject(predicate)) {
+                    result[property] = thing.hasOwnProperty(property) ?
+                        map(thing[property], predicate) :
+                        undefined;
+                }
             }
         }
         return result;
