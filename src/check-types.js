@@ -38,7 +38,8 @@
         verifyNegativeNumber: verifyNegativeNumber,
         isNegativeNumber: isNegativeNumber,
         verifyNumber: verifyNumber,
-        isNumber: isNumber
+        isNumber: isNumber,
+        map: map
     };
 
     exportFunctions();
@@ -491,5 +492,9 @@
             globals.check = functions;
         }
     }
-}(this));
 
+    function map (obj, predicates) {
+        verifyObject(obj);
+        verifyObject(predicates);
+    }
+}(this));

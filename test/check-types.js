@@ -996,6 +996,23 @@
                 types.verifyEvenNumber(-8);
             });
         });
+
+        test('map with null object throws', function() {
+            assert.throws(function () {
+                types.map(null, { foo: types.isString });
+            });
+        });
+
+        test('map with null predicates throws', function() {
+            assert.throws(function() {
+                types.map({ foo: 'test' }, null);
+            });
+        });
+
+        test('map with valid object and predicates does not throw', function() {
+            assert.doesNotThrow(function() {
+                types.map({ foo: 'test' }, { foo: types.isString });
+            });
+        });
     });
 }());
-
