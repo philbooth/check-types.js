@@ -510,21 +510,17 @@
     function map (thing, predicates) {
         var property,
             result = {};
-
         verifyObject(thing);
         verifyObject(predicates);
 
         for (property in predicates) {
             if (predicates.hasOwnProperty(property)) {
                 var predicate = predicates[property];
-
                 if (isFunction(predicate)) {
                     result[property] = thing.hasOwnProperty(property) ?
                         predicate(thing[property]) :
                         undefined;
-                }
-
-                else if (isObject(predicate)) {
+                } else if (isObject(predicate)) {
                     result[property] = thing.hasOwnProperty(property) ?
                         map(thing[property], predicate) :
                         undefined;
@@ -543,23 +539,18 @@
      */
     function every (mappedPredicates) {
         var property;
-
         verifyObject(mappedPredicates);
 
         for (property in mappedPredicates) {
             if (mappedPredicates.hasOwnProperty(property)) {
                 var value = mappedPredicates[property];
-
                 if (isObject(value) && !every(value)) {
                     return false;
-                }
-
-                else if (!value) {
+                } else if (!value) {
                     return false;
                 }
             }
         }
-
         return true;
     }
 
@@ -572,23 +563,18 @@
      */
     function any (mappedPredicates) {
         var property;
-
         verifyObject(mappedPredicates);
 
         for (property in mappedPredicates) {
             if (mappedPredicates.hasOwnProperty(property)) {
                 var value = mappedPredicates[property];
-
                 if (isObject(value) && any(value)) {
                     return true;
-                }
-
-                else if (value === true) {
+                } else if (value === true) {
                     return true;
                 }
             }
         }
-
         return false;
     }
 }(this));
