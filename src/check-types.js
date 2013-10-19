@@ -493,6 +493,16 @@
         }
     }
 
+    /**
+     * Public function `map`.
+     *
+     * Returns the result of mapping each predicate to the corresponding
+     * object's property.
+     *
+     * @param thing The thing to test.
+     * @param predicates The associative array of predicates to test
+     *                   against each of thing's corresponding property.
+     */
     function map (thing, predicates) {
         var property,
             result = {};
