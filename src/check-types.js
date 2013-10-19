@@ -497,7 +497,9 @@
      * Public function `map`.
      *
      * Returns the result of mapping each predicate to the corresponding
-     * object's property.
+     * object's property. Similar to `quacksLike` but takes a schema of
+     * predicate functions instead of a *duck* and returns the result of
+     * each predicate instead of a boolean.
      *
      * @param thing The thing to test.
      * @param predicates The associative array of predicates to test
