@@ -493,8 +493,20 @@
         }
     }
 
-    function map (obj, predicates) {
-        verifyObject(obj);
+    function map (thing, predicates) {
+        var property,
+            result = {};
+
+        verifyObject(thing);
         verifyObject(predicates);
+
+        for (property in predicates) {
+            if (predicates.hasOwnProperty(property)) {
+                result[property] = thing.hasOwnProperty(property) ?
+                    predicates[property](thing[property]) :
+                    undefined;
+            }
+        }
+        return result;
     }
 }(this));

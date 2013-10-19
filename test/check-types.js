@@ -1014,5 +1014,17 @@
                 types.map({ foo: 'test' }, { foo: types.isString });
             });
         });
+
+        test('map with valid object and predicates returns the predicates results', function() {
+            var result = types.map({ foo: 'test', bar: 33 },
+                                   { foo: types.isString,
+                                     bar: types.isEvenNumber });
+            assert.deepEqual(result, { foo: true, bar: false });
+        });
+
+        test('map with unmatched predicates returns undefined for property', function() {
+            var result = types.map({ bar: 33 }, { foo: types.isString });
+            assert.deepEqual(result, { foo: undefined });
+        });
     });
 }());
