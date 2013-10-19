@@ -1033,6 +1033,21 @@
             assert.deepEqual(result, { foo: { bar: true } });
         });
 
+        test('map with verifier functions does not throw when valid', function() {
+            assert.doesNotThrow(function() {
+                types.map({ foo: 'bar', baz: 123 },
+                          { foo: types.verifyString,
+                            baz: types.verifyNumber });
+            });
+        });
+
+        test('map with verifier functions throws when invalid', function() {
+            assert.throws(function() {
+                types.map({ foo: 'bar', baz: 123 },
+                          { foo: types.verifyNumber });
+            });
+        });
+
         test('every with invalid object throws', function() {
             assert.throws(function() {
                 types.every(null);
