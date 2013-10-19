@@ -40,7 +40,8 @@
         verifyNumber: verifyNumber,
         isNumber: isNumber,
         map: map,
-        every: every
+        every: every,
+        any: any
     };
 
     exportFunctions();
@@ -536,7 +537,7 @@
     /**
      * Public function `every`
      *
-     * Returns the conjunction of all predicates results.
+     * Returns the conjunction of all booleans in a hash.
      *
      * @param mappedPredicates The hash of evaluated predicates
      */
@@ -560,5 +561,34 @@
         }
 
         return true;
+    }
+
+    /**
+     * Public function `any`
+     *
+     * Returns the disjunction of all booleans in a hash.
+     *
+     * @param mappedPredicates The has of evaluated predicates
+     */
+    function any (mappedPredicates) {
+        var property;
+
+        verifyObject(mappedPredicates);
+
+        for (property in mappedPredicates) {
+            if (mappedPredicates.hasOwnProperty(property)) {
+                var value = mappedPredicates[property];
+
+                if (isObject(value) && any(value)) {
+                    return true;
+                }
+
+                else if (value === true) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }(this));

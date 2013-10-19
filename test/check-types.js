@@ -1039,15 +1039,43 @@
             });
         });
 
-        test('every with valid object evaluates the conjunction of all booleans', function() {
+
+        test('every with valid object does not throw', function() {
+            assert.doesNotThrow(function() {
+                types.every({ foo: true });
+            });
+        });
+
+        test('every with valid object evaluates the conjunction of all values', function() {
             assert.isTrue(types.every({ foo: true, bar: true, baz: true }));
             assert.isFalse(types.every({ foo: true, bar: true, baz: false }));
         });
 
-        test('every with nested objects evaluates the conjunction of all booleans', function() {
+        test('every with nested objects evaluates the conjunction of all values', function() {
             assert.isTrue(types.every({ foo: true, bar: { baz: true } }));
             assert.isFalse(types.every({ foo: { bar : { baz : false }, bat: true } }));
         });
 
+        test('any with invalid object throws', function() {
+            assert.throws(function() {
+                types.any(null);
+            });
+        });
+
+        test('any with valid object does not throw', function() {
+            assert.doesNotThrow(function() {
+                types.any({ foo: true });
+            });
+        });
+
+        test('any with valid object evaluates the disjunction of all values', function() {
+            assert.isTrue(types.any({ foo: false, bar: true, baz: false }));
+            assert.isFalse(types.any({ foo: false, bar: false }));
+        });
+
+        test('any with nested objects evaluates the disjunction of all values', function() {
+            assert.isTrue(types.any({ foo: { bar: false, baz: true }, bat: false }));
+            assert.isFalse(types.any({ foo: { bar: false, baz: false }, bat: false }));
+        });
     });
 }());
