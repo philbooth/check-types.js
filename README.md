@@ -226,7 +226,7 @@ to call:
                                 bar: check.isString })); // true
 
 * `check.any(evaluatedPredicates)`:
-  Returns `true` if at least on value of `evaluatedPredicates` is `true`, `false` otherwise.
+  Returns `true` if at least one value of `evaluatedPredicates` is `true`, `false` otherwise.
 
 
 ## How do I set up the build environment?
