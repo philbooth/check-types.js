@@ -208,12 +208,12 @@ to call:
   the hash of results. Similar to `quacksLike` but uses predicate functions
   instead of values. It supports nested objects.
 
-  ex:
+  example:
 
-      var result = check.map({ foo: 42, bar: { baz: 'cookie monster' } },
-                             { foo: check.isOddNumber,
-                               bar: { baz: check.isString} });
-      console.log(result); // { foo: false, bar: { baz: true } }
+        var result = check.map({ foo: 42, bar: { baz: 'cookie monster' } },
+                               { foo: check.isOddNumber,
+                                 bar: { baz: check.isString} });
+        console.log(result); // { foo: false, bar: { baz: true } }
 
 
 * `check.every(evaluatedPredicates)`:
@@ -221,9 +221,9 @@ to call:
 
   ex:
 
-      check.every(check.map({ foo: 42, bar: 'baz' },
-                            { foo: check.isNumber,
-                              bar: check.isString })); // true
+        check.every(check.map({ foo: 42, bar: 'baz' },
+                              { foo: check.isNumber,
+                                bar: check.isString })); // true
 
 * `check.any(evaluatedPredicates)`:
   Returns `true` if at least on value of `evaluatedPredicates` is `true`, `false` otherwise.
