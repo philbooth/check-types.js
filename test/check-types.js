@@ -1032,5 +1032,22 @@
                                    { foo: { bar: types.isEvenNumber } });
             assert.deepEqual(result, { foo: { bar: true } });
         });
+
+        test('every with invalid object throws', function() {
+            assert.throws(function() {
+                types.every(null);
+            });
+        });
+
+        test('every with valid object evaluates the conjunction of all booleans', function() {
+            assert.isTrue(types.every({ foo: true, bar: true, baz: true }));
+            assert.isFalse(types.every({ foo: true, bar: true, baz: false }));
+        });
+
+        test('every with nested objects evaluates the conjunction of all booleans', function() {
+            assert.isTrue(types.every({ foo: true, bar: { baz: true } }));
+            assert.isFalse(types.every({ foo: { bar : { baz : false }, bat: true } }));
+        });
+
     });
 }());

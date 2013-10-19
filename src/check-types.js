@@ -39,7 +39,8 @@
         isNegativeNumber: isNegativeNumber,
         verifyNumber: verifyNumber,
         isNumber: isNumber,
-        map: map
+        map: map,
+        every: every
     };
 
     exportFunctions();
@@ -530,5 +531,34 @@
             }
         }
         return result;
+    }
+
+    /**
+     * Public function `every`
+     *
+     * Returns the conjunction of all predicates results.
+     *
+     * @param mappedPredicates The hash of evaluated predicates
+     */
+    function every (mappedPredicates) {
+        var property;
+
+        verifyObject(mappedPredicates);
+
+        for (property in mappedPredicates) {
+            if (mappedPredicates.hasOwnProperty(property)) {
+                var value = mappedPredicates[property];
+
+                if (isObject(value) && !every(value)) {
+                    return false;
+                }
+
+                else if (!value) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }(this));
