@@ -19,14 +19,15 @@
         "parameters"
     ],
     "devDependencies": {
-        "jake": "0.7.x",
-        "jshint": "2.1.x",
+        "jshint": "2.2.x",
         "mocha": "1.13.x",
         "chai": "1.8.x",
         "uglify-js": "2.4.x"
     },
     "scripts": {
-        "test": "jake test"
+        "lint": "./node_modules/.bin/jshint ./src/check-types.js --config config/jshint.json",
+        "test": "./node_modules/.bin/mocha --ui tdd --reporter spec --colors ./test/check-types.js",
+        "minify": "./node_modules/.bin/uglifyjs ./src/check-types.js --compress --mangle --output ./src/check-types.min.js"
     }
 }
 
