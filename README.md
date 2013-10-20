@@ -208,6 +208,11 @@ to call:
 * `check.verifyString(thing, message)`:
   Throws an exception unless something is a string.
 
+* `check.isLength(thing, length)`:
+  Returns `true` if something has a length property
+  that matches the specified length,
+  `false` otherwise.
+
 
 ### Numbers
 
