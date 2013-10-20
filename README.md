@@ -120,7 +120,7 @@ to call:
 * `check.verifyObject(thing, message)`:
   Throws an exception unless something is a non-null, non-array, non-date object.
 
-* `check.map(things, predicates)`:
+* `check.map(thing, predicates)`:
   Maps each predicate function to the corresponding value of `thing`
   returning the hash of results.
   Similar to `quacksLike`
