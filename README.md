@@ -84,7 +84,7 @@ in your application,
 a whole bunch of functions are available
 to call:
 
-### Objects
+### Object functions
 
 * `check.quacksLike(thing, duck)`:
   Tests whether an object 'quacks like a duck'.
@@ -156,7 +156,7 @@ to call:
                       { foo: check.isNumber, bar: check.isUnemptyString }));
   ```
 
-### Arrays
+### Array functions
 
 * `check.isLength(thing, length)`:
   Returns `true` if something has a length property
@@ -175,7 +175,7 @@ to call:
   Throws an exception unless something is an array.
 
 
-### Dates
+### Date functions
 
 * `check.isDate(thing)`:
   Returns `true` something is a date,
@@ -193,7 +193,7 @@ to call:
 * `check.verifyFunction(thing, message)`:
   Throws an exception unless something is function.
 
-### Strings
+### String functions
 
 * `check.isUnemptyString(thing)`:
   Returns `true` if something is a non-empty string,
@@ -215,7 +215,7 @@ to call:
   `false` otherwise.
 
 
-### Numbers
+### Number functions
 
 * `check.isPositiveNumber(thing)`:
   Returns `true` if something is a number
@@ -258,19 +258,18 @@ to call:
   Throws an exception unless something is a number.
   In this case, `NaN` is not considered a number.
 
-
 ### Modifiers
 
-* `check.maybe.<predicate>(thing)`
+* `check.maybe.<predicate>(thing)`:
   Acts *exactly* like the predicate it precedes if `thing` is defined.
   If `thing` is not defined, returns `true`.
 
-  e.g.: The value might not be there, but if it is, it has to pass the
-  predicate.
+  e.g.:
   ```javascript
-  //Returns true
+  // Returns true
   check.maybe.isNumber(undefined);
   ```
+
 ## How do I set up the build environment?
 
 The build environment relies on
@@ -299,3 +298,4 @@ open `test/check-types.html`.
 [mocha]: http://visionmedia.github.com/mocha
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
+
