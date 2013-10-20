@@ -1099,6 +1099,39 @@
             assert.isTrue(types.any({ foo: { bar: false, baz: true }, bat: false }));
             assert.isFalse(types.any({ foo: { bar: false, baz: false }, bat: false }));
         });
+
+        test('maybe.* modifier is applied on every method', function() {
+            assert.isObject(types.maybe);
+            assert.equal(Object.keys(types).length - 1, Object.keys(types.maybe).length);
+        });
+
+        test('maybe with <is*> predicate returns true on undefined', function() {
+            assert.isTrue(types.maybe.isString(undefined));
+        });
+
+        test('maybe with <is*> predicate returns predicate result on value', function() {
+            assert.isFalse(types.maybe.isOddNumber(34));
+            assert.isTrue(types.maybe.isOddNumber(33));
+        });
+
+        test('maybe with <verify*> thrower does not throw on undefined', function() {
+            assert.doesNotThrow(function() {
+                types.maybe.verifyPositiveNumber(undefined);
+            });
+        });
+
+        test('maybe with <verify*> thrower acts like thrower on value', function() {
+            assert.throws(function() {
+                types.maybe.verifyPositiveNumber(-44);
+            });
+            assert.doesNotThrow(function() {
+                types.maybe.verifyString('string');
+            });
+        });
+
+        test('maybe predicate with falsy values evaluates predicate', function() {
+            assert.isFalse(types.maybe.isPositiveNumber(0));
+            assert.isFalse(types.maybe.isLength([], 2));
+        });
     });
 }(typeof require === 'function' ? require : undefined));
-

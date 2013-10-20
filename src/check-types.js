@@ -44,6 +44,7 @@
         any: any
     };
 
+    wrapMaybeFunctions();
     exportFunctions();
 
     /**
@@ -576,5 +577,29 @@
         }
         return false;
     }
-}(this));
 
+    // Higher order function to generate a `maybe.predicate`
+    function maybe (predicate) {
+        return function() {
+            return arguments[0] === null || arguments[0] === undefined ?
+                true :
+                predicate.apply(null, arguments);
+        };
+    }
+
+    // Generates all verifiers and predicates wrapped with the `maybe`
+    // modifier.
+    function wrapMaybeFunctions () {
+        var property, func;
+        functions.maybe = {};
+
+        for (property in functions) {
+            if (functions.hasOwnProperty(property)) {
+                func = functions[property];
+                functions.maybe[property] = maybe(func);
+            }
+        }
+        // This one would be useless.
+        delete functions.maybe.maybe;
+    }
+}(this));
