@@ -174,11 +174,12 @@ to call:
 * `check.verifyArray(thing, message)`:
   Throws an exception unless something is an array.
 
+
+### Dates
+
 * `check.isDate(thing)`:
   Returns `true` something is a date,
   `false` otherwise.
-
-### Dates
 
 * `check.verifyDate(thing, message)`:
   Throws an exception unless something is a date.
