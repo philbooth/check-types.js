@@ -24,7 +24,7 @@ in an efficient and robust manner.
 
 ## How tiny is it?
 
-17 kb unminified with comments, 2.7 kb minified, 1 kb minified + gzipped.
+17.7 kb unminified with comments, 2.9 kb minified, 1 kb minified + gzipped.
 
 ## How do I install it?
 
