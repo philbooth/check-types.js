@@ -508,14 +508,13 @@
      *                   against each of thing's corresponding property.
      */
     function map (thing, predicates) {
-        var property,
-            result = {};
+        var property, result = {}, predicate;
         verifyObject(thing);
         verifyObject(predicates);
 
         for (property in predicates) {
             if (predicates.hasOwnProperty(property)) {
-                var predicate = predicates[property];
+                predicate = predicates[property];
                 if (isFunction(predicate)) {
                     result[property] = thing.hasOwnProperty(property) ?
                         predicate(thing[property]) :
@@ -538,12 +537,12 @@
      * @param mappedPredicates The hash of evaluated predicates
      */
     function every (mappedPredicates) {
-        var property;
+        var property, value;
         verifyObject(mappedPredicates);
 
         for (property in mappedPredicates) {
             if (mappedPredicates.hasOwnProperty(property)) {
-                var value = mappedPredicates[property];
+                value = mappedPredicates[property];
                 if (isObject(value) && !every(value)) {
                     return false;
                 } else if (!value) {
@@ -562,12 +561,12 @@
      * @param mappedPredicates The has of evaluated predicates
      */
     function any (mappedPredicates) {
-        var property;
+        var property, value;
         verifyObject(mappedPredicates);
 
         for (property in mappedPredicates) {
             if (mappedPredicates.hasOwnProperty(property)) {
-                var value = mappedPredicates[property];
+                value = mappedPredicates[property];
                 if (isObject(value) && any(value)) {
                     return true;
                 } else if (value === true) {
@@ -578,3 +577,4 @@
         return false;
     }
 }(this));
+

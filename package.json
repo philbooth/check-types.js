@@ -1,18 +1,15 @@
 {
     "name": "check-types",
-    "version": "0.6.5",
-    "author": "Phil Booth <pmbooth@gmail.com>",
+    "version": "0.7.0",
     "description": "A tiny library for checking types and throwing exceptions.",
-    "contributors": [
-        { "name": "Phil Booth", "email": "pmbooth@gmail.com" },
-        { "name": "Rowan Manning" },
-        { "name": "Forbes Lindesay" },
-        { "name": "Fabrizio Moscon" }
-    ],
+    "homepage": "https://github.com/philbooth/check-types.js",
+    "bugs": "https://github.com/philbooth/check-types.js/issues",
+    "license": "MIT",
+    "author": "Phil Booth <pmbooth@gmail.com> (https://github.com/philbooth)",
     "main": "./src/check-types.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/philbooth/check-types.js"
+        "url": "https://github.com/philbooth/check-types.js.git"
     },
     "keywords": [
         "types",
@@ -22,15 +19,15 @@
         "parameters"
     ],
     "devDependencies": {
-        "jake": "0.7.x",
-        "jshint": "2.1.x",
+        "jshint": "2.2.x",
         "mocha": "1.13.x",
         "chai": "1.8.x",
         "uglify-js": "2.4.x"
     },
-    "license": "MIT",
     "scripts": {
-        "test": "jake test"
+        "lint": "./node_modules/.bin/jshint ./src/check-types.js --config config/jshint.json",
+        "test": "./node_modules/.bin/mocha --ui tdd --reporter spec --colors ./test/check-types.js",
+        "minify": "./node_modules/.bin/uglifyjs ./src/check-types.js --compress --mangle --output ./src/check-types.min.js"
     }
 }
 

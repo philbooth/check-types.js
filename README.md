@@ -24,7 +24,7 @@ in an efficient and robust manner.
 
 ## How tiny is it?
 
-14.3 kb unminified with comments, 2.2 kb minified, 0.8 kb minified + gzipped.
+17 kb unminified with comments, 2.7 kb minified, 1 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -203,38 +203,47 @@ to call:
   Throws an exception unless something is a number.
   In this case, `NaN` is not considered a number.
 
-* `check.map(thing, predicates)`:
-  Maps the predicate functions to each corresponding value of `thing` and returns
-  the hash of results. Similar to `quacksLike` but uses predicate functions
-  instead of values. It supports nested objects.
+* `check.map(things, predicates)`:
+  Maps each predicate function to the corresponding value of `thing`
+  returning the hash of results.
+  Similar to `quacksLike`
+  but using predicate functions instead of values.
+  It supports nested objects.
 
-  example:
-
-        var result = check.map({ foo: 42, bar: { baz: 'cookie monster' } },
-                               { foo: check.isOddNumber,
-                                 bar: { baz: check.isString} });
-        console.log(result); // { foo: false, bar: { baz: true } }
-
+  e.g.:
+  ```javascript
+  var result = check.map({ foo: 42, bar: { baz: 'cookie monster' } },
+                         { foo: check.isOddNumber, bar: { baz: check.isString} });
+  console.log(result); // { foo: false, bar: { baz: true } }
+  ```
 
 * `check.every(evaluatedPredicates)`:
-  Returns `true` if all values of `evaluatedPredicates` are `true`, `false` otherwise.
+  Returns `true` if all values of `evaluatedPredicates` are `true`,
+  `false` otherwise.
 
-  ex:
-
-        check.every(check.map({ foo: 42, bar: 'baz' },
-                              { foo: check.isNumber,
-                                bar: check.isString })); // true
+  e.g.:
+  ```javascript
+  // Returns false
+  check.every(check.map({ foo: 0, bar: '' },
+                        { foo: check.isNumber, bar: check.isUnemptyString }));
+  ```
 
 * `check.any(evaluatedPredicates)`:
-  Returns `true` if at least one value of `evaluatedPredicates` is `true`, `false` otherwise.
+  Returns `true` if at least one value of `evaluatedPredicates` is `true`,
+  `false` otherwise.
 
+  e.g.:
+  ```javascript
+  // Returns true
+  check.any(check.map({ foo: 0, bar: '' },
+                      { foo: check.isNumber, bar: check.isUnemptyString }));
+  ```
 
 ## How do I set up the build environment?
 
 The build environment relies on
 Node.js,
 [NPM],
-[Jake],
 [JSHint],
 [Mocha],
 [Chai] and
@@ -244,7 +253,7 @@ you just need to run `npm install` to
 install all of the dependencies as listed in `package.json`.
 
 The unit tests are in `test/check-types.js`.
-You can run them with the command `npm test` or `jake test`.
+You can run them with the command `npm test`.
 To run the tests in a web browser,
 open `test/check-types.html`.
 
@@ -254,8 +263,8 @@ open `test/check-types.html`.
 [browserify]: http://browserify.org/
 [require]: http://requirejs.org/
 [npm]: https://npmjs.org/
-[jake]: https://github.com/mde/jake
 [jshint]: https://github.com/jshint/node-jshint
 [mocha]: http://visionmedia.github.com/mocha
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
+
