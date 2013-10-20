@@ -84,6 +84,8 @@ in your application,
 a whole bunch of functions are available
 to call:
 
+### Objects
+
 * `check.quacksLike(thing, duck)`:
   Tests whether an object 'quacks like a duck'.
   Returns `true`
@@ -118,6 +120,44 @@ to call:
 * `check.verifyObject(thing, message)`:
   Throws an exception unless something is a non-null, non-array, non-date object.
 
+* `check.map(thing, predicates)`:
+  Maps each predicate function to the corresponding value of `thing`
+  returning the hash of results.
+  Similar to `quacksLike`
+  but using predicate functions instead of values.
+  It supports nested objects.
+
+  e.g.:
+  ```javascript
+  var result = check.map({ foo: 42, bar: { baz: 'cookie monster' } },
+                         { foo: check.isOddNumber, bar: { baz: check.isString} });
+  console.log(result); // { foo: false, bar: { baz: true } }
+  ```
+
+* `check.every(evaluatedPredicates)`:
+  Returns `true` if all values of `evaluatedPredicates` are `true`,
+  `false` otherwise.
+
+  e.g.:
+  ```javascript
+  // Returns false
+  check.every(check.map({ foo: 0, bar: '' },
+                        { foo: check.isNumber, bar: check.isUnemptyString }));
+  ```
+
+* `check.any(evaluatedPredicates)`:
+  Returns `true` if at least one value of `evaluatedPredicates` is `true`,
+  `false` otherwise.
+
+  e.g.:
+  ```javascript
+  // Returns true
+  check.any(check.map({ foo: 0, bar: '' },
+                      { foo: check.isNumber, bar: check.isUnemptyString }));
+  ```
+
+### Arrays
+
 * `check.isLength(thing, length)`:
   Returns `true` if something has a length property
   that matches the specified length,
@@ -134,6 +174,9 @@ to call:
 * `check.verifyArray(thing, message)`:
   Throws an exception unless something is an array.
 
+
+### Dates
+
 * `check.isDate(thing)`:
   Returns `true` something is a date,
   `false` otherwise.
@@ -141,12 +184,16 @@ to call:
 * `check.verifyDate(thing, message)`:
   Throws an exception unless something is a date.
 
+### Functions
+
 * `check.isFunction(thing)`:
   Returns `true` if something is function,
   `false` otherwise.
 
 * `check.verifyFunction(thing, message)`:
   Throws an exception unless something is function.
+
+### Strings
 
 * `check.isUnemptyString(thing)`:
   Returns `true` if something is a non-empty string,
@@ -161,6 +208,14 @@ to call:
 
 * `check.verifyString(thing, message)`:
   Throws an exception unless something is a string.
+
+* `check.isLength(thing, length)`:
+  Returns `true` if something has a length property
+  that matches the specified length,
+  `false` otherwise.
+
+
+### Numbers
 
 * `check.isPositiveNumber(thing)`:
   Returns `true` if something is a number
@@ -203,41 +258,6 @@ to call:
   Throws an exception unless something is a number.
   In this case, `NaN` is not considered a number.
 
-* `check.map(things, predicates)`:
-  Maps each predicate function to the corresponding value of `thing`
-  returning the hash of results.
-  Similar to `quacksLike`
-  but using predicate functions instead of values.
-  It supports nested objects.
-
-  e.g.:
-  ```javascript
-  var result = check.map({ foo: 42, bar: { baz: 'cookie monster' } },
-                         { foo: check.isOddNumber, bar: { baz: check.isString} });
-  console.log(result); // { foo: false, bar: { baz: true } }
-  ```
-
-* `check.every(evaluatedPredicates)`:
-  Returns `true` if all values of `evaluatedPredicates` are `true`,
-  `false` otherwise.
-
-  e.g.:
-  ```javascript
-  // Returns false
-  check.every(check.map({ foo: 0, bar: '' },
-                        { foo: check.isNumber, bar: check.isUnemptyString }));
-  ```
-
-* `check.any(evaluatedPredicates)`:
-  Returns `true` if at least one value of `evaluatedPredicates` is `true`,
-  `false` otherwise.
-
-  e.g.:
-  ```javascript
-  // Returns true
-  check.any(check.map({ foo: 0, bar: '' },
-                      { foo: check.isNumber, bar: check.isUnemptyString }));
-  ```
 
 ## How do I set up the build environment?
 
@@ -267,4 +287,3 @@ open `test/check-types.html`.
 [mocha]: http://visionmedia.github.com/mocha
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
-
