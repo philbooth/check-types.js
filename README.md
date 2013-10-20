@@ -203,6 +203,32 @@ to call:
   Throws an exception unless something is a number.
   In this case, `NaN` is not considered a number.
 
+* `check.map(thing, predicates)`:
+  Maps the predicate functions to each corresponding value of `thing` and returns
+  the hash of results. Similar to `quacksLike` but uses predicate functions
+  instead of values. It supports nested objects.
+
+  example:
+
+        var result = check.map({ foo: 42, bar: { baz: 'cookie monster' } },
+                               { foo: check.isOddNumber,
+                                 bar: { baz: check.isString} });
+        console.log(result); // { foo: false, bar: { baz: true } }
+
+
+* `check.every(evaluatedPredicates)`:
+  Returns `true` if all values of `evaluatedPredicates` are `true`, `false` otherwise.
+
+  ex:
+
+        check.every(check.map({ foo: 42, bar: 'baz' },
+                              { foo: check.isNumber,
+                                bar: check.isString })); // true
+
+* `check.any(evaluatedPredicates)`:
+  Returns `true` if at least one value of `evaluatedPredicates` is `true`, `false` otherwise.
+
+
 ## How do I set up the build environment?
 
 The build environment relies on
@@ -233,4 +259,3 @@ open `test/check-types.html`.
 [mocha]: http://visionmedia.github.com/mocha
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
-

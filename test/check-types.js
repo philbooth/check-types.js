@@ -996,6 +996,101 @@
                 types.verifyEvenNumber(-8);
             });
         });
+
+        test('map with invalid object throws', function() {
+            assert.throws(function () {
+                types.map(null, { foo: types.isString });
+            });
+        });
+
+        test('map with invalid predicates throws', function() {
+            assert.throws(function() {
+                types.map({ foo: 'test' }, null);
+            });
+        });
+
+        test('map with valid object and predicates does not throw', function() {
+            assert.doesNotThrow(function() {
+                types.map({ foo: 'test' }, { foo: types.isString });
+            });
+        });
+
+        test('map with valid object and predicates returns the predicates results', function() {
+            var result = types.map({ foo: 'test', bar: 33 },
+                                   { foo: types.isString,
+                                     bar: types.isEvenNumber });
+            assert.deepEqual(result, { foo: true, bar: false });
+        });
+
+        test('map with unmatched predicates returns undefined for property', function() {
+            var result = types.map({ bar: 33 }, { foo: types.isString });
+            assert.deepEqual(result, { foo: undefined });
+        });
+
+        test('map with nested objects and predicates returns the predicates results', function() {
+            var result = types.map({ foo: { bar: 20 } },
+                                   { foo: { bar: types.isEvenNumber } });
+            assert.deepEqual(result, { foo: { bar: true } });
+        });
+
+        test('map with verifier functions does not throw when valid', function() {
+            assert.doesNotThrow(function() {
+                types.map({ foo: 'bar', baz: 123 },
+                          { foo: types.verifyString,
+                            baz: types.verifyNumber });
+            });
+        });
+
+        test('map with verifier functions throws when invalid', function() {
+            assert.throws(function() {
+                types.map({ foo: 'bar', baz: 123 },
+                          { foo: types.verifyNumber });
+            });
+        });
+
+        test('every with invalid object throws', function() {
+            assert.throws(function() {
+                types.every(null);
+            });
+        });
+
+
+        test('every with valid object does not throw', function() {
+            assert.doesNotThrow(function() {
+                types.every({ foo: true });
+            });
+        });
+
+        test('every with valid object evaluates the conjunction of all values', function() {
+            assert.isTrue(types.every({ foo: true, bar: true, baz: true }));
+            assert.isFalse(types.every({ foo: true, bar: true, baz: false }));
+        });
+
+        test('every with nested objects evaluates the conjunction of all values', function() {
+            assert.isTrue(types.every({ foo: true, bar: { baz: true } }));
+            assert.isFalse(types.every({ foo: { bar : { baz : false }, bat: true } }));
+        });
+
+        test('any with invalid object throws', function() {
+            assert.throws(function() {
+                types.any(null);
+            });
+        });
+
+        test('any with valid object does not throw', function() {
+            assert.doesNotThrow(function() {
+                types.any({ foo: true });
+            });
+        });
+
+        test('any with valid object evaluates the disjunction of all values', function() {
+            assert.isTrue(types.any({ foo: false, bar: true, baz: false }));
+            assert.isFalse(types.any({ foo: false, bar: false }));
+        });
+
+        test('any with nested objects evaluates the disjunction of all values', function() {
+            assert.isTrue(types.any({ foo: { bar: false, baz: true }, bat: false }));
+            assert.isFalse(types.any({ foo: { bar: false, baz: false }, bat: false }));
+        });
     });
 }());
-
