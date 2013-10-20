@@ -259,6 +259,18 @@ to call:
   In this case, `NaN` is not considered a number.
 
 
+### Modifiers
+
+* `check.maybe.<predicate>(thing)`
+  Acts *exactly* like the predicate it precedes if `thing` is defined.
+  If `thing` is not defined, returns `true`.
+
+  e.g.: The value might not be there, but if it is, it has to pass the
+  predicate.
+  ```javascript
+  //Returns true
+  check.maybe.isNumber(undefined);
+  ```
 ## How do I set up the build environment?
 
 The build environment relies on
