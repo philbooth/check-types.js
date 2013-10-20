@@ -223,8 +223,9 @@ to call:
 
   e.g.:
   ```javascript
+  // Returns false
   check.every(check.map({ foo: 0, bar: '' },
-                        { foo: check.isNumber, bar: check.isUnemptyString })); // Returns false
+                        { foo: check.isNumber, bar: check.isUnemptyString }));
   ```
 
 * `check.any(evaluatedPredicates)`:
@@ -233,8 +234,9 @@ to call:
 
   e.g.:
   ```javascript
+  // Returns true
   check.any(check.map({ foo: 0, bar: '' },
-                      { foo: check.isNumber, bar: check.isUnemptyString })); // Returns true
+                      { foo: check.isNumber, bar: check.isUnemptyString }));
   ```
 
 ## How do I set up the build environment?
