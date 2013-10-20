@@ -1,23 +1,27 @@
-/*globals require */
+/*globals require, chai */
 
-(function () {
+(function (require) {
     'use strict';
 
+    var assert, modulePath;
+
     if (typeof require === 'undefined') {
-        var assert = chai.assert, require = function () { return check; }, module = '';
+        assert = chai.assert;
+        require = function () { return check; };
     } else {
-        var assert = require('chai').assert, module = '../src/check-types';
+        assert = require('chai').assert;
+        modulePath = '../src/check-types';
     }
 
     suite('no setup:', function () {
         test('require does not throw', function () {
             assert.doesNotThrow(function () {
-                require(module);
+                require(modulePath);
             });
         });
 
         test('require returns object', function () {
-            assert.isObject(require(module));
+            assert.isObject(require(modulePath));
         });
     });
 
@@ -25,7 +29,7 @@
         var types;
 
         setup(function () {
-            types = require(module);
+            types = require(modulePath);
         });
 
         teardown(function () {
@@ -1096,4 +1100,5 @@
             assert.isFalse(types.any({ foo: { bar: false, baz: false }, bat: false }));
         });
     });
-}());
+}(typeof require === 'function' ? require : undefined));
+
