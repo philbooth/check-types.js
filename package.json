@@ -3,12 +3,6 @@
     "version": "0.6.5",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tiny library for checking types and throwing exceptions.",
-    "contributors": [
-        { "name": "Phil Booth", "email": "pmbooth@gmail.com" },
-        { "name": "Rowan Manning" },
-        { "name": "Forbes Lindesay" },
-        { "name": "Fabrizio Moscon" }
-    ],
     "main": "./src/check-types.js",
     "repository": {
         "type": "git",
