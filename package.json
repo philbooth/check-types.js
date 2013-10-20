@@ -1,12 +1,15 @@
 {
     "name": "check-types",
     "version": "0.6.5",
-    "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tiny library for checking types and throwing exceptions.",
+    "homepage": "https://github.com/philbooth/check-types.js",
+    "bugs": "https://github.com/philbooth/check-types.js/issues",
+    "license": "MIT",
+    "author": "Phil Booth <pmbooth@gmail.com> (https://github.com/philbooth)",
     "main": "./src/check-types.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/philbooth/check-types.js"
+        "url": "https://github.com/philbooth/check-types.js.git"
     },
     "keywords": [
         "types",
@@ -22,7 +25,6 @@
         "chai": "1.8.x",
         "uglify-js": "2.4.x"
     },
-    "license": "MIT",
     "scripts": {
         "test": "jake test"
     }
