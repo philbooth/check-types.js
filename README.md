@@ -349,7 +349,7 @@ check.maybe.isObject(null);
 
 ```javascript
 check.verifyQuack('', [], 'Invalid array-like object');
-// Throws new Error('Invalid array-like object');
+// Throws new Error('Invalid array-like object')
 ```
 
 ```javascript
