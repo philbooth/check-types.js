@@ -430,5 +430,5 @@ open `test/check-types.html`.
 [mocha]: http://visionmedia.github.com/mocha
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
-[license]: https://github.com/philbooth/trier.js/blob/master/COPYING
+[license]: https://github.com/philbooth/check-types.js/blob/master/COPYING
 
