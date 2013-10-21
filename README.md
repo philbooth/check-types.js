@@ -348,12 +348,12 @@ check.maybe.isObject(null);
 ```
 
 ```javascript
-check.verifyQuack('', [], 'Invalid array-like object');
+check.verifyQuack({}, { foo: 'bar' }, 'Invalid object');
 // Throws new Error('Invalid array-like object')
 ```
 
 ```javascript
-check.maybe.verifyQuack(undefined, [], 'Invalid array-like object');
+check.maybe.verifyQuack(undefined, { foo: 'bar' }, 'Invalid object');
 // Doesn't throw
 ```
 
