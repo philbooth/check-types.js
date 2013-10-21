@@ -123,8 +123,8 @@ are broadly split into two types.
 
 Additionally, every exported function
 is available with a `maybe` modifier
-that simply returns `true` if the value is undefined,
-otherwise it calls the original, unmodified function.
+that simply returns `true` if the value is `null` or `undefined`,
+otherwise it delegates to the original, unmodified function.
 Calls to these functions look like
 `check.maybe.isXxxx(thing)` and
 `check.maybe.verifyXxxx(thing)`.
@@ -218,7 +218,7 @@ These are implemented by
   if `thing` is an odd number,
   `false` otherwise.
 
-* `check.verifyOddNumberthing, message)`:
+* `check.verifyOddNumber(thing, message)`:
   Throws an exception
   unless `thing` is an odd number.
 
@@ -311,7 +311,7 @@ These are implemented by
 
 * `check.maybe.isXxxx(...)` / `check.maybe.verifyXxxx(...)`:
   Returns `true`
-  if `thing` is undefined,
+  if `thing` is `null` or `undefined`,
   otherwise it delegates to
   the original, unmodified function.
 
@@ -338,22 +338,41 @@ These are implemented by
 #### Some examples
 
 ```javascript
-// Returns { foo: false, bar: { baz: true } }
+check.isObject(null);
+// Returns false
+```
+
+```javascript
+check.maybe.isObject(null);
+// Returns true
+```
+
+```javascript
+check.verifyQuack('', [], 'Invalid array-like object');
+// Throws new Error('Invalid array-like object');
+```
+
+```javascript
+check.maybe.verifyQuack(undefined, [], 'Invalid array-like object');
+// Doesn't throw
+```
+
+```javascript
 check.map({
-    foo: 42,
+    foo: 2,
     bar: {
-        baz: 'cookie monster'
+        baz: 'qux'
     }
 }, {
     foo: check.isOddNumber,
     bar: {
-        baz: check.isString
+        baz: check.isUnemptyString
     }
 });
+// Returns { foo: false, bar: { baz: true } }
 ```
 
 ```javascript
-// Returns false
 check.every(
     check.map({
         foo: 0,
@@ -363,10 +382,10 @@ check.every(
         bar: check.isUnemptyString
     })
 );
+// Returns false
 ```
 
 ```javascript
-// Returns true
 check.any(
     check.map({
         foo: 0,
@@ -376,6 +395,7 @@ check.any(
         bar: check.isUnemptyString
     })
 );
+// Returns true
 ```
 
 ## How do I set up the build environment?
