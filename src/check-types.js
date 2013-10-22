@@ -63,6 +63,7 @@
      *                           to set on the thrown Error.
      */
     function verifyUrl (thing, message) {
+        verifyString(thing);
         verify(isUrl, [thing], message, 'Invalid URL');
     }
 

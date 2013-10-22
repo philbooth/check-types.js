@@ -40,7 +40,16 @@
             assert.isFunction(check.isUrl);
         });
 
-        test('isUrl returns false for invalid urls', function () {
+        test('isUrl returns false for non strings', function () {
+            assert.isFalse(check.isUrl(555));
+            assert.isFalse(check.isUrl(127.1));
+            assert.isFalse(check.isUrl({
+                url: 'http://somewhere.com'
+            }));
+            assert.isFalse(check.isUrl(['a', 'b']));
+        });
+
+        test('isUrl returns false for non-url strings', function () {
             assert.isFalse(check.isUrl('localhost'));
             assert.isFalse(check.isUrl('//127.0.0.1'));
             assert.isFalse(check.isUrl('localhost:4999'));
@@ -65,19 +74,41 @@
             assert.isFunction(check.verifyUrl);
         });
 
-        test('verifyUrl throws', function () {
+        test('verifyUrl throws for non-urls', function () {
             assert.throws(function () {
                 check.verifyUrl('1');
             });
 
             assert.throws(function () {
+                check.verifyUrl(true);
+            });
+
+            assert.throws(function () {
                 check.verifyUrl(4789);
+            });
+
+            assert.throws(function () {
+                check.verifyUrl([]);
+            });
+
+            assert.throws(function () {
+                check.verifyUrl(['http://localhost/']);
+            });
+
+            assert.throws(function () {
+                check.verifyUrl({
+                    foo: 'bar'
+                });
             });
         });
 
         test('verifyUrl does not throw for valid url', function () {
             assert.doesNotThrow(function () {
                 check.verifyUrl('http://somewhere.com');
+            });
+
+            assert.doesNotThrow(function () {
+                check.verifyUrl('https://200.110.10.1:44/home.html');
             });
         });
 
