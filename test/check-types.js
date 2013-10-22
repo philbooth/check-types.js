@@ -36,6 +36,51 @@
             check = undefined;
         });
 
+        test('isUrl function is defined', function () {
+            assert.isFunction(check.isUrl);
+        });
+
+        test('isUrl returns false for invalid urls', function () {
+            assert.isFalse(check.isUrl('localhost'));
+            assert.isFalse(check.isUrl('//127.0.0.1'));
+            assert.isFalse(check.isUrl('localhost:4999'));
+            assert.isFalse(check.isUrl('www.google.com/page.html'));
+        });
+
+        test('isUrl returns true for urls', function () {
+            assert.isTrue(check.isUrl('http://localhost'));
+            assert.isTrue(check.isUrl('http://127.0.0.1'));
+            assert.isTrue(check.isUrl('http://localhost:4999'));
+            assert.isTrue(check.isUrl('http://www.google.com/page.html'));
+        });
+
+        test('isUrl returns true for HTTPS urls', function () {
+            assert.isTrue(check.isUrl('https://localhost'));
+            assert.isTrue(check.isUrl('https://127.0.0.1'));
+            assert.isTrue(check.isUrl('https://localhost:4999'));
+            assert.isTrue(check.isUrl('https://www.google.com/page.html'));
+        });
+
+        test('verifyUrl function is defined', function () {
+            assert.isFunction(check.verifyUrl);
+        });
+
+        test('verifyUrl throws', function () {
+            assert.throws(function () {
+                check.verifyUrl('1');
+            });
+
+            assert.throws(function () {
+                check.verifyUrl(4789);
+            });
+        });
+
+        test('verifyUrl does not throw for valid url', function () {
+            assert.doesNotThrow(function () {
+                check.verifyUrl('http://somewhere.com');
+            });
+        });
+
         test('verifyQuack function is defined', function () {
             assert.isFunction(check.verifyQuack);
         });
