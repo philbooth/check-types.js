@@ -42,19 +42,19 @@
         map: map,
         every: every,
         any: any,
-        verifyUrl: verifyUrl,
-        isUrl: isUrl
+        verifyWebUrl: verifyWebUrl,
+        isWebUrl: isWebUrl
     };
 
     wrapMaybeFunctions();
     exportFunctions();
 
-    function isUrl (thing) {
-        return (/^https*:\/\//.test(thing));
+    function isWebUrl (thing) {
+        return (/^https?:\/\/.+/.test(thing));
     }
 
     /**
-     * Public function `verifyUrl`.
+     * Public function `verifyWebUrl`.
      *
      * Throws an exception if a string is not an http:// or https:// url
      *
@@ -62,9 +62,9 @@
      * @param [message] {string} An optional error message
      *                           to set on the thrown Error.
      */
-    function verifyUrl (thing, message) {
-        verifyString(thing);
-        verify(isUrl, [thing], message, 'Invalid URL');
+    function verifyWebUrl (thing, message) {
+        verifyString(thing, 'Web url should be a string');
+        verify(isWebUrl, [thing], message, 'Invalid URL');
     }
 
     /**
