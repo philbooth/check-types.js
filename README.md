@@ -157,6 +157,15 @@ These are implemented by
   Throws an exception
   unless `thing` is a non-empty string.
 
+* `check.isWebUrl(thing)`:
+  Returns `true`
+  if `thing` is an HTTP or HTTPS urL,
+  `false` otherwise.
+
+* `check.verifyWebUrl(thing, message)`:
+  Throws an exception
+  unless `thing` is an HTTP or HTTPS URL.
+
 * `check.isLength(thing, length)`:
   Returns `true`
   if `thing` has a length property
