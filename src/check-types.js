@@ -41,11 +41,31 @@
         isNumber: isNumber,
         map: map,
         every: every,
-        any: any
+        any: any,
+        verifyWebUrl: verifyWebUrl,
+        isWebUrl: isWebUrl
     };
 
     wrapMaybeFunctions();
     exportFunctions();
+
+    function isWebUrl (thing) {
+        return (/^https?:\/\/.+/.test(thing));
+    }
+
+    /**
+     * Public function `verifyWebUrl`.
+     *
+     * Throws an exception if a string is not an http:// or https:// url
+     *
+     * @param thing {object}     The object to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyWebUrl (thing, message) {
+        verifyString(thing, 'Web url should be a string');
+        verify(isWebUrl, [thing], message, 'Invalid URL');
+    }
 
     /**
      * Public function `verifyQuack`.
