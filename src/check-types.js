@@ -322,7 +322,6 @@
      *                           to set on the thrown Error.
      */
     function verifyWebUrl (thing, message) {
-        verifyString(thing, 'Web url should be a string');
         verify(isWebUrl, [thing], message, 'Invalid URL');
     }
 
@@ -335,7 +334,7 @@
      * @param thing          The thing to test.
      */
     function isWebUrl (thing) {
-        return (/^https?:\/\/.+/.test(thing));
+        return check.isUnemptyString(thing) && /^https?:\/\/.+/.test(thing);
     }
 
     /**

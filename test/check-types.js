@@ -417,7 +417,11 @@
         });
 
         test('isWebUrl with object returns false', function () {
-            assert.isFalse(check.isWebUrl({}));
+            assert.isFalse(check.isWebUrl({ toString: function () { return 'https://example.com/'; } }));
+        });
+
+        test('isWebUrl with number returns false', function () {
+            assert.isFalse(check.isWebUrl(42));
         });
 
         test('verifyWebUrl function is defined', function () {
