@@ -25,6 +25,8 @@
         isDate: isDate,
         verifyFunction: verifyFunction,
         isFunction: isFunction,
+        verifyWebUrl: verifyWebUrl,
+        isWebUrl: isWebUrl,
         verifyUnemptyString: verifyUnemptyString,
         isUnemptyString:isUnemptyString,
         verifyString: verifyString,
@@ -41,31 +43,11 @@
         isNumber: isNumber,
         map: map,
         every: every,
-        any: any,
-        verifyWebUrl: verifyWebUrl,
-        isWebUrl: isWebUrl
+        any: any
     };
 
     wrapMaybeFunctions();
     exportFunctions();
-
-    function isWebUrl (thing) {
-        return (/^https?:\/\/.+/.test(thing));
-    }
-
-    /**
-     * Public function `verifyWebUrl`.
-     *
-     * Throws an exception if a string is not an http:// or https:// url
-     *
-     * @param thing {object}     The object to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyWebUrl (thing, message) {
-        verifyString(thing, 'Web url should be a string');
-        verify(isWebUrl, [thing], message, 'Invalid URL');
-    }
 
     /**
      * Public function `verifyQuack`.
@@ -328,6 +310,32 @@
      */
     function isFunction (thing) {
         return typeof thing === 'function';
+    }
+
+    /**
+     * Public function `verifyWebUrl`.
+     *
+     * Throws an exception unless something is an HTTP or HTTPS URL.
+     *
+     * @param thing              The thing to test.
+     * @param [message] {string} An optional error message
+     *                           to set on the thrown Error.
+     */
+    function verifyWebUrl (thing, message) {
+        verifyString(thing, 'Web url should be a string');
+        verify(isWebUrl, [thing], message, 'Invalid URL');
+    }
+
+    /**
+     * Public function `isWebUrl`.
+     *
+     * Returns `true` if something is an HTTP or HTTPS URL,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function isWebUrl (thing) {
+        return (/^https?:\/\/.+/.test(thing));
     }
 
     /**
