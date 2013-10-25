@@ -159,7 +159,7 @@ These are implemented by
 
 * `check.isWebUrl(thing)`:
   Returns `true`
-  if `thing` is an HTTP or HTTPS urL,
+  if `thing` is an HTTP or HTTPS URL,
   `false` otherwise.
 
 * `check.verifyWebUrl(thing, message)`:
