@@ -334,7 +334,7 @@
      * @param thing          The thing to test.
      */
     function isWebUrl (thing) {
-        return check.isUnemptyString(thing) && /^https?:\/\/.+/.test(thing);
+        return isUnemptyString(thing) && /^https?:\/\/.+/.test(thing);
     }
 
     /**
