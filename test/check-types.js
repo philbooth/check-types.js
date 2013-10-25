@@ -36,140 +36,6 @@
             check = undefined;
         });
 
-        test('isWebUrl function is defined', function () {
-            assert.isFunction(check.isWebUrl);
-        });
-
-        test('isWebUrl returns false for non strings', function () {
-            assert.isFalse(check.isWebUrl(555));
-            assert.isFalse(check.isWebUrl(127.1));
-            assert.isFalse(check.isWebUrl({
-                url: 'http://somewhere.com'
-            }));
-            assert.isFalse(check.isWebUrl(['a', 'b']));
-        });
-
-        test('isWebUrl returns false for non-http protocols', function () {
-            assert.isFalse(check.isWebUrl('ftp://somewhere.com'));
-            assert.isFalse(check.isWebUrl('git://somewhere.com'));
-            assert.isFalse(check.isWebUrl('ssl://somewhere.com'));
-            assert.isFalse(check.isWebUrl('ws://somewhere.com'));
-        });
-
-        test('isWebUrl returns false for non-url strings', function () {
-            assert.isFalse(check.isWebUrl('localhost'));
-            assert.isFalse(check.isWebUrl('//127.0.0.1'));
-            assert.isFalse(check.isWebUrl('localhost:4999'));
-            assert.isFalse(check.isWebUrl('www.google.com/page.html'));
-        });
-
-        test('isWebUrl returns false for edge cases', function () {
-            assert.isFalse(check.isWebUrl('httpss://'));
-            assert.isFalse(check.isWebUrl('httpsss://'));
-            assert.isFalse(check.isWebUrl('httpa://'));
-        });
-
-        test('isWebUrl returns false for protocols only', function () {
-            assert.isFalse(check.isWebUrl('http://'));
-            assert.isFalse(check.isWebUrl('https://'));
-        });
-
-        test('isWebUrl returns true for urls', function () {
-            assert.isTrue(check.isWebUrl('http://localhost'));
-            assert.isTrue(check.isWebUrl('http://127.0.0.1'));
-            assert.isTrue(check.isWebUrl('http://localhost:4999'));
-            assert.isTrue(check.isWebUrl('http://www.google.com/page.html'));
-        });
-
-        test('isWebUrl returns true for HTTPS urls', function () {
-            assert.isTrue(check.isWebUrl('https://localhost'));
-            assert.isTrue(check.isWebUrl('https://127.0.0.1'));
-            assert.isTrue(check.isWebUrl('https://localhost:4999'));
-            assert.isTrue(check.isWebUrl('https://www.google.com/page.html'));
-        });
-
-        test('verifyWebUrl function is defined', function () {
-            assert.isFunction(check.verifyWebUrl);
-        });
-
-        test('verifyWebUrl throws for non-urls', function () {
-            assert.throws(function () {
-                check.verifyWebUrl('1');
-            });
-
-            assert.throws(function () {
-                check.verifyWebUrl(true);
-            });
-
-            assert.throws(function () {
-                check.verifyWebUrl(4789);
-            });
-
-            assert.throws(function () {
-                check.verifyWebUrl([]);
-            });
-
-            assert.throws(function () {
-                check.verifyWebUrl(['http://localhost/']);
-            });
-
-            assert.throws(function () {
-                check.verifyWebUrl({
-                    foo: 'bar'
-                });
-            });
-        });
-
-        test('verifyWebUrl does not throw for valid url', function () {
-            assert.doesNotThrow(function () {
-                check.verifyWebUrl('http://somewhere.com');
-            });
-
-            assert.doesNotThrow(function () {
-                check.verifyWebUrl('https://200.110.10.1:44/home.html');
-            });
-        });
-
-        test('verifyQuack function is defined', function () {
-            assert.isFunction(check.verifyQuack);
-        });
-
-        test('verifyQuack with two empty object arguments does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyQuack({}, {});
-            });
-        });
-
-        test('verifyQuack with foo bar properties throws', function () {
-            assert.throws(function () {
-                check.verifyQuack({ foo: {} }, { bar: {} });
-            });
-        });
-
-        test('verifyQuack with foo foo properties does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyQuack({ foo: {} }, { foo: {} });
-            });
-        });
-
-        test('verifyQuack with bar baz second properties throws', function () {
-            assert.throws(function () {
-                check.verifyQuack({ foo: {}, bar: {} }, { foo: {}, baz: {} });
-            });
-        });
-
-        test('verifyQuack with bar bar second properties does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyQuack({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: {} });
-            });
-        });
-
-        test('verifyQuack with differently typed bar bar second properties throws', function () {
-            assert.throws(function () {
-                check.verifyQuack({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: (function () {}) });
-            });
-        });
-
         test('quacksLike function is defined', function () {
             assert.isFunction(check.quacksLike);
         });
@@ -234,45 +100,19 @@
             assert.isFalse(check.quacksLike({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: (function () {}) }));
         });
 
-        test('verifyInstance with new Error and Error does not throw', function () {
+        test('verifyQuack function is defined', function () {
+            assert.isFunction(check.verifyQuack);
+        });
+
+        test('verifyQuack with foo bar properties throws', function () {
+            assert.throws(function () {
+                check.verifyQuack({ foo: {} }, { bar: {} });
+            });
+        });
+
+        test('verifyQuack with foo foo properties does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyInstance(new Error(), Error);
-            });
-        });
-
-        test('verifyInstance with object and Error throws', function () {
-            assert.throws(function () {
-                check.verifyInstance({}, Error);
-            });
-        });
-
-        test('verifyInstance with null and null throws', function () {
-            assert.throws(function () {
-                check.verifyInstance(null, null);
-            });
-        });
-
-        test('verifyInstance with object and Object does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyInstance({}, Object);
-            });
-        });
-
-        test('verifyInstance with null and Object throws', function () {
-            assert.throws(function () {
-                check.verifyInstance(null, Object);
-            });
-        });
-
-        test('verifyInstance with array and Array does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyInstance([], Array);
-            });
-        });
-
-        test('verifyInstance with Object and object throws', function () {
-            assert.throws(function () {
-                check.verifyInstance(Object, {});
+                check.verifyQuack({ foo: {} }, { foo: {} });
             });
         });
 
@@ -308,37 +148,15 @@
             assert.isFalse(check.isInstance(Object, {}));
         });
 
-        test('verifyEmptyObject function is defined', function () {
-            assert.isFunction(check.verifyEmptyObject);
-        });
-
-        test('verifyEmptyObject with empty object does not throw', function () {
+        test('verifyInstance with new Error and Error does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyEmptyObject({});
+                check.verifyInstance(new Error(), Error);
             });
         });
 
-        test('verifyEmptyObject with non-empty object throws', function () {
+        test('verifyInstance with object and Error throws', function () {
             assert.throws(function () {
-                check.verifyEmptyObject({ foo: 'bar' });
-            });
-        });
-
-        test('verifyEmptyObject with null throws', function () {
-            assert.throws(function () {
-                check.verifyEmptyObject(null);
-            });
-        });
-
-        test('verifyEmptyObject with string throws', function () {
-            assert.throws(function () {
-                check.verifyEmptyObject('{}');
-            });
-        });
-
-        test('verifyEmptyObject with array throws', function () {
-            assert.throws(function () {
-                check.verifyEmptyObject([]);
+                check.verifyInstance({}, Error);
             });
         });
 
@@ -362,37 +180,19 @@
             assert.isFalse(check.isEmptyObject({ foo: 'bar' }));
         });
 
-        test('verifyObject function is defined', function () {
-            assert.isFunction(check.verifyObject);
+        test('verifyEmptyObject function is defined', function () {
+            assert.isFunction(check.verifyEmptyObject);
         });
 
-        test('verifyObject with object does not throw', function () {
+        test('verifyEmptyObject with empty object does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyObject({});
+                check.verifyEmptyObject({});
             });
         });
 
-        test('verifyObject with null throws', function () {
+        test('verifyEmptyObject with non-empty object throws', function () {
             assert.throws(function () {
-                check.verifyObject(null);
-            });
-        });
-
-        test('verifyObject with string throws', function () {
-            assert.throws(function () {
-                check.verifyObject('[]');
-            });
-        });
-
-        test('verifyObject with array throws', function () {
-            assert.throws(function () {
-                check.verifyObject([]);
-            });
-        });
-
-        test('verifyObject with date throws', function () {
-            assert.throws(function () {
-                check.verifyObject(new Date());
+                check.verifyEmptyObject({ foo: 'bar' });
             });
         });
 
@@ -420,43 +220,19 @@
             assert.isFalse(check.isObject(new Date()));
         });
 
-        test('verifyLength function is defined', function () {
-            assert.isFunction(check.verifyLength);
+        test('verifyObject function is defined', function () {
+            assert.isFunction(check.verifyObject);
         });
 
-        test('verifyLength with matching undefined length does not throw', function () {
+        test('verifyObject with object does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyLength({});
+                check.verifyObject({});
             });
         });
 
-        test('verifyLength with contrasting undefined length throws', function () {
+        test('verifyObject with null throws', function () {
             assert.throws(function () {
-                check.verifyLength({}, 42);
-            });
-        });
-
-        test('verifyLength with matching length on array does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyLength([ 1, 2, 3], 3);
-            });
-        });
-
-        test('verifyLength with contrasting length on array throws', function () {
-            assert.throws(function () {
-                check.verifyLength([ 2, 3], 3);
-            });
-        });
-
-        test('verifyLength with matching length on object does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyLength({ length: 4 }, 4);
-            });
-        });
-
-        test('verifyLength with contrasting length on object throws', function () {
-            assert.throws(function () {
-                check.verifyLength({ length: 5 }, 4);
+                check.verifyObject(null);
             });
         });
 
@@ -488,31 +264,19 @@
             assert.isFalse(check.isLength({ length: 1 }, 2));
         });
 
-        test('verifyArray function is defined', function () {
-            assert.isFunction(check.verifyArray);
+        test('verifyLength function is defined', function () {
+            assert.isFunction(check.verifyLength);
         });
 
-        test('verifyArray with array does not throw', function () {
+        test('verifyLength with matching length on array does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyArray([]);
+                check.verifyLength([ 1, 2, 3], 3);
             });
         });
 
-        test('verifyArray with null throws', function () {
+        test('verifyLength with contrasting length on array throws', function () {
             assert.throws(function () {
-                check.verifyArray(null);
-            });
-        });
-
-        test('verifyArray with string throws', function () {
-            assert.throws(function () {
-                check.verifyArray('[]');
-            });
-        });
-
-        test('verifyArray with object throws', function () {
-            assert.throws(function () {
-                check.verifyArray({});
+                check.verifyLength([ 2, 3], 3);
             });
         });
 
@@ -536,25 +300,19 @@
             assert.isFalse(check.isArray({}));
         });
 
-        test('verifyDate function is defined', function () {
-            assert.isFunction(check.verifyDate);
+        test('verifyArray function is defined', function () {
+            assert.isFunction(check.verifyArray);
         });
 
-        test('verifyDate with date does not throw', function () {
+        test('verifyArray with array does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyDate(new Date());
+                check.verifyArray([]);
             });
         });
 
-        test('verifyDate with object throws', function () {
+        test('verifyArray with object throws', function () {
             assert.throws(function () {
-                check.verifyDate({});
-            });
-        });
-
-        test('verifyDate with string throws', function () {
-            assert.throws(function () {
-                check.verifyDate('new Date()');
+                check.verifyArray({});
             });
         });
 
@@ -570,41 +328,27 @@
             assert.isFalse(check.isDate({}));
         });
 
+        test('isDate with null returns false', function () {
+            assert.isFalse(check.isDate(null));
+        });
+
         test('isDate with string returns false', function () {
             assert.isFalse(check.isDate('new Date()'));
         });
 
-        test('verifyFunction function is defined', function () {
-            assert.isFunction(check.verifyFunction);
+        test('verifyDate function is defined', function () {
+            assert.isFunction(check.verifyDate);
         });
 
-        test('verifyFunction with function does not throw', function () {
+        test('verifyDate with date does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyFunction(function () {});
+                check.verifyDate(new Date());
             });
         });
 
-        test('verifyFunction with null throws', function () {
+        test('verifyDate with object throws', function () {
             assert.throws(function () {
-                check.verifyFunction(null);
-            });
-        });
-
-        test('verifyFunction with string throws', function () {
-            assert.throws(function () {
-                check.verifyFunction('[]');
-            });
-        });
-
-        test('verifyFunction with object throws', function () {
-            assert.throws(function () {
-                check.verifyFunction({});
-            });
-        });
-
-        test('verifyFunction with array throws', function () {
-            assert.throws(function () {
-                check.verifyFunction([]);
+                check.verifyDate({});
             });
         });
 
@@ -628,41 +372,67 @@
             assert.isFalse(check.isFunction({}));
         });
 
-        test('isFunction with array returns false', function () {
-            assert.isFalse(check.isFunction([]));
+        test('verifyFunction function is defined', function () {
+            assert.isFunction(check.verifyFunction);
         });
 
-        test('verifyUnemptyString function is defined', function () {
-            assert.isFunction(check.verifyUnemptyString);
-        });
-
-        test('verifyUnemptyString with string baz does not throw', function () {
+        test('verifyFunction with function does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyUnemptyString('baz');
+                check.verifyFunction(function () {});
             });
         });
 
-        test('verifyUnemptyString with null throws', function () {
+        test('verifyFunction with object throws', function () {
             assert.throws(function () {
-                check.verifyUnemptyString(null);
+                check.verifyFunction({});
             });
         });
 
-        test('verifyUnemptyString with empty string throws', function () {
+        test('isWebUrl function is defined', function () {
+            assert.isFunction(check.isWebUrl);
+        });
+
+        test('isWebUrl with https: URL returns true', function () {
+            assert.isTrue(check.isWebUrl('https://example.com/'));
+        });
+
+        test('isWebUrl with ftp: URL returns false', function () {
+            assert.isFalse(check.isWebUrl('ftp://example.com/'));
+        });
+
+        test('isWebUrl with http: URL returns true', function () {
+            assert.isTrue(check.isWebUrl('http://127.0.0.1:8080/'));
+        });
+
+        test('isWebUrl with protocol-relative URL returns false', function () {
+            assert.isFalse(check.isWebUrl('//example.com/'));
+        });
+
+        test('isWebUrl with httpss scheme returns false', function () {
+            assert.isFalse(check.isWebUrl('httpss://'));
+        });
+
+        test('isWebUrl without domain returns false', function () {
+            assert.isFalse(check.isWebUrl('http://'));
+        });
+
+        test('isWebUrl with object returns false', function () {
+            assert.isFalse(check.isWebUrl({}));
+        });
+
+        test('verifyWebUrl function is defined', function () {
+            assert.isFunction(check.verifyWebUrl);
+        });
+
+        test('verifyWebUrl with ftp: URL throws', function () {
             assert.throws(function () {
-                check.verifyUnemptyString('');
+                check.verifyWebUrl('ftp://example.com/');
             });
         });
 
-        test('verifyUnemptyString with object throws', function () {
-            assert.throws(function () {
-                check.verifyUnemptyString({});
-            });
-        });
-
-        test('verifyUnemptyString with string qux does not throw', function () {
+        test('verifyWebUrl with http: URL does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyUnemptyString('qux');
+                check.verifyWebUrl('http://localhost');
             });
         });
 
@@ -690,31 +460,19 @@
             assert.isTrue(check.isUnemptyString('bar'));
         });
 
-        test('verifyString function is defined', function () {
-            assert.isFunction(check.verifyString);
+        test('verifyUnemptyString function is defined', function () {
+            assert.isFunction(check.verifyUnemptyString);
         });
 
-        test('verifyString with string baz does not throw', function () {
+        test('verifyUnemptyString with string baz does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyString('baz');
+                check.verifyUnemptyString('baz');
             });
         });
 
-        test('verifyString with null throws', function () {
+        test('verifyUnemptyString with empty string throws', function () {
             assert.throws(function () {
-                check.verifyString(null);
-            });
-        });
-
-        test('verifyString with empty string does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyString('');
-            });
-        });
-
-        test('verifyString with object throws', function () {
-            assert.throws(function () {
-                check.verifyString({});
+                check.verifyUnemptyString('');
             });
         });
 
@@ -726,10 +484,6 @@
             assert.isTrue(check.isString('foo'));
         });
 
-        test('isString with null returns false', function () {
-            assert.isFalse(check.isString(null));
-        });
-
         test('isString with empty string returns true', function () {
             assert.isTrue(check.isString(''));
         });
@@ -738,61 +492,19 @@
             assert.isFalse(check.isString({}));
         });
 
-        test('verifyPositiveNumber function is defined', function () {
-            assert.isFunction(check.verifyPositiveNumber);
+        test('verifyString function is defined', function () {
+            assert.isFunction(check.verifyString);
         });
 
-        test('verifyPositiveNumber with positive integer does not throw', function () {
+        test('verifyString with string baz does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyPositiveNumber(1);
+                check.verifyString('baz');
             });
         });
 
-        test('verifyPositiveNumber with negative integer throws', function () {
+        test('verifyString with object throws', function () {
             assert.throws(function () {
-                check.verifyPositiveNumber(-1);
-            });
-        });
-
-        test('verifyPositiveNumber with positive fraction does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyPositiveNumber(1/2);
-            });
-        });
-
-        test('verifyPositiveNumber with negative fraction throws', function () {
-            assert.throws(function () {
-                check.verifyPositiveNumber(-1/2);
-            });
-        });
-
-        test('verifyPositiveNumber with positive infinity does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyPositiveNumber(Infinity);
-            });
-        });
-
-        test('verifyPositiveNumber with negative infinity throws', function () {
-            assert.throws(function () {
-                check.verifyPositiveNumber(-Infinity);
-            });
-        });
-
-        test('verifyPositiveNumber with NaN throws', function () {
-            assert.throws(function () {
-                check.verifyPositiveNumber(NaN);
-            });
-        });
-
-        test('verifyPositiveNumber with object throws', function () {
-            assert.throws(function () {
-                check.verifyPositiveNumber({});
-            });
-        });
-
-        test('verifyPositiveNumber with string throws', function () {
-            assert.throws(function () {
-                check.verifyPositiveNumber('1');
+                check.verifyString({});
             });
         });
 
@@ -836,61 +548,19 @@
             assert.isFalse(check.isPositiveNumber('1'));
         });
 
-        test('verifyNegativeNumber function is defined', function () {
-            assert.isFunction(check.verifyNegativeNumber);
+        test('verifyPositiveNumber function is defined', function () {
+            assert.isFunction(check.verifyPositiveNumber);
         });
 
-        test('verifyNegativeNumber with positive integer throws', function () {
-            assert.throws(function () {
-                check.verifyNegativeNumber(1);
-            });
-        });
-
-        test('verifyNegativeNumber with negative integer does not throw', function () {
+        test('verifyPositiveNumber with positive integer does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyNegativeNumber(-1);
+                check.verifyPositiveNumber(1);
             });
         });
 
-        test('verifyNegativeNumber with positive fraction throws', function () {
+        test('verifyPositiveNumber with negative integer throws', function () {
             assert.throws(function () {
-                check.verifyNegativeNumber(1/2);
-            });
-        });
-
-        test('verifyNegativeNumber with negative fraction does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyNegativeNumber(-1/2);
-            });
-        });
-
-        test('verifyNegativeNumber with positive infinity throws', function () {
-            assert.throws(function () {
-                check.verifyNegativeNumber(Infinity);
-            });
-        });
-
-        test('verifyNegativeNumber with negative infinity does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyNegativeNumber(-Infinity);
-            });
-        });
-
-        test('verifyNegativeNumber with NaN throws', function () {
-            assert.throws(function () {
-                check.verifyNegativeNumber(NaN);
-            });
-        });
-
-        test('verifyNegativeNumber with object throws', function () {
-            assert.throws(function () {
-                check.verifyNegativeNumber({});
-            });
-        });
-
-        test('verifyNegativeNumber with string throws', function () {
-            assert.throws(function () {
-                check.verifyNegativeNumber('-1');
+                check.verifyPositiveNumber(-1);
             });
         });
 
@@ -931,58 +601,22 @@
         });
 
         test('isNegativeNumber with string returns false', function () {
-            assert.isFalse(check.isNegativeNumber('1'));
+            assert.isFalse(check.isNegativeNumber('-1'));
         });
 
-        test('verifyNumber function is defined', function () {
-            assert.isFunction(check.verifyNumber);
+        test('verifyNegativeNumber function is defined', function () {
+            assert.isFunction(check.verifyNegativeNumber);
         });
 
-        test('verifyNumber with positive integer does not throw', function () {
+        test('verifyNegativeNumber with negative integer does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyNumber(1);
+                check.verifyNegativeNumber(-1);
             });
         });
 
-        test('verifyNumber with negative integer does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyNumber(-1);
-            });
-        });
-
-        test('verifyNumber with fraction does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyNumber(1/2);
-            });
-        });
-
-        test('verifyNumber with positive infinity does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyNumber(Infinity);
-            });
-        });
-
-        test('verifyNumber with negative infinity does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.verifyNumber(-Infinity);
-            });
-        });
-
-        test('verifyNumber with NaN throws', function () {
+        test('verifyNegativeNumber with positive integer throws', function () {
             assert.throws(function () {
-                check.verifyNumber(NaN);
-            });
-        });
-
-        test('verifyNumber with object throws', function () {
-            assert.throws(function () {
-                check.verifyNumber({});
-            });
-        });
-
-        test('verifyNumber with string throws', function () {
-            assert.throws(function () {
-                check.verifyNumber('1');
+                check.verifyNegativeNumber(1);
             });
         });
 
@@ -1018,8 +652,24 @@
             assert.isFalse(check.isNumber('1'));
         });
 
-        test('isOddNumber with string returns false', function () {
-            assert.isFalse(check.isOddNumber('1'));
+        test('verifyNumber function is defined', function () {
+            assert.isFunction(check.verifyNumber);
+        });
+
+        test('verifyNumber with positive integer does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.verifyNumber(1);
+            });
+        });
+
+        test('verifyNumber with NaN throws', function () {
+            assert.throws(function () {
+                check.verifyNumber(NaN);
+            });
+        });
+
+        test('isOddNumber function is defined', function () {
+            assert.isFunction(check.isOddNumber);
         });
 
         test('isOddNumber with odd number returns true', function () {
@@ -1030,12 +680,8 @@
             assert.isFalse(check.isOddNumber(2));
         });
 
-        test('isOddNumber with alternative odd number returns true', function () {
-            assert.isTrue(check.isOddNumber(3));
-        });
-
         test('isOddNumber with negative odd number returns true', function () {
-            assert.isTrue(check.isOddNumber(-5));
+            assert.isTrue(check.isOddNumber(-3));
         });
 
         test('isOddNumber with negative even number returns false', function () {
@@ -1043,7 +689,17 @@
         });
 
         test('isOddNumber with floating point number returns false', function () {
-            assert.isFalse(check.isEvenNumber(3.5));
+            assert.isFalse(check.isEvenNumber(5.5));
+        });
+
+        test('isOddNumber with string returns false', function () {
+            assert.isFalse(check.isOddNumber('1'));
+        });
+
+        test('verifyOddNumber with even number throws', function () {
+            assert.throws(function () {
+                check.verifyOddNumber(6);
+            });
         });
 
         test('verifyOddNumber with odd number does not throw', function () {
@@ -1052,50 +708,48 @@
             });
         });
 
-        test('verifyOddNumber with even number throws', function () {
-            assert.throws(function () {
-                check.verifyOddNumber(8);
-            });
-        });
-
-        test('isEvenNumber with string returns false', function () {
-            assert.isFalse(check.isEvenNumber('2'));
-        });
-
-        test('isEvenNumber with odd number returns false', function () {
-            assert.isFalse(check.isEvenNumber(1));
+        test('isOddNumber function is defined', function () {
+            assert.isFunction(check.isOddNumber);
         });
 
         test('isEvenNumber with even number returns true', function () {
             assert.isTrue(check.isEvenNumber(2));
         });
 
-        test('isEvenNumber with alternative even number returns true', function () {
-            assert.isTrue(check.isEvenNumber(4));
+        test('isEvenNumber with odd number returns false', function () {
+            assert.isFalse(check.isEvenNumber(3));
+        });
+
+        test('isEvenNumber with negative even number returns true', function () {
+            assert.isTrue(check.isEvenNumber(-4));
         });
 
         test('isEvenNumber with negative odd number returns false', function () {
             assert.isFalse(check.isEvenNumber(-5));
         });
 
-        test('isEvenNumber with negative even number returns true', function () {
-            assert.isTrue(check.isEvenNumber(-6));
-        });
-
         test('isEvenNumber with floating point number returns false', function () {
             assert.isFalse(check.isEvenNumber(2.4));
         });
 
+        test('isEvenNumber with string returns false', function () {
+            assert.isFalse(check.isEvenNumber('2'));
+        });
+
         test('verifyEvenNumber with odd number throws', function () {
             assert.throws(function () {
-                check.verifyEvenNumber(7);
+                check.verifyEvenNumber(1);
             });
         });
 
         test('verifyEvenNumber with even number does not throw', function () {
             assert.doesNotThrow(function () {
-                check.verifyEvenNumber(-8);
+                check.verifyEvenNumber(-2);
             });
+        });
+
+        test('map function is defined', function () {
+            assert.isFunction(check.map);
         });
 
         test('map with invalid object throws', function() {
@@ -1149,6 +803,10 @@
             });
         });
 
+        test('every function is defined', function () {
+            assert.isFunction(check.every);
+        });
+
         test('every with invalid object throws', function() {
             assert.throws(function() {
                 check.every(null);
@@ -1170,6 +828,10 @@
         test('every with nested objects evaluates the conjunction of all values', function() {
             assert.isTrue(check.every({ foo: true, bar: { baz: true } }));
             assert.isFalse(check.every({ foo: { bar : { baz : false }, bat: true } }));
+        });
+
+        test('any function is defined', function () {
+            assert.isFunction(check.any);
         });
 
         test('any with invalid object throws', function() {
@@ -1194,38 +856,41 @@
             assert.isFalse(check.any({ foo: { bar: false, baz: false }, bat: false }));
         });
 
-        test('maybe.* modifier is applied on every method', function() {
+        test('maybe modifier is defined', function () {
             assert.isObject(check.maybe);
+        });
+
+        test('maybe modifier is applied on correct number of methods', function() {
             assert.equal(Object.keys(check).length - 1, Object.keys(check.maybe).length);
         });
 
-        test('maybe with <is*> predicate returns true on undefined', function() {
+        test('maybe modifier is not applied to itself', function () {
+            assert.isUndefined(check.maybe.maybe);
+        });
+
+        test('maybe with predicate returns true on undefined', function() {
             assert.isTrue(check.maybe.isString(undefined));
         });
 
-        test('maybe with <is*> predicate returns predicate result on value', function() {
+        test('maybe with predicate returns predicate result on value', function() {
             assert.isFalse(check.maybe.isOddNumber(34));
             assert.isTrue(check.maybe.isOddNumber(33));
         });
 
-        test('maybe with <verify*> thrower does not throw on undefined', function() {
+        test('maybe with thrower does not throw on undefined', function() {
             assert.doesNotThrow(function() {
                 check.maybe.verifyPositiveNumber(undefined);
             });
         });
 
-        test('maybe with <verify*> thrower acts like thrower on value', function() {
+        test('maybe with thrower acts like thrower on value', function() {
             assert.throws(function() {
-                check.maybe.verifyPositiveNumber(-44);
-            });
-            assert.doesNotThrow(function() {
-                check.maybe.verifyString('string');
+                check.maybe.verifyPositiveNumber(-1);
             });
         });
 
-        test('maybe predicate with falsy values evaluates predicate', function() {
+        test('maybe predicate with falsey values evaluates predicate', function() {
             assert.isFalse(check.maybe.isPositiveNumber(0));
-            assert.isFalse(check.maybe.isLength([], 2));
         });
     });
 }(typeof require === 'function' ? require : undefined));
