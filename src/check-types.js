@@ -8,44 +8,27 @@
 (function (globals) {
     'use strict';
 
-    var functions = {
-        verifyQuack: verifyQuack,
-        quacksLike: quacksLike,
-        verifyInstance: verifyInstance,
-        isInstance: isInstance,
-        verifyEmptyObject: verifyEmptyObject,
-        isEmptyObject: isEmptyObject,
-        verifyObject: verifyObject,
-        isObject: isObject,
-        verifyLength: verifyLength,
-        isLength: isLength,
-        verifyArray: verifyArray,
-        isArray: isArray,
-        verifyDate: verifyDate,
-        isDate: isDate,
-        verifyFunction: verifyFunction,
-        isFunction: isFunction,
-        verifyWebUrl: verifyWebUrl,
-        isWebUrl: isWebUrl,
-        verifyUnemptyString: verifyUnemptyString,
-        isUnemptyString:isUnemptyString,
-        verifyString: verifyString,
-        isString: isString,
-        verifyEvenNumber: verifyEvenNumber,
-        isEvenNumber: isEvenNumber,
-        verifyOddNumber: verifyOddNumber,
-        isOddNumber: isOddNumber,
-        verifyPositiveNumber: verifyPositiveNumber,
-        isPositiveNumber: isPositiveNumber,
-        verifyNegativeNumber: verifyNegativeNumber,
-        isNegativeNumber: isNegativeNumber,
-        verifyNumber: verifyNumber,
-        isNumber: isNumber,
-        map: map,
-        every: every,
-        any: any
+    // Default messages when an Error is thrown for a failed predicate.
+    var defaultMessages = {
+        quacksLike: 'Invalid type',
+        isInstance: 'Invalid type',
+        isEmptyObject: 'Invalid object',
+        isObject: 'Invalid lbject',
+        isLength: 'Invalid length',
+        isArray: 'Invalid array',
+        isDate: 'Invalid date',
+        isFunction: 'Invalid function',
+        isWebUrl: 'Invalid web Url',
+        isUnemptyString: 'Invalid String',
+        isString: 'Invalid String',
+        isEvenNumber: 'Invalid Number',
+        isOddNumber: 'Invalid Number',
+        isPositiveNumber: 'Invalid Number',
+        isNegativeNumber: 'Invalid Number',
+        isNumber: 'Invalid Number'
     };
 
+    // Predicate functions
     var predicates = {
         quacksLike: quacksLike,
         isInstance: isInstance,
@@ -65,23 +48,43 @@
         isNumber: isNumber
     };
 
-    var defaultMessages = {
-        quacksLike: 'Invalid type',
-        isInstance: 'Invalid type',
-        isEmptyObject: 'Invalid object',
-        isObject: 'Invalid lbject',
-        isLength: 'Invalid length',
-        isArray: 'Invalid array',
-        isDate: 'Invalid date',
-        isFunction: 'Invalid function',
-        isWebUrl: 'Invalid web Url',
-        isUnemptyString: 'Invalid String',
-        isString: 'Invalid String',
-        isEvenNumber: 'Invalid Number',
-        isOddNumber: 'Invalid Number',
-        isPositiveNumber: 'Invalid Number',
-        isNegativeNumber: 'Invalid Number',
-        isNumber: 'Invalid Number'
+    // Hash of exported functions
+    var functions = {
+        verifyQuack: verified(quacksLike, defaultMessages.quacksLike),
+        quacksLike: quacksLike,
+        verifyInstance: verified(isInstance, defaultMessages.isInstance),
+        isInstance: isInstance,
+        verifyEmptyObject: verified(isEmptyObject, defaultMessages.isEmptyObject),
+        isEmptyObject: isEmptyObject,
+        verifyObject: verified(isObject, defaultMessages.isObject),
+        isObject: isObject,
+        verifyLength: verified(isLength, defaultMessages.isLength),
+        isLength: isLength,
+        verifyArray: verified(isArray, defaultMessages.isArray),
+        isArray: isArray,
+        verifyDate: verified(isDate, defaultMessages.isDate),
+        isDate: isDate,
+        verifyFunction: verified(isFunction, defaultMessages.isFunction),
+        isFunction: isFunction,
+        verifyWebUrl: verified(isWebUrl, defaultMessages.isWebUrl),
+        isWebUrl: isWebUrl,
+        verifyUnemptyString: verified(isUnemptyString, defaultMessages.isUnemptyString),
+        isUnemptyString:isUnemptyString,
+        verifyString: verified(isString, defaultMessages.isString),
+        isString: isString,
+        verifyEvenNumber: verified(isEvenNumber, defaultMessages.isEvenNumber),
+        isEvenNumber: isEvenNumber,
+        verifyOddNumber: verified(isOddNumber, defaultMessages.isOddNumber),
+        isOddNumber: isOddNumber,
+        verifyPositiveNumber: verified(isPositiveNumber, defaultMessages.isPositiveNumber),
+        isPositiveNumber: isPositiveNumber,
+        verifyNegativeNumber: verified(isNegativeNumber, defaultMessages.isNegativeNumber),
+        isNegativeNumber: isNegativeNumber,
+        verifyNumber: verified(isNumber, defaultMessages.isNumber),
+        isNumber: isNumber,
+        map: map,
+        every: every,
+        any: any
     };
 
     // Add `check.verify.*` wrapped version of functions.
