@@ -46,7 +46,6 @@
         any: any
     };
 
-    // Add `check.maybe.*` wrapped version of functions.
     functions.maybe = maybeFunctions(functions);
 
     exportFunctions(functions);
@@ -75,14 +74,6 @@
         }
     }
 
-    function maybe (predicate) {
-        return function() {
-            return arguments[0] === null || arguments[0] === undefined ?
-                true :
-                predicate.apply(null, arguments);
-        };
-    }
-
     /**
      * Public function `quacksLike`.
      *
@@ -98,18 +89,18 @@
      *                       against.
      */
     function quacksLike (thing, duck) {
-        var property;
+        var property, thingVal, duckVal;
 
         verifyObject(thing);
         verifyObject(duck);
 
         for (property in duck) {
             if (duck.hasOwnProperty(property)) {
-                if (thing.hasOwnProperty(property) === false) {
-                    return false;
-                }
-
-                if (typeof thing[property] !== typeof duck[property]) {
+                thingVal = thing[property];
+                duckVal  = duck[property];
+                if (!thing.hasOwnProperty(property)    ||
+                    typeof thingVal !== typeof duckVal ||
+                    (isObject(thingVal) && !quacksLike(thingVal, duckVal))) {
                     return false;
                 }
             }
@@ -615,6 +606,13 @@
         return functions;
     }
 
+    function maybe (predicate) {
+        return function() {
+            return arguments[0] === null || arguments[0] === undefined ?
+                true :
+                predicate.apply(null, arguments);
+        };
+    }
 
     function exportFunctions (functions) {
         if (typeof define === 'function' && define.amd) {
