@@ -118,11 +118,15 @@
             assert.throws(function () {
                 check.verifyQuack({ foo: {} }, { bar: {} });
             });
+            assert.throws(function() {
+                check.verify.quacksLike({ foo: {} }, { bar: {} });
+            });
         });
 
         test('verifyQuack with foo foo properties does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyQuack({ foo: {} }, { foo: {} });
+                check.verify.quacksLike({ foo: {} }, { foo: {} });
             });
         });
 
@@ -161,12 +165,16 @@
         test('verifyInstance with new Error and Error does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyInstance(new Error(), Error);
+                check.verify.isInstance(new Error(), Error);
             });
         });
 
         test('verifyInstance with object and Error throws', function () {
             assert.throws(function () {
                 check.verifyInstance({}, Error);
+            });
+            assert.throws(function() {
+                check.verify.isInstance({}, Error);
             });
         });
 
@@ -197,12 +205,16 @@
         test('verifyEmptyObject with empty object does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyEmptyObject({});
+                check.verify.isEmptyObject({});
             });
         });
 
         test('verifyEmptyObject with non-empty object throws', function () {
             assert.throws(function () {
                 check.verifyEmptyObject({ foo: 'bar' });
+            });
+            assert.throws(function() {
+                check.verify.isEmptyObject({ foo: 'bar' });
             });
         });
 
@@ -237,12 +249,16 @@
         test('verifyObject with object does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyObject({});
+                check.verify.isObject({});
             });
         });
 
         test('verifyObject with null throws', function () {
             assert.throws(function () {
                 check.verifyObject(null);
+            });
+            assert.throws(function() {
+                check.verify.isObject(null);
             });
         });
 
@@ -281,12 +297,16 @@
         test('verifyLength with matching length on array does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyLength([ 1, 2, 3], 3);
+                check.verify.isLength([1, 2, 3], 3);
             });
         });
 
         test('verifyLength with contrasting length on array throws', function () {
             assert.throws(function () {
                 check.verifyLength([ 2, 3], 3);
+            });
+            assert.throws(function() {
+                check.verify.length([2, 3], 3);
             });
         });
 
@@ -317,12 +337,16 @@
         test('verifyArray with array does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyArray([]);
+                check.verify.isArray([]);
             });
         });
 
         test('verifyArray with object throws', function () {
             assert.throws(function () {
                 check.verifyArray({});
+            });
+            assert.throws(function () {
+                check.verify.isArray({});
             });
         });
 
@@ -353,12 +377,16 @@
         test('verifyDate with date does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyDate(new Date());
+                check.verify.isDate(new Date());
             });
         });
 
         test('verifyDate with object throws', function () {
             assert.throws(function () {
                 check.verifyDate({});
+            });
+            assert.throws(function () {
+                check.verify.isDate({});
             });
         });
 
@@ -389,12 +417,16 @@
         test('verifyFunction with function does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyFunction(function () {});
+                check.verify.isFunction(function() {});
             });
         });
 
         test('verifyFunction with object throws', function () {
             assert.throws(function () {
                 check.verifyFunction({});
+            });
+            assert.throws(function() {
+                check.verify.isFunction({});
             });
         });
 
@@ -442,11 +474,15 @@
             assert.throws(function () {
                 check.verifyWebUrl('ftp://example.com/');
             });
+            assert.throws(function() {
+                check.verify.isWebUrl('ftp://example.com/');
+            });
         });
 
         test('verifyWebUrl with http: URL does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyWebUrl('http://localhost');
+                check.verify.isWebUrl('http://localhost');
             });
         });
 
@@ -481,12 +517,16 @@
         test('verifyUnemptyString with string baz does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyUnemptyString('baz');
+                check.verify.isUnemptyString('baz');
             });
         });
 
         test('verifyUnemptyString with empty string throws', function () {
             assert.throws(function () {
                 check.verifyUnemptyString('');
+            });
+            assert.throws(function() {
+                check.verify.isUnemptyString('');
             });
         });
 
@@ -513,12 +553,16 @@
         test('verifyString with string baz does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyString('baz');
+                check.verify.isString('baz');
             });
         });
 
         test('verifyString with object throws', function () {
             assert.throws(function () {
                 check.verifyString({});
+            });
+            assert.throws(function () {
+                check.verify.isString({});
             });
         });
 
@@ -569,12 +613,16 @@
         test('verifyPositiveNumber with positive integer does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyPositiveNumber(1);
+                check.verify.isPositiveNumber(1);
             });
         });
 
         test('verifyPositiveNumber with negative integer throws', function () {
             assert.throws(function () {
                 check.verifyPositiveNumber(-1);
+            });
+            assert.throws(function () {
+                check.verify.isPositiveNumber(-1);
             });
         });
 
@@ -625,12 +673,16 @@
         test('verifyNegativeNumber with negative integer does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyNegativeNumber(-1);
+                check.verify.isNegativeNumber(-1);
             });
         });
 
         test('verifyNegativeNumber with positive integer throws', function () {
             assert.throws(function () {
                 check.verifyNegativeNumber(1);
+            });
+            assert.throws(function () {
+                check.verify.isNegativeNumber(1);
             });
         });
 
@@ -673,12 +725,16 @@
         test('verifyNumber with positive integer does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyNumber(1);
+                check.verify.isNumber(1);
             });
         });
 
         test('verifyNumber with NaN throws', function () {
             assert.throws(function () {
                 check.verifyNumber(NaN);
+            });
+            assert.throws(function () {
+                check.verify.isNumber(NaN);
             });
         });
 
@@ -754,11 +810,15 @@
             assert.throws(function () {
                 check.verifyEvenNumber(1);
             });
+            assert.throws(function () {
+                check.verify.isEvenNumber(1);
+            });
         });
 
         test('verifyEvenNumber with even number does not throw', function () {
             assert.doesNotThrow(function () {
                 check.verifyEvenNumber(-2);
+                check.verify.isEvenNumber(-2);
             });
         });
 
@@ -805,15 +865,15 @@
         test('map with verifier functions does not throw when valid', function() {
             assert.doesNotThrow(function() {
                 check.map({ foo: 'bar', baz: 123 },
-                          { foo: check.verifyString,
-                            baz: check.verifyNumber });
+                          { foo: check.verify.isString,
+                            baz: check.verify.isNumber });
             });
         });
 
         test('map with verifier functions throws when invalid', function() {
             assert.throws(function() {
                 check.map({ foo: 'bar', baz: 123 },
-                          { foo: check.verifyNumber });
+                          { foo: check.verify.isNumber });
             });
         });
 
@@ -894,6 +954,7 @@
         test('maybe with thrower does not throw on undefined', function() {
             assert.doesNotThrow(function() {
                 check.maybe.verifyPositiveNumber(undefined);
+                check.maybe.verify.isPositiveNumber(undefined);
             });
         });
 
@@ -901,10 +962,18 @@
             assert.throws(function() {
                 check.maybe.verifyPositiveNumber(-1);
             });
+            assert.throws(function() {
+                check.maybe.verify.isPositiveNumber(-1);
+            });
         });
 
         test('maybe predicate with falsey values evaluates predicate', function() {
             assert.isFalse(check.maybe.isPositiveNumber(0));
         });
+
+        test('verify modifier is defined', function() {
+            assert.isObject(check.verify);
+        });
+
     });
 }(typeof require === 'function' ? require : undefined));
