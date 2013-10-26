@@ -83,13 +83,13 @@
     functions = mixin(functions, verifies);
 
     // Add `check.verify.*` wrapped version of functions.
-    functions.verify = verifyFunctions(predicates, messages);
+    functions = mixin(functions, { verify: verifyFunctions(predicates, messages) });
 
     // Add `check.maybe.*` wrapped version of functions.
-    functions.maybe  = maybeFunctions(functions);
+    functions = mixin(functions, { maybe: maybeFunctions(functions) });
 
     // Add `check.maybe.verify.*` wrapped version of functions.
-    functions.maybe.verify = maybeFunctions(functions.verify);
+    functions.maybe = mixin(functions.maybe, { verify: maybeFunctions(functions.verify) });
 
     exportFunctions(functions);
 
