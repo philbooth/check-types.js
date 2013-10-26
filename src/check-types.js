@@ -8,8 +8,6 @@
 (function (globals) {
     'use strict';
 
-    var check = {};
-
     var functions = {
         verifyQuack: verifyQuack,
         quacksLike: quacksLike,
