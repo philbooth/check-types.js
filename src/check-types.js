@@ -604,15 +604,15 @@
     }
 
     function maybeFunctions (predicates) {
-        var property, fn, maybeFunctions;
-        maybeFunctions = {};
+        var property, fn, functions;
+        functions = {};
         for (property in predicates) {
-            if (functions.hasOwnProperty(property)) {
+            if (predicates.hasOwnProperty(property)) {
                 fn = predicates[property];
-                maybeFunctions[property] = maybe(fn);
+                functions[property] = maybe(fn);
             }
         }
-        return maybeFunctions;
+        return functions;
     }
 
 
