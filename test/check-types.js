@@ -100,6 +100,16 @@
             assert.isFalse(check.quacksLike({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: (function () {}) }));
         });
 
+        test('quacksLike with different nested objects returns false', function() {
+            assert.isFalse(check.quacksLike({ foo: { bar: { qux: 'string' }, baz: 23 }},
+                                            { foo: { bar: { qux: 123      }, baz: 66 }}));
+        });
+
+        test('quacksLike with alike nested objects returns true', function() {
+            assert.isTrue(check.quacksLike({ foo: { bar: { qux: 'string' }, baz: 23 }},
+                                           { foo: { bar: { qux: 'other'  }, baz: 66 }}));
+        });
+
         test('verifyQuack function is defined', function () {
             assert.isFunction(check.verifyQuack);
         });
@@ -898,4 +908,3 @@
         });
     });
 }(typeof require === 'function' ? require : undefined));
-
