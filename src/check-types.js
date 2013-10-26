@@ -73,6 +73,7 @@
         }
     }
 
+
     /**
      * Public function `quacksLike`.
      *
@@ -88,18 +89,18 @@
      *                       against.
      */
     function quacksLike (thing, duck) {
-        var property;
+        var property, thingVal, duckVal;
 
         verifyObject(thing);
         verifyObject(duck);
 
         for (property in duck) {
             if (duck.hasOwnProperty(property)) {
-                if (thing.hasOwnProperty(property) === false) {
-                    return false;
-                }
-
-                if (typeof thing[property] !== typeof duck[property]) {
+                thingVal = thing[property];
+                duckVal  = duck[property];
+                if (!thing.hasOwnProperty(property)    ||
+                    typeof thingVal !== typeof duckVal ||
+                    (isObject(thingVal) && !quacksLike(thingVal, duckVal))) {
                     return false;
                 }
             }
@@ -628,4 +629,3 @@
         }
     }
 }(this));
-
