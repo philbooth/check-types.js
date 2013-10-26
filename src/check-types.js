@@ -8,6 +8,8 @@
 (function (globals) {
     'use strict';
 
+    var check = {};
+
     var functions = {
         verifyQuack: verifyQuack,
         quacksLike: quacksLike,
@@ -46,8 +48,52 @@
         any: any
     };
 
+    var predicates = {
+        quacksLike: quacksLike,
+        isInstance: isInstance,
+        isEmptyObject: isEmptyObject,
+        isObject: isObject,
+        isLength: isLength,
+        isArray: isArray,
+        isDate: isDate,
+        isFunction: isFunction,
+        isWebUrl: isWebUrl,
+        isUnemptyString: isUnemptyString,
+        isString: isString,
+        isEvenNumber: isEvenNumber,
+        isOddNumber: isOddNumber,
+        isPositiveNumber: isPositiveNumber,
+        isNegativeNumber: isNegativeNumber,
+        isNumber: isNumber
+    };
+
+    var defaultMessages = {
+        quacksLike: 'Invalid type',
+        isInstance: 'Invalid type',
+        isEmptyObject: 'Invalid object',
+        isObject: 'Invalid lbject',
+        isLength: 'Invalid length',
+        isArray: 'Invalid array',
+        isDate: 'Invalid date',
+        isFunction: 'Invalid function',
+        isWebUrl: 'Invalid web Url',
+        isUnemptyString: 'Invalid String',
+        isString: 'Invalid String',
+        isEvenNumber: 'Invalid Number',
+        isOddNumber: 'Invalid Number',
+        isPositiveNumber: 'Invalid Number',
+        isNegativeNumber: 'Invalid Number',
+        isNumber: 'Invalid Number'
+    };
+
+    // Add `check.verify.*` wrapped version of functions.
+    functions.verify = verifyFunctions(predicates, defaultMessages);
+
     // Add `check.maybe.*` wrapped version of functions.
-    functions.maybe = maybeFunctions(functions);
+    functions.maybe  = maybeFunctions(functions);
+
+    // Add `check.maybe.verify.*` wrapped version of functions.
+    functions.maybe.verify = maybeFunctions(functions.verify);
 
     exportFunctions(functions);
 
@@ -80,6 +126,16 @@
             return arguments[0] === null || arguments[0] === undefined ?
                 true :
                 predicate.apply(null, arguments);
+        };
+    }
+
+    function verified (fn, defaultMessage) {
+        return function() {
+            var message = arguments[arguments.length-1];
+            message = isString(message) ? message : null;
+            if (!fn.apply(null, arguments)) {
+                throw new Error(message || defaultMessage);
+            }
         };
     }
 
@@ -613,6 +669,19 @@
             }
         }
         return functions;
+    }
+
+    function verifyFunctions (predicates, defaultMessages) {
+        var property, verifiedPredicates, predicate, message;
+        verifiedPredicates = {};
+        for (property in predicates) {
+            if (predicates.hasOwnProperty(property)) {
+                predicate = predicates[property];
+                message = defaultMessages[property];
+                verifiedPredicates[property] = verified(predicate, message);
+            }
+        }
+        return verifiedPredicates;
     }
 
 
