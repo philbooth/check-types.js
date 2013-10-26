@@ -8,28 +8,10 @@
 (function (globals) {
     'use strict';
 
-    // Default messages when an Error is thrown for a failed predicate.
-    var defaultMessages = {
-        quacksLike: 'Invalid type',
-        isInstance: 'Invalid type',
-        isEmptyObject: 'Invalid object',
-        isObject: 'Invalid lbject',
-        isLength: 'Invalid length',
-        isArray: 'Invalid array',
-        isDate: 'Invalid date',
-        isFunction: 'Invalid function',
-        isWebUrl: 'Invalid web Url',
-        isUnemptyString: 'Invalid String',
-        isString: 'Invalid String',
-        isEvenNumber: 'Invalid Number',
-        isOddNumber: 'Invalid Number',
-        isPositiveNumber: 'Invalid Number',
-        isNegativeNumber: 'Invalid Number',
-        isNumber: 'Invalid Number'
-    };
+    var messages, predicates, verifies, functions;
 
     // Predicate functions
-    var predicates = {
+    predicates = {
         quacksLike: quacksLike,
         isInstance: isInstance,
         isEmptyObject: isEmptyObject,
@@ -48,47 +30,60 @@
         isNumber: isNumber
     };
 
-    // Hash of exported functions
-    var functions = {
-        verifyQuack: verify(quacksLike, defaultMessages.quacksLike),
-        quacksLike: quacksLike,
-        verifyInstance: verify(isInstance, defaultMessages.isInstance),
-        isInstance: isInstance,
-        verifyEmptyObject: verify(isEmptyObject, defaultMessages.isEmptyObject),
-        isEmptyObject: isEmptyObject,
-        verifyObject: verify(isObject, defaultMessages.isObject),
-        isObject: isObject,
-        verifyLength: verify(isLength, defaultMessages.isLength),
-        isLength: isLength,
-        verifyArray: verify(isArray, defaultMessages.isArray),
-        isArray: isArray,
-        verifyDate: verify(isDate, defaultMessages.isDate),
-        isDate: isDate,
-        verifyFunction: verify(isFunction, defaultMessages.isFunction),
-        isFunction: isFunction,
-        verifyWebUrl: verify(isWebUrl, defaultMessages.isWebUrl),
-        isWebUrl: isWebUrl,
-        verifyUnemptyString: verify(isUnemptyString, defaultMessages.isUnemptyString),
-        isUnemptyString:isUnemptyString,
-        verifyString: verify(isString, defaultMessages.isString),
-        isString: isString,
-        verifyEvenNumber: verify(isEvenNumber, defaultMessages.isEvenNumber),
-        isEvenNumber: isEvenNumber,
-        verifyOddNumber: verify(isOddNumber, defaultMessages.isOddNumber),
-        isOddNumber: isOddNumber,
-        verifyPositiveNumber: verify(isPositiveNumber, defaultMessages.isPositiveNumber),
-        isPositiveNumber: isPositiveNumber,
-        verifyNegativeNumber: verify(isNegativeNumber, defaultMessages.isNegativeNumber),
-        isNegativeNumber: isNegativeNumber,
-        verifyNumber: verify(isNumber, defaultMessages.isNumber),
-        isNumber: isNumber,
+    // Default messages when an Error is thrown for a failed predicate.
+    messages = {
+        quacksLike: 'Invalid type',
+        isInstance: 'Invalid type',
+        isEmptyObject: 'Invalid object',
+        isObject: 'Invalid object',
+        isLength: 'Invalid length',
+        isArray: 'Invalid array',
+        isDate: 'Invalid date',
+        isFunction: 'Invalid function',
+        isWebUrl: 'Invalid web Url',
+        isUnemptyString: 'Invalid String',
+        isString: 'Invalid String',
+        isEvenNumber: 'Invalid Number',
+        isOddNumber: 'Invalid Number',
+        isPositiveNumber: 'Invalid Number',
+        isNegativeNumber: 'Invalid Number',
+        isNumber: 'Invalid Number'
+    };
+
+    // Thrower versions of predicate functions
+    verifies = {
+        verifyQuack: verify(quacksLike, messages.quacksLike),
+        verifyInstance: verify(isInstance, messages.isInstance),
+        verifyEmptyObject: verify(isEmptyObject, messages.isEmptyObject),
+        verifyObject: verify(isObject, messages.isObject),
+        verifyLength: verify(isLength, messages.isLength),
+        verifyArray: verify(isArray, messages.isArray),
+        verifyDate: verify(isDate, messages.isDate),
+        verifyFunction: verify(isFunction, messages.isFunction),
+        verifyWebUrl: verify(isWebUrl, messages.isWebUrl),
+        verifyUnemptyString: verify(isUnemptyString, messages.isUnemptyString),
+        verifyString: verify(isString, messages.isString),
+        verifyEvenNumber: verify(isEvenNumber, messages.isEvenNumber),
+        verifyOddNumber: verify(isOddNumber, messages.isOddNumber),
+        verifyPositiveNumber: verify(isPositiveNumber, messages.isPositiveNumber),
+        verifyNegativeNumber: verify(isNegativeNumber, messages.isNegativeNumber),
+        verifyNumber: verify(isNumber, messages.isNumber)
+    };
+
+    functions = {
         map: map,
         every: every,
         any: any
     };
 
+    // Add predicates to exported functions
+    functions = mixin(functions, predicates);
+
+    // Add thrower functions for backwards compatibility
+    functions = mixin(functions, verifies);
+
     // Add `check.verify.*` wrapped version of functions.
-    functions.verify = verifyFunctions(predicates, defaultMessages);
+    functions.verify = verifyFunctions(predicates, messages);
 
     // Add `check.maybe.*` wrapped version of functions.
     functions.maybe  = maybeFunctions(functions);
@@ -114,6 +109,16 @@
                 throw new Error(message || defaultMessage);
             }
         };
+    }
+
+    function mixin (target, source) {
+        var property;
+        for (property in source) {
+            if (source.hasOwnProperty(property)) {
+                target[property] = source[property];
+            }
+        }
+        return target;
     }
 
     /**
@@ -447,17 +452,17 @@
         return functions;
     }
 
-    function verifyFunctions (predicates, defaultMessages) {
-        var property, verifiedPredicates, predicate, message;
-        verifiedPredicates = {};
+    function verifyFunctions (predicates, messages) {
+        var property, functions, fn, message;
+        functions = {};
         for (property in predicates) {
             if (predicates.hasOwnProperty(property)) {
-                predicate = predicates[property];
-                message = defaultMessages[property];
-                verifiedPredicates[property] = verify(predicate, message);
+                fn = predicates[property];
+                message = messages[property];
+                functions[property] = verify(fn, message);
             }
         }
-        return verifiedPredicates;
+        return functions;
     }
 
 
