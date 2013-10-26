@@ -46,8 +46,10 @@
         any: any
     };
 
-    wrapMaybeFunctions();
-    exportFunctions();
+    // Add `check.maybe.*` wrapped version of functions.
+    functions.maybe = maybeFunctions(functions);
+
+    exportFunctions(functions);
 
     /**
      * Public function `verifyQuack`.
@@ -71,6 +73,14 @@
         if (fn.apply(null, args) === false) {
             throw new Error(message || defaultMessage);
         }
+    }
+
+    function maybe (predicate) {
+        return function() {
+            return arguments[0] === null || arguments[0] === undefined ?
+                true :
+                predicate.apply(null, arguments);
+        };
     }
 
     /**
@@ -593,30 +603,20 @@
         return false;
     }
 
-    function wrapMaybeFunctions () {
-        var property, fn;
-
-        functions.maybe = {};
-
-        for (property in functions) {
+    function maybeFunctions (predicates) {
+        var property, fn, maybeFunctions;
+        maybeFunctions = {};
+        for (property in predicates) {
             if (functions.hasOwnProperty(property)) {
-                fn = functions[property];
-                functions.maybe[property] = maybe(fn);
+                fn = predicates[property];
+                maybeFunctions[property] = maybe(fn);
             }
         }
-
-        delete functions.maybe.maybe;
+        return maybeFunctions;
     }
 
-    function maybe (predicate) {
-        return function() {
-            return arguments[0] === null || arguments[0] === undefined ?
-                true :
-                predicate.apply(null, arguments);
-        };
-    }
 
-    function exportFunctions () {
+    function exportFunctions (functions) {
         if (typeof define === 'function' && define.amd) {
             define(function () {
                 return functions;
@@ -628,4 +628,3 @@
         }
     }
 }(this));
-
