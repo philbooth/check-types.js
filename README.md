@@ -21,6 +21,7 @@ and throwing exceptions.
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
+* [What changed from 0.x to 1.x?](#what-changed-from-0x-to-1x)
 * [How do I set up the build environment?](#how-do-i-set-up-the-build-environment)
 * [What license is it released under?](#what-license-is-it-released-under)
 
@@ -343,6 +344,26 @@ check.any(
 // Returns true
 ```
 
+## What changed from 0.x to 1.x?
+
+Breaking changes
+were made to the API
+in version 1.0.0.
+
+Specifically,
+all of the predicates
+were renamed
+from `check.isXxxx`
+to `check.xxx` and
+all of the verifiers
+were renamed
+from `check.verifyXxxx`
+to `check.verify.xxx`.
+
+You can see
+a full list of changes
+in the [history].
+
 ## How do I set up the build environment?
 
 The build environment relies on
@@ -370,6 +391,7 @@ open `test/check-types.html`.
 [node]: http://nodejs.org/
 [browserify]: http://browserify.org/
 [require]: http://requirejs.org/
+[history]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
 [mocha]: http://visionmedia.github.com/mocha
