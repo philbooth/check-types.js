@@ -3,7 +3,7 @@
 [![Build status][ci-image]][ci-status]
 
 A tiny JavaScript library
-for checking types and values
+for checking arguments
 and throwing exceptions.
 
 * [Why would I want that?](#why-would-i-want-that)
