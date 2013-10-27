@@ -360,9 +360,8 @@ were renamed
 from `check.verifyXxxx`
 to `check.verify.xxx`.
 
-You can see
-a full list of changes
-in the [history].
+See the [history]
+for more details.
 
 ## How do I set up the build environment?
 
