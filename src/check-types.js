@@ -161,7 +161,7 @@
      * Public function `length`.
      *
      * Returns `true` if something is has a length property
-     * matching the specified value, `false` otherwise.
+     * that equals `value`, `false` otherwise.
      *
      * @param thing The thing to test.
      * @param value The required length to test against.
