@@ -350,6 +350,62 @@
             assert.isFalse(check.string({}));
         });
 
+        test('oddNumber function is defined', function () {
+            assert.isFunction(check.oddNumber);
+        });
+
+        test('oddNumber with odd number returns true', function () {
+            assert.isTrue(check.oddNumber(1));
+        });
+
+        test('oddNumber with even number returns false', function () {
+            assert.isFalse(check.oddNumber(2));
+        });
+
+        test('oddNumber with negative odd number returns true', function () {
+            assert.isTrue(check.oddNumber(-3));
+        });
+
+        test('oddNumber with negative even number returns false', function () {
+            assert.isFalse(check.oddNumber(-4));
+        });
+
+        test('oddNumber with floating point number returns false', function () {
+            assert.isFalse(check.evenNumber(5.5));
+        });
+
+        test('oddNumber with string returns false', function () {
+            assert.isFalse(check.oddNumber('1'));
+        });
+
+        test('evenNumber function is defined', function () {
+            assert.isFunction(check.evenNumber);
+        });
+
+        test('evenNumber with even number returns true', function () {
+            assert.isTrue(check.evenNumber(2));
+        });
+
+        test('evenNumber with odd number returns false', function () {
+            assert.isFalse(check.evenNumber(3));
+        });
+
+        test('evenNumber with negative even number returns true', function () {
+            assert.isTrue(check.evenNumber(-4));
+        });
+
+        test('evenNumber with negative odd number returns false', function () {
+            assert.isFalse(check.evenNumber(-5));
+        });
+
+        test('evenNumber with floating point number returns false', function () {
+            assert.isFalse(check.evenNumber(2.4));
+        });
+
+        test('evenNumber with string returns false', function () {
+            assert.isFalse(check.evenNumber('2'));
+        });
+
         test('positiveNumber function is defined', function () {
             assert.isFunction(check.positiveNumber);
         });
@@ -460,62 +516,6 @@
 
         test('number with string returns false', function () {
             assert.isFalse(check.number('1'));
-        });
-
-        test('oddNumber function is defined', function () {
-            assert.isFunction(check.oddNumber);
-        });
-
-        test('oddNumber with odd number returns true', function () {
-            assert.isTrue(check.oddNumber(1));
-        });
-
-        test('oddNumber with even number returns false', function () {
-            assert.isFalse(check.oddNumber(2));
-        });
-
-        test('oddNumber with negative odd number returns true', function () {
-            assert.isTrue(check.oddNumber(-3));
-        });
-
-        test('oddNumber with negative even number returns false', function () {
-            assert.isFalse(check.oddNumber(-4));
-        });
-
-        test('oddNumber with floating point number returns false', function () {
-            assert.isFalse(check.evenNumber(5.5));
-        });
-
-        test('oddNumber with string returns false', function () {
-            assert.isFalse(check.oddNumber('1'));
-        });
-
-        test('evenNumber function is defined', function () {
-            assert.isFunction(check.evenNumber);
-        });
-
-        test('evenNumber with even number returns true', function () {
-            assert.isTrue(check.evenNumber(2));
-        });
-
-        test('evenNumber with odd number returns false', function () {
-            assert.isFalse(check.evenNumber(3));
-        });
-
-        test('evenNumber with negative even number returns true', function () {
-            assert.isTrue(check.evenNumber(-4));
-        });
-
-        test('evenNumber with negative odd number returns false', function () {
-            assert.isFalse(check.evenNumber(-5));
-        });
-
-        test('evenNumber with floating point number returns false', function () {
-            assert.isFalse(check.evenNumber(2.4));
-        });
-
-        test('evenNumber with string returns false', function () {
-            assert.isFalse(check.evenNumber('2'));
         });
 
         test('map function is defined', function () {
