@@ -4,7 +4,7 @@
 
 * API overhaul:
     * Predicates exported as `check.xxx` rather than `check.isXxx`.
-    * Verifiers exported as `check.verify.xxx` rather than `check.verifyXxx`.
+    * Verifiers exported as `check.verify.xxx` rather than `check.verifyXxx`. Thanks to [Marc-Olivier Ricard][marcolivier].
 * Unit tests added for error messages.
 
 ## 0.8
@@ -17,6 +17,6 @@
 * Added `check.map`, `check.every` and `check.any` batch operations. Thanks to [Marc-Olivier Ricard][marcolivier].
 * Harmonised the node and browser unit tests.
 
-[marcolivier][https://github.com/ricardmo]
-[gleb][https://github.com/bahmutov]
+[marcolivier]: https://github.com/ricardmo
+[gleb]: https://github.com/bahmutov
 
