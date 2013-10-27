@@ -12,7 +12,7 @@
 
     // Predicate functions
     predicates = {
-        quacksLike: quacksLike,
+        isLike: isLike,
         isInstance: isInstance,
         isEmptyObject: isEmptyObject,
         isObject: isObject,
@@ -32,7 +32,7 @@
 
     // Default messages when an Error is thrown for a failed predicate.
     messages = {
-        quacksLike: 'Invalid type',
+        isLike: 'Invalid type',
         isInstance: 'Invalid type',
         isEmptyObject: 'Invalid object',
         isObject: 'Invalid object',
@@ -52,7 +52,7 @@
 
     // Thrower versions of predicate functions
     verifies = {
-        verifyQuack: verify(quacksLike, messages.quacksLike),
+        verifyQuack: verify(isLike, messages.isLike),
         verifyInstance: verify(isInstance, messages.isInstance),
         verifyEmptyObject: verify(isEmptyObject, messages.isEmptyObject),
         verifyObject: verify(isObject, messages.isObject),
@@ -94,7 +94,7 @@
     exportFunctions(functions);
 
     /**
-     * Public function `quacksLike`.
+     * Public function `isLike`.
      *
      * Tests whether an object 'quacks like a duck'.
      * Returns `true` if the first argument has all of
@@ -107,7 +107,7 @@
      *                       'duck', that the test is
      *                       against.
      */
-    function quacksLike (thing, duck) {
+    function isLike (thing, duck) {
         var property, thingVal, duckVal;
 
         verify(isObject)(thing);
@@ -119,7 +119,7 @@
                 duckVal  = duck[property];
                 if (!thing.hasOwnProperty(property)    ||
                     typeof thingVal !== typeof duckVal ||
-                    (isObject(thingVal) && !quacksLike(thingVal, duckVal))) {
+                    (isObject(thingVal) && !isLike(thingVal, duckVal))) {
                     return false;
                 }
             }
@@ -334,7 +334,7 @@
      * Public function `map`.
      *
      * Returns the results hash of mapping each predicate to the
-     * corresponding thing's property. Similar to `quacksLike` but
+     * corresponding thing's property. Similar to `isLike` but
      * with functions instead of values.
      *
      * @param things {object}     The things to test.
