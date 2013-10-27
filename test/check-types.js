@@ -679,6 +679,38 @@
             });
         });
 
+        test('verify modifier throws Error instance', function () {
+            try {
+                check.verify.unemptyString('');
+            } catch (error) {
+                assert.instanceOf(error, Error);
+            }
+        });
+
+        test('verify modifier sets default message on Error instance', function () {
+            try {
+                check.verify.unemptyString('');
+            } catch (error) {
+                assert.strictEqual(error.message, 'Invalid string');
+            }
+        });
+
+        test('verify modifer sets message on Error instance', function () {
+            try {
+                check.verify.unemptyString('', 'foo bar');
+            } catch (error) {
+                assert.strictEqual(error.message, 'foo bar');
+            }
+        });
+
+        test('verify modifiers prohibits empty error messages', function () {
+            try {
+                check.verify.unemptyString('', '');
+            } catch (error) {
+                assert.strictEqual(error.message, 'Invalid string');
+            }
+        });
+
         test('maybe modifier is defined', function () {
             assert.isObject(check.maybe);
         });
