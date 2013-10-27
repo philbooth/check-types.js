@@ -659,6 +659,10 @@
             assert.isUndefined(check.verify.verify);
         });
 
+        test('verify modifier is not applied to maybe', function () {
+            assert.isUndefined(check.verify.maybe);
+        });
+
         test('verify modifier has correct number of keys', function () {
             assert.strictEqual(Object.keys(check.verify).length, 16);
         });
@@ -679,8 +683,17 @@
             assert.isObject(check.maybe);
         });
 
+        test('maybe modifier is not applied to itself', function () {
+            assert.isUndefined(check.maybe.maybe);
+        });
+
+        test('maybe modifier is applied to verify', function () {
+            assert.isObject(check.maybe.verify);
+            assert.strictEqual(Object.keys(check.maybe.verify).length, 16);
+        });
+
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 16);
+            assert.strictEqual(Object.keys(check.maybe).length, 17);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -696,7 +709,13 @@
             assert.isTrue(check.maybe.oddNumber(1));
         });
 
-        test('maybe verify modifier throws on bad value', function() {
+        test('maybe verify modifier does not throw when value is correct', function() {
+            assert.doesNotThrow(function() {
+                check.maybe.verify.positiveNumber(1);
+            });
+        });
+
+        test('maybe verify modifier throws when value is wrong', function() {
             assert.throws(function() {
                 check.maybe.verify.positiveNumber(-1);
             });

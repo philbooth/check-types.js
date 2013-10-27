@@ -57,6 +57,7 @@
     functions = mixin(functions, predicates);
     verify = createModifiedPredicates(verifyModifier);
     maybe = createModifiedPredicates(maybeModifier);
+    maybe.verify = createModifiedFunctions(maybeModifier, verify);
 
     exportFunctions(mixin(functions, {
         verify: verify,
@@ -429,11 +430,15 @@
     }
 
     function createModifiedPredicates (modifier) {
+        return createModifiedFunctions(modifier, predicates);
+    }
+
+    function createModifiedFunctions (modifier, functions) {
         var name, result = {};
 
-        for (name in predicates) {
-            if (predicates.hasOwnProperty(name)) {
-                result[name] = modifier(predicates[name], messages[name]);
+        for (name in functions) {
+            if (functions.hasOwnProperty(name)) {
+                result[name] = modifier(functions[name], messages[name]);
             }
         }
 
