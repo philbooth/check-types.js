@@ -8,66 +8,44 @@
 (function (globals) {
     'use strict';
 
-    var messages, predicates, verifies, functions;
+    var messages, predicates, functions, verify, maybe;
 
-    // Predicate functions
     predicates = {
-        isLike: isLike,
-        isInstance: isInstance,
-        isEmptyObject: isEmptyObject,
-        isObject: isObject,
-        isLength: isLength,
-        isArray: isArray,
-        isDate: isDate,
-        isFunction: isFunction,
-        isWebUrl: isWebUrl,
-        isUnemptyString: isUnemptyString,
-        isString: isString,
-        isEvenNumber: isEvenNumber,
-        isOddNumber: isOddNumber,
-        isPositiveNumber: isPositiveNumber,
-        isNegativeNumber: isNegativeNumber,
-        isNumber: isNumber
+        like: like,
+        instance: instance,
+        emptyObject: emptyObject,
+        object: object,
+        length: length,
+        array: array,
+        date: date,
+        fn: fn,
+        webUrl: webUrl,
+        unemptyString: unemptyString,
+        string: string,
+        evenNumber: evenNumber,
+        oddNumber: oddNumber,
+        positiveNumber: positiveNumber,
+        negativeNumber: negativeNumber,
+        number: number
     };
 
-    // Default messages when an Error is thrown for a failed predicate.
     messages = {
-        isLike: 'Invalid type',
-        isInstance: 'Invalid type',
-        isEmptyObject: 'Invalid object',
-        isObject: 'Invalid object',
-        isLength: 'Invalid length',
-        isArray: 'Invalid array',
-        isDate: 'Invalid date',
-        isFunction: 'Invalid function',
-        isWebUrl: 'Invalid web Url',
-        isUnemptyString: 'Invalid String',
-        isString: 'Invalid String',
-        isEvenNumber: 'Invalid Number',
-        isOddNumber: 'Invalid Number',
-        isPositiveNumber: 'Invalid Number',
-        isNegativeNumber: 'Invalid Number',
-        isNumber: 'Invalid Number'
-    };
-
-    // Thrower versions of predicate functions
-    verifies = {
-        verifyQuack: verify(isLike, messages.isLike),
-        verifyInstance: verify(isInstance, messages.isInstance),
-        verifyEmptyObject: verify(isEmptyObject, messages.isEmptyObject),
-        verifyObject: verify(isObject, messages.isObject),
-        verifyLength: verify(isLength, messages.isLength),
-        verifyArray: verify(isArray, messages.isArray),
-        verifyDate: verify(isDate, messages.isDate),
-        verifyFunction: verify(isFunction, messages.isFunction),
-        verifyWebUrl: verify(isWebUrl, messages.isWebUrl),
-        verifyUnemptyString: verify(isUnemptyString, messages.isUnemptyString),
-        verifyString: verify(isString, messages.isString),
-        verifyEvenNumber: verify(isEvenNumber, messages.isEvenNumber),
-        verifyOddNumber: verify(isOddNumber, messages.isOddNumber),
-        verifyPositiveNumber: verify(isPositiveNumber, messages.isPositiveNumber),
-        verifyNegativeNumber: verify(isNegativeNumber, messages.isNegativeNumber),
-        verifyNumber: verify(isNumber, messages.isNumber)
+        like: 'Invalid type',
+        instance: 'Invalid type',
+        emptyObject: 'Invalid object',
+        object: 'Invalid object',
+        length: 'Invalid length',
+        array: 'Invalid array',
+        date: 'Invalid date',
+        fn: 'Invalid function',
+        webUrl: 'Invalid URL',
+        unemptyString: 'Invalid string',
+        string: 'Invalid string',
+        evenNumber: 'Invalid number',
+        oddNumber: 'Invalid number',
+        positiveNumber: 'Invalid number',
+        negativeNumber: 'Invalid number',
+        number: 'Invalid number'
     };
 
     functions = {
@@ -76,25 +54,17 @@
         any: any
     };
 
-    // Add predicates to exported functions
     functions = mixin(functions, predicates);
+    verify = createModifiedPredicates(verifyModifier);
+    maybe = createModifiedPredicates(maybeModifier);
 
-    // Add thrower functions for backwards compatibility
-    functions = mixin(functions, verifies);
-
-    // Add `check.verify.*` wrapped version of functions.
-    functions = mixin(functions, { verify: verifyFunctions(predicates, messages) });
-
-    // Add `check.maybe.*` wrapped version of functions.
-    functions = mixin(functions, { maybe: maybeFunctions(functions) });
-
-    // Add `check.maybe.verify.*` wrapped version of functions.
-    functions.maybe = mixin(functions.maybe, { verify: maybeFunctions(functions.verify) });
-
-    exportFunctions(functions);
+    exportFunctions(mixin(functions, {
+        verify: verify,
+        maybe: maybe
+    }));
 
     /**
-     * Public function `isLike`.
+     * Public function `like`.
      *
      * Tests whether an object 'quacks like a duck'.
      * Returns `true` if the first argument has all of
@@ -107,19 +77,19 @@
      *                       'duck', that the test is
      *                       against.
      */
-    function isLike (thing, duck) {
-        var property, thingVal, duckVal;
+    function like (thing, duck) {
+        var name;
 
-        verify(isObject)(thing);
-        verify(isObject)(duck);
+        verify.object(thing);
+        verify.object(duck);
 
-        for (property in duck) {
-            if (duck.hasOwnProperty(property)) {
-                thingVal = thing[property];
-                duckVal  = duck[property];
-                if (!thing.hasOwnProperty(property)    ||
-                    typeof thingVal !== typeof duckVal ||
-                    (isObject(thingVal) && !isLike(thingVal, duckVal))) {
+        for (name in duck) {
+            if (duck.hasOwnProperty(name)) {
+                if (thing.hasOwnProperty(name) === false || typeof thing[name] !== typeof duck[name]) {
+                    return false;
+                }
+
+                if (object(thing[name]) && like(thing[name], duck[name]) === false) {
                     return false;
                 }
             }
@@ -129,7 +99,7 @@
     }
 
     /**
-     * Public function `isInstance`.
+     * Public function `instance`.
      *
      * Returns `true` if an object is an instance of a prototype,
      * `false` otherwise.
@@ -138,12 +108,12 @@
      * @param prototype {function} The prototype that the
      *                             test is against.
      */
-    function isInstance (thing, prototype) {
+    function instance (thing, prototype) {
         if (typeof thing === 'undefined' || thing === null) {
             return false;
         }
 
-        if (isFunction(prototype) && thing instanceof prototype) {
+        if (fn(prototype) && thing instanceof prototype) {
             return true;
         }
 
@@ -151,16 +121,17 @@
     }
 
     /**
-     * Public function `isEmptyObject`.
+     * Public function `emptyObject`.
      *
-     * Returns `true` if something is an empty, non-null, non-array object, `false` otherwise.
+     * Returns `true` if something is an empty, non-null,
+     * non-array object, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isEmptyObject (thing) {
+    function emptyObject (thing) {
         var property;
 
-        if (isObject(thing)) {
+        if (object(thing)) {
             for (property in thing) {
                 if (thing.hasOwnProperty(property)) {
                     return false;
@@ -174,38 +145,38 @@
     }
 
     /**
-     * Public function `isObject`.
+     * Public function `object`.
      *
      * Returns `true` if something is a non-null, non-array,
      * non-date object, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isObject (thing) {
-        return typeof thing === 'object' && thing !== null && isArray(thing) === false && isDate(thing) === false;
+    function object (thing) {
+        return typeof thing === 'object' && thing !== null && array(thing) === false && date(thing) === false;
     }
 
     /**
-     * Public function `isLength`.
+     * Public function `length`.
      *
      * Returns `true` if something is has a length property
      * matching the specified value, `false` otherwise.
      *
-     * @param thing  The thing to test.
-     * @param length The required length to test against.
+     * @param thing The thing to test.
+     * @param value The required length to test against.
      */
-    function isLength (thing, length) {
-        return thing && thing.length === length;
+    function length (thing, value) {
+        return thing && thing.length === value;
     }
 
     /**
-     * Public function `isArray`.
+     * Public function `array`.
      *
      * Returns `true` something is an array, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isArray (thing) {
+    function array (thing) {
         if (Array.isArray) {
             return Array.isArray(thing);
         }
@@ -214,119 +185,119 @@
     }
 
     /**
-     * Public function `isDate`.
+     * Public function `date`.
      *
      * Returns `true` something is a date, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isDate (thing) {
+    function date (thing) {
         return Object.prototype.toString.call(thing) === '[object Date]';
     }
 
     /**
-     * Public function `isFunction`.
+     * Public function `fn`.
      *
      * Returns `true` if something is function, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isFunction (thing) {
+    function fn (thing) {
         return typeof thing === 'function';
     }
 
     /**
-     * Public function `isWebUrl`.
+     * Public function `webUrl`.
      *
      * Returns `true` if something is an HTTP or HTTPS URL,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isWebUrl (thing) {
-        return isUnemptyString(thing) && /^https?:\/\/.+/.test(thing);
+    function webUrl (thing) {
+        return unemptyString(thing) && /^https?:\/\/.+/.test(thing);
     }
 
     /**
-     * Public function `isUnemptyString`.
+     * Public function `unemptyString`.
      *
      * Returns `true` if something is a non-empty string, `false`
      * otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isUnemptyString (thing) {
-        return isString(thing) && thing !== '';
+    function unemptyString (thing) {
+        return string(thing) && thing !== '';
     }
 
     /**
-     * Public function `isString`.
+     * Public function `string`.
      *
      * Returns `true` if something is a string, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isString (thing) {
+    function string (thing) {
         return typeof thing === 'string';
     }
 
     /**
-     * Public function `isOddNumber`.
+     * Public function `oddNumber`.
      *
      * Returns `true` if something is an odd number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isOddNumber (thing) {
-        return isNumber(thing) && (thing % 2 === 1 || thing % 2 === -1);
+    function oddNumber (thing) {
+        return number(thing) && (thing % 2 === 1 || thing % 2 === -1);
     }
 
     /**
-     * Public function `isEvenNumber`.
+     * Public function `evenNumber`.
      *
      * Returns `true` if something is an even number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isEvenNumber (thing) {
-        return isNumber(thing) && thing % 2 === 0;
+    function evenNumber (thing) {
+        return number(thing) && thing % 2 === 0;
     }
 
     /**
-     * Public function `isPositiveNumber`.
+     * Public function `positiveNumber`.
      *
      * Returns `true` if something is a positive number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isPositiveNumber (thing) {
-        return isNumber(thing) && thing > 0;
+    function positiveNumber (thing) {
+        return number(thing) && thing > 0;
     }
 
     /**
-     * Public function `isNegativeNumber`.
+     * Public function `negativeNumber`.
      *
      * Returns `true` if something is a positive number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isNegativeNumber (thing) {
-        return isNumber(thing) && thing < 0;
+    function negativeNumber (thing) {
+        return number(thing) && thing < 0;
     }
 
     /**
-     * Public function `isNumber`.
+     * Public function `number`.
      *
      * Returns `true` if something is a number other than NaN,
      * `false` otherwise.
      *
      * @param thing The thing to test.
      */
-    function isNumber (thing) {
+    function number (thing) {
         return typeof thing === 'number' && isNaN(thing) === false;
     }
 
@@ -334,7 +305,7 @@
      * Public function `map`.
      *
      * Returns the results hash of mapping each predicate to the
-     * corresponding thing's property. Similar to `isLike` but
+     * corresponding thing's property. Similar to `like` but
      * with functions instead of values.
      *
      * @param things {object}     The things to test.
@@ -343,20 +314,18 @@
      */
     function map (things, predicates) {
         var property, result = {}, predicate;
-        verify(isObject)(things);
-        verify(isObject)(predicates);
+
+        verify.object(things);
+        verify.object(predicates);
 
         for (property in predicates) {
             if (predicates.hasOwnProperty(property)) {
                 predicate = predicates[property];
-                if (isFunction(predicate)) {
-                    result[property] = things.hasOwnProperty(property) ?
-                        predicate(things[property]) :
-                        undefined;
-                } else if (isObject(predicate)) {
-                    result[property] = things.hasOwnProperty(property) ?
-                        map(things[property], predicate) :
-                        undefined;
+
+                if (fn(predicate)) {
+                    result[property] = things.hasOwnProperty(property) ?  predicate(things[property]) : undefined;
+                } else if (object(predicate)) {
+                    result[property] = things.hasOwnProperty(property) ?  map(things[property], predicate) : undefined;
                 }
             }
         }
@@ -373,14 +342,18 @@
      */
     function every (predicateResults) {
         var property, value;
-        verify(isObject)(predicateResults);
+
+        verify.object(predicateResults);
 
         for (property in predicateResults) {
             if (predicateResults.hasOwnProperty(property)) {
                 value = predicateResults[property];
-                if (isObject(value) && !every(value)) {
+
+                if (object(value) && every(value) === false) {
                     return false;
-                } else if (!value) {
+                }
+
+                if (value === false) {
                     return false;
                 }
             }
@@ -397,74 +370,75 @@
      */
     function any (predicateResults) {
         var property, value;
-        verify(isObject)(predicateResults);
+
+        verify.object(predicateResults);
 
         for (property in predicateResults) {
             if (predicateResults.hasOwnProperty(property)) {
                 value = predicateResults[property];
-                if (isObject(value) && any(value)) {
+
+                if (object(value) && any(value)) {
                     return true;
-                } else if (value === true) {
+                }
+
+                if (value === true) {
                     return true;
                 }
             }
         }
-        return false;
-    }
 
-    function maybeFunctions (predicates) {
-        var property, fn, functions;
-        functions = {};
-        for (property in predicates) {
-            if (predicates.hasOwnProperty(property)) {
-                fn = predicates[property];
-                functions[property] = maybe(fn);
-            }
-        }
-        return functions;
+        return false;
     }
 
     function mixin (target, source) {
         var property;
+
         for (property in source) {
             if (source.hasOwnProperty(property)) {
                 target[property] = source[property];
             }
         }
+
         return target;
     }
 
-    function verify (fn, defaultMessage) {
+    /**
+     * Public modifier `verify`.
+     *
+     * Throws if `predicate` returns `false`.
+     */
+    function verifyModifier (predicate, defaultMessage) {
         return function() {
-            var message = arguments[arguments.length-1];
-            message = isString(message) ? message : null;
-            if (!fn.apply(null, arguments)) {
-                throw new Error(message || defaultMessage);
+            var message = arguments[arguments.length - 1];
+            if (predicate.apply(null, arguments) === false) {
+                throw new Error(unemptyString(message) ? message : defaultMessage);
             }
         };
     }
 
-    function maybe (predicate) {
+    /**
+     * Public modifier `maybe`.
+     *
+     * Returns `true` if preficate is `null` or `undefined`, otherwise
+     * propagates the return value from the predicate.
+     */
+    function maybeModifier (predicate) {
         return function() {
-            return arguments[0] === null || arguments[0] === undefined ?
-                true :
-                predicate.apply(null, arguments);
+            return arguments[0] === null || arguments[0] === undefined ?  true : predicate.apply(null, arguments);
         };
     }
 
-    function verifyFunctions (predicates, messages) {
-        var property, functions, fn, message;
-        functions = {};
-        for (property in predicates) {
-            if (predicates.hasOwnProperty(property)) {
-                fn = predicates[property];
-                message = messages[property];
-                functions[property] = verify(fn, message);
+    function createModifiedPredicates (modifier) {
+        var name, result = {};
+
+        for (name in predicates) {
+            if (predicates.hasOwnProperty(name)) {
+                result[name] = modifier(predicates[name], messages[name]);
             }
         }
-        return functions;
-    }
 
+        return result;
+    }
 
     function exportFunctions (functions) {
         if (typeof define === 'function' && define.amd) {
