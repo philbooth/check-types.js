@@ -1,5 +1,9 @@
 # History
 
+## 1.1
+
+* Replace `check.maybe.verify.xxx` with `check.verify.maybe.xxx`.
+
 ## 1.0
 
 * API overhaul:
