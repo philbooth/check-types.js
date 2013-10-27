@@ -659,12 +659,13 @@
             assert.isUndefined(check.verify.verify);
         });
 
-        test('verify modifier is not applied to maybe', function () {
-            assert.isUndefined(check.verify.maybe);
+        test('verify modifier is applied to maybe', function () {
+            assert.isObject(check.verify.maybe);
+            assert.strictEqual(Object.keys(check.verify.maybe).length, 16);
         });
 
         test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 16);
+            assert.strictEqual(Object.keys(check.verify).length, 17);
         });
 
         test('verify modifier throws when value is wrong', function () {
@@ -719,13 +720,12 @@
             assert.isUndefined(check.maybe.maybe);
         });
 
-        test('maybe modifier is applied to verify', function () {
-            assert.isObject(check.maybe.verify);
-            assert.strictEqual(Object.keys(check.maybe.verify).length, 16);
+        test('maybe modifier is not applied to verify', function () {
+            assert.isUndefined(check.maybe.verify);
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 17);
+            assert.strictEqual(Object.keys(check.maybe).length, 16);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -741,15 +741,15 @@
             assert.isTrue(check.maybe.oddNumber(1));
         });
 
-        test('maybe verify modifier does not throw when value is correct', function() {
+        test('verify modifier with maybe does not throw when value is correct', function() {
             assert.doesNotThrow(function() {
-                check.maybe.verify.positiveNumber(1);
+                check.verify.maybe.positiveNumber(1);
             });
         });
 
-        test('maybe verify modifier throws when value is wrong', function() {
+        test('verify modifier with maybe throws when value is wrong', function() {
             assert.throws(function() {
-                check.maybe.verify.positiveNumber(-1);
+                check.verify.maybe.positiveNumber(-1);
             });
         });
 

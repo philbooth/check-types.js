@@ -57,7 +57,7 @@
     functions = mixin(functions, predicates);
     verify = createModifiedPredicates(verifyModifier);
     maybe = createModifiedPredicates(maybeModifier);
-    maybe.verify = createModifiedFunctions(maybeModifier, verify);
+    verify.maybe = createModifiedFunctions(verifyModifier, maybe);
 
     exportFunctions(mixin(functions, {
         verify: verify,
@@ -410,8 +410,10 @@
      */
     function verifyModifier (predicate, defaultMessage) {
         return function() {
-            var message = arguments[arguments.length - 1];
+            var message;
+
             if (predicate.apply(null, arguments) === false) {
+                message = arguments[arguments.length - 1];
                 throw new Error(unemptyString(message) ? message : defaultMessage);
             }
         };
@@ -420,8 +422,8 @@
     /**
      * Public modifier `maybe`.
      *
-     * Returns `true` if preficate is `null` or `undefined`, otherwise
-     * propagates the return value from the predicate.
+     * Returns `true` if `predicate` is  `null` or `undefined`,
+     * otherwise propagates the return value from `predicate`.
      */
     function maybeModifier (predicate) {
         return function() {

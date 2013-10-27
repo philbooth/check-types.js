@@ -117,21 +117,21 @@ are broadly split into three types.
   returning true or false
   depending on the type and value of `thing`.
 
-* `check.verify.xxx(thing, message)`:
-  The verify modifier
-  calls the equivalent predicate
-  and throws an `Error`
-  if the result is `false`.
-
 * `check.maybe.xxx(thing)`:
   The maybe modifier
   returns `true` if `thing` is `null` or `undefined`,
   otherwise it returns the result
   of the equivalent predicate.
+
+* `check.verify.xxx(thing, message)`:
+  The verify modifier
+  calls the equivalent predicate
+  and throws an `Error`
+  if the result is `false`.
   It can also be applied
-  to verify modifiers
+  to maybe modifiers
   using the form
-  `check.maybe.verify.xxx(thing, message)`.
+  `check.verify.maybe.xxx(thing, message)`.
 
 Additionally, there are some batch operations
 that allow you to test maps
@@ -248,18 +248,19 @@ These are implemented by
 
 #### Modifiers
 
-* `check.verify.xxx(...)`:
+* `check.maybe.xxx(...)`:
+  Returns `true`
+  if `thing` is `null` or `undefined`,
+  otherwise it propagates
+  the returne value
+  from its predicate.
+
+* `check.verify.xxx(...)` / `check.verify.maybe.xxx(...)`:
   Throws an `Error`
   if the predicate returns false.
   The last argument
   is an optional message
   to be set on the `Error` instance.
-
-* `check.maybe.xxx(...)` / `check.maybe.verify.xxx(...)`:
-  Returns `true`
-  if `thing` is `null` or `undefined`,
-  otherwise it delegates to
-  the original, unmodified function.
 
 #### Batch operations
 
@@ -299,7 +300,7 @@ check.verify.like({}, { foo: 'bar' }, 'Invalid object');
 ```
 
 ```javascript
-check.maybe.verify.like(undefined, { foo: 'bar' }, 'Invalid object');
+check.verify.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
 // Doesn't throw
 ```
 
