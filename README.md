@@ -252,7 +252,7 @@ These are implemented by
   Returns `true`
   if `thing` is `null` or `undefined`,
   otherwise it propagates
-  the returne value
+  the return value
   from its predicate.
 
 * `check.verify.xxx(...)` / `check.verify.maybe.xxx(...)`:
