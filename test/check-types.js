@@ -547,7 +547,7 @@
             assert.deepEqual(result, { foo: true, bar: false });
         });
 
-        test('map with unmatched predicates still calls predicate', function() {
+        test('map with undefined properties in thing still calls corresponding predicate', function() {
             assert.throws(function() {
                 check.map({ bar: 33 }, { foo: check.verify.string });
             });
