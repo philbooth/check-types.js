@@ -44,7 +44,7 @@ abstracted by a simple API.
 
 ## How tiny is it?
 
-11.7 kb unminified with comments, 2.7 kb minified, 1 kb minified + gzipped.
+11.9 kb unminified with comments, 2.7 kb minified, 1 kb minified + gzipped.
 
 ## How do I install it?
 
