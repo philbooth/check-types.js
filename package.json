@@ -1,6 +1,6 @@
 {
     "name": "check-types",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "A tiny library for checking arguments and throwing exceptions.",
     "homepage": "https://github.com/philbooth/check-types.js",
     "bugs": "https://github.com/philbooth/check-types.js/issues",
