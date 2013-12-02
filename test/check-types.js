@@ -547,9 +547,10 @@
             assert.deepEqual(result, { foo: true, bar: false });
         });
 
-        test('map with unmatched predicates returns undefined for property', function() {
-            var result = check.map({ bar: 33 }, { foo: check.string });
-            assert.deepEqual(result, { foo: undefined });
+        test('map with undefined properties in thing still calls corresponding predicate', function() {
+            assert.throws(function() {
+                check.map({ bar: 33 }, { foo: check.verify.string });
+            });
         });
 
         test('map with nested objects and predicates returns the predicates results', function() {
@@ -758,4 +759,3 @@
         });
     });
 }(typeof require === 'function' ? require : undefined));
-

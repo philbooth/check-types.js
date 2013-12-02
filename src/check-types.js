@@ -324,9 +324,9 @@
                 predicate = predicates[property];
 
                 if (fn(predicate)) {
-                    result[property] = things.hasOwnProperty(property) ?  predicate(things[property]) : undefined;
+                    result[property] = predicate(things[property]);
                 } else if (object(predicate)) {
-                    result[property] = things.hasOwnProperty(property) ?  map(things[property], predicate) : undefined;
+                    result[property] = map(things[property], predicate);
                 }
             }
         }
