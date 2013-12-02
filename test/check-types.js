@@ -567,7 +567,6 @@
             });
         });
 
-
         test('map with verifier functions throws when invalid', function() {
             assert.throws(function() {
                 check.map({ foo: 'bar', baz: 123 },
