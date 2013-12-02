@@ -3,7 +3,7 @@
 [![Build status][ci-image]][ci-status]
 
 A tiny JavaScript library
-for checking types
+for checking arguments
 and throwing exceptions.
 
 * [Why would I want that?](#why-would-i-want-that)
@@ -21,6 +21,7 @@ and throwing exceptions.
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
+* [What changed from 0.x to 1.x?](#what-changed-from-0x-to-1x)
 * [How do I set up the build environment?](#how-do-i-set-up-the-build-environment)
 * [What license is it released under?](#what-license-is-it-released-under)
 
@@ -38,11 +39,12 @@ to your codebase.
 The purpose of check-types.js
 is to remove this burden
 from JavaScript application developers
-in an efficient and robust manner.
+in an efficient and robust manner,
+abstracted by a simple API.
 
 ## How tiny is it?
 
-17.7 kb unminified with comments, 2.9 kb minified, 1 kb minified + gzipped.
+11.7 kb unminified with comments, 2.7 kb minified, 1 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -108,28 +110,30 @@ to call.
 
 For the most part,
 the exported functions
-are broadly split into two types.
+are broadly split into three types.
 
-* `check.isXxxx(thing)`:
+* `check.xxx(thing)`:
   These functions are predicates,
   returning true or false
   depending on the type and value of `thing`.
 
-* `check.verifyXxxx(thing, message)`:
-  These functions call
-  their equivalent `isXxxx` predicate
-  and throw an `Error`
+* `check.maybe.xxx(thing)`:
+  The maybe modifier
+  returns `true` if `thing` is `null` or `undefined`,
+  otherwise it returns the result
+  of the equivalent predicate.
+
+* `check.verify.xxx(thing, message)`:
+  The verify modifier
+  calls the equivalent predicate
+  and throws an `Error`
   if the result is `false`.
+  It can also be applied
+  to maybe modifiers
+  using the form
+  `check.verify.maybe.xxx(thing, message)`.
 
-Additionally, every exported function
-is available with a `maybe` modifier
-that simply returns `true` if the value is `null` or `undefined`,
-otherwise it delegates to the original, unmodified function.
-Calls to these functions look like
-`check.maybe.isXxxx(thing)` and
-`check.maybe.verifyXxxx(thing)`.
-
-Finally, there are also some batch operations
+Additionally, there are some batch operations
 that allow you to test maps
 of many predicates at once.
 These are implemented by
@@ -139,190 +143,124 @@ These are implemented by
 
 #### String functions
 
-* `check.isString(thing)`:
+* `check.string(thing)`:
   Returns `true`
   if `thing` is a string,
   `false` otherwise.
 
-* `check.verifyString(thing, message)`:
-  Throws an exception
-  unless `thing` is a string.
-
-* `check.isUnemptyString(thing)`:
+* `check.unemptyString(thing)`:
   Returns `true`
   if `thing` is a non-empty string,
   `false` otherwise.
 
-* `check.verifyUnemptyString(thing, message)`:
-  Throws an exception
-  unless `thing` is a non-empty string.
-
-* `check.isWebUrl(thing)`:
+* `check.webUrl(thing)`:
   Returns `true`
   if `thing` is an HTTP or HTTPS URL,
   `false` otherwise.
 
-* `check.verifyWebUrl(thing, message)`:
-  Throws an exception
-  unless `thing` is an HTTP or HTTPS URL.
-
-* `check.isLength(thing, length)`:
+* `check.length(thing, value)`:
   Returns `true`
   if `thing` has a length property
-  that matches the specified length,
+  that equals `value`,
   `false` otherwise.
-
-* `check.verifyLength(thing, length, message)`:
-  Throws an exception
-  unless `thing` has a length property
-  that matches the specified length.
 
 #### Number functions
 
-* `check.isNumber(thing)`:
+* `check.number(thing)`:
   Returns `true`
   if `thing` is a number,
   `false` otherwise.
   In this case,
-  `NaN` is not considered to be a number.
+  `NaN` is not considered a number.
 
-* `check.verifyNumber(thing, message)`:
-  Throws an exception
-  unless `thing` is a number.
-  In this case,
-  `NaN` is not considered to be a number.
-
-* `check.isPositiveNumber(thing)`:
+* `check.positiveNumber(thing)`:
   Returns `true` if `thing` is a number
   greater than zero,
   `false` otherwise.
 
-* `check.verifyPositiveNumber(thing, message)`:
-  Throws an exception
-  unless `thing` is a number
-  greater than zero.
-
-* `check.isNegativeNumber(thing)`:
+* `check.negativeNumber(thing)`:
   Returns `true`
   if `thing` is a number
   less than zero,
   `false` otherwise.
 
-* `check.verifyNegativeNumber(thing, message)`:
-  Throws an exception
-  unless `thing` is a number
-  less than zero.
-
-* `check.isEvenNumber(thing)`:
-  Returns `true`
-  if `thing` is an even number,
-  `false` otherwise.
-
-* `check.verifyEvenNumber(thing, message)`:
-  Throws an exception
-  unless `thing` is an even number.
-
-* `check.isOddNumber(thing)`:
+* `check.oddNumber(thing)`:
   Returns `true`
   if `thing` is an odd number,
   `false` otherwise.
 
-* `check.verifyOddNumber(thing, message)`:
-  Throws an exception
-  unless `thing` is an odd number.
+* `check.evenNumber(thing)`:
+  Returns `true`
+  if `thing` is an even number,
+  `false` otherwise.
 
 #### Function functions
 
-* `check.isFunction(thing)`:
+* `check.fn(thing)`:
   Returns `true`
-  if `thing` is function,
+  if `thing` is a function,
   `false` otherwise.
-
-* `check.verifyFunction(thing, message)`:
-  Throws an exception
-  unless `thing` is function.
 
 #### Array functions
 
-* `check.isArray(thing)`:
+* `check.array(thing)`:
   Returns `true`
   if `thing` is an array,
   `false` otherwise.
 
-* `check.verifyArray(thing, message)`:
-  Throws an exception
-  unless `thing` is an array.
-
-* `check.isLength(thing, length)`:
+* `check.length(thing, value)`:
   Returns `true`
   if `thing` has a length property
-  that matches the specified length,
+  that equals `value`,
   `false` otherwise.
-
-* `check.verifyLength(thing, length, message)`:
-  Throws an exception
-  unless `thing` has a length property
-  that matches the specified length.
 
 #### Date functions
 
-* `check.isDate(thing)`:
+* `check.date(thing)`:
   Returns `true`
   if `thing` is a date,
   `false` otherwise.
 
-* `check.verifyDate(thing, message)`:
-  Throws an exception
-  unless `thing` is a date.
-
 #### Object functions
 
-* `check.isObject(thing)`:
+* `check.object(thing)`:
   Returns `true`
   if `thing` is a non-null, non-array, non-date object,
   `false` otherwise.
 
-* `check.verifyObject(thing, message)`:
-  Throws an exception
-  unless `thing` is a non-null, non-array, non-date object.
-
-* `check.isEmptyObject(thing)`:
+* `check.emptyObject(thing)`:
   Returns `true`
   if `thing` is an empty object,
   `false` otherwise.
 
-* `check.verifyEmptyObject(thing, message)`:
-  Throws an exception
-  unless `thing` is an empty object.
-
-* `check.isInstance(thing, prototype)`:
+* `check.instance(thing, prototype)`:
   Returns `true`
   if `thing` is an instance of `prototype`,
   `false` otherwise.
 
-* `check.verifyInstance(thing, prototype, message)`:
-  Throws an exception
-  unless `thing` is an instance of `prototype`.
-
-* `check.quacksLike(thing, duck)`:
-  Tests whether an object 'quacks like a duck'.
+* `check.like(thing, duck)`:
+  Duck-typing checker.
   Returns `true`
   if `thing` has all of the properties of `duck`,
   `false` otherwise.
   If either argument is not an object,
   an exception is thrown.
 
-* `check.verifyQuack(thing, duck, message)`:
-  Throws an exception
-  unless `thing` has all of the properties of `duck`.
-
 #### Modifiers
 
-* `check.maybe.isXxxx(...)` / `check.maybe.verifyXxxx(...)`:
+* `check.maybe.xxx(...)`:
   Returns `true`
   if `thing` is `null` or `undefined`,
-  otherwise it delegates to
-  the original, unmodified function.
+  otherwise it propagates
+  the return value
+  from its predicate.
+
+* `check.verify.xxx(...)` / `check.verify.maybe.xxx(...)`:
+  Throws an `Error`
+  if the predicate returns false.
+  The last argument
+  is an optional message
+  to be set on the `Error` instance.
 
 #### Batch operations
 
@@ -330,7 +268,7 @@ These are implemented by
   Maps each predicate from the `functions` object
   to the corresponding value from `things`,
   returning the hash of results.
-  Similar to `quacksLike`
+  Similar to `like`
   but using functions instead of values.
   Supports nested objects.
 
@@ -347,22 +285,22 @@ These are implemented by
 #### Some examples
 
 ```javascript
-check.isObject(null);
+check.object(null);
 // Returns false
 ```
 
 ```javascript
-check.maybe.isObject(null);
+check.maybe.object(null);
 // Returns true
 ```
 
 ```javascript
-check.verifyQuack({}, { foo: 'bar' }, 'Invalid object');
+check.verify.like({}, { foo: 'bar' }, 'Invalid object');
 // Throws new Error('Invalid object')
 ```
 
 ```javascript
-check.maybe.verifyQuack(undefined, { foo: 'bar' }, 'Invalid object');
+check.verify.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
 // Doesn't throw
 ```
 
@@ -373,9 +311,9 @@ check.map({
         baz: 'qux'
     }
 }, {
-    foo: check.isOddNumber,
+    foo: check.oddNumber,
     bar: {
-        baz: check.isUnemptyString
+        baz: check.unemptyString
     }
 });
 // Returns { foo: false, bar: { baz: true } }
@@ -387,8 +325,8 @@ check.every(
         foo: 0,
         bar: ''
     }, {
-        foo: check.isNumber,
-        bar: check.isUnemptyString
+        foo: check.number,
+        bar: check.unemptyString
     })
 );
 // Returns false
@@ -400,12 +338,31 @@ check.any(
         foo: 0,
         bar: ''
     }, {
-        foo: check.isNumber,
-        bar: check.isUnemptyString
+        foo: check.number,
+        bar: check.unemptyString
     })
 );
 // Returns true
 ```
+
+## What changed from 0.x to 1.x?
+
+Breaking changes
+were made to the API
+in version 1.0.0.
+
+Specifically,
+all of the predicates
+were renamed
+from `check.isXxxx`
+to `check.xxx` and
+all of the verifiers
+were renamed
+from `check.verifyXxxx`
+to `check.verify.xxx`.
+
+See the [history]
+for more details.
 
 ## How do I set up the build environment?
 
@@ -434,6 +391,7 @@ open `test/check-types.html`.
 [node]: http://nodejs.org/
 [browserify]: http://browserify.org/
 [require]: http://requirejs.org/
+[history]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
 [mocha]: http://visionmedia.github.com/mocha

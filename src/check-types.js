@@ -8,73 +8,64 @@
 (function (globals) {
     'use strict';
 
-    var functions = {
-        verifyQuack: verifyQuack,
-        quacksLike: quacksLike,
-        verifyInstance: verifyInstance,
-        isInstance: isInstance,
-        verifyEmptyObject: verifyEmptyObject,
-        isEmptyObject: isEmptyObject,
-        verifyObject: verifyObject,
-        isObject: isObject,
-        verifyLength: verifyLength,
-        isLength: isLength,
-        verifyArray: verifyArray,
-        isArray: isArray,
-        verifyDate: verifyDate,
-        isDate: isDate,
-        verifyFunction: verifyFunction,
-        isFunction: isFunction,
-        verifyWebUrl: verifyWebUrl,
-        isWebUrl: isWebUrl,
-        verifyUnemptyString: verifyUnemptyString,
-        isUnemptyString:isUnemptyString,
-        verifyString: verifyString,
-        isString: isString,
-        verifyEvenNumber: verifyEvenNumber,
-        isEvenNumber: isEvenNumber,
-        verifyOddNumber: verifyOddNumber,
-        isOddNumber: isOddNumber,
-        verifyPositiveNumber: verifyPositiveNumber,
-        isPositiveNumber: isPositiveNumber,
-        verifyNegativeNumber: verifyNegativeNumber,
-        isNegativeNumber: isNegativeNumber,
-        verifyNumber: verifyNumber,
-        isNumber: isNumber,
+    var messages, predicates, functions, verify, maybe;
+
+    predicates = {
+        like: like,
+        instance: instance,
+        emptyObject: emptyObject,
+        object: object,
+        length: length,
+        array: array,
+        date: date,
+        fn: fn,
+        webUrl: webUrl,
+        unemptyString: unemptyString,
+        string: string,
+        evenNumber: evenNumber,
+        oddNumber: oddNumber,
+        positiveNumber: positiveNumber,
+        negativeNumber: negativeNumber,
+        number: number
+    };
+
+    messages = {
+        like: 'Invalid type',
+        instance: 'Invalid type',
+        emptyObject: 'Invalid object',
+        object: 'Invalid object',
+        length: 'Invalid length',
+        array: 'Invalid array',
+        date: 'Invalid date',
+        fn: 'Invalid function',
+        webUrl: 'Invalid URL',
+        unemptyString: 'Invalid string',
+        string: 'Invalid string',
+        evenNumber: 'Invalid number',
+        oddNumber: 'Invalid number',
+        positiveNumber: 'Invalid number',
+        negativeNumber: 'Invalid number',
+        number: 'Invalid number'
+    };
+
+    functions = {
         map: map,
         every: every,
         any: any
     };
 
-    wrapMaybeFunctions();
-    exportFunctions();
+    functions = mixin(functions, predicates);
+    verify = createModifiedPredicates(verifyModifier);
+    maybe = createModifiedPredicates(maybeModifier);
+    verify.maybe = createModifiedFunctions(verifyModifier, maybe);
+
+    exportFunctions(mixin(functions, {
+        verify: verify,
+        maybe: maybe
+    }));
 
     /**
-     * Public function `verifyQuack`.
-     *
-     * Throws an exception if an object does not share
-     * the properties of a second, archetypal object
-     * (i.e. doesn't 'quack like a duck').
-     *
-     * @param thing {object}     The object to test.
-     * @param duck {object}      The archetypal object,
-     *                           or 'duck', that the test
-     *                           is against.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyQuack (thing, duck, message) {
-        verify(quacksLike, [ thing, duck ], message, 'Invalid type');
-    }
-
-    function verify (fn, args, message, defaultMessage) {
-        if (fn.apply(null, args) === false) {
-            throw new Error(message || defaultMessage);
-        }
-    }
-
-    /**
-     * Public function `quacksLike`.
+     * Public function `like`.
      *
      * Tests whether an object 'quacks like a duck'.
      * Returns `true` if the first argument has all of
@@ -87,19 +78,19 @@
      *                       'duck', that the test is
      *                       against.
      */
-    function quacksLike (thing, duck) {
-        var property;
+    function like (thing, duck) {
+        var name;
 
-        verifyObject(thing);
-        verifyObject(duck);
+        verify.object(thing);
+        verify.object(duck);
 
-        for (property in duck) {
-            if (duck.hasOwnProperty(property)) {
-                if (thing.hasOwnProperty(property) === false) {
+        for (name in duck) {
+            if (duck.hasOwnProperty(name)) {
+                if (thing.hasOwnProperty(name) === false || typeof thing[name] !== typeof duck[name]) {
                     return false;
                 }
 
-                if (typeof thing[property] !== typeof duck[property]) {
+                if (object(thing[name]) && like(thing[name], duck[name]) === false) {
                     return false;
                 }
             }
@@ -109,23 +100,7 @@
     }
 
     /**
-     * Public function `verifyInstance`.
-     *
-     * Throws an exception if an object is not an instance
-     * of a prototype.
-     *
-     * @param thing {object}       The object to test.
-     * @param prototype {function} The prototype that the
-     *                             test is against.
-     * @param [message] {string}   An optional error message
-     *                             to set on the thrown Error.
-     */
-    function verifyInstance (thing, prototype, message) {
-        verify(isInstance, [ thing, prototype ], message, 'Invalid type');
-    }
-
-    /**
-     * Public function `isInstance`.
+     * Public function `instance`.
      *
      * Returns `true` if an object is an instance of a prototype,
      * `false` otherwise.
@@ -134,12 +109,12 @@
      * @param prototype {function} The prototype that the
      *                             test is against.
      */
-    function isInstance (thing, prototype) {
+    function instance (thing, prototype) {
         if (typeof thing === 'undefined' || thing === null) {
             return false;
         }
 
-        if (isFunction(prototype) && thing instanceof prototype) {
+        if (fn(prototype) && thing instanceof prototype) {
             return true;
         }
 
@@ -147,30 +122,17 @@
     }
 
     /**
-     * Public function `verifyEmptyObject`.
+     * Public function `emptyObject`.
      *
-     * Throws an exception unless something is an empty, non-null,
-     * non-array object.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyEmptyObject (thing, message) {
-        verify(isEmptyObject, [ thing ], message, 'Invalid object');
-    }
-
-    /**
-     * Public function `isEmptyObject`.
-     *
-     * Returns `true` if something is an empty, non-null, non-array object, `false` otherwise.
+     * Returns `true` if something is an empty, non-null,
+     * non-array object, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isEmptyObject (thing) {
+    function emptyObject (thing) {
         var property;
 
-        if (isObject(thing)) {
+        if (object(thing)) {
             for (property in thing) {
                 if (thing.hasOwnProperty(property)) {
                     return false;
@@ -184,79 +146,38 @@
     }
 
     /**
-     * Public function `verifyObject`.
-     *
-     * Throws an exception unless something is a non-null,
-     * non-array, non-date object.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyObject (thing, message) {
-        verify(isObject, [ thing ], message, 'Invalid object');
-    }
-
-    /**
-     * Public function `isObject`.
+     * Public function `object`.
      *
      * Returns `true` if something is a non-null, non-array,
      * non-date object, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isObject (thing) {
-        return typeof thing === 'object' && thing !== null && isArray(thing) === false && isDate(thing) === false;
+    function object (thing) {
+        return typeof thing === 'object' && thing !== null && array(thing) === false && date(thing) === false;
     }
 
     /**
-     * Public function `verifyLength`.
-     *
-     * Throws an exception unless something is a non-null,
-     * non-array object.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyLength (thing, length, message) {
-        verify(isLength, [ thing, length ], message, 'Invalid length');
-    }
-
-    /**
-     * Public function `isLength`.
+     * Public function `length`.
      *
      * Returns `true` if something is has a length property
-     * matching the specified value, `false` otherwise.
+     * that equals `value`, `false` otherwise.
      *
-     * @param thing  The thing to test.
-     * @param length The required length to test against.
+     * @param thing The thing to test.
+     * @param value The required length to test against.
      */
-    function isLength (thing, length) {
-        return thing && thing.length === length;
+    function length (thing, value) {
+        return thing && thing.length === value;
     }
 
     /**
-     * Public function `verifyArray`.
-     *
-     * Throws an exception unless something is an array.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyArray (thing, message) {
-        verify(isArray, [ thing ], message, 'Invalid array');
-    }
-
-    /**
-     * Public function `isArray`.
+     * Public function `array`.
      *
      * Returns `true` something is an array, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isArray (thing) {
+    function array (thing) {
         if (Array.isArray) {
             return Array.isArray(thing);
         }
@@ -265,249 +186,119 @@
     }
 
     /**
-     * Public function `verifyDate`.
-     *
-     * Throws an exception unless something is a date.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyDate (thing, message) {
-        verify(isDate, [ thing ], message, 'Invalid date');
-    }
-
-    /**
-     * Public function `isDate`.
+     * Public function `date`.
      *
      * Returns `true` something is a date, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isDate (thing) {
+    function date (thing) {
         return Object.prototype.toString.call(thing) === '[object Date]';
     }
 
     /**
-     * Public function `verifyFunction`.
-     *
-     * Throws an exception unless something is function.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyFunction (thing, message) {
-        verify(isFunction, [ thing ], message, 'Invalid function');
-    }
-
-    /**
-     * Public function `isFunction`.
+     * Public function `fn`.
      *
      * Returns `true` if something is function, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isFunction (thing) {
+    function fn (thing) {
         return typeof thing === 'function';
     }
 
     /**
-     * Public function `verifyWebUrl`.
-     *
-     * Throws an exception unless something is an HTTP or HTTPS URL.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyWebUrl (thing, message) {
-        verify(isWebUrl, [thing], message, 'Invalid URL');
-    }
-
-    /**
-     * Public function `isWebUrl`.
+     * Public function `webUrl`.
      *
      * Returns `true` if something is an HTTP or HTTPS URL,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isWebUrl (thing) {
-        return isUnemptyString(thing) && /^https?:\/\/.+/.test(thing);
+    function webUrl (thing) {
+        return unemptyString(thing) && /^https?:\/\/.+/.test(thing);
     }
 
     /**
-     * Public function `verifyUnemptyString`.
-     *
-     * Throws an exception unless something is a non-empty string.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyUnemptyString (thing, message) {
-        verify(isUnemptyString, [ thing ], message, 'Invalid string');
-    }
-
-    /**
-     * Public function `isUnemptyString`.
+     * Public function `unemptyString`.
      *
      * Returns `true` if something is a non-empty string, `false`
      * otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isUnemptyString (thing) {
-        return isString(thing) && thing !== '';
+    function unemptyString (thing) {
+        return string(thing) && thing !== '';
     }
 
     /**
-     * Public function `verifyString`.
-     *
-     * Throws an exception unless something is a string.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyString (thing, message) {
-        verify(isString, [ thing ], message, 'Invalid string');
-    }
-
-    /**
-     * Public function `isString`.
+     * Public function `string`.
      *
      * Returns `true` if something is a string, `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isString (thing) {
+    function string (thing) {
         return typeof thing === 'string';
     }
 
     /**
-     * Public function `verifyOddNumber`.
-     *
-     * Throws an exception unless something is an odd number.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyOddNumber (thing, message) {
-        verify(isOddNumber, [ thing ], message, 'Invalid number');
-    }
-
-    /**
-     * Public function `isOddNumber`.
+     * Public function `oddNumber`.
      *
      * Returns `true` if something is an odd number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isOddNumber (thing) {
-        return isNumber(thing) && (thing % 2 === 1 || thing % 2 === -1);
+    function oddNumber (thing) {
+        return number(thing) && (thing % 2 === 1 || thing % 2 === -1);
     }
 
     /**
-     * Public function `verifyEvenNumber`.
-     *
-     * Throws an exception unless something is an even number.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyEvenNumber (thing, message) {
-        verify(isEvenNumber, [ thing ], message, 'Invalid number');
-    }
-
-    /**
-     * Public function `isEvenNumber`.
+     * Public function `evenNumber`.
      *
      * Returns `true` if something is an even number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isEvenNumber (thing) {
-        return isNumber(thing) && thing % 2 === 0;
+    function evenNumber (thing) {
+        return number(thing) && thing % 2 === 0;
     }
 
     /**
-     * Public function `verifyPositiveNumber`.
-     *
-     * Throws an exception unless something is a positive number.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyPositiveNumber (thing, message) {
-        verify(isPositiveNumber, [ thing ], message, 'Invalid number');
-    }
-
-    /**
-     * Public function `isPositiveNumber`.
+     * Public function `positiveNumber`.
      *
      * Returns `true` if something is a positive number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isPositiveNumber (thing) {
-        return isNumber(thing) && thing > 0;
+    function positiveNumber (thing) {
+        return number(thing) && thing > 0;
     }
 
     /**
-     * Public function `verifyNegativeNumber`.
-     *
-     * Throws an exception unless something is a positive number.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyNegativeNumber (thing, message) {
-        verify(isNegativeNumber, [ thing ], message, 'Invalid number');
-    }
-
-    /**
-     * Public function `isNegativeNumber`.
+     * Public function `negativeNumber`.
      *
      * Returns `true` if something is a positive number,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function isNegativeNumber (thing) {
-        return isNumber(thing) && thing < 0;
+    function negativeNumber (thing) {
+        return number(thing) && thing < 0;
     }
 
     /**
-     * Public function `verifyNumber`.
-     *
-     * Throws an exception unless something is a number, excluding NaN.
-     *
-     * @param thing              The thing to test.
-     * @param [message] {string} An optional error message
-     *                           to set on the thrown Error.
-     */
-    function verifyNumber (thing, message) {
-        verify(isNumber, [ thing ], message, 'Invalid number');
-    }
-
-    /**
-     * Public function `isNumber`.
+     * Public function `number`.
      *
      * Returns `true` if something is a number other than NaN,
      * `false` otherwise.
      *
      * @param thing The thing to test.
      */
-    function isNumber (thing) {
+    function number (thing) {
         return typeof thing === 'number' && isNaN(thing) === false;
     }
 
@@ -515,7 +306,7 @@
      * Public function `map`.
      *
      * Returns the results hash of mapping each predicate to the
-     * corresponding thing's property. Similar to `quacksLike` but
+     * corresponding thing's property. Similar to `like` but
      * with functions instead of values.
      *
      * @param things {object}     The things to test.
@@ -524,20 +315,18 @@
      */
     function map (things, predicates) {
         var property, result = {}, predicate;
-        verifyObject(things);
-        verifyObject(predicates);
+
+        verify.object(things);
+        verify.object(predicates);
 
         for (property in predicates) {
             if (predicates.hasOwnProperty(property)) {
                 predicate = predicates[property];
-                if (isFunction(predicate)) {
-                    result[property] = things.hasOwnProperty(property) ?
-                        predicate(things[property]) :
-                        undefined;
-                } else if (isObject(predicate)) {
-                    result[property] = things.hasOwnProperty(property) ?
-                        map(things[property], predicate) :
-                        undefined;
+
+                if (fn(predicate)) {
+                    result[property] = things.hasOwnProperty(property) ?  predicate(things[property]) : undefined;
+                } else if (object(predicate)) {
+                    result[property] = things.hasOwnProperty(property) ?  map(things[property], predicate) : undefined;
                 }
             }
         }
@@ -554,14 +343,18 @@
      */
     function every (predicateResults) {
         var property, value;
-        verifyObject(predicateResults);
+
+        verify.object(predicateResults);
 
         for (property in predicateResults) {
             if (predicateResults.hasOwnProperty(property)) {
                 value = predicateResults[property];
-                if (isObject(value) && !every(value)) {
+
+                if (object(value) && every(value) === false) {
                     return false;
-                } else if (!value) {
+                }
+
+                if (value === false) {
                     return false;
                 }
             }
@@ -578,45 +371,83 @@
      */
     function any (predicateResults) {
         var property, value;
-        verifyObject(predicateResults);
+
+        verify.object(predicateResults);
 
         for (property in predicateResults) {
             if (predicateResults.hasOwnProperty(property)) {
                 value = predicateResults[property];
-                if (isObject(value) && any(value)) {
+
+                if (object(value) && any(value)) {
                     return true;
-                } else if (value === true) {
+                }
+
+                if (value === true) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
-    function wrapMaybeFunctions () {
-        var property, fn;
+    function mixin (target, source) {
+        var property;
 
-        functions.maybe = {};
-
-        for (property in functions) {
-            if (functions.hasOwnProperty(property)) {
-                fn = functions[property];
-                functions.maybe[property] = maybe(fn);
+        for (property in source) {
+            if (source.hasOwnProperty(property)) {
+                target[property] = source[property];
             }
         }
 
-        delete functions.maybe.maybe;
+        return target;
     }
 
-    function maybe (predicate) {
+    /**
+     * Public modifier `verify`.
+     *
+     * Throws if `predicate` returns `false`.
+     */
+    function verifyModifier (predicate, defaultMessage) {
         return function() {
-            return arguments[0] === null || arguments[0] === undefined ?
-                true :
-                predicate.apply(null, arguments);
+            var message;
+
+            if (predicate.apply(null, arguments) === false) {
+                message = arguments[arguments.length - 1];
+                throw new Error(unemptyString(message) ? message : defaultMessage);
+            }
         };
     }
 
-    function exportFunctions () {
+    /**
+     * Public modifier `maybe`.
+     *
+     * Returns `true` if `predicate` is  `null` or `undefined`,
+     * otherwise propagates the return value from `predicate`.
+     */
+    function maybeModifier (predicate) {
+        return function() {
+            return arguments[0] === null || arguments[0] === undefined ?  true : predicate.apply(null, arguments);
+        };
+    }
+
+    function createModifiedPredicates (modifier) {
+        return createModifiedFunctions(modifier, predicates);
+    }
+
+    function createModifiedFunctions (modifier, functions) {
+        var name, result = {};
+
+        for (name in functions) {
+            if (functions.hasOwnProperty(name)) {
+                result[name] = modifier(functions[name], messages[name]);
+            }
+        }
+
+        return result;
+    }
+
+    function exportFunctions (functions) {
         if (typeof define === 'function' && define.amd) {
             define(function () {
                 return functions;
@@ -628,4 +459,3 @@
         }
     }
 }(this));
-
