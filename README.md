@@ -294,12 +294,17 @@ These are implemented by
 #### Some examples
 
 ```javascript
-check.object(null);
+check.object(0);
 // Returns false
 ```
 
 ```javascript
 check.maybe.object(null);
+// Returns true
+```
+
+```javascript
+check.not.object(0);
 // Returns true
 ```
 
@@ -310,6 +315,11 @@ check.verify.like({}, { foo: 'bar' }, 'Invalid object');
 
 ```javascript
 check.verify.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
+// Doesn't throw
+```
+
+```javascript
+check.verify.not.like({}, { foo: 'bar' }, 'Invalid object');
 // Doesn't throw
 ```
 
