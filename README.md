@@ -110,7 +110,7 @@ to call.
 
 For the most part,
 the exported functions
-are broadly split into three types.
+are broadly split into four types.
 
 * `check.xxx(thing)`:
   These functions are predicates,
@@ -123,15 +123,24 @@ are broadly split into three types.
   otherwise it returns the result
   of the equivalent predicate.
 
+* `check.not.xxx(thing)`:
+  The not modifier
+  negates a predicate,
+  returning `true` if the predicate returns `false`
+  and `false` if the predicate returns `true`.
+
 * `check.verify.xxx(thing, message)`:
   The verify modifier
   calls the equivalent predicate
   and throws an `Error`
   if the result is `false`.
   It can also be applied
-  to maybe modifiers
+  to maybe and not modifiers
   using the form
-  `check.verify.maybe.xxx(thing, message)`.
+  `check.verify.maybe.xxx(thing, message)`
+  or
+  `check.verify.not.xxx(thing, message)`
+  respectively.
 
 Additionally, there are some batch operations
 that allow you to test maps
