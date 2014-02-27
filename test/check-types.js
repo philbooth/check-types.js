@@ -666,7 +666,7 @@
         });
 
         test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 17);
+            assert.strictEqual(Object.keys(check.verify).length, 18);
         });
 
         test('verify modifier throws when value is wrong', function () {
@@ -742,6 +742,30 @@
             assert.isTrue(check.maybe.oddNumber(1));
         });
 
+        test('not modifier is defined', function () {
+            assert.isObject(check.not);
+        });
+
+        test('not modifier is not applied to itself', function () {
+            assert.isUndefined(check.not.not);
+        });
+
+        test('not modifier is not applied to verify', function () {
+            assert.isUndefined(check.not.verify);
+        });
+
+        test('not modifier has correct number of keys', function () {
+            assert.strictEqual(Object.keys(check.not).length, 16);
+        });
+
+        test('not modifier returns true when predicate returns false', function() {
+            assert.isTrue(check.not.object(undefined));
+        });
+
+        test('not modifier returns false when predicate returns true', function() {
+            assert.isFalse(check.not.unemptyString('1'));
+        });
+
         test('verify modifier with maybe does not throw when value is correct', function() {
             assert.doesNotThrow(function() {
                 check.verify.maybe.positiveNumber(1);
@@ -751,6 +775,18 @@
         test('verify modifier with maybe throws when value is wrong', function() {
             assert.throws(function() {
                 check.verify.maybe.positiveNumber(-1);
+            });
+        });
+
+        test('verify modifier with not throws when value is correct', function() {
+            assert.throws(function() {
+                check.verify.not.negativeNumber(-1);
+            });
+        });
+
+        test('verify modifier with not doesNotThrow when value is wrong', function() {
+            assert.doesNotThrow(function() {
+                check.verify.not.negativeNumber(1);
             });
         });
 

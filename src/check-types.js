@@ -8,7 +8,7 @@
 (function (globals) {
     'use strict';
 
-    var messages, predicates, functions, verify, maybe;
+    var messages, predicates, functions, verify, maybe, not;
 
     predicates = {
         like: like,
@@ -57,11 +57,14 @@
     functions = mixin(functions, predicates);
     verify = createModifiedPredicates(verifyModifier);
     maybe = createModifiedPredicates(maybeModifier);
+    not = createModifiedPredicates(notModifier);
     verify.maybe = createModifiedFunctions(verifyModifier, maybe);
+    verify.not = createModifiedFunctions(verifyModifier, not);
 
     exportFunctions(mixin(functions, {
         verify: verify,
-        maybe: maybe
+        maybe: maybe,
+        not: not
     }));
 
     /**
@@ -428,6 +431,17 @@
     function maybeModifier (predicate) {
         return function() {
             return arguments[0] === null || arguments[0] === undefined ?  true : predicate.apply(null, arguments);
+        };
+    }
+
+    /**
+     * Public modifier `not`.
+     *
+     * Negates `predicate`.
+     */
+    function notModifier (predicate) {
+        return function () {
+            return !predicate.apply(null, arguments);
         };
     }
 
