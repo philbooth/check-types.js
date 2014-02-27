@@ -4,6 +4,7 @@
     "description": "A tiny JavaScript library for checking arguments and throwing exceptions.",
     "repo": "philbooth/check-types.js",
     "license": "MIT",
+    "main": "src/check-types.js",
     "keywords": [
         "types",
         "type-checking",
@@ -12,7 +13,7 @@
         "parameters"
     ],
     "scripts": [
-        "src/check-types.min.js"
+        "src/check-types.js"
     ]
 }
 
