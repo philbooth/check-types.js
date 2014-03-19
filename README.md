@@ -167,6 +167,11 @@ These are implemented by
   if `thing` is an HTTP or HTTPS URL,
   `false` otherwise.
 
+* `check.gitSsh(thing)`:
+  Returns `true`
+  if `thing` is a git+ssh URL,
+  `false` otherwise.
+
 * `check.length(thing, value)`:
   Returns `true`
   if `thing` has a length property
