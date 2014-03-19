@@ -310,6 +310,38 @@
             assert.isFalse(check.webUrl(42));
         });
 
+        test('gitSsh function is defined', function () {
+            assert.isFunction(check.gitSsh);
+        });
+
+        test('gitSsh with git+ssh: URL returns true', function () {
+            assert.isTrue(check.gitSsh('git+ssh://example.com/'));
+        });
+
+        test('gitSsh with http: URL returns false', function () {
+            assert.isFalse(check.gitSsh('http://example.com/'));
+        });
+
+        test('gitSsh with protocol-relative URL returns false', function () {
+            assert.isFalse(check.gitSsh('//example.com/'));
+        });
+
+        test('gitSsh with sssh scheme returns false', function () {
+            assert.isFalse(check.gitSsh('git+sssh://'));
+        });
+
+        test('gitSsh without domain returns false', function () {
+            assert.isFalse(check.gitSsh('git+ssh://'));
+        });
+
+        test('gitSsh with object returns false', function () {
+            assert.isFalse(check.gitSsh({ toString: function () { return 'https://example.com/'; } }));
+        });
+
+        test('gitSsh with number returns false', function () {
+            assert.isFalse(check.gitSsh(42));
+        });
+
         test('unemptyString function is defined', function () {
             assert.isFunction(check.unemptyString);
         });
@@ -648,6 +680,7 @@
             assert.isFunction(check.verify.positiveNumber);
             assert.isFunction(check.verify.negativeNumber);
             assert.isFunction(check.verify.number);
+            assert.isFunction(check.verify.gitSsh);
         });
 
         test('verify modifier is not applied to batch operations', function () {
@@ -662,11 +695,11 @@
 
         test('verify modifier is applied to maybe', function () {
             assert.isObject(check.verify.maybe);
-            assert.strictEqual(Object.keys(check.verify.maybe).length, 16);
+            assert.strictEqual(Object.keys(check.verify.maybe).length, 17);
         });
 
         test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 18);
+            assert.strictEqual(Object.keys(check.verify).length, 19);
         });
 
         test('verify modifier throws when value is wrong', function () {
@@ -726,7 +759,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 16);
+            assert.strictEqual(Object.keys(check.maybe).length, 17);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -755,7 +788,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.not).length, 16);
+            assert.strictEqual(Object.keys(check.not).length, 17);
         });
 
         test('not modifier returns true when predicate returns false', function() {
