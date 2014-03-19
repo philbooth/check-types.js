@@ -310,38 +310,6 @@
             assert.isFalse(check.webUrl(42));
         });
 
-        test('gitSsh function is defined', function () {
-            assert.isFunction(check.gitSsh);
-        });
-
-        test('gitSsh with git+ssh: URL returns true', function () {
-            assert.isTrue(check.gitSsh('git+ssh://example.com/'));
-        });
-
-        test('gitSsh with http: URL returns false', function () {
-            assert.isFalse(check.gitSsh('http://example.com/'));
-        });
-
-        test('gitSsh with protocol-relative URL returns false', function () {
-            assert.isFalse(check.gitSsh('//example.com/'));
-        });
-
-        test('gitSsh with sssh scheme returns false', function () {
-            assert.isFalse(check.gitSsh('git+sssh://'));
-        });
-
-        test('gitSsh without domain returns false', function () {
-            assert.isFalse(check.gitSsh('git+ssh://'));
-        });
-
-        test('gitSsh with object returns false', function () {
-            assert.isFalse(check.gitSsh({ toString: function () { return 'https://example.com/'; } }));
-        });
-
-        test('gitSsh with number returns false', function () {
-            assert.isFalse(check.gitSsh(42));
-        });
-
         test('unemptyString function is defined', function () {
             assert.isFunction(check.unemptyString);
         });
@@ -548,6 +516,38 @@
 
         test('number with string returns false', function () {
             assert.isFalse(check.number('1'));
+        });
+
+        test('gitSsh function is defined', function () {
+            assert.isFunction(check.gitSsh);
+        });
+
+        test('gitSsh with git+ssh: URL returns true', function () {
+            assert.isTrue(check.gitSsh('git+ssh://example.com/'));
+        });
+
+        test('gitSsh with http: URL returns false', function () {
+            assert.isFalse(check.gitSsh('http://example.com/'));
+        });
+
+        test('gitSsh with protocol-relative URL returns false', function () {
+            assert.isFalse(check.gitSsh('//example.com/'));
+        });
+
+        test('gitSsh with sssh scheme returns false', function () {
+            assert.isFalse(check.gitSsh('git+sssh://'));
+        });
+
+        test('gitSsh without domain returns false', function () {
+            assert.isFalse(check.gitSsh('git+ssh://'));
+        });
+
+        test('gitSsh with object returns false', function () {
+            assert.isFalse(check.gitSsh({ toString: function () { return 'git+ssh://example.com/'; } }));
+        });
+
+        test('gitSsh with number returns false', function () {
+            assert.isFalse(check.gitSsh(42));
         });
 
         test('map function is defined', function () {
