@@ -20,14 +20,14 @@
         date: date,
         fn: fn,
         webUrl: webUrl,
+        gitUrl: gitUrl,
         unemptyString: unemptyString,
         string: string,
         evenNumber: evenNumber,
         oddNumber: oddNumber,
         positiveNumber: positiveNumber,
         negativeNumber: negativeNumber,
-        number: number,
-        gitUrl: gitUrl
+        number: number
     };
 
     messages = {
@@ -40,14 +40,14 @@
         date: 'Invalid date',
         fn: 'Invalid function',
         webUrl: 'Invalid URL',
+        gitUrl: 'Invalid git URL',
         unemptyString: 'Invalid string',
         string: 'Invalid string',
         evenNumber: 'Invalid number',
         oddNumber: 'Invalid number',
         positiveNumber: 'Invalid number',
         negativeNumber: 'Invalid number',
-        number: 'Invalid number',
-        gitUrl: 'Invalid git URL'
+        number: 'Invalid number'
     };
 
     functions = {
