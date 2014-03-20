@@ -27,7 +27,7 @@
         positiveNumber: positiveNumber,
         negativeNumber: negativeNumber,
         number: number,
-        gitSsh: gitSsh
+        gitUrl: gitUrl
     };
 
     messages = {
@@ -47,7 +47,7 @@
         positiveNumber: 'Invalid number',
         negativeNumber: 'Invalid number',
         number: 'Invalid number',
-        gitSsh: 'Invalid git+ssh URL'
+        gitUrl: 'Invalid git URL'
     };
 
     functions = {
@@ -225,15 +225,15 @@
     }
 
     /**
-     * Public function `gitSsh`.
+     * Public function `gitUrl`.
      *
-     * Returns `true` if something is a git+ssh URL,
+     * Returns `true` if something is a git+ssh, git+http or git+https URL,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
-    function gitSsh (thing) {
-        return unemptyString(thing) && /^git\+ssh:\/\/.+/.test(thing);
+    function gitUrl (thing) {
+        return unemptyString(thing) && /^git\+(ssh|https?):\/\/.+/.test(thing);
     }
 
     /**

@@ -518,36 +518,44 @@
             assert.isFalse(check.number('1'));
         });
 
-        test('gitSsh function is defined', function () {
-            assert.isFunction(check.gitSsh);
+        test('gitUrl function is defined', function () {
+            assert.isFunction(check.gitUrl);
         });
 
-        test('gitSsh with git+ssh: URL returns true', function () {
-            assert.isTrue(check.gitSsh('git+ssh://example.com/'));
+        test('gitUrl with git+ssh: URL returns true', function () {
+            assert.isTrue(check.gitUrl('git+ssh://example.com/'));
         });
 
-        test('gitSsh with http: URL returns false', function () {
-            assert.isFalse(check.gitSsh('http://example.com/'));
+        test('gitUrl with git+http: URL returns true', function () {
+            assert.isTrue(check.gitUrl('git+http://example.com/'));
         });
 
-        test('gitSsh with protocol-relative URL returns false', function () {
-            assert.isFalse(check.gitSsh('//example.com/'));
+        test('gitUrl with git+https: URL returns true', function () {
+            assert.isTrue(check.gitUrl('git+https://example.com/'));
         });
 
-        test('gitSsh with sssh scheme returns false', function () {
-            assert.isFalse(check.gitSsh('git+sssh://'));
+        test('gitUrl with http: URL returns false', function () {
+            assert.isFalse(check.gitUrl('http://example.com/'));
         });
 
-        test('gitSsh without domain returns false', function () {
-            assert.isFalse(check.gitSsh('git+ssh://'));
+        test('gitUrl with protocol-relative URL returns false', function () {
+            assert.isFalse(check.gitUrl('//example.com/'));
         });
 
-        test('gitSsh with object returns false', function () {
-            assert.isFalse(check.gitSsh({ toString: function () { return 'git+ssh://example.com/'; } }));
+        test('gitUrl with httpss scheme returns false', function () {
+            assert.isFalse(check.gitUrl('git+httpss://'));
         });
 
-        test('gitSsh with number returns false', function () {
-            assert.isFalse(check.gitSsh(42));
+        test('gitUrl without domain returns false', function () {
+            assert.isFalse(check.gitUrl('git+ssh://'));
+        });
+
+        test('gitUrl with object returns false', function () {
+            assert.isFalse(check.gitUrl({ toString: function () { return 'git+ssh://example.com/'; } }));
+        });
+
+        test('gitUrl with number returns false', function () {
+            assert.isFalse(check.gitUrl(42));
         });
 
         test('map function is defined', function () {
@@ -680,7 +688,7 @@
             assert.isFunction(check.verify.positiveNumber);
             assert.isFunction(check.verify.negativeNumber);
             assert.isFunction(check.verify.number);
-            assert.isFunction(check.verify.gitSsh);
+            assert.isFunction(check.verify.gitUrl);
         });
 
         test('verify modifier is not applied to batch operations', function () {
