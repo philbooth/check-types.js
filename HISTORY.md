@@ -1,5 +1,10 @@
 # History
 
+## 1.2
+
+* Implement `not` modifier.
+* Implement `gitUrl` predicate. Thanks to [Gal Niv][galniv].
+
 ## 1.1
 
 * Replace `check.maybe.verify.xxx` with `check.verify.maybe.xxx`.
@@ -23,4 +28,5 @@
 
 [marcolivier]: https://github.com/ricardmo
 [gleb]: https://github.com/bahmutov
+[galniv]: https://github.com/galniv
 
