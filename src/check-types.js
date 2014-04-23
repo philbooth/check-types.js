@@ -21,6 +21,7 @@
         fn: fn,
         webUrl: webUrl,
         gitUrl: gitUrl,
+        email: email,
         unemptyString: unemptyString,
         string: string,
         evenNumber: evenNumber,
@@ -43,6 +44,7 @@
         fn: 'Invalid function',
         webUrl: 'Invalid URL',
         gitUrl: 'Invalid git URL',
+        email: 'Invalid email',
         unemptyString: 'Invalid string',
         string: 'Invalid string',
         evenNumber: 'Invalid number',
@@ -238,6 +240,19 @@
      */
     function gitUrl (thing) {
         return unemptyString(thing) && /^git\+(ssh|https?):\/\/.+/.test(thing);
+    }
+
+    /**
+     * Public function `email`.
+     *
+     * Returns `true` if something is an email,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function email (thing) {
+        var reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return unemptyString(thing) && reg.test(thing);
     }
 
     /**
