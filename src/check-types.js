@@ -27,6 +27,8 @@
         oddNumber: oddNumber,
         positiveNumber: positiveNumber,
         negativeNumber: negativeNumber,
+        intNumber : intNumber,
+        floatNumber : floatNumber,
         number: number
     };
 
@@ -47,6 +49,8 @@
         oddNumber: 'Invalid number',
         positiveNumber: 'Invalid number',
         negativeNumber: 'Invalid number',
+        intNumber: 'Invalid number',
+        floatNumber: 'Invalid number',
         number: 'Invalid number'
     };
 
