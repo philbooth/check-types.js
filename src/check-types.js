@@ -284,6 +284,30 @@
     }
 
     /**
+     * Public function `intNumber`.
+     *
+     * Returns `true` if something is an integer number,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function intNumber (thing) {
+        return number(thing) && thing % 1 === 0;
+    }
+
+    /**
+     * Public function `floatNumber`.
+     *
+     * Returns `true` if something is a float number,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function floatNumber (thing) {
+        return number(thing) && thing % 1 !== 0;
+    }
+
+    /**
      * Public function `positiveNumber`.
      *
      * Returns `true` if something is a positive number,
