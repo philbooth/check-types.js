@@ -28,8 +28,8 @@
         oddNumber: oddNumber,
         positiveNumber: positiveNumber,
         negativeNumber: negativeNumber,
-        intNumber : intNumber,
-        floatNumber : floatNumber,
+        'int' : intNumber,
+        'float' : floatNumber,
         number: number
     };
 
@@ -51,8 +51,8 @@
         oddNumber: 'Invalid number',
         positiveNumber: 'Invalid number',
         negativeNumber: 'Invalid number',
-        intNumber: 'Invalid number',
-        floatNumber: 'Invalid number',
+        'int': 'Invalid number',
+        'float': 'Invalid number',
         number: 'Invalid number'
     };
 
@@ -245,14 +245,13 @@
     /**
      * Public function `email`.
      *
-     * Returns `true` if something is an email,
+     * Returns `true` if something seems like a valid email address,
      * `false` otherwise.
      *
      * @param thing          The thing to test.
      */
     function email (thing) {
-        var reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return unemptyString(thing) && reg.test(thing);
+        return unemptyString(thing) && /\S+@\S+/.test(thing);
     }
 
     /**
