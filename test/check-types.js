@@ -350,6 +350,34 @@
             assert.isFalse(check.gitUrl(42));
         });
 
+        test('email function is defined', function () {
+            assert.isFunction(check.email);
+        });
+
+        test('email with user@host.tld returns true', function () {
+            assert.isTrue(check.email('user@host.tld'));
+        });
+
+        test('email with user.other@host.tld returns true', function () {
+            assert.isTrue(check.email('user.other@host.tld'));
+        });
+
+        test('email with user.other@sub.host.tld returns true', function () {
+            assert.isTrue(check.email('user.other@sub.host.tld'));
+        });
+
+        test('email with @ returns false', function () {
+            assert.isFalse(check.email('@'));
+        });
+
+        test('email with object returns false', function () {
+            assert.isFalse(check.email({ toString: function () { return 'user@host.tld'; } }));
+        });
+
+        test('email with number returns false', function () {
+            assert.isFalse(check.email(42));
+        });
+
         test('unemptyString function is defined', function () {
             assert.isFunction(check.unemptyString);
         });
@@ -524,6 +552,62 @@
 
         test('negativeNumber with string returns false', function () {
             assert.isFalse(check.negativeNumber('-1'));
+        });
+
+        test('int function is defined', function () {
+            assert.isFunction(check.int);
+        });
+
+        test('int with float returns false', function () {
+            assert.isFalse(check.int(0.5));
+        });
+
+        test('int with integer returns true', function () {
+            assert.isTrue(check.int(1));
+        });
+
+        test('int with infinity returns false', function () {
+            assert.isFalse(check.int(Infinity));
+        });
+
+        test('int with NaN returns false', function () {
+            assert.isFalse(check.int(NaN));
+        });
+
+        test('int with object returns false', function () {
+            assert.isFalse(check.int({}));
+        });
+
+        test('int with string returns false', function () {
+            assert.isFalse(check.int('-1'));
+        });
+
+        test('float function is defined', function () {
+            assert.isFunction(check.float);
+        });
+
+        test('float with integer returns false', function () {
+            assert.isFalse(check.float(1));
+        });
+
+        test('float with float returns true', function () {
+            assert.isTrue(check.float(0.5));
+        });
+
+        test('float with infinity returns true', function () {
+            assert.isTrue(check.float(Infinity));
+        });
+
+        test('float with NaN returns false', function () {
+            assert.isFalse(check.float(NaN));
+        });
+
+        test('float with object returns false', function () {
+            assert.isFalse(check.float({}));
+        });
+
+        test('float with string returns false', function () {
+            assert.isFalse(check.float('1.2'));
         });
 
         test('number function is defined', function () {
@@ -703,11 +787,11 @@
 
         test('verify modifier is applied to maybe', function () {
             assert.isObject(check.verify.maybe);
-            assert.strictEqual(Object.keys(check.verify.maybe).length, 17);
+            assert.strictEqual(Object.keys(check.verify.maybe).length, 20);
         });
 
         test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 19);
+            assert.strictEqual(Object.keys(check.verify).length, 22);
         });
 
         test('verify modifier throws when value is wrong', function () {
@@ -767,7 +851,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 17);
+            assert.strictEqual(Object.keys(check.maybe).length, 20);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -796,7 +880,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.not).length, 17);
+            assert.strictEqual(Object.keys(check.not).length, 20);
         });
 
         test('not modifier returns true when predicate returns false', function() {

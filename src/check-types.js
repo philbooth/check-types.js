@@ -21,12 +21,15 @@
         fn: fn,
         webUrl: webUrl,
         gitUrl: gitUrl,
+        email: email,
         unemptyString: unemptyString,
         string: string,
         evenNumber: evenNumber,
         oddNumber: oddNumber,
         positiveNumber: positiveNumber,
         negativeNumber: negativeNumber,
+        'int' : intNumber,
+        'float' : floatNumber,
         number: number
     };
 
@@ -41,12 +44,15 @@
         fn: 'Invalid function',
         webUrl: 'Invalid URL',
         gitUrl: 'Invalid git URL',
+        email: 'Invalid email',
         unemptyString: 'Invalid string',
         string: 'Invalid string',
         evenNumber: 'Invalid number',
         oddNumber: 'Invalid number',
         positiveNumber: 'Invalid number',
         negativeNumber: 'Invalid number',
+        'int': 'Invalid number',
+        'float': 'Invalid number',
         number: 'Invalid number'
     };
 
@@ -237,6 +243,18 @@
     }
 
     /**
+     * Public function `email`.
+     *
+     * Returns `true` if something seems like a valid email address,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function email (thing) {
+        return unemptyString(thing) && /\S+@\S+/.test(thing);
+    }
+
+    /**
      * Public function `unemptyString`.
      *
      * Returns `true` if something is a non-empty string, `false`
@@ -281,6 +299,30 @@
      */
     function evenNumber (thing) {
         return number(thing) && thing % 2 === 0;
+    }
+
+    /**
+     * Public function `intNumber`.
+     *
+     * Returns `true` if something is an integer number,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function intNumber (thing) {
+        return number(thing) && thing % 1 === 0;
+    }
+
+    /**
+     * Public function `floatNumber`.
+     *
+     * Returns `true` if something is a float number,
+     * `false` otherwise.
+     *
+     * @param thing          The thing to test.
+     */
+    function floatNumber (thing) {
+        return number(thing) && thing % 1 !== 0;
     }
 
     /**

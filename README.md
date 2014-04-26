@@ -172,6 +172,11 @@ These are implemented by
   if `thing` is a git+ssh, git+http or git+https URL,
   `false` otherwise.
 
+* `check.email(thing)`:
+  Returns `true`
+  if `thing` seems like a valid email address,
+  `false` otherwise.
+
 * `check.length(thing, value)`:
   Returns `true`
   if `thing` has a length property
@@ -206,6 +211,16 @@ These are implemented by
 * `check.evenNumber(thing)`:
   Returns `true`
   if `thing` is an even number,
+  `false` otherwise.
+
+* `check.int(thing)`:
+  Returns `true`
+  if `thing` is an integer number,
+  `false` otherwise.
+
+* `check.float(thing)`:
+  Returns `true`
+  if `thing` is a float number,
   `false` otherwise.
 
 #### Function functions
