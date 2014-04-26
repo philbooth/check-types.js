@@ -370,14 +370,6 @@
             assert.isFalse(check.email('@'));
         });
 
-        test('email with user@host URL returns false', function () {
-            assert.isFalse(check.email('user@host'));
-        });
-
-        test('email with user@.com returns false', function () {
-            assert.isFalse(check.email('user@.com'));
-        });
-
         test('email with object returns false', function () {
             assert.isFalse(check.email({ toString: function () { return 'user@host.tld'; } }));
         });
@@ -562,60 +554,60 @@
             assert.isFalse(check.negativeNumber('-1'));
         });
 
-        test('intNumber function is defined', function () {
-            assert.isFunction(check.intNumber);
+        test('int function is defined', function () {
+            assert.isFunction(check.int);
         });
 
-        test('intNumber with float returns false', function () {
-            assert.isFalse(check.intNumber(0.5));
+        test('int with float returns false', function () {
+            assert.isFalse(check.int(0.5));
         });
 
-        test('intNumber with integer returns true', function () {
-            assert.isTrue(check.intNumber(1));
+        test('int with integer returns true', function () {
+            assert.isTrue(check.int(1));
         });
 
-        test('intNumber with infinity returns false', function () {
-            assert.isFalse(check.intNumber(Infinity));
+        test('int with infinity returns false', function () {
+            assert.isFalse(check.int(Infinity));
         });
 
-        test('intNumber with NaN returns false', function () {
-            assert.isFalse(check.intNumber(NaN));
+        test('int with NaN returns false', function () {
+            assert.isFalse(check.int(NaN));
         });
 
-        test('intNumber with object returns false', function () {
-            assert.isFalse(check.intNumber({}));
+        test('int with object returns false', function () {
+            assert.isFalse(check.int({}));
         });
 
-        test('intNumber with string returns false', function () {
-            assert.isFalse(check.intNumber('-1'));
+        test('int with string returns false', function () {
+            assert.isFalse(check.int('-1'));
         });
 
-        test('floatNumber function is defined', function () {
-            assert.isFunction(check.floatNumber);
+        test('float function is defined', function () {
+            assert.isFunction(check.float);
         });
 
-        test('floatNumber with integer returns false', function () {
-            assert.isFalse(check.floatNumber(1));
+        test('float with integer returns false', function () {
+            assert.isFalse(check.float(1));
         });
 
-        test('floatNumber with float returns true', function () {
-            assert.isTrue(check.floatNumber(0.5));
+        test('float with float returns true', function () {
+            assert.isTrue(check.float(0.5));
         });
 
-        test('floatNumber with infinity returns true', function () {
-            assert.isTrue(check.floatNumber(Infinity));
+        test('float with infinity returns true', function () {
+            assert.isTrue(check.float(Infinity));
         });
 
-        test('floatNumber with NaN returns false', function () {
-            assert.isFalse(check.floatNumber(NaN));
+        test('float with NaN returns false', function () {
+            assert.isFalse(check.float(NaN));
         });
 
-        test('floatNumber with object returns false', function () {
-            assert.isFalse(check.floatNumber({}));
+        test('float with object returns false', function () {
+            assert.isFalse(check.float({}));
         });
 
-        test('floatNumber with string returns false', function () {
-            assert.isFalse(check.floatNumber('1.2'));
+        test('float with string returns false', function () {
+            assert.isFalse(check.float('1.2'));
         });
 
         test('number function is defined', function () {
