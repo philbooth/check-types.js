@@ -174,7 +174,7 @@ These are implemented by
 
 * `check.email(thing)`:
   Returns `true`
-  if `thing` is an email,
+  if `thing` seems like a valid email address,
   `false` otherwise.
 
 * `check.length(thing, value)`:
