@@ -494,20 +494,16 @@
             assert.isFalse(check.positiveNumber(-1/2));
         });
 
-        test('positiveNumber with positive infinity returns true', function () {
-            assert.isTrue(check.positiveNumber(Infinity));
+        test('positiveNumber with positive infinity returns false', function () {
+            assert.isFalse(check.positiveNumber(Number.POSITIVE_INFINITY));
         });
 
         test('positiveNumber with negative infinity returns false', function () {
-            assert.isFalse(check.positiveNumber(-Infinity));
+            assert.isFalse(check.positiveNumber(Number.NEGATIVE_INFINITY));
         });
 
         test('positiveNumber with NaN returns false', function () {
             assert.isFalse(check.positiveNumber(NaN));
-        });
-
-        test('positiveNumber with object returns false', function () {
-            assert.isFalse(check.positiveNumber({}));
         });
 
         test('positiveNumber with string returns false', function () {
@@ -535,19 +531,15 @@
         });
 
         test('negativeNumber with positive infinity returns false', function () {
-            assert.isFalse(check.negativeNumber(Infinity));
+            assert.isFalse(check.negativeNumber(Number.POSITIVE_INFINITY));
         });
 
-        test('negativeNumber with negative infinity returns true', function () {
-            assert.isTrue(check.negativeNumber(-Infinity));
+        test('negativeNumber with negative infinity returns false', function () {
+            assert.isFalse(check.negativeNumber(Number.NEGATIVE_INFINITY));
         });
 
         test('negativeNumber with NaN returns false', function () {
             assert.isFalse(check.negativeNumber(NaN));
-        });
-
-        test('negativeNumber with object returns false', function () {
-            assert.isFalse(check.negativeNumber({}));
         });
 
         test('negativeNumber with string returns false', function () {
@@ -590,8 +582,8 @@
             assert.isTrue(check.floatNumber(1.1));
         });
 
-        test('floatNumber with infinity returns true', function () {
-            assert.isTrue(check.floatNumber(Infinity));
+        test('floatNumber with infinity returns false', function () {
+            assert.isFalse(check.floatNumber(Infinity));
         });
 
         test('floatNumber with NaN returns false', function () {
@@ -618,8 +610,16 @@
             assert.isTrue(check.number(1/2));
         });
 
-        test('number with Infinity returns true', function () {
-            assert.isTrue(check.number(Infinity));
+        test('number with positive infinity returns false', function () {
+            assert.isFalse(check.number(Number.POSITIVE_INFINITY));
+        });
+
+        test('number with negative infinity returns false', function () {
+            assert.isFalse(check.number(Number.NEGATIVE_INFINITY));
+        });
+
+        test('number with infinity returns false', function () {
+            assert.isFalse(check.number(Number.Infinity));
         });
 
         test('number with NaN returns false', function () {

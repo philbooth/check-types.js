@@ -352,13 +352,16 @@
     /**
      * Public function `number`.
      *
-     * Returns `true` if something is a number other than NaN,
+     * Returns `true` if something is a real number,
      * `false` otherwise.
      *
      * @param thing The thing to test.
      */
     function number (thing) {
-        return typeof thing === 'number' && isNaN(thing) === false;
+        return typeof thing === 'number' &&
+               isNaN(thing) === false &&
+               thing !== Number.POSITIVE_INFINITY &&
+               thing !== Number.NEGATIVE_INFINITY;
     }
 
     /**

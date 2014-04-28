@@ -187,10 +187,13 @@ These are implemented by
 
 * `check.number(thing)`:
   Returns `true`
-  if `thing` is a number,
+  if `thing` is a real number,
   `false` otherwise.
-  In this case,
-  `NaN` is not considered a number.
+  Note that
+  `NaN`,
+  `Number.POSITIVE_INFINITY` and
+  `Number.NEGATIVE_INFINITY`
+  are not real numbers.
 
 * `check.positiveNumber(thing)`:
   Returns `true` if `thing` is a number
