@@ -28,8 +28,8 @@
         oddNumber: oddNumber,
         positiveNumber: positiveNumber,
         negativeNumber: negativeNumber,
-        'int' : intNumber,
-        'float' : floatNumber,
+        intNumber : intNumber,
+        floatNumber : floatNumber,
         number: number
     };
 
@@ -51,8 +51,8 @@
         oddNumber: 'Invalid number',
         positiveNumber: 'Invalid number',
         negativeNumber: 'Invalid number',
-        'int': 'Invalid number',
-        'float': 'Invalid number',
+        intNumber: 'Invalid number',
+        floatNumber: 'Invalid number',
         number: 'Invalid number'
     };
 

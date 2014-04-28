@@ -213,14 +213,14 @@ These are implemented by
   if `thing` is an even number,
   `false` otherwise.
 
-* `check.int(thing)`:
+* `check.intNumber(thing)`:
   Returns `true`
-  if `thing` is an integer number,
+  if `thing` is an integer,
   `false` otherwise.
 
-* `check.float(thing)`:
+* `check.floatNumber(thing)`:
   Returns `true`
-  if `thing` is a float number,
+  if `thing` is a floating-point number,
   `false` otherwise.
 
 #### Function functions
