@@ -2,7 +2,7 @@
 
 ## 1.3
 
-* Implement `intNumber` and `floatNumber` predicates. Thanks to [Rodrigo González][rodrigo].
+* Implement `email`, `intNumber` and `floatNumber` predicates. Thanks to [Rodrigo González][rodrigo].
 * Infinity is not a number.
 
 ## 1.2
