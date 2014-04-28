@@ -1,5 +1,10 @@
 # History
 
+## 1.3
+
+* Implement `intNumber` and `floatNumber` predicates. Thanks to [Rodrigo González][rodrigo].
+* Infinity is not a number.
+
 ## 1.2
 
 * Implement `not` modifier.
@@ -29,4 +34,5 @@
 [marcolivier]: https://github.com/ricardmo
 [gleb]: https://github.com/bahmutov
 [galniv]: https://github.com/galniv
+[rodrigo]: https://github.com/roro89
 
