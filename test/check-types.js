@@ -813,6 +813,8 @@
             assert.isFunction(check.verify.negativeNumber);
             assert.isFunction(check.verify.number);
             assert.isFunction(check.verify.gitUrl);
+            assert.isFunction(check.verify.nullObject);
+            assert.isFunction(check.verify.undefinedObject);
         });
 
         test('verify modifier is not applied to batch operations', function () {
