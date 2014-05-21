@@ -634,60 +634,60 @@
             assert.isFalse(check.number('1'));
         });
 
-        test('nullObject function is defined', function () {
-            assert.isFunction(check.nullObject);
+        test('nulled function is defined', function () {
+            assert.isFunction(check.nulled);
         });
 
-        test('nullObject with null returns true', function () {
-            assert.isTrue(check.nullObject(null));
+        test('nulled with null returns true', function () {
+            assert.isTrue(check.nulled(null));
         });
 
-        test('nullObject with string returns false', function () {
-            assert.isFalse(check.nullObject('null'));
+        test('nulled with string returns false', function () {
+            assert.isFalse(check.nulled('null'));
         });
 
-        test('nullObject with undefined returns false', function () {
-            assert.isFalse(check.nullObject(undefined));
+        test('nulled with undefined returns false', function () {
+            assert.isFalse(check.nulled(undefined));
         });
 
-        test('nullObject with empty array returns false', function () {
-            assert.isFalse(check.nullObject([]));
+        test('nulled with empty array returns false', function () {
+            assert.isFalse(check.nulled([]));
         });
 
-        test('nullObject with empty object returns false', function () {
-            assert.isFalse(check.nullObject({}));
+        test('nulled with empty object returns false', function () {
+            assert.isFalse(check.nulled({}));
         });
 
-        test('nullObject with empty string returns false', function () {
-            assert.isFalse(check.nullObject(""));
+        test('nulled with empty string returns false', function () {
+            assert.isFalse(check.nulled(""));
         });
 
-        test('undefinedObject function is defined', function () {
-            assert.isFunction(check.undefinedObject);
+        test('defined function is defined', function () {
+            assert.isFunction(check.defined);
         });
 
-        test('undefinedObject with undefined returns true', function () {
-            assert.isTrue(check.undefinedObject(undefined));
+        test('defined with undefined returns true', function () {
+            assert.isFalse(check.defined(undefined));
         });
 
-        test('undefinedObject with string returns false', function () {
-            assert.isFalse(check.undefinedObject('undefined'));
+        test('defined with string returns false', function () {
+            assert.isTrue(check.defined('undefined'));
         });
 
-        test('undefinedObject with null returns false', function () {
-            assert.isFalse(check.undefinedObject(null));
+        test('defined with null returns false', function () {
+            assert.isTrue(check.defined(null));
         });
 
-        test('undefinedObject with empty array returns false', function () {
-            assert.isFalse(check.undefinedObject([]));
+        test('defined with empty array returns false', function () {
+            assert.isTrue(check.defined([]));
         });
 
-        test('undefinedObject with empty object returns false', function () {
-            assert.isFalse(check.undefinedObject({}));
+        test('defined with empty object returns false', function () {
+            assert.isTrue(check.defined({}));
         });
 
-        test('undefinedObject with empty string returns false', function () {
-            assert.isFalse(check.undefinedObject(""));
+        test('defined with empty string returns false', function () {
+            assert.isTrue(check.defined(""));
         });
 
         test('map function is defined', function () {
@@ -821,8 +821,8 @@
             assert.isFunction(check.verify.negativeNumber);
             assert.isFunction(check.verify.number);
             assert.isFunction(check.verify.gitUrl);
-            assert.isFunction(check.verify.nullObject);
-            assert.isFunction(check.verify.undefinedObject);
+            assert.isFunction(check.verify.nulled);
+            assert.isFunction(check.verify.defined);
         });
 
         test('verify modifier is not applied to batch operations', function () {

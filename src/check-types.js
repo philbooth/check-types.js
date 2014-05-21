@@ -31,8 +31,8 @@
         intNumber : intNumber,
         floatNumber : floatNumber,
         number: number,
-        nullObject: nullObject,
-        undefinedObject: undefinedObject
+        nulled: nulled,
+        defined: defined
     };
 
     messages = {
@@ -56,8 +56,8 @@
         intNumber: 'Invalid number',
         floatNumber: 'Invalid number',
         number: 'Invalid number',
-        nullObject: 'Not null',
-        undefinedObject: 'Not undefined'
+        nulled: 'Not null',
+        defined: 'Not defined'
     };
 
     functions = {
@@ -369,27 +369,27 @@
     }
 
     /**
-     * Public function `nullObject`.
+     * Public function `nulled`.
      *
      * Returns `true` if something is null,
      * `false` otherwise.
      *
      * @param thing The thing to test.
      */
-    function nullObject (thing) {
+    function nulled (thing) {
         return thing === null;
     }
 
     /**
-     * Public function `undefinedObject`.
+     * Public function `defined`.
      *
-     * Returns `true` if something is undefined,
+     * Returns `true` if something is not undefined,
      * `false` otherwise.
      *
      * @param thing The thing to test.
      */
-    function undefinedObject (thing) {
-        return thing === void 0;
+    function defined (thing) {
+        return thing !== void 0;
     }
 
     /**
