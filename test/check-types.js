@@ -634,6 +634,10 @@
             assert.isFalse(check.number('1'));
         });
 
+        test('nullObject function is defined', function () {
+            assert.isFunction(check.nullObject);
+        });
+
         test('nullObject with null returns true', function () {
             assert.isTrue(check.nullObject(null));
         });
@@ -656,6 +660,10 @@
 
         test('nullObject with empty string returns false', function () {
             assert.isFalse(check.nullObject(""));
+        });
+
+        test('undefinedObject function is defined', function () {
+            assert.isFunction(check.undefinedObject);
         });
 
         test('undefinedObject with undefined returns true', function () {
