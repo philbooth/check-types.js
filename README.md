@@ -278,6 +278,18 @@ These are implemented by
   If either argument is not an object,
   an exception is thrown.
 
+* `check.nullObject(thing)`:
+  Returns `true`
+  if `thing` is `null` object,
+  `false` otherwise.
+
+* `check.undefinedObject(thing)`:
+  Returns `true`
+  if `thing` is `undefined` object,
+  `false` otherwise.
+
+
+
 #### Modifiers
 
 * `check.maybe.xxx(...)`:

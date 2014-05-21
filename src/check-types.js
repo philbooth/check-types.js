@@ -30,7 +30,9 @@
         negativeNumber: negativeNumber,
         intNumber : intNumber,
         floatNumber : floatNumber,
-        number: number
+        number: number,
+        nullObject: nullObject,
+        undefinedObject: undefinedObject
     };
 
     messages = {
@@ -53,7 +55,9 @@
         negativeNumber: 'Invalid number',
         intNumber: 'Invalid number',
         floatNumber: 'Invalid number',
-        number: 'Invalid number'
+        number: 'Invalid number',
+        nullObject: 'Not null',
+        undefinedObject: 'Not undefined'
     };
 
     functions = {
@@ -362,6 +366,30 @@
                isNaN(thing) === false &&
                thing !== Number.POSITIVE_INFINITY &&
                thing !== Number.NEGATIVE_INFINITY;
+    }
+
+    /**
+     * Public function `nullObject`.
+     *
+     * Returns `true` if something is null,
+     * `false` otherwise.
+     *
+     * @param thing The thing to test.
+     */
+    function nullObject (thing) {
+        return thing === null;
+    }
+
+    /**
+     * Public function `undefinedObject`.
+     *
+     * Returns `true` if something is undefined,
+     * `false` otherwise.
+     *
+     * @param thing The thing to test.
+     */
+    function undefinedObject (thing) {
+        return thing === void 0;
     }
 
     /**

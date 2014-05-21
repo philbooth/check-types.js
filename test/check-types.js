@@ -634,6 +634,54 @@
             assert.isFalse(check.number('1'));
         });
 
+        test('nullObject with null returns true', function () {
+            assert.isTrue(check.nullObject(null));
+        });
+
+        test('nullObject with string returns false', function () {
+            assert.isFalse(check.nullObject('null'));
+        });
+
+        test('nullObject with undefined returns false', function () {
+            assert.isFalse(check.nullObject(undefined));
+        });
+
+        test('nullObject with empty array returns false', function () {
+            assert.isFalse(check.nullObject([]));
+        });
+
+        test('nullObject with empty object returns false', function () {
+            assert.isFalse(check.nullObject({}));
+        });
+
+        test('nullObject with empty string returns false', function () {
+            assert.isFalse(check.nullObject(""));
+        });
+
+        test('undefinedObject with undefined returns true', function () {
+            assert.isTrue(check.undefinedObject(undefined));
+        });
+
+        test('undefinedObject with string returns false', function () {
+            assert.isFalse(check.undefinedObject('undefined'));
+        });
+
+        test('undefinedObject with null returns false', function () {
+            assert.isFalse(check.undefinedObject(null));
+        });
+
+        test('undefinedObject with empty array returns false', function () {
+            assert.isFalse(check.undefinedObject([]));
+        });
+
+        test('undefinedObject with empty object returns false', function () {
+            assert.isFalse(check.undefinedObject({}));
+        });
+
+        test('undefinedObject with empty string returns false', function () {
+            assert.isFalse(check.undefinedObject(""));
+        });
+
         test('map function is defined', function () {
             assert.isFunction(check.map);
         });
@@ -779,11 +827,11 @@
 
         test('verify modifier is applied to maybe', function () {
             assert.isObject(check.verify.maybe);
-            assert.strictEqual(Object.keys(check.verify.maybe).length, 20);
+            assert.strictEqual(Object.keys(check.verify.maybe).length, 22);
         });
 
         test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 22);
+            assert.strictEqual(Object.keys(check.verify).length, 24);
         });
 
         test('verify modifier throws when value is wrong', function () {
@@ -843,7 +891,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 20);
+            assert.strictEqual(Object.keys(check.maybe).length, 22);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -872,7 +920,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.not).length, 20);
+            assert.strictEqual(Object.keys(check.not).length, 22);
         });
 
         test('not modifier returns true when predicate returns false', function() {
