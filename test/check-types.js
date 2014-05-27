@@ -634,6 +634,62 @@
             assert.isFalse(check.number('1'));
         });
 
+        test('nulled function is defined', function () {
+            assert.isFunction(check.nulled);
+        });
+
+        test('nulled with null returns true', function () {
+            assert.isTrue(check.nulled(null));
+        });
+
+        test('nulled with string returns false', function () {
+            assert.isFalse(check.nulled('null'));
+        });
+
+        test('nulled with undefined returns false', function () {
+            assert.isFalse(check.nulled(undefined));
+        });
+
+        test('nulled with empty array returns false', function () {
+            assert.isFalse(check.nulled([]));
+        });
+
+        test('nulled with empty object returns false', function () {
+            assert.isFalse(check.nulled({}));
+        });
+
+        test('nulled with empty string returns false', function () {
+            assert.isFalse(check.nulled(""));
+        });
+
+        test('defined function is defined', function () {
+            assert.isFunction(check.defined);
+        });
+
+        test('defined with undefined returns true', function () {
+            assert.isFalse(check.defined(undefined));
+        });
+
+        test('defined with string returns false', function () {
+            assert.isTrue(check.defined('undefined'));
+        });
+
+        test('defined with null returns false', function () {
+            assert.isTrue(check.defined(null));
+        });
+
+        test('defined with empty array returns false', function () {
+            assert.isTrue(check.defined([]));
+        });
+
+        test('defined with empty object returns false', function () {
+            assert.isTrue(check.defined({}));
+        });
+
+        test('defined with empty string returns false', function () {
+            assert.isTrue(check.defined(""));
+        });
+
         test('map function is defined', function () {
             assert.isFunction(check.map);
         });
@@ -765,6 +821,8 @@
             assert.isFunction(check.verify.negativeNumber);
             assert.isFunction(check.verify.number);
             assert.isFunction(check.verify.gitUrl);
+            assert.isFunction(check.verify.nulled);
+            assert.isFunction(check.verify.defined);
         });
 
         test('verify modifier is not applied to batch operations', function () {
@@ -779,11 +837,11 @@
 
         test('verify modifier is applied to maybe', function () {
             assert.isObject(check.verify.maybe);
-            assert.strictEqual(Object.keys(check.verify.maybe).length, 20);
+            assert.strictEqual(Object.keys(check.verify.maybe).length, 22);
         });
 
         test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 22);
+            assert.strictEqual(Object.keys(check.verify).length, 24);
         });
 
         test('verify modifier throws when value is wrong', function () {
@@ -843,7 +901,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 20);
+            assert.strictEqual(Object.keys(check.maybe).length, 22);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -872,7 +930,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.not).length, 20);
+            assert.strictEqual(Object.keys(check.not).length, 22);
         });
 
         test('not modifier returns true when predicate returns false', function() {
