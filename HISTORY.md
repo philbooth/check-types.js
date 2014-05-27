@@ -4,6 +4,7 @@
 
 * Implement `email`, `intNumber` and `floatNumber` predicates. Thanks to [Rodrigo González][rodrigo].
 * Infinity is not a number.
+* Implement `defined` and `nulled`. Thanks to [Alejandro Villanueva][ialex].
 
 ## 1.2
 
@@ -35,4 +36,5 @@
 [gleb]: https://github.com/bahmutov
 [galniv]: https://github.com/galniv
 [rodrigo]: https://github.com/roro89
+[ialex]: https://github.com/ialex
 
