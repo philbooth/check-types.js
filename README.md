@@ -44,7 +44,7 @@ abstracted by a simple API.
 
 ## How tiny is it?
 
-13.7 kb unminified with comments, 3.1 kb minified, 1.1 kb minified + gzipped.
+14.3 kb unminified with comments, 3.2 kb minified, 1.2 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -260,6 +260,16 @@ These are implemented by
   if `thing` is a non-null, non-array, non-date object,
   `false` otherwise.
 
+* `check.nulled(thing)`:
+  Returns `true`
+  if `thing` is `null`,
+  `false` otherwise.
+
+* `check.defined(thing)`:
+  Returns `true`
+  if `thing` is not `undefined`,
+  `false` otherwise.
+
 * `check.emptyObject(thing)`:
   Returns `true`
   if `thing` is an empty object,
@@ -277,18 +287,6 @@ These are implemented by
   `false` otherwise.
   If either argument is not an object,
   an exception is thrown.
-
-* `check.nulled(thing)`:
-  Returns `true`
-  if `thing` is `null` object,
-  `false` otherwise.
-
-* `check.defined(thing)`:
-  Returns `true`
-  if `thing` is not `undefined` object,
-  `false` otherwise.
-
-
 
 #### Modifiers
 
