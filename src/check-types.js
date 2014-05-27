@@ -14,6 +14,8 @@
         like: like,
         instance: instance,
         emptyObject: emptyObject,
+        nulled: nulled,
+        defined: defined,
         object: object,
         length: length,
         array: array,
@@ -30,15 +32,15 @@
         negativeNumber: negativeNumber,
         intNumber : intNumber,
         floatNumber : floatNumber,
-        number: number,
-        nulled: nulled,
-        defined: defined
+        number: number
     };
 
     messages = {
         like: 'Invalid type',
         instance: 'Invalid type',
         emptyObject: 'Invalid object',
+        nulled: 'Not null',
+        defined: 'Not defined',
         object: 'Invalid object',
         length: 'Invalid length',
         array: 'Invalid array',
@@ -55,9 +57,7 @@
         negativeNumber: 'Invalid number',
         intNumber: 'Invalid number',
         floatNumber: 'Invalid number',
-        number: 'Invalid number',
-        nulled: 'Not null',
-        defined: 'Not defined'
+        number: 'Invalid number'
     };
 
     functions = {
@@ -125,7 +125,7 @@
      *                             test is against.
      */
     function instance (thing, prototype) {
-        if (typeof thing === 'undefined' || thing === null) {
+        if (!defined(thing) || nulled(thing)) {
             return false;
         }
 
@@ -161,6 +161,30 @@
     }
 
     /**
+     * Public function `nulled`.
+     *
+     * Returns `true` if something is null,
+     * `false` otherwise.
+     *
+     * @param thing The thing to test.
+     */
+    function nulled (thing) {
+        return thing === null;
+    }
+
+    /**
+     * Public function `defined`.
+     *
+     * Returns `true` if something is not undefined,
+     * `false` otherwise.
+     *
+     * @param thing The thing to test.
+     */
+    function defined (thing) {
+        return thing !== void 0;
+    }
+
+    /**
      * Public function `object`.
      *
      * Returns `true` if something is a non-null, non-array,
@@ -169,7 +193,7 @@
      * @param thing          The thing to test.
      */
     function object (thing) {
-        return typeof thing === 'object' && thing !== null && array(thing) === false && date(thing) === false;
+        return typeof thing === 'object' && !nulled(thing) && !array(thing) && !date(thing);
     }
 
     /**
@@ -369,30 +393,6 @@
     }
 
     /**
-     * Public function `nulled`.
-     *
-     * Returns `true` if something is null,
-     * `false` otherwise.
-     *
-     * @param thing The thing to test.
-     */
-    function nulled (thing) {
-        return thing === null;
-    }
-
-    /**
-     * Public function `defined`.
-     *
-     * Returns `true` if something is not undefined,
-     * `false` otherwise.
-     *
-     * @param thing The thing to test.
-     */
-    function defined (thing) {
-        return thing !== void 0;
-    }
-
-    /**
      * Public function `map`.
      *
      * Returns the results hash of mapping each predicate to the
@@ -499,7 +499,7 @@
      * Throws if `predicate` returns `false`.
      */
     function verifyModifier (predicate, defaultMessage) {
-        return function() {
+        return function () {
             var message;
 
             if (predicate.apply(null, arguments) === false) {
@@ -516,8 +516,12 @@
      * otherwise propagates the return value from `predicate`.
      */
     function maybeModifier (predicate) {
-        return function() {
-            return arguments[0] === null || arguments[0] === undefined ?  true : predicate.apply(null, arguments);
+        return function () {
+            if (!defined(arguments[0]) || nulled(arguments[0])) {
+                return true;
+            }
+
+            return predicate.apply(null, arguments);
         };
     }
 
