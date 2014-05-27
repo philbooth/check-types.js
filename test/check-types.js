@@ -162,6 +162,50 @@
             assert.isFalse(check.emptyObject({ foo: 'bar' }));
         });
 
+        test('nulled function is defined', function () {
+            assert.isFunction(check.nulled);
+        });
+
+        test('nulled with null returns true', function () {
+            assert.isTrue(check.nulled(null));
+        });
+
+        test('nulled with string returns false', function () {
+            assert.isFalse(check.nulled('null'));
+        });
+
+        test('nulled with empty string returns false', function () {
+            assert.isFalse(check.nulled(''));
+        });
+
+        test('nulled with undefined returns false', function () {
+            assert.isFalse(check.nulled(undefined));
+        });
+
+        test('nulled with object returns false', function () {
+            assert.isFalse(check.nulled({}));
+        });
+
+        test('defined function is defined', function () {
+            assert.isFunction(check.defined);
+        });
+
+        test('defined with undefined returns false', function () {
+            assert.isFalse(check.defined(undefined));
+        });
+
+        test('defined with string returns true', function () {
+            assert.isTrue(check.defined('undefined'));
+        });
+
+        test('defined with object returns true', function () {
+            assert.isTrue(check.defined({}));
+        });
+
+        test('defined with null returns true', function () {
+            assert.isTrue(check.defined(null));
+        });
+
         test('object function is defined', function () {
             assert.isFunction(check.object);
         });
@@ -632,62 +676,6 @@
 
         test('number with string returns false', function () {
             assert.isFalse(check.number('1'));
-        });
-
-        test('nulled function is defined', function () {
-            assert.isFunction(check.nulled);
-        });
-
-        test('nulled with null returns true', function () {
-            assert.isTrue(check.nulled(null));
-        });
-
-        test('nulled with string returns false', function () {
-            assert.isFalse(check.nulled('null'));
-        });
-
-        test('nulled with undefined returns false', function () {
-            assert.isFalse(check.nulled(undefined));
-        });
-
-        test('nulled with empty array returns false', function () {
-            assert.isFalse(check.nulled([]));
-        });
-
-        test('nulled with empty object returns false', function () {
-            assert.isFalse(check.nulled({}));
-        });
-
-        test('nulled with empty string returns false', function () {
-            assert.isFalse(check.nulled(""));
-        });
-
-        test('defined function is defined', function () {
-            assert.isFunction(check.defined);
-        });
-
-        test('defined with undefined returns true', function () {
-            assert.isFalse(check.defined(undefined));
-        });
-
-        test('defined with string returns false', function () {
-            assert.isTrue(check.defined('undefined'));
-        });
-
-        test('defined with null returns false', function () {
-            assert.isTrue(check.defined(null));
-        });
-
-        test('defined with empty array returns false', function () {
-            assert.isTrue(check.defined([]));
-        });
-
-        test('defined with empty object returns false', function () {
-            assert.isTrue(check.defined({}));
-        });
-
-        test('defined with empty string returns false', function () {
-            assert.isTrue(check.defined(""));
         });
 
         test('map function is defined', function () {
