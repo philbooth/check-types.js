@@ -19,8 +19,8 @@
         "parameters"
     ],
     "devDependencies": {
-        "jshint": "2.4.x",
-        "mocha": "1.18.x",
+        "jshint": "2.5.x",
+        "mocha": "1.19.x",
         "chai": "1.9.x",
         "uglify-js": "2.4.x"
     },
