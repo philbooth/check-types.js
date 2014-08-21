@@ -5,6 +5,7 @@
 * Implement `email`, `intNumber` and `floatNumber` predicates. Thanks to [Rodrigo González][rodrigo].
 * Infinity is not a number.
 * Implement `defined` and `nulled`. Thanks to [Alejandro Villanueva][ialex].
+* Speculatively fix conflict with angular-mocks.
 
 ## 1.2
 
