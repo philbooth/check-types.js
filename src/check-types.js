@@ -557,7 +557,7 @@
             define(function () {
                 return functions;
             });
-        } else if (typeof module !== 'undefined' && module !== null) {
+        } else if (typeof module !== 'undefined' && module !== null && module.exports) {
             module.exports = functions;
         } else {
             globals.check = functions;
