@@ -25,9 +25,9 @@
         "uglify-js": "2.4.x"
     },
     "scripts": {
-        "lint": "./node_modules/.bin/jshint ./src/check-types.js --config config/jshint.json",
-        "test": "./node_modules/.bin/mocha --ui tdd --reporter spec --colors ./test/check-types.js",
-        "minify": "./node_modules/.bin/uglifyjs ./src/check-types.js --compress --mangle --output ./src/check-types.min.js"
+        "lint": "jshint ./src/check-types.js --config config/jshint.json",
+        "test": "mocha --ui tdd --reporter spec --colors ./test/check-types.js",
+        "minify": "uglifyjs ./src/check-types.js --compress --mangle --output ./src/check-types.min.js"
     }
 }
 
