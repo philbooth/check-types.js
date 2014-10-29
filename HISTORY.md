@@ -1,5 +1,9 @@
 # History
 
+## 1.4
+
+* Implement `bool` predicate. Thanks to [Clinton Skakun][clintonskakun].
+
 ## 1.3
 
 * Implement `email`, `intNumber` and `floatNumber` predicates. Thanks to [Rodrigo González][rodrigo].
@@ -38,4 +42,5 @@
 [galniv]: https://github.com/galniv
 [rodrigo]: https://github.com/roro89
 [ialex]: https://github.com/ialex
+[clintonskakun]: https://github.com/clintonskakun
 
