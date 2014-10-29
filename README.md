@@ -18,6 +18,7 @@ and throwing exceptions.
         * [Array functions](#array-functions)
         * [Date functions](#date-functions)
         * [Object functions](#object-functions)
+        * [Boolean functions](#boolean-functions)
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
@@ -287,6 +288,13 @@ These are implemented by
   `false` otherwise.
   If either argument is not an object,
   an exception is thrown.
+
+#### Boolean functions
+
+* `check.bool(thing)`:
+  Returns `true`
+  if `thing` is a boolean,
+  `false` otherwise.
 
 #### Modifiers
 
