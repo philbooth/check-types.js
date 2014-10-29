@@ -861,11 +861,11 @@
 
         test('verify modifier is applied to maybe', function () {
             assert.isObject(check.verify.maybe);
-            assert.strictEqual(Object.keys(check.verify.maybe).length, 22);
+            assert.strictEqual(Object.keys(check.verify.maybe).length, 23);
         });
 
         test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 24);
+            assert.strictEqual(Object.keys(check.verify).length, 25);
         });
 
         test('verify modifier throws when value is wrong', function () {
@@ -925,7 +925,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 22);
+            assert.strictEqual(Object.keys(check.maybe).length, 23);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -954,7 +954,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.not).length, 22);
+            assert.strictEqual(Object.keys(check.not).length, 23);
         });
 
         test('not modifier returns true when predicate returns false', function() {
