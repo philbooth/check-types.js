@@ -694,18 +694,6 @@
             assert.isFalse(check.bool(1));
         });
 
-        test('bool with number zero returns false', function () {
-            assert.isFalse(check.bool(0));
-        });
-
-        test('bool with array returns false', function () {
-            assert.isFalse(check.bool([true]));
-        });
-
-        test('bool with NaN returns false', function () {
-            assert.isFalse(check.bool(NaN));
-        });
-
         test('bool with object returns false', function () {
             assert.isFalse(check.bool({}));
         });
