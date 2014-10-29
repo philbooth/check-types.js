@@ -403,8 +403,7 @@
      * @param thing The thing to test.
      */
     function bool (thing) {
-        return typeof thing === 'boolean' &&
-               (thing === false || thing === true);
+        return thing === false || thing === true;
     }
 
     /**
