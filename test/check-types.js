@@ -678,6 +678,42 @@
             assert.isFalse(check.number('1'));
         });
 
+        test('bool function is defined', function () {
+            assert.isFunction(check.bool);
+        });
+
+        test('bool with true boolean returns true', function () {
+            assert.isTrue(check.bool(true));
+        });
+
+        test('bool with false boolean returns true', function () {
+            assert.isTrue(check.bool(false));
+        });
+
+        test('bool with positive number returns false', function () {
+            assert.isFalse(check.bool(1));
+        });
+
+        test('bool with number zero returns false', function () {
+            assert.isFalse(check.bool(0));
+        });
+
+        test('bool with array returns false', function () {
+            assert.isFalse(check.bool([true]));
+        });
+
+        test('bool with NaN returns false', function () {
+            assert.isFalse(check.bool(NaN));
+        });
+
+        test('bool with object returns false', function () {
+            assert.isFalse(check.bool({}));
+        });
+
+        test('bool with string returns false', function () {
+            assert.isFalse(check.bool('false'));
+        });
+
         test('map function is defined', function () {
             assert.isFunction(check.map);
         });
