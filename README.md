@@ -293,7 +293,7 @@ These are implemented by
 
 * `check.bool(thing)`:
   Returns `true`
-  if `thing` is a boolean
+  if `thing` is a boolean,
   `false` otherwise.
 
 #### Modifiers
