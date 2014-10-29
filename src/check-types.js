@@ -32,7 +32,8 @@
         negativeNumber: negativeNumber,
         intNumber : intNumber,
         floatNumber : floatNumber,
-        number: number
+        number: number,
+        bool: bool
     };
 
     messages = {
@@ -57,7 +58,8 @@
         negativeNumber: 'Invalid number',
         intNumber: 'Invalid number',
         floatNumber: 'Invalid number',
-        number: 'Invalid number'
+        number: 'Invalid number',
+        bool: 'Invalid bool'
     };
 
     functions = {
@@ -390,6 +392,19 @@
                isNaN(thing) === false &&
                thing !== Number.POSITIVE_INFINITY &&
                thing !== Number.NEGATIVE_INFINITY;
+    }
+
+    /**
+     * Public function `bool`.
+     *
+     * Returns `true` if something is a bool,
+     * `false` otherwise.
+     *
+     * @param thing The thing to test.
+     */
+    function bool (thing) {
+        return typeof thing === 'boolean' &&
+               (thing === false || thing === true);
     }
 
     /**
