@@ -59,7 +59,7 @@
         intNumber: 'Invalid number',
         floatNumber: 'Invalid number',
         number: 'Invalid number',
-        bool: 'Invalid bool'
+        bool: 'Invalid boolean'
     };
 
     functions = {
