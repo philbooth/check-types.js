@@ -878,6 +878,7 @@
             assert.isFunction(check.assert.negative);
             assert.isFunction(check.assert.integer);
             assert.isFunction(check.assert.number);
+            assert.isFunction(check.assert.boolean);
         });
 
         test('assert modifier is not applied to batch operations', function () {
@@ -893,16 +894,16 @@
 
         test('assert modifier is applied to maybe', function () {
             assert.isObject(check.assert.maybe);
-            assert.strictEqual(Object.keys(check.assert.maybe).length, 20);
+            assert.strictEqual(Object.keys(check.assert.maybe).length, 21);
         });
 
         test('assert modifier is applied to not', function () {
             assert.isObject(check.assert.not);
-            assert.strictEqual(Object.keys(check.assert.not).length, 20);
+            assert.strictEqual(Object.keys(check.assert.not).length, 21);
         });
 
         test('assert modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.assert).length, 22);
+            assert.strictEqual(Object.keys(check.assert).length, 23);
         });
 
         test('assert modifier throws when value is wrong', function () {
@@ -962,7 +963,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.maybe).length, 20);
+            assert.strictEqual(Object.keys(check.maybe).length, 21);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -991,7 +992,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.not).length, 20);
+            assert.strictEqual(Object.keys(check.not).length, 21);
         });
 
         test('not modifier returns true when predicate returns false', function() {
