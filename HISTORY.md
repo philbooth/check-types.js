@@ -2,7 +2,8 @@
 
 ## 2.0
 
-* Breaking changes to make the API more uniform and drop support for ES3:
+* Breaking changes:
+  * Drop ES3 support.
   * Rename `verify` => `assert`.
   * Remame `nulled` => `null`.
   * Switch `defined` to `undefined` for consistency with `null`.
