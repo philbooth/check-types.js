@@ -1,7 +1,7 @@
 {
     "name": "check-types",
-    "version": "1.4.0",
-    "description": "A tiny library for checking arguments and throwing exceptions.",
+    "version": "2.0.0",
+    "description": "A tiny library for asserting types and values.",
     "homepage": "https://github.com/philbooth/check-types.js",
     "bugs": "https://github.com/philbooth/check-types.js/issues",
     "license": "MIT",
@@ -12,11 +12,21 @@
         "url": "https://github.com/philbooth/check-types.js.git"
     },
     "keywords": [
+        "type",
         "types",
+        "type-check",
         "type-checking",
         "duck-typing",
         "arguments",
-        "parameters"
+        "parameters",
+        "values",
+        "data",
+        "contract",
+        "assert",
+        "check",
+        "verify",
+        "safe",
+        "safety"
     ],
     "devDependencies": {
         "jshint": "2.5.x",
