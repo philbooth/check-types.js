@@ -46,33 +46,27 @@
             });
         });
 
-        test('like with two object arguments does not throw', function () {
+        test('like with two empty objects does not throw', function () {
             assert.doesNotThrow(function () {
                 check.like({}, {});
             });
         });
 
-        test('like with function first argument throws', function () {
-            assert.throws(function () {
-                check.like(function () {}, {});
-            });
-        });
-
-        test('like with null first argument throws', function () {
+        test('like with null, empty object throws', function () {
             assert.throws(function () {
                 check.like(null, {});
             });
         });
 
-        test('like with function second argument throws', function () {
+        test('like with empty function, empty object throws', function () {
             assert.throws(function () {
-                check.like({}, function () {});
+                check.like(function () {}, {});
             });
         });
 
-        test('like with null second argument throws', function () {
+        test('like with empty object, null throws', function () {
             assert.throws(function () {
-                check.like({}, null);
+                check.like({}, null) {});
             });
         });
 
@@ -80,32 +74,32 @@
             assert.isTrue(check.like({}, {}));
         });
 
-        test('like with foo bar properties returns false', function () {
+        test('like with different named properties returns false', function () {
             assert.isFalse(check.like({ foo: {} }, { bar: {} }));
         });
 
-        test('like with foo foo properties returns true', function () {
+        test('like with same named properties returns true', function () {
             assert.isTrue(check.like({ foo: {} }, { foo: {} }));
         });
 
-        test('like with bar baz second properties returns false', function () {
+        test('like with different named second properties returns false', function () {
             assert.isFalse(check.like({ foo: {}, bar: {} }, { foo: {}, baz: {} }));
         });
 
-        test('like with bar bar second properties returns true', function () {
+        test('like with same named second properties returns true', function () {
             assert.isTrue(check.like({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: {} }));
         });
 
-        test('like with differently typed bar bar second properties returns false', function () {
+        test('like with differently typed second properties returns false', function () {
             assert.isFalse(check.like({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: (function () {}) }));
         });
 
         test('like with different nested objects returns false', function() {
             assert.isFalse(check.like({ foo: { bar: { qux: 'string' }, baz: 23 }},
-                                            { foo: { bar: { qux: 123      }, baz: 66 }}));
+                                      { foo: { bar: { qux: 123      }, baz: 66 }}));
         });
 
-        test('like with alike nested objects returns true', function() {
+        test('like with similar nested objects returns true', function() {
             assert.isTrue(check.like({ foo: { bar: { qux: 'string' }, baz: 23 }},
                                      { foo: { bar: { qux: 'other'  }, baz: 66 }}));
         });
@@ -138,7 +132,7 @@
             assert.isTrue(check.instance([], Array));
         });
 
-        test('instance with Object and object returns false', function () {
+        test('instance with swapped arguments returns false', function () {
             assert.isFalse(check.instance(Object, {}));
         });
 
@@ -162,48 +156,64 @@
             assert.isFalse(check.emptyObject({ foo: 'bar' }));
         });
 
-        test('nulled function is defined', function () {
-            assert.isFunction(check.nulled);
+        test('null function is defined', function () {
+            assert.isFunction(check.null);
         });
 
-        test('nulled with null returns true', function () {
-            assert.isTrue(check.nulled(null));
+        test('null with null returns true', function () {
+            assert.isTrue(check.null(null));
         });
 
-        test('nulled with string returns false', function () {
-            assert.isFalse(check.nulled('null'));
+        test('null with empty object returns false', function () {
+            assert.isFalse(check.null({}));
         });
 
-        test('nulled with empty string returns false', function () {
-            assert.isFalse(check.nulled(''));
+        test('null with undefined returns false', function () {
+            assert.isFalse(check.null(undefined));
         });
 
-        test('nulled with undefined returns false', function () {
-            assert.isFalse(check.nulled(undefined));
+        test('undefined function is defined', function () {
+            assert.isFunction(check.undefined);
         });
 
-        test('nulled with object returns false', function () {
-            assert.isFalse(check.nulled({}));
+        test('undefined with undefined returns true', function () {
+            assert.isTrue(check.undefined(undefined));
         });
 
-        test('defined function is defined', function () {
-            assert.isFunction(check.defined);
+        test('undefined with null returns false', function () {
+            assert.isFalse(check.undefined(null));
         });
 
-        test('defined with undefined returns false', function () {
-            assert.isFalse(check.defined(undefined));
+        test('undefined with empty object returns false', function () {
+            assert.isFalse(check.undefined({}));
         });
 
-        test('defined with string returns true', function () {
-            assert.isTrue(check.defined('undefined'));
+        test('undefined with false returns false', function () {
+            assert.isFalse(check.undefined(false));
         });
 
-        test('defined with object returns true', function () {
-            assert.isTrue(check.defined({}));
+        test('assigned function is defined', function () {
+            assert.isFunction(check.assigned);
         });
 
-        test('defined with null returns true', function () {
-            assert.isTrue(check.defined(null));
+        test('assigned with null returns false', function () {
+            assert.isFalse(check.assigned(null));
+        });
+
+        test('assigned with undefined returns false', function () {
+            assert.isFalse(check.assigned(undefined));
+        });
+
+        test('assigned with empty object returns true', function () {
+            assert.isTrue(check.assigned({}));
+        });
+
+        test('assigned with empty string returns true', function () {
+            assert.isTrue(check.assigned(''));
+        });
+
+        test('assigned with false returns true', function () {
+            assert.isTrue(check.assigned(false));
         });
 
         test('object function is defined', function () {
@@ -218,12 +228,12 @@
             assert.isFalse(check.object(null));
         });
 
-        test('object with string returns false', function () {
-            assert.isFalse(check.object('{}'));
-        });
-
         test('object with array returns false', function () {
             assert.isFalse(check.object([]));
+        });
+
+        test('object with string returns false', function () {
+            assert.isFalse(check.object(''));
         });
 
         test('object with date returns false', function () {
@@ -234,12 +244,28 @@
             assert.isFunction(check.length);
         });
 
-        test('length with matching undefined length returns true', function () {
-            assert.isTrue(check.length({}));
+        test('length without length argument throws', function () {
+            assert.throws(function () {
+                check.length({});
+            });
         });
 
-        test('length with contrasting undefined length returns false', function () {
-            assert.isFalse(check.length({}, 7));
+        test('length with length argument does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.length({}, 5);
+            });
+        });
+
+        test('length with zero on empty array returns true', function () {
+            assert.isTrue(check.length([], 0));
+        });
+
+        test('length with zero on empty string returns true', function () {
+            assert.isTrue(check.length('', 0));
+        });
+
+        test('length with zero on empty object returns false', function () {
+            assert.isFalse(check.length({}, 0));
         });
 
         test('length with matching length on array returns true', function () {
@@ -250,12 +276,20 @@
             assert.isFalse(check.length([ 'foo', 'bar', 'baz' ], 2));
         });
 
+        test('length with matching length on string returns true', function () {
+            assert.isTrue(check.length('foo', 3));
+        });
+
+        test('length with contrasting length on string returns false', function () {
+            assert.isFalse(check.length('foobar', 3));
+        });
+
         test('length with matching length on object returns true', function () {
             assert.isTrue(check.length({ length: 1 }, 1));
         });
 
         test('length with contrasting length on object returns false', function () {
-            assert.isFalse(check.length({ length: 1 }, 2));
+            assert.isFalse(check.length({ length: 2 }, 1));
         });
 
         test('array function is defined', function () {
@@ -266,16 +300,16 @@
             assert.isTrue(check.array([]));
         });
 
-        test('array with null returns false', function () {
-            assert.isFalse(check.array(null));
-        });
-
         test('array with string returns false', function () {
-            assert.isFalse(check.array('[]'));
+            assert.isFalse(check.array(''));
         });
 
         test('array with object returns false', function () {
             assert.isFalse(check.array({}));
+        });
+
+        test('array with arguments object returns false', function () {
+            assert.isFalse(check.array(arguments));
         });
 
         test('date function is defined', function () {
@@ -290,28 +324,12 @@
             assert.isFalse(check.date({}));
         });
 
-        test('date with null returns false', function () {
-            assert.isFalse(check.date(null));
-        });
-
-        test('date with string returns false', function () {
-            assert.isFalse(check.date('new Date()'));
-        });
-
         test('fn function is defined', function () {
             assert.isFunction(check.fn);
         });
 
         test('fn with function returns true', function () {
             assert.isTrue(check.fn(function () {}));
-        });
-
-        test('fn with null returns false', function () {
-            assert.isFalse(check.fn(null));
-        });
-
-        test('fn with string returns false', function () {
-            assert.isFalse(check.fn('function () {}'));
         });
 
         test('fn with object returns false', function () {
@@ -833,7 +851,7 @@
             assert.isFunction(check.verify.negativeNumber);
             assert.isFunction(check.verify.number);
             assert.isFunction(check.verify.gitUrl);
-            assert.isFunction(check.verify.nulled);
+            assert.isFunction(check.verify.null);
             assert.isFunction(check.verify.defined);
         });
 

@@ -1,5 +1,12 @@
 # History
 
+## 2.0
+
+* Breaking changes to make the API more uniform and drop support for ES3:
+  * Rename `verify` => `assert`.
+  * Remame `nulled` => `null`.
+* Add predicate `assigned`.
+
 ## 1.4
 
 * Implement `bool` predicate. Thanks to [Clinton Skakun][clintonskakun].
