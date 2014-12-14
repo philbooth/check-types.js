@@ -751,7 +751,7 @@
 
         test('map with undefined properties in thing still calls corresponding predicate', function() {
             assert.throws(function() {
-                check.map({ bar: 33 }, { foo: check.verify.string });
+                check.map({ bar: 33 }, { foo: check.assert.string });
             });
         });
 
@@ -764,15 +764,15 @@
         test('map with verifier functions does not throw when valid', function() {
             assert.doesNotThrow(function() {
                 check.map({ foo: 'bar', baz: 123 },
-                          { foo: check.verify.string,
-                            baz: check.verify.number });
+                          { foo: check.assert.string,
+                            baz: check.assert.number });
             });
         });
 
         test('map with verifier functions throws when invalid', function() {
             assert.throws(function() {
                 check.map({ foo: 'bar', baz: 123 },
-                          { foo: check.verify.number });
+                          { foo: check.assert.number });
             });
         });
 
@@ -829,90 +829,91 @@
             assert.isFalse(check.any({ foo: { bar: false, baz: false }, bat: false }));
         });
 
-        test('verify modifier is defined', function() {
-            assert.isObject(check.verify);
+        test('assert modifier is defined', function() {
+            assert.isObject(check.assert);
         });
 
-        test('verify modifier is applied to predicates', function () {
-            assert.isFunction(check.verify.like);
-            assert.isFunction(check.verify.instance);
-            assert.isFunction(check.verify.emptyObject);
-            assert.isFunction(check.verify.object);
-            assert.isFunction(check.verify.length);
-            assert.isFunction(check.verify.array);
-            assert.isFunction(check.verify.date);
-            assert.isFunction(check.verify.fn);
-            assert.isFunction(check.verify.webUrl);
-            assert.isFunction(check.verify.unemptyString);
-            assert.isFunction(check.verify.string);
-            assert.isFunction(check.verify.evenNumber);
-            assert.isFunction(check.verify.oddNumber);
-            assert.isFunction(check.verify.positiveNumber);
-            assert.isFunction(check.verify.negativeNumber);
-            assert.isFunction(check.verify.number);
-            assert.isFunction(check.verify.gitUrl);
-            assert.isFunction(check.verify.null);
-            assert.isFunction(check.verify.defined);
+        test('assert modifier is applied to predicates', function () {
+            assert.isFunction(check.assert.like);
+            assert.isFunction(check.assert.instance);
+            assert.isFunction(check.assert.emptyObject);
+            assert.isFunction(check.assert.object);
+            assert.isFunction(check.assert.length);
+            assert.isFunction(check.assert.array);
+            assert.isFunction(check.assert.date);
+            assert.isFunction(check.assert.fn);
+            assert.isFunction(check.assert.webUrl);
+            assert.isFunction(check.assert.unemptyString);
+            assert.isFunction(check.assert.string);
+            assert.isFunction(check.assert.evenNumber);
+            assert.isFunction(check.assert.oddNumber);
+            assert.isFunction(check.assert.positiveNumber);
+            assert.isFunction(check.assert.negativeNumber);
+            assert.isFunction(check.assert.number);
+            assert.isFunction(check.assert.gitUrl);
+            assert.isFunction(check.assert.null);
+            assert.isFunction(check.assert.undefined);
+            assert.isFunction(check.assert.assigned);
         });
 
-        test('verify modifier is not applied to batch operations', function () {
-            assert.isUndefined(check.verify.map);
-            assert.isUndefined(check.verify.every);
-            assert.isUndefined(check.verify.any);
+        test('assert modifier is not applied to batch operations', function () {
+            assert.isUndefined(check.assert.map);
+            assert.isUndefined(check.assert.every);
+            assert.isUndefined(check.assert.any);
         });
 
-        test('verify modifier is not applied to itself', function () {
-            assert.isUndefined(check.verify.verify);
+        test('assert modifier is not applied to itself', function () {
+            assert.isUndefined(check.assert.assert);
         });
 
-        test('verify modifier is applied to maybe', function () {
-            assert.isObject(check.verify.maybe);
-            assert.strictEqual(Object.keys(check.verify.maybe).length, 23);
+        test('assert modifier is applied to maybe', function () {
+            assert.isObject(check.assert.maybe);
+            assert.strictEqual(Object.keys(check.assert.maybe).length, 23);
         });
 
-        test('verify modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.verify).length, 25);
+        test('assert modifier has correct number of keys', function () {
+            assert.strictEqual(Object.keys(check.assert).length, 25);
         });
 
-        test('verify modifier throws when value is wrong', function () {
+        test('assert modifier throws when value is wrong', function () {
             assert.throws(function () {
-                check.verify.unemptyString('');
+                check.assert.unemptyString('');
             });
         });
 
-        test('verify modifier does not throw when value is correct', function () {
+        test('assert modifier does not throw when value is correct', function () {
             assert.doesNotThrow(function () {
-                check.verify.unemptyString(' ');
+                check.assert.unemptyString(' ');
             });
         });
 
-        test('verify modifier throws Error instance', function () {
+        test('assert modifier throws Error instance', function () {
             try {
-                check.verify.unemptyString('');
+                check.assert.unemptyString('');
             } catch (error) {
                 assert.instanceOf(error, Error);
             }
         });
 
-        test('verify modifier sets default message on Error instance', function () {
+        test('assert modifier sets default message on Error instance', function () {
             try {
-                check.verify.unemptyString('');
+                check.assert.unemptyString('');
             } catch (error) {
                 assert.strictEqual(error.message, 'Invalid string');
             }
         });
 
-        test('verify modifer sets message on Error instance', function () {
+        test('assert modifer sets message on Error instance', function () {
             try {
-                check.verify.unemptyString('', 'foo bar');
+                check.assert.unemptyString('', 'foo bar');
             } catch (error) {
                 assert.strictEqual(error.message, 'foo bar');
             }
         });
 
-        test('verify modifiers prohibits empty error messages', function () {
+        test('assert modifiers prohibits empty error messages', function () {
             try {
-                check.verify.unemptyString('', '');
+                check.assert.unemptyString('', '');
             } catch (error) {
                 assert.strictEqual(error.message, 'Invalid string');
             }
@@ -926,8 +927,8 @@
             assert.isUndefined(check.maybe.maybe);
         });
 
-        test('maybe modifier is not applied to verify', function () {
-            assert.isUndefined(check.maybe.verify);
+        test('maybe modifier is not applied to assert', function () {
+            assert.isUndefined(check.maybe.assert);
         });
 
         test('maybe modifier has correct number of keys', function () {
@@ -955,8 +956,8 @@
             assert.isUndefined(check.not.not);
         });
 
-        test('not modifier is not applied to verify', function () {
-            assert.isUndefined(check.not.verify);
+        test('not modifier is not applied to assert', function () {
+            assert.isUndefined(check.not.assert);
         });
 
         test('not modifier has correct number of keys', function () {
@@ -971,27 +972,27 @@
             assert.isFalse(check.not.unemptyString('1'));
         });
 
-        test('verify modifier with maybe does not throw when value is correct', function() {
+        test('assert modifier with maybe does not throw when value is correct', function() {
             assert.doesNotThrow(function() {
-                check.verify.maybe.positiveNumber(1);
+                check.assert.maybe.positiveNumber(1);
             });
         });
 
-        test('verify modifier with maybe throws when value is wrong', function() {
+        test('assert modifier with maybe throws when value is wrong', function() {
             assert.throws(function() {
-                check.verify.maybe.positiveNumber(-1);
+                check.assert.maybe.positiveNumber(-1);
             });
         });
 
-        test('verify modifier with not throws when value is correct', function() {
+        test('assert modifier with not throws when value is correct', function() {
             assert.throws(function() {
-                check.verify.not.negativeNumber(-1);
+                check.assert.not.negativeNumber(-1);
             });
         });
 
-        test('verify modifier with not doesNotThrow when value is wrong', function() {
+        test('assert modifier with not doesNotThrow when value is wrong', function() {
             assert.doesNotThrow(function() {
-                check.verify.not.negativeNumber(1);
+                check.assert.not.negativeNumber(1);
             });
         });
 
