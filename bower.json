@@ -5,6 +5,8 @@
     "ignore": [
         "AUTHORS",
         "component.json",
+        "HISTORY.md",
+        "README.md",
         "config",
         "node_modules",
         "package.json",
