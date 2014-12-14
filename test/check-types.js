@@ -324,16 +324,16 @@
             assert.isFalse(check.date({}));
         });
 
-        test('fn function is defined', function () {
-            assert.isFunction(check.fn);
+        test('function function is defined', function () {
+            assert.isFunction(check.function);
         });
 
-        test('fn with function returns true', function () {
-            assert.isTrue(check.fn(function () {}));
+        test('function with function returns true', function () {
+            assert.isTrue(check.function(function () {}));
         });
 
-        test('fn with object returns false', function () {
-            assert.isFalse(check.fn({}));
+        test('function with object returns false', function () {
+            assert.isFalse(check.function({}));
         });
 
         test('webUrl function is defined', function () {
@@ -366,7 +366,7 @@
             );
         });
 
-        test('webUrl with no scheme URL returns true', function () {
+        test('webUrl with no scheme returns true', function () {
             assert.isTrue(check.webUrl('//example.com/'));
         });
 
@@ -388,10 +388,6 @@
 
         test('webUrl with percent-encoding returns true', function () {
             assert.isTrue(check.webUrl('http://example.com/%20'));
-        });
-
-        test('webUrl with bad percent-encoding returns false', function () {
-            assert.isFalse(check.webUrl('http://example.com/%zz'));
         });
 
         test('unemptyString function is defined', function () {
@@ -514,12 +510,8 @@
             assert.isFalse(check.positive(-1/2));
         });
 
-        test('positive with positive infinity returns true', function () {
-            assert.isTrue(check.positive(Number.POSITIVE_INFINITY));
-        });
-
-        test('positive with negative infinity returns false', function () {
-            assert.isFalse(check.positive(Number.NEGATIVE_INFINITY));
+        test('positive with positive infinity returns false', function () {
+            assert.isFalse(check.positive(Number.POSITIVE_INFINITY));
         });
 
         test('positive with NaN returns false', function () {
@@ -550,12 +542,8 @@
             assert.isTrue(check.negative(-1/2));
         });
 
-        test('negative with positive infinity returns false', function () {
-            assert.isFalse(check.negative(Number.POSITIVE_INFINITY));
-        });
-
-        test('negative with negative infinity returns true', function () {
-            assert.isTrue(check.negative(Number.NEGATIVE_INFINITY));
+        test('negative with negative infinity returns false', function () {
+            assert.isFalse(check.negative(Number.NEGATIVE_INFINITY));
         });
 
         test('negative with NaN returns false', function () {
@@ -700,7 +688,7 @@
                     [ '', 0, '', 0 ],
                     [ check.string, check.string, check.number, check.number ]
                 );
-            assert.lengthOf(results, 4);
+            assert.lengthOf(result, 4);
             assert.isTrue(result[0]);
             assert.isFalse(result[1]);
             assert.isFalse(result[2]);
@@ -731,19 +719,13 @@
 
         test('map with non-object predicates throws', function() {
             assert.throws(function() {
-                check.map({}, []);
+                check.map({}, function () {});
             });
         });
 
         test('map with object data and predicates does not throw', function() {
             assert.doesNotThrow(function() {
                 check.map({}, {});
-            });
-        });
-
-        test('map with one predicate does not throw', function() {
-            assert.doesNotThrow(function() {
-                check.map({ foo: '', bar: '' }, check.string);
             });
         });
 
@@ -765,17 +747,17 @@
                     { foo: '', bar: 0, baz: { qux: 0 } },
                     { foo: check.string, bar: check.string, baz: { qux: check.number } }
                 );
-            assert.lengthOf(Object.keys(results), 3);
+            assert.lengthOf(Object.keys(result), 3);
             assert.isTrue(result.foo);
             assert.isFalse(result.bar);
-            assert.isObject(results.baz);
-            assert.lengthOf(Object.keys(results.baz), 1);
-            assert.isTrue(results.baz.qux);
+            assert.isObject(result.baz);
+            assert.lengthOf(Object.keys(result.baz), 1);
+            assert.isTrue(result.baz.qux);
         });
 
         test('map with assertion does not throw with valid data', function() {
             assert.doesNotThrow(function() {
-                check.map({ foo: 'bar' }, check.assert.string);
+                check.map({ foo: 'bar' }, { foo: check.assert.string });
             });
         });
 
@@ -868,7 +850,7 @@
             assert.isFunction(check.assert.length);
             assert.isFunction(check.assert.array);
             assert.isFunction(check.assert.date);
-            assert.isFunction(check.assert.fn);
+            assert.isFunction(check.assert.function);
             assert.isFunction(check.assert.webUrl);
             assert.isFunction(check.assert.unemptyString);
             assert.isFunction(check.assert.string);
@@ -975,8 +957,8 @@
         });
 
         test('maybe modifier returns predicate result on value', function() {
-            assert.isFalse(check.maybe.oddNumber(2));
-            assert.isTrue(check.maybe.oddNumber(1));
+            assert.isFalse(check.maybe.odd(2));
+            assert.isTrue(check.maybe.odd(1));
         });
 
         test('not modifier is defined', function () {
@@ -1005,30 +987,30 @@
 
         test('assert modifier with maybe does not throw when value is correct', function() {
             assert.doesNotThrow(function() {
-                check.assert.maybe.positiveNumber(1);
+                check.assert.maybe.positive(1);
             });
         });
 
         test('assert modifier with maybe throws when value is wrong', function() {
             assert.throws(function() {
-                check.assert.maybe.positiveNumber(-1);
+                check.assert.maybe.positive(-1);
             });
         });
 
         test('assert modifier with not throws when value is correct', function() {
             assert.throws(function() {
-                check.assert.not.negativeNumber(-1);
+                check.assert.not.negative(-1);
             });
         });
 
         test('assert modifier with not does not throw when value is wrong', function() {
             assert.doesNotThrow(function() {
-                check.assert.not.negativeNumber(1);
+                check.assert.not.negative(1);
             });
         });
 
         test('maybe modifier with falsey values evaluates predicate', function() {
-            assert.isFalse(check.maybe.positiveNumber(0));
+            assert.isFalse(check.maybe.positive(0));
         });
     });
 }(typeof require === 'function' ? require : undefined));

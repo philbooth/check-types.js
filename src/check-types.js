@@ -8,75 +8,72 @@
 (function (globals) {
     'use strict';
 
-    var messages, predicates, functions, verify, maybe, not;
-
-    predicates = {
-        like: like,
-        instance: instance,
-        emptyObject: emptyObject,
-        nulled: nulled,
-        defined: defined,
-        object: object,
-        length: length,
-        array: array,
-        date: date,
-        fn: fn,
-        webUrl: webUrl,
-        gitUrl: gitUrl,
-        email: email,
-        unemptyString: unemptyString,
-        string: string,
-        evenNumber: evenNumber,
-        oddNumber: oddNumber,
-        positiveNumber: positiveNumber,
-        negativeNumber: negativeNumber,
-        intNumber : intNumber,
-        floatNumber : floatNumber,
-        number: number,
-        bool: bool
-    };
+    var messages, predicates, functions, assert, maybe, not;
 
     messages = {
         like: 'Invalid type',
         instance: 'Invalid type',
         emptyObject: 'Invalid object',
-        nulled: 'Not null',
-        defined: 'Not defined',
         object: 'Invalid object',
+        assigned: 'Invalid value',
+        undefined: 'Invalid value',
+        null: 'Invalid value',
         length: 'Invalid length',
         array: 'Invalid array',
         date: 'Invalid date',
         fn: 'Invalid function',
         webUrl: 'Invalid URL',
-        gitUrl: 'Invalid git URL',
-        email: 'Invalid email',
         unemptyString: 'Invalid string',
         string: 'Invalid string',
-        evenNumber: 'Invalid number',
-        oddNumber: 'Invalid number',
-        positiveNumber: 'Invalid number',
-        negativeNumber: 'Invalid number',
-        intNumber: 'Invalid number',
-        floatNumber: 'Invalid number',
+        odd: 'Invalid number',
+        even: 'Invalid number',
+        positive: 'Invalid number',
+        negative: 'Invalid number',
+        integer: 'Invalid number',
         number: 'Invalid number',
-        bool: 'Invalid boolean'
+        boolean: 'Invalid boolean'
+    };
+
+    predicates = {
+        like: like,
+        instance: instance,
+        emptyObject: emptyObject,
+        object: object,
+        assigned: assigned,
+        undefined: isUndefined,
+        null: isNull,
+        length: length,
+        array: array,
+        date: date,
+        function: isFunction,
+        webUrl: webUrl,
+        unemptyString: unemptyString,
+        string: string,
+        odd: odd,
+        even: even,
+        positive: positive,
+        negative: negative,
+        integer : integer,
+        number: number,
+        boolean: boolean
     };
 
     functions = {
+        apply: apply,
         map: map,
-        every: every,
+        all: all,
         any: any
     };
 
     functions = mixin(functions, predicates);
-    verify = createModifiedPredicates(verifyModifier);
+    assert = createModifiedPredicates(assertModifier);
     maybe = createModifiedPredicates(maybeModifier);
     not = createModifiedPredicates(notModifier);
-    verify.maybe = createModifiedFunctions(verifyModifier, maybe);
-    verify.not = createModifiedFunctions(verifyModifier, not);
+    assert.maybe = createModifiedFunctions(assertModifier, maybe);
+    assert.not = createModifiedFunctions(assertModifier, not);
 
     exportFunctions(mixin(functions, {
-        verify: verify,
+        assert: assert,
         maybe: maybe,
         not: not
     }));
@@ -90,24 +87,20 @@
      * (the 'duck'). Returns `false` otherwise. If either
      * argument is not an object, an exception is thrown.
      *
-     * @param thing {object} The object to test.
-     * @param duck {object}  The archetypal object, or
-     *                       'duck', that the test is
-     *                       against.
      */
-    function like (thing, duck) {
+    function like (data, duck) {
         var name;
 
-        verify.object(thing);
-        verify.object(duck);
+        assert.object(data);
+        assert.object(duck);
 
         for (name in duck) {
             if (duck.hasOwnProperty(name)) {
-                if (thing.hasOwnProperty(name) === false || typeof thing[name] !== typeof duck[name]) {
+                if (data.hasOwnProperty(name) === false || typeof data[name] !== typeof duck[name]) {
                     return false;
                 }
 
-                if (object(thing[name]) && like(thing[name], duck[name]) === false) {
+                if (object(data[name]) && like(data[name], duck[name]) === false) {
                     return false;
                 }
             }
@@ -122,16 +115,9 @@
      * Returns `true` if an object is an instance of a prototype,
      * `false` otherwise.
      *
-     * @param thing {object}       The object to test.
-     * @param prototype {function} The prototype that the
-     *                             test is against.
      */
-    function instance (thing, prototype) {
-        if (!defined(thing) || nulled(thing)) {
-            return false;
-        }
-
-        if (fn(prototype) && thing instanceof prototype) {
+    function instance (data, prototype) {
+        if (data && isFunction(prototype) && data instanceof prototype) {
             return true;
         }
 
@@ -141,61 +127,56 @@
     /**
      * Public function `emptyObject`.
      *
-     * Returns `true` if something is an empty, non-null,
-     * non-array object, `false` otherwise.
-     *
-     * @param thing          The thing to test.
-     */
-    function emptyObject (thing) {
-        var property;
-
-        if (object(thing)) {
-            for (property in thing) {
-                if (thing.hasOwnProperty(property)) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Public function `nulled`.
-     *
-     * Returns `true` if something is null,
+     * Returns `true` if something is an empty object,
      * `false` otherwise.
      *
-     * @param thing The thing to test.
      */
-    function nulled (thing) {
-        return thing === null;
-    }
-
-    /**
-     * Public function `defined`.
-     *
-     * Returns `true` if something is not undefined,
-     * `false` otherwise.
-     *
-     * @param thing The thing to test.
-     */
-    function defined (thing) {
-        return thing !== void 0;
+    function emptyObject (data) {
+        return object(data) && Object.keys(data).length === 0;
     }
 
     /**
      * Public function `object`.
      *
-     * Returns `true` if something is a non-null, non-array,
-     * non-date object, `false` otherwise.
+     * Returns `true` if something is a plain-old JS object,
+     * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function object (thing) {
-        return typeof thing === 'object' && !nulled(thing) && !array(thing) && !date(thing);
+    function object (data) {
+        return assigned(data) && Object.prototype.toString.call(data) === '[object Object]';
+    }
+
+    /**
+     * Public function `assigned`.
+     *
+     * Returns `true` if something is not null or undefined,
+     * `false` otherwise.
+     *
+     */
+    function assigned (data) {
+        return !isUndefined(data) && !isNull(data);
+    }
+
+    /**
+     * Public function `undefined`.
+     *
+     * Returns `true` if something is undefined,
+     * `false` otherwise.
+     *
+     */
+    function isUndefined (data) {
+        return data === undefined;
+    }
+
+    /**
+     * Public function `null`.
+     *
+     * Returns `true` if something is null,
+     * `false` otherwise.
+     *
+     */
+    function isNull (data) {
+        return data === null;
     }
 
     /**
@@ -204,48 +185,44 @@
      * Returns `true` if something is has a length property
      * that equals `value`, `false` otherwise.
      *
-     * @param thing The thing to test.
-     * @param value The required length to test against.
      */
-    function length (thing, value) {
-        return thing && thing.length === value;
+    function length (data, value) {
+        assert.number(value);
+
+        return assigned(data) && data.length === value;
     }
 
     /**
      * Public function `array`.
      *
-     * Returns `true` something is an array, `false` otherwise.
+     * Returns `true` something is an array,
+     * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function array (thing) {
-        if (Array.isArray) {
-            return Array.isArray(thing);
-        }
-
-        return Object.prototype.toString.call(thing) === '[object Array]';
+    function array (data) {
+        return Array.isArray(data);
     }
 
     /**
      * Public function `date`.
      *
-     * Returns `true` something is a date, `false` otherwise.
+     * Returns `true` something is a date,
+     * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function date (thing) {
-        return Object.prototype.toString.call(thing) === '[object Date]';
+    function date (data) {
+        return Object.prototype.toString.call(data) === '[object Date]';
     }
 
     /**
-     * Public function `fn`.
+     * Public function `function`.
      *
-     * Returns `true` if something is function, `false` otherwise.
+     * Returns `true` if something is function,
+     * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function fn (thing) {
-        return typeof thing === 'function';
+    function isFunction (data) {
+        return typeof data === 'function';
     }
 
     /**
@@ -254,34 +231,9 @@
      * Returns `true` if something is an HTTP or HTTPS URL,
      * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function webUrl (thing) {
-        return unemptyString(thing) && /^https?:\/\/.+/.test(thing);
-    }
-
-    /**
-     * Public function `gitUrl`.
-     *
-     * Returns `true` if something is a git+ssh, git+http or git+https URL,
-     * `false` otherwise.
-     *
-     * @param thing          The thing to test.
-     */
-    function gitUrl (thing) {
-        return unemptyString(thing) && /^git\+(ssh|https?):\/\/.+/.test(thing);
-    }
-
-    /**
-     * Public function `email`.
-     *
-     * Returns `true` if something seems like a valid email address,
-     * `false` otherwise.
-     *
-     * @param thing          The thing to test.
-     */
-    function email (thing) {
-        return unemptyString(thing) && /\S+@\S+/.test(thing);
+    function webUrl (data) {
+        return unemptyString(data) && /^(https?:)?\/\/([\w-\.~:@]+)(\/[\w-\.~\/\?#\[\]&\(\)\*\+,;=%]*)?$/.test(data);
     }
 
     /**
@@ -290,10 +242,9 @@
      * Returns `true` if something is a non-empty string, `false`
      * otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function unemptyString (thing) {
-        return string(thing) && thing !== '';
+    function unemptyString (data) {
+        return string(data) && data !== '';
     }
 
     /**
@@ -301,218 +252,227 @@
      *
      * Returns `true` if something is a string, `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function string (thing) {
-        return typeof thing === 'string';
+    function string (data) {
+        return typeof data === 'string';
     }
 
     /**
-     * Public function `oddNumber`.
+     * Public function `odd`.
      *
      * Returns `true` if something is an odd number,
      * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function oddNumber (thing) {
-        return number(thing) && (thing % 2 === 1 || thing % 2 === -1);
+    function odd (data) {
+        return integer(data) && !even(data);
     }
 
     /**
-     * Public function `evenNumber`.
+     * Public function `even`.
      *
      * Returns `true` if something is an even number,
      * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function evenNumber (thing) {
-        return number(thing) && thing % 2 === 0;
+    function even (data) {
+        return number(data) && data % 2 === 0;
     }
 
     /**
-     * Public function `intNumber`.
+     * Public function `integer`.
      *
-     * Returns `true` if something is an integer number,
+     * Returns `true` if something is an integer,
      * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function intNumber (thing) {
-        return number(thing) && thing % 1 === 0;
+    function integer (data) {
+        return number(data) && data % 1 === 0;
     }
 
     /**
-     * Public function `floatNumber`.
-     *
-     * Returns `true` if something is a float number,
-     * `false` otherwise.
-     *
-     * @param thing          The thing to test.
-     */
-    function floatNumber (thing) {
-        return number(thing) && thing % 1 !== 0;
-    }
-
-    /**
-     * Public function `positiveNumber`.
+     * Public function `positive`.
      *
      * Returns `true` if something is a positive number,
      * `false` otherwise.
      *
-     * @param thing          The thing to test.
      */
-    function positiveNumber (thing) {
-        return number(thing) && thing > 0;
+    function positive (data) {
+        return number(data) && data > 0;
     }
 
     /**
-     * Public function `negativeNumber`.
+     * Public function `negative`.
      *
-     * Returns `true` if something is a positive number,
+     * Returns `true` if something is a negative number,
      * `false` otherwise.
      *
-     * @param thing          The thing to test.
+     * @param data          The thing to test.
      */
-    function negativeNumber (thing) {
-        return number(thing) && thing < 0;
+    function negative (data) {
+        return number(data) && data < 0;
     }
 
     /**
      * Public function `number`.
      *
-     * Returns `true` if something is a real number,
+     * Returns `true` if data is a number,
      * `false` otherwise.
      *
-     * @param thing The thing to test.
      */
-    function number (thing) {
-        return typeof thing === 'number' &&
-               isNaN(thing) === false &&
-               thing !== Number.POSITIVE_INFINITY &&
-               thing !== Number.NEGATIVE_INFINITY;
+    function number (data) {
+        return typeof data === 'number' && isNaN(data) === false &&
+               data !== Number.POSITIVE_INFINITY &&
+               data !== Number.NEGATIVE_INFINITY;
     }
 
     /**
-     * Public function `bool`.
+     * Public function `boolean`.
      *
-     * Returns `true` if something is a bool,
+     * Returns `true` if data is a boolean value,
      * `false` otherwise.
      *
-     * @param thing The thing to test.
      */
-    function bool (thing) {
-        return thing === false || thing === true;
+    function boolean (data) {
+        return data === false || data === true;
+    }
+
+    /**
+     * Public function `apply`.
+     *
+     * Maps each value from the data to the corresponding predicate and returns
+     * the result array. If the same function is to be applied across all of the
+     * data, a single predicate function may be passed in.
+     *
+     */
+    function apply (data, predicates) {
+        assert.array(data);
+
+        if (isFunction(predicates)) {
+            return data.map(function (value) {
+                return predicates(value);
+            });
+        }
+
+        assert.array(predicates);
+        assert.length(data, predicates.length);
+
+        return data.map(function (value, index) {
+            return predicates[index](value);
+        });
     }
 
     /**
      * Public function `map`.
      *
-     * Returns the results hash of mapping each predicate to the
-     * corresponding thing's property. Similar to `like` but
-     * with functions instead of values.
+     * Maps each value from the data to the corresponding predicate and returns
+     * the result object. Supports nested objects.
      *
-     * @param things {object}     The things to test.
-     * @param predicates {object} The map of functions to call against
-     *                            the corresponding properties from `things`.
      */
-    function map (things, predicates) {
-        var property, result = {}, predicate;
+    function map (data, predicates) {
+        var result = {}, keys;
 
-        verify.object(things);
-        verify.object(predicates);
+        assert.object(data);
+        assert.object(predicates);
 
-        for (property in predicates) {
-            if (predicates.hasOwnProperty(property)) {
-                predicate = predicates[property];
+        keys = Object.keys(predicates);
+        assert.length(Object.keys(data), keys.length);
 
-                if (fn(predicate)) {
-                    result[property] = predicate(things[property]);
-                } else if (object(predicate)) {
-                    result[property] = map(things[property], predicate);
-                }
+        keys.forEach(function (key) {
+            var predicate = predicates[key];
+
+            if (isFunction(predicate)) {
+                result[key] = predicate(data[key]);
+            } else if (object(predicate)) {
+                result[key] = map(data[key], predicate);
             }
-        }
+        });
 
         return result;
     }
 
     /**
-     * Public function `every`
+     * Public function `all`
      *
-     * Returns the conjunction of all booleans in a hash.
+     * Check that all boolean values are true
+     * in an array (returned from `apply`)
+     * or object (returned from `map`).
      *
-     * @param predicateResults {object} The hash of evaluated predicates.
      */
-    function every (predicateResults) {
-        var property, value;
+    function all (data) {
+        if (array(data)) {
+            return testArray(data, false);
+        }
 
-        verify.object(predicateResults);
+        assert.object(data);
 
-        for (property in predicateResults) {
-            if (predicateResults.hasOwnProperty(property)) {
-                value = predicateResults[property];
+        return testObject(data, false);
+    }
 
-                if (object(value) && every(value) === false) {
-                    return false;
+    function testArray (data, result) {
+        var i;
+
+        for (i = 0; i < data.length; i += 1) {
+            if (data[i] === result) {
+                return result;
+            }
+        }
+
+        return !result;
+    }
+
+    function testObject (data, result) {
+        var key, value;
+
+        for (key in data) {
+            if (data.hasOwnProperty(key)) {
+                value = data[key];
+
+                if (object(value) && testObject(value, result) === result) {
+                    return result;
                 }
 
-                if (value === false) {
-                    return false;
+                if (value === result) {
+                    return result;
                 }
             }
         }
-        return true;
+
+        return !result;
     }
 
     /**
      * Public function `any`
      *
-     * Returns the disjunction of all booleans in a hash.
+     * Check that at least one boolean value is true
+     * in an array (returned from `apply`)
+     * or object (returned from `map`).
      *
-     * @param predicateResults {object} The hash of evaluated predicates.
      */
-    function any (predicateResults) {
-        var property, value;
-
-        verify.object(predicateResults);
-
-        for (property in predicateResults) {
-            if (predicateResults.hasOwnProperty(property)) {
-                value = predicateResults[property];
-
-                if (object(value) && any(value)) {
-                    return true;
-                }
-
-                if (value === true) {
-                    return true;
-                }
-            }
+    function any (data) {
+        if (array(data)) {
+            return testArray(data, true);
         }
 
-        return false;
+        assert.object(data);
+
+        return testObject(data, true);
     }
 
     function mixin (target, source) {
-        var property;
-
-        for (property in source) {
-            if (source.hasOwnProperty(property)) {
-                target[property] = source[property];
-            }
-        }
+        Object.keys(source).forEach(function (key) {
+            target[key] = source[key];
+        });
 
         return target;
     }
 
     /**
-     * Public modifier `verify`.
+     * Public modifier `assert`.
      *
      * Throws if `predicate` returns `false`.
      */
-    function verifyModifier (predicate, defaultMessage) {
+    function assertModifier (predicate, defaultMessage) {
         return function () {
             var message;
 
@@ -531,7 +491,7 @@
      */
     function maybeModifier (predicate) {
         return function () {
-            if (!defined(arguments[0]) || nulled(arguments[0])) {
+            if (!assigned(arguments[0])) {
                 return true;
             }
 
@@ -555,13 +515,11 @@
     }
 
     function createModifiedFunctions (modifier, functions) {
-        var name, result = {};
+        var result = {};
 
-        for (name in functions) {
-            if (functions.hasOwnProperty(name)) {
-                result[name] = modifier(functions[name], messages[name]);
-            }
-        }
+        Object.keys(functions).forEach(function (key) {
+            result[key] = modifier(functions[key], messages[key]);
+        });
 
         return result;
     }
