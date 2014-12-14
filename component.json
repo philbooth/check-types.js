@@ -1,7 +1,7 @@
 {
     "name": "check-types",
-    "version": "1.4.0",
-    "description": "A tiny JavaScript library for checking arguments and throwing exceptions.",
+    "version": "2.0.0",
+    "description": "A tiny library for asserting types and values.",
     "repo": "philbooth/check-types.js",
     "license": "MIT",
     "main": "src/check-types.js",

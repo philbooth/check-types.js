@@ -1,11 +1,9 @@
 {
-    "-W065": true,
-
     "bitwise": true,
     "camelcase": true,
     "curly": true,
     "eqeqeq": true,
-    "es3": true,
+    "es3": false,
     "forin": true,
     "freeze": true,
     "immed": true,

@@ -1,5 +1,23 @@
 # History
 
+## 2.0
+
+* Breaking changes:
+  * Drop ES3 support.
+  * Rename `verify` => `assert`.
+  * Remame `nulled` => `null`.
+  * Switch `defined` to `undefined` for consistency with `null`.
+  * Tightened implementation of `webUrl` to reject more cases.
+  * Drop `gitUrl`. (sorry @galniv!)
+  * Drop `email`. (sorry @rodrigo!)
+  * Drop `floatNumber`. (sorry @rodrigo!)
+  * Rename `oddNumber`, `evenNumber`, `positiveNumber`, `negativeNumber`, `intNumber` => `odd`, `even`, `positive`, `negative`, `integer`.
+  * Rename `bool` => `boolean`.
+  * Rename `every` => `all`.
+* Add predicate `assigned`.
+* Add `apply` batch operation.
+* Delete superfluous unit tests.
+
 ## 1.4
 
 * Implement `bool` predicate. Thanks to [Clinton Skakun][clintonskakun].
