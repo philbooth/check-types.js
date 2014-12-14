@@ -5,6 +5,19 @@
 * Breaking changes to make the API more uniform and drop support for ES3:
   * Rename `verify` => `assert`.
   * Remame `nulled` => `null`.
+  * Switch `defined` to `undefined` for consistence with `null`.
+  * Tightened implementation of `webUrl` to reject more cases.
+  * Drop `gitUrl`. (sorry @galniv!)
+  * Drop `email`. (sorry @rodrigo!)
+  * Rename `oddNumber`, `evenNumber`, `positiveNumber`, `negativeNumber`, `intNumber` => `odd`, `even`, `positive`, `negative`, `integer`.
+  * Drop `floatNumber`. (sorry @rodrigo!)
+  * Relax implementation of `positive` to incorporate positive infinity.
+  * Relax implementation of `negative` to incorporate negative infinity.
+  * Delete superfluous unit tests.
+  * Rename `bool` => `boolean`.
+  * Add `apply` batch operation.
+  * Allow one predicate to be specified in `map` batch operation.
+  * Rename `every` => `all`.
 * Add predicate `assigned`.
 
 ## 1.4
