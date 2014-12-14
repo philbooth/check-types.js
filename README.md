@@ -73,8 +73,8 @@ from Bower, Component and Jam.
 ### Loading the library
 
 If you are running in
-[Node.js][node],
-[Browserify]
+Node.js,
+Browserify
 or another CommonJS-style
 environment,
 you can `require`
@@ -86,7 +86,7 @@ var check = require('check-types');
 
 It also the supports
 the AMD-style format
-preferred by [Require.js][require].
+preferred by Require.js.
 
 If you are
 including check-types.js
@@ -416,6 +416,9 @@ all support old IE
 and any future 1.x versions
 will adhere to that.
 
+See the [releases]
+for more information.
+
 ## What changed from 1.x to 2.x?
 
 Breaking changes
@@ -483,9 +486,7 @@ open `test/check-types.html`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
-[node]: http://nodejs.org/
-[browserify]: http://browserify.org/
-[require]: http://requirejs.org/
+[releases]: https://github.com/philbooth/check-types.js/releases
 [history]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
