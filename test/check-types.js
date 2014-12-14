@@ -66,7 +66,7 @@
 
         test('like with empty object, null throws', function () {
             assert.throws(function () {
-                check.like({}, null) {});
+                check.like({}, null);
             });
         });
 
@@ -87,11 +87,11 @@
         });
 
         test('like with same named second properties returns true', function () {
-            assert.isTrue(check.like({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: {} }));
+            assert.isTrue(check.like({ foo: function () {}, bar: {} }, { foo: function () {}, bar: {} }));
         });
 
         test('like with differently typed second properties returns false', function () {
-            assert.isFalse(check.like({ foo: (function () {}), bar: {} }, { foo: (function () {}), bar: (function () {}) }));
+            assert.isFalse(check.like({ foo: function () {}, bar: {} }, { foo: function () {}, bar: function () {} }));
         });
 
         test('like with different nested objects returns false', function() {
@@ -809,7 +809,7 @@
 
         test('all returns true when data is all true', function() {
             assert.isTrue(check.all({ foo: true, bar: true, baz: true, qux: true }));
-            assert.isTrue(check.all([ true, true, true, true ]);
+            assert.isTrue(check.all([ true, true, true, true ]));
             assert.isTrue(check.all({ foo: { bar: { baz: { qux: true }}}}));
         });
 
@@ -843,7 +843,7 @@
 
         test('any returns true when some data is true', function() {
             assert.isTrue(check.any({ foo: false, bar: true }));
-            assert.isTrue(check.any([ false, true ]);
+            assert.isTrue(check.any([ false, true ]));
             assert.isTrue(check.any({ foo: { bar: true }}));
         });
 
