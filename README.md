@@ -3,8 +3,8 @@
 [![Build status][ci-image]][ci-status]
 
 A tiny JavaScript library
-for checking arguments
-and throwing exceptions.
+for asserting types
+and values.
 
 * [Why would I want that?](#why-would-i-want-that)
 * [How tiny is it?](#how-tiny-is-it)
@@ -22,6 +22,8 @@ and throwing exceptions.
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
+* [Where can I use it?](#where-can-i-use-it)
+* [What changed from 1.x to 2.x?](#what-changed-from-0x-to-1x)
 * [What changed from 0.x to 1.x?](#what-changed-from-0x-to-1x)
 * [How do I set up the build environment?](#how-do-i-set-up-the-build-environment)
 * [What license is it released under?](#what-license-is-it-released-under)
@@ -30,8 +32,8 @@ and throwing exceptions.
 
 Writing explicit conditions
 in your functions
-for checking arguments
-and throwing exceptions
+to check arguments
+and throw exceptions
 is a task that
 swiftly becomes tiresome
 and adds complexity
@@ -49,19 +51,22 @@ abstracted by a simple API.
 
 ## How do I install it?
 
-Any of the following will do:
+If you're using npm:
 
 ```
-npm install check-types
+npm install check-types --save
+```
 
-jam install check-types
+Or if you just want the git repo:
 
-bower install check-types
-
-component install philbooth/check-types.js
-
+```
 git clone git@github.com:philbooth/check-types.js.git
 ```
+
+If you're into
+other package managers,
+it is also available
+from Bower, Component and Jam.
 
 ## How do I use it?
 
@@ -81,26 +86,14 @@ var check = require('check-types');
 
 It also the supports
 the AMD-style format
-preferred by [Require.js][require]:
-
-```javascript
-require.config({
-    paths: {
-        check: 'check-types.js/src/check-types'
-    }
-});
-
-require([ 'check' ], function (check) {
-});
-```
+preferred by [Require.js][require].
 
 If you are
 including check-types.js
 with an HTML `<script>` tag,
 or neither of the above environments
 are detected,
-check-types.js will just export its interface globally
-as `check`.
+it will export the interface globally as `check`.
 
 ### Calling the exported functions
 
@@ -130,23 +123,25 @@ are broadly split into four types.
   returning `true` if the predicate returns `false`
   and `false` if the predicate returns `true`.
 
-* `check.verify.xxx(thing, message)`:
-  The verify modifier
+* `check.assert.xxx(thing, message)`:
+  The assert modifier
   calls the equivalent predicate
   and throws an `Error`
   if the result is `false`.
   It can also be applied
   to maybe and not modifiers
   using the form
-  `check.verify.maybe.xxx(thing, message)`
+  `check.assert.maybe.xxx(thing, message)`
   or
-  `check.verify.not.xxx(thing, message)`
+  `check.assert.not.xxx(thing, message)`
   respectively.
 
 Additionally, there are some batch operations
-that allow you to test maps
-of many predicates at once.
+that allow you to apply predicates
+across multiple values
+inside arrays or objects.
 These are implemented by
+`check.apply`,
 `check.map`,
 `check.any` and
 `check.every`.
@@ -168,16 +163,6 @@ These are implemented by
   if `thing` is an HTTP or HTTPS URL,
   `false` otherwise.
 
-* `check.gitUrl(thing)`:
-  Returns `true`
-  if `thing` is a git+ssh, git+http or git+https URL,
-  `false` otherwise.
-
-* `check.email(thing)`:
-  Returns `true`
-  if `thing` seems like a valid email address,
-  `false` otherwise.
-
 * `check.length(thing, value)`:
   Returns `true`
   if `thing` has a length property
@@ -188,48 +173,43 @@ These are implemented by
 
 * `check.number(thing)`:
   Returns `true`
-  if `thing` is a real number,
+  if `thing` is a number,
   `false` otherwise.
   Note that
   `NaN`,
   `Number.POSITIVE_INFINITY` and
   `Number.NEGATIVE_INFINITY`
-  are not real numbers.
+  are not considered numbers here.
 
-* `check.positiveNumber(thing)`:
+* `check.positive(thing)`:
   Returns `true` if `thing` is a number
   greater than zero,
   `false` otherwise.
 
-* `check.negativeNumber(thing)`:
+* `check.negative(thing)`:
   Returns `true`
   if `thing` is a number
   less than zero,
   `false` otherwise.
 
-* `check.oddNumber(thing)`:
+* `check.odd(thing)`:
   Returns `true`
   if `thing` is an odd number,
   `false` otherwise.
 
-* `check.evenNumber(thing)`:
+* `check.even(thing)`:
   Returns `true`
   if `thing` is an even number,
   `false` otherwise.
 
-* `check.intNumber(thing)`:
+* `check.integer(thing)`:
   Returns `true`
   if `thing` is an integer,
   `false` otherwise.
 
-* `check.floatNumber(thing)`:
-  Returns `true`
-  if `thing` is a floating-point number,
-  `false` otherwise.
-
 #### Function functions
 
-* `check.fn(thing)`:
+* `check.function(thing)`:
   Returns `true`
   if `thing` is a function,
   `false` otherwise.
@@ -261,16 +241,6 @@ These are implemented by
   if `thing` is a non-null, non-array, non-date object,
   `false` otherwise.
 
-* `check.nulled(thing)`:
-  Returns `true`
-  if `thing` is `null`,
-  `false` otherwise.
-
-* `check.defined(thing)`:
-  Returns `true`
-  if `thing` is not `undefined`,
-  `false` otherwise.
-
 * `check.emptyObject(thing)`:
   Returns `true`
   if `thing` is an empty object,
@@ -289,14 +259,34 @@ These are implemented by
   If either argument is not an object,
   an exception is thrown.
 
+* `check.null(thing)`:
+  Returns `true`
+  if `thing` is `null`,
+  `false` otherwise.
+
+* `check.undefined(thing)`:
+  Returns `true`
+  if `thing` is `undefined`,
+  `false` otherwise.
+
+* `check.assigned(thing)`:
+  Returns `true`
+  if `thing` is not
+  `null` or `undefined`,
+  `false` otherwise.
+
 #### Boolean functions
 
-* `check.bool(thing)`:
+* `check.boolean(thing)`:
   Returns `true`
   if `thing` is a boolean,
   `false` otherwise.
 
 #### Modifiers
+
+* `check.not.xxx(...)`:
+  Returns the negation
+  of the predicate.
 
 * `check.maybe.xxx(...)`:
   Returns `true`
@@ -305,7 +295,7 @@ These are implemented by
   the return value
   from its predicate.
 
-* `check.verify.xxx(...)` / `check.verify.maybe.xxx(...)`:
+* `check.assert.xxx(...)` / `check.assert.maybe.xxx(...)`:
   Throws an `Error`
   if the predicate returns false.
   The last argument
@@ -314,96 +304,141 @@ These are implemented by
 
 #### Batch operations
 
-* `check.map(things, functions)`:
-  Maps each predicate from the `functions` object
-  to the corresponding value from `things`,
-  returning the hash of results.
-  Similar to `like`
-  but using functions instead of values.
+* `check.apply(things, predicates)`:
+  Applies each value from the array of things
+  to the corresponding predicate
+  and returns the array of results.
+  Passing a single predicate
+  instead of an array of them
+  applies all of the values
+  to that predicate.
+
+* `check.map(things, predicates)`:
+  Maps each value from the data
+  to the corresponding predicate
+  and returns a results object.
   Supports nested objects.
 
-* `check.every(predicateResults)`:
+* `check.all(results)`:
   Returns `true`
-  if all properties of the `predicateResults` object are `true`,
-  `false` otherwise.
+  if all the result values are true
+  in an array (returned from `apply`)
+  or object (returned from `map`).
 
 * `check.any(predicateResults)`:
   Returns `true`
-  is any property of the `predicateResults` object is `true`,
-  `false` otherwise.
+  if any result value is true
+  in an array (returned from `apply`)
+  or object (returned from `map`).
 
 #### Some examples
 
 ```javascript
-check.object(0);
+check.even(3);
 // Returns false
 ```
 
 ```javascript
-check.maybe.object(null);
+check.maybe.even(null);
 // Returns true
 ```
 
 ```javascript
-check.not.object(0);
+check.not.even(3);
 // Returns true
 ```
 
 ```javascript
-check.verify.like({}, { foo: 'bar' }, 'Invalid object');
+check.assert.like({ foo: 'bar' }, { baz: 'qux' }, 'Invalid object');
 // Throws new Error('Invalid object')
 ```
 
 ```javascript
-check.verify.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
+check.assert.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
 // Doesn't throw
 ```
 
 ```javascript
-check.verify.not.like({}, { foo: 'bar' }, 'Invalid object');
+check.assert.not.like({ foo: 'bar' }, { baz: 'qux' }, 'Invalid object');
 // Doesn't throw
+```
+
+```javascript
+check.apply([ 'foo', 'bar', '' ], check.unemptyString);
+// Returns false
 ```
 
 ```javascript
 check.map({
     foo: 2,
-    bar: {
-        baz: 'qux'
-    }
+    bar: { baz: 'qux' }
 }, {
-    foo: check.oddNumber,
-    bar: {
-        baz: check.unemptyString
-    }
+    foo: check.odd,
+    bar: { baz: check.unemptyString }
 });
 // Returns { foo: false, bar: { baz: true } }
 ```
 
 ```javascript
-check.every(
-    check.map({
-        foo: 0,
-        bar: ''
-    }, {
-        foo: check.number,
-        bar: check.unemptyString
-    })
+check.all(
+    check.map(
+        { foo: 0, bar: '' },
+        { foo: check.number, bar: check.string }
+    );
 );
-// Returns false
+// Returns true
 ```
 
 ```javascript
 check.any(
-    check.map({
-        foo: 0,
-        bar: ''
-    }, {
-        foo: check.number,
-        bar: check.unemptyString
-    })
+    check.apply(
+        [ 1, 2, 3, '' ],
+        check.string
+    )
 );
 // Returns true
 ```
+
+## Where can I use it?
+
+As of version 2.0,
+this library no longer supports ES3.
+That means you can't use it
+in IE 7 or 8.
+
+Everywhere else should be fine.
+
+If those versions of IE
+are important to you,
+there is hope!
+The 1.x versions
+all support old IE
+and any future 1.x versions
+will adhere to that.
+
+## What changed from 1.x to 2.x?
+
+Breaking changes
+were made to the API
+in version 2.0.0.
+
+Specifically:
+
+* Support for ES3 was dropped
+* The predicates `gitUrl`, `email` and `floatNumber` were removed.
+* `verify` was renamed to `assert`.
+* `nulled` was renamed to `null`.
+* `oddNumber` was renamed to `odd`.
+* `evenNumber` was renamed to `even`.
+* `positiveNumber` was renamed to `positive`.
+* `negativeNumber` was renamed to `negative`.
+* `intNumber` was renamed to `integer`.
+* `defined` was swapped to become `undefined`.
+* `webUrl` was tightened to reject more cases.
+* The `assigned` predicate and the `apply` batch operation were added.
+
+See the [history]
+for more details.
 
 ## What changed from 0.x to 1.x?
 
