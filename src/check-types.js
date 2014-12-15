@@ -187,8 +187,6 @@
      *
      */
     function length (data, value) {
-        assert.number(value);
-
         return assigned(data) && data.length === value;
     }
 
