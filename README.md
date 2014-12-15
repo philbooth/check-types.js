@@ -445,7 +445,7 @@ Specifically:
 * `webUrl` was tightened to reject more cases.
 * The `assigned` predicate and the `apply` batch operation were added.
 
-See the [history]
+See the [history2]
 for more details.
 
 ## What changed from 0.x to 1.x?
@@ -464,7 +464,7 @@ were renamed
 from `check.verifyXxxx`
 to `check.verify.xxx`.
 
-See the [history]
+See the [history1]
 for more details.
 
 ## How do I set up the build environment?
@@ -492,7 +492,8 @@ open `test/check-types.html`.
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
-[history]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md
+[history2]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md#20
+[history1]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md#10
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
