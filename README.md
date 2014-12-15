@@ -23,7 +23,7 @@ and values.
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
 * [Where can I use it?](#where-can-i-use-it)
-* [What changed from 1.x to 2.x?](#what-changed-from-0x-to-1x)
+* [What changed from 1.x to 2.x?](#what-changed-from-1x-to-2x)
 * [What changed from 0.x to 1.x?](#what-changed-from-0x-to-1x)
 * [How do I set up the build environment?](#how-do-i-set-up-the-build-environment)
 * [What license is it released under?](#what-license-is-it-released-under)
