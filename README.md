@@ -445,7 +445,7 @@ Specifically:
 * `webUrl` was tightened to reject more cases.
 * The `assigned` predicate and the `apply` batch operation were added.
 
-See the [history2]
+See the [history][history2]
 for more details.
 
 ## What changed from 0.x to 1.x?
@@ -464,7 +464,7 @@ were renamed
 from `check.verifyXxxx`
 to `check.verify.xxx`.
 
-See the [history1]
+See the [history][history1]
 for more details.
 
 ## How do I set up the build environment?
