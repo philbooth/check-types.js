@@ -168,6 +168,8 @@ These are implemented by
   if `thing` has a length property
   that equals `value`,
   `false` otherwise.
+  If `value` is undefined,
+  an exception is thrown.
 
 #### Number functions
 
@@ -226,6 +228,8 @@ These are implemented by
   if `thing` has a length property
   that equals `value`,
   `false` otherwise.
+  If `value` is undefined,
+  an exception is thrown.
 
 #### Date functions
 
@@ -238,7 +242,7 @@ These are implemented by
 
 * `check.object(thing)`:
   Returns `true`
-  if `thing` is a non-null, non-array, non-date object,
+  if `thing` is a plain-old JavaScript object,
   `false` otherwise.
 
 * `check.emptyObject(thing)`:
@@ -466,7 +470,7 @@ for more details.
 ## How do I set up the build environment?
 
 The build environment relies on
-Node.js,
+[Node.js][node],
 [NPM],
 [JSHint],
 [Mocha],
@@ -489,6 +493,7 @@ open `test/check-types.html`.
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
 [history]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md
+[node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
 [mocha]: http://visionmedia.github.com/mocha
