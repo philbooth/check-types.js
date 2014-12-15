@@ -436,6 +436,7 @@ Specifically:
 * `positiveNumber` was renamed to `positive`.
 * `negativeNumber` was renamed to `negative`.
 * `intNumber` was renamed to `integer`.
+* `bool` was renamed to `boolean`.
 * `defined` was swapped to become `undefined`.
 * `webUrl` was tightened to reject more cases.
 * The `assigned` predicate and the `apply` batch operation were added.
