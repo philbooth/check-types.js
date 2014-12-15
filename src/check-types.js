@@ -187,6 +187,8 @@
      *
      */
     function length (data, value) {
+        assert.not.undefined(value);
+
         return assigned(data) && data.length === value;
     }
 
