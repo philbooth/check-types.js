@@ -1050,6 +1050,18 @@
             assert.isFalse(check.either.odd(2).or.even(5));
         });
 
+        test('assert modifier with not throws when value is correct', function() {
+            assert.throws(function() {
+                check.assert.not.negative(-1);
+            });
+        });
+
+        test('assert modifier with not does not throw when value is wrong', function() {
+            assert.doesNotThrow(function() {
+                check.assert.not.negative(1);
+            });
+        });
+
         test('assert modifier with maybe does not throw when value is correct', function() {
             assert.doesNotThrow(function() {
                 check.assert.maybe.positive(1);
@@ -1062,15 +1074,9 @@
             });
         });
 
-        test('assert modifier with not throws when value is correct', function() {
-            assert.throws(function() {
-                check.assert.not.negative(-1);
-            });
-        });
-
-        test('assert modifier with not does not throw when value is wrong', function() {
+        test('assert modifier with either does not throw when second value is correct', function() {
             assert.doesNotThrow(function() {
-                check.assert.not.negative(1);
+                check.assert.either.negative(1).or.positive(3);
             });
         });
     });
