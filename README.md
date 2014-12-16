@@ -111,17 +111,22 @@ are broadly split into four types.
   returning true or false
   depending on the type and value of `thing`.
 
+* `check.not.xxx(thing)`:
+  The `not` modifier
+  negates a predicate,
+  returning `true` if the predicate returns `false`
+  and `false` if the predicate returns `true`.
+
 * `check.maybe.xxx(thing)`:
-  The maybe modifier
+  The `maybe` modifier
   returns `true` if `thing` is `null` or `undefined`,
   otherwise it returns the result
   of the equivalent predicate.
 
-* `check.not.xxx(thing)`:
-  The not modifier
-  negates a predicate,
-  returning `true` if the predicate returns `false`
-  and `false` if the predicate returns `true`.
+* `check.either.xxx(thing).or.yyy(thang)`:
+  The `either...or` modifier
+  returns `true` if either predicate is true,
+  otherwise it returns `false`.
 
 * `check.assert.xxx(thing, message)`:
   The assert modifier
@@ -129,12 +134,12 @@ are broadly split into four types.
   and throws an `Error`
   if the result is `false`.
   It can also be applied
-  to maybe and not modifiers
-  using the form
+  to the `not`, `maybe` and `either` modifiers
+  using the forms
+  `check.assert.not.xxx(thing, message)`,
   `check.assert.maybe.xxx(thing, message)`
-  or
-  `check.assert.not.xxx(thing, message)`
-  respectively.
+  and
+  `check.assert.either.xxx(thing, message).or.yyy(thang, message)`.
 
 Additionally, there are some batch operations
 that allow you to apply predicates
@@ -298,6 +303,10 @@ These are implemented by
   otherwise it propagates
   the return value
   from its predicate.
+
+* `check.either.xxx(...).or.yyy(...)`:
+  Returns `true`
+  if either predicate is true.
 
 * `check.assert.xxx(...)` / `check.assert.maybe.xxx(...)`:
   Throws an `Error`
