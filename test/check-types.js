@@ -874,18 +874,23 @@
             assert.isUndefined(check.assert.assert);
         });
 
-        test('assert modifier is applied to maybe', function () {
-            assert.isObject(check.assert.maybe);
-            assert.strictEqual(Object.keys(check.assert.maybe).length, 21);
-        });
-
         test('assert modifier is applied to not', function () {
             assert.isObject(check.assert.not);
             assert.strictEqual(Object.keys(check.assert.not).length, 21);
         });
 
+        test('assert modifier is applied to maybe', function () {
+            assert.isObject(check.assert.maybe);
+            assert.strictEqual(Object.keys(check.assert.maybe).length, 21);
+        });
+
+        test('assert modifier is applied to either', function () {
+            assert.isObject(check.assert.either);
+            assert.strictEqual(Object.keys(check.assert.either).length, 21);
+        });
+
         test('assert modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.assert).length, 23);
+            assert.strictEqual(Object.keys(check.assert).length, 24);
         });
 
         test('assert modifier throws when value is wrong', function () {
@@ -932,12 +937,52 @@
             }
         });
 
+        test('not modifier is defined', function () {
+            assert.isObject(check.not);
+        });
+
+        test('not modifier is not applied to itself', function () {
+            assert.isUndefined(check.not.not);
+        });
+
+        test('not modifier is not applied to maybe', function () {
+            assert.isUndefined(check.not.maybe);
+        });
+
+        test('not modifier is not applied to either', function () {
+            assert.isUndefined(check.not.either);
+        });
+
+        test('not modifier is not applied to assert', function () {
+            assert.isUndefined(check.not.assert);
+        });
+
+        test('not modifier has correct number of keys', function () {
+            assert.strictEqual(Object.keys(check.not).length, 21);
+        });
+
+        test('not modifier returns true when predicate returns false', function() {
+            assert.isTrue(check.not.object(undefined));
+        });
+
+        test('not modifier returns false when predicate returns true', function() {
+            assert.isFalse(check.not.unemptyString('1'));
+        });
+
         test('maybe modifier is defined', function () {
             assert.isObject(check.maybe);
         });
 
         test('maybe modifier is not applied to itself', function () {
             assert.isUndefined(check.maybe.maybe);
+        });
+
+        test('maybe modifier is not applied to not', function () {
+            assert.isUndefined(check.maybe.not);
+        });
+
+        test('maybe modifier is not applied to either', function () {
+            assert.isUndefined(check.maybe.either);
         });
 
         test('maybe modifier is not applied to assert', function () {
@@ -961,28 +1006,48 @@
             assert.isTrue(check.maybe.odd(1));
         });
 
-        test('not modifier is defined', function () {
-            assert.isObject(check.not);
+        test('maybe modifier with falsey values evaluates predicate', function() {
+            assert.isFalse(check.maybe.positive(0));
         });
 
-        test('not modifier is not applied to itself', function () {
-            assert.isUndefined(check.not.not);
+        test('either modifier is defined', function () {
+            assert.isObject(check.either);
         });
 
-        test('not modifier is not applied to assert', function () {
-            assert.isUndefined(check.not.assert);
+        test('either modifier is not applied to itself', function () {
+            assert.isUndefined(check.either.either);
         });
 
-        test('not modifier has correct number of keys', function () {
-            assert.strictEqual(Object.keys(check.not).length, 21);
+        test('either modifier is not applied to not', function () {
+            assert.isUndefined(check.either.not);
         });
 
-        test('not modifier returns true when predicate returns false', function() {
-            assert.isTrue(check.not.object(undefined));
+        test('either modifier is not applied to maybe', function () {
+            assert.isUndefined(check.either.maybe);
         });
 
-        test('not modifier returns false when predicate returns true', function() {
-            assert.isFalse(check.not.unemptyString('1'));
+        test('either modifier is not applied to assert', function () {
+            assert.isUndefined(check.either.assert);
+        });
+
+        test('either modifier has correct number of keys', function () {
+            assert.strictEqual(Object.keys(check.either).length, 21);
+        });
+
+        test('either modifier returns or object', function () {
+            assert.isObject(check.either.string(''));
+            assert.isObject(check.either.string('').or);
+            assert.lengthOf(Object.keys(check.either.string('').or), 21);
+        });
+
+        test('either returns true when first predicate is true', function () {
+            assert.isTrue(check.either.odd(1).or.even(2));
+            assert.isTrue(check.either.odd(1).or.even(3));
+        });
+
+        test('either returns second predicate result when first predicate is false', function () {
+            assert.isTrue(check.either.odd(2).or.even(4));
+            assert.isFalse(check.either.odd(2).or.even(5));
         });
 
         test('assert modifier with maybe does not throw when value is correct', function() {
@@ -1007,10 +1072,6 @@
             assert.doesNotThrow(function() {
                 check.assert.not.negative(1);
             });
-        });
-
-        test('maybe modifier with falsey values evaluates predicate', function() {
-            assert.isFalse(check.maybe.positive(0));
         });
     });
 }(typeof require === 'function' ? require : undefined));

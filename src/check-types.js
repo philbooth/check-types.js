@@ -8,7 +8,7 @@
 (function (globals) {
     'use strict';
 
-    var messages, predicates, functions, assert, maybe, not;
+    var messages, predicates, functions, assert, not, maybe, either;
 
     messages = {
         like: 'Invalid type',
@@ -67,15 +67,18 @@
 
     functions = mixin(functions, predicates);
     assert = createModifiedPredicates(assertModifier);
-    maybe = createModifiedPredicates(maybeModifier);
     not = createModifiedPredicates(notModifier);
-    assert.maybe = createModifiedFunctions(assertModifier, maybe);
+    maybe = createModifiedPredicates(maybeModifier);
+    either = createModifiedPredicates(eitherModifier);
     assert.not = createModifiedFunctions(assertModifier, not);
+    assert.maybe = createModifiedFunctions(assertModifier, maybe);
+    assert.either = createModifiedFunctions(assertModifier, either);
 
     exportFunctions(mixin(functions, {
         assert: assert,
+        not: not,
         maybe: maybe,
-        not: not
+        either: either
     }));
 
     /**
@@ -484,9 +487,20 @@
     }
 
     /**
+     * Public modifier `not`.
+     *
+     * Negates `predicate`.
+     */
+    function notModifier (predicate) {
+        return function () {
+            return !predicate.apply(null, arguments);
+        };
+    }
+
+    /**
      * Public modifier `maybe`.
      *
-     * Returns `true` if `predicate` is  `null` or `undefined`,
+     * Returns `true` if predicate argument is  `null` or `undefined`,
      * otherwise propagates the return value from `predicate`.
      */
     function maybeModifier (predicate) {
@@ -500,14 +514,29 @@
     }
 
     /**
-     * Public modifier `not`.
+     * Public modifier `either`.
+     *
+     * Returns `true` if either predicate is true.
      *
      * Negates `predicate`.
      */
-    function notModifier (predicate) {
+    function eitherModifier (predicate) {
         return function () {
-            return !predicate.apply(null, arguments);
+            var shortcut = predicate.apply(null, arguments);
+
+            return {
+                or: Object.keys(predicates).reduce(nopOrPredicate, {})
+            };
+
+            function nopOrPredicate (result, key) {
+                result[key] = shortcut ? nop : predicates[key];
+                return result;
+            }
         };
+
+        function nop () {
+            return true;
+        }
     }
 
     function createModifiedPredicates (modifier) {
