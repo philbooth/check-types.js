@@ -1,5 +1,9 @@
 # History
 
+## 2.1
+
+* Add `either`.
+
 ## 2.0
 
 * Breaking changes:
