@@ -72,7 +72,7 @@
     either = createModifiedPredicates(eitherModifier);
     assert.not = createModifiedFunctions(assertModifier, not);
     assert.maybe = createModifiedFunctions(assertModifier, maybe);
-    assert.either = createModifiedFunctions(assertModifier, either);
+    assert.either = createModifiedFunctions(assertEitherModifier, either);
 
     exportFunctions(mixin(functions, {
         assert: assert,
@@ -484,6 +484,25 @@
                 throw new Error(unemptyString(message) ? message : defaultMessage);
             }
         };
+    }
+
+    function assertEitherModifier (predicate, defaultMessage) {
+        return function () {
+            var intermediate = predicate.apply(null, arguments);
+
+            return {
+                or: Object.keys(predicates).reduce(magicalAssert, {})
+            };
+
+            function magicalAssert (result, key) {
+                // TODO: Run the second predicate (which we know nothing about)
+                //       then either throw this Error, that Error or neither of them.
+            }
+        };
+
+        function nop () {
+            return true;
+        }
     }
 
     /**
