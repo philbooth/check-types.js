@@ -166,7 +166,7 @@ These are implemented by
 
 * `check.webUrl(thing)`:
   Returns `true`
-  if `thing` is an HTTP or HTTPS URL,
+  if `thing` seems like an HTTP or HTTPS URL,
   `false` otherwise.
 
 * `check.length(thing, value)`:
