@@ -488,21 +488,32 @@
 
     function assertEitherModifier (predicate, defaultMessage) {
         return function () {
-            var intermediate = predicate.apply(null, arguments);
+            var message, error;
+
+            if (!predicate.apply(null, arguments)) {
+                message = arguments[arguments.length - 1];
+                error = new Error(unemptyString(message) ? message : defaultMessage);
+            }
 
             return {
-                or: Object.keys(predicates).reduce(magicalAssert, {})
+                or: Object.keys(predicates).reduce(delayedAssert, {})
             };
 
-            function magicalAssert (result, key) {
+            function delayedAssert (result, key) {
                 // TODO: Run the second predicate (which we know nothing about)
                 //       then either throw this Error, that Error or neither of them.
+                result[key] = function () {
+                    if (!error) {
+                        return assert[key].apply(null, arguments);
+                    }
+
+                    if (predicates[key].apply(null, arguments)) {
+                        throw error;
+                    }
+                };
+                return result;
             }
         };
-
-        function nop () {
-            return true;
-        }
     }
 
     /**
