@@ -500,8 +500,6 @@
             };
 
             function delayedAssert (result, key) {
-                // TODO: Run the second predicate (which we know nothing about)
-                //       then either throw this Error, that Error or neither of them.
                 result[key] = function () {
                     if (!error) {
                         return assert[key].apply(null, arguments);
