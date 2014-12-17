@@ -121,7 +121,7 @@ are broadly split into four types.
   The `maybe` modifier
   returns `true` if `thing` is `null` or `undefined`,
   otherwise it returns the result
-  of the equivalent predicate.
+  of the predicate.
 
 * `check.either.xxx(thing).or.yyy(thang)`:
   The `either` modifier
