@@ -363,11 +363,11 @@ check.not.even(3);
 ```javascript
 check.maybe.even(null);
 // Returns true
+```
 
 ```javascript
 check.either.even(3).or.odd(3);
 // Returns true
-```
 ```
 
 ```javascript
