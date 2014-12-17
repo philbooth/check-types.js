@@ -371,13 +371,18 @@ check.assert.like({ foo: 'bar' }, { baz: 'qux' }, 'Invalid object');
 ```
 
 ```javascript
+check.assert.not.like({ foo: 'bar' }, { baz: 'qux' }, 'Invalid object');
+// Doesn't throw
+```
+
+```javascript
 check.assert.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
 // Doesn't throw
 ```
 
 ```javascript
-check.assert.not.like({ foo: 'bar' }, { baz: 'qux' }, 'Invalid object');
-// Doesn't throw
+check.assert.either.unemptyString(error, 'Invalid error').or.instance(error, Error);
+// Throws if `error` is not an error string or Error instance
 ```
 
 ```javascript
