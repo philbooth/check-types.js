@@ -126,7 +126,8 @@ are broadly split into four types.
 * `check.either.xxx(thing).or.yyy(thang)`:
   The `either...or` modifier
   returns `true` if either predicate is true,
-  otherwise it returns `false`.
+  it will only return `false`
+  when both predicates are false.
 
 * `check.assert.xxx(thing, message)`:
   The assert modifier
@@ -139,7 +140,7 @@ are broadly split into four types.
   `check.assert.not.xxx(thing, message)`,
   `check.assert.maybe.xxx(thing, message)`
   and
-  `check.assert.either.xxx(thing, message).or.yyy(thang, message)`.
+  `check.assert.either.xxx(thing, message).or.yyy(thang)`.
 
 Additionally, there are some batch operations
 that allow you to apply predicates
@@ -307,13 +308,16 @@ These are implemented by
 * `check.either.xxx(...).or.yyy(...)`:
   Returns `true`
   if either predicate is true.
+  Returns `false`
+  if both predicates are false.
 
-* `check.assert.xxx(...)` / `check.assert.maybe.xxx(...)`:
+* `check.assert.xxx(...)`:
   Throws an `Error`
   if the predicate returns false.
   The last argument
   is an optional message
   to be set on the `Error` instance.
+  Also works with the `not`, `maybe` and `either` modifiers.
 
 #### Batch operations
 
