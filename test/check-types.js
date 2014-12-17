@@ -1079,6 +1079,24 @@
                 check.assert.either.negative(1).or.positive(3);
             });
         });
+
+        test('assert modifier with either does not throw when first value is correct', function() {
+            assert.doesNotThrow(function() {
+                check.assert.either.odd(7).or.even(5);
+            });
+        });
+
+        test('assert modifier with either does not throw when both values are correct', function() {
+            assert.doesNotThrow(function() {
+                check.assert.either.string('').or.number(0);
+            });
+        });
+
+        test('assert modifier with either throws when both values are wrong', function() {
+            assert.throws(function() {
+                check.assert.either.number('').or.string(0);
+            });
+        });
     });
 }(typeof require === 'function' ? require : undefined));
 

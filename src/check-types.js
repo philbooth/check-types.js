@@ -72,7 +72,7 @@
     either = createModifiedPredicates(eitherModifier);
     assert.not = createModifiedFunctions(assertModifier, not);
     assert.maybe = createModifiedFunctions(assertModifier, maybe);
-    assert.either = createModifiedFunctions(assertEitherModifier, either);
+    assert.either = createModifiedFunctions(assertEitherModifier, predicates);
 
     exportFunctions(mixin(functions, {
         assert: assert,
@@ -477,22 +477,27 @@
      */
     function assertModifier (predicate, defaultMessage) {
         return function () {
-            var message;
-
-            if (predicate.apply(null, arguments) === false) {
-                message = arguments[arguments.length - 1];
-                throw new Error(unemptyString(message) ? message : defaultMessage);
-            }
+            assertPredicate(predicate, arguments, defaultMessage);
         };
+    }
+
+    function assertPredicate (predicate, args, defaultMessage) {
+        var message;
+
+        if (!predicate.apply(null, args)) {
+            message = args[args.length - 1];
+            throw new Error(unemptyString(message) ? message : defaultMessage);
+        }
     }
 
     function assertEitherModifier (predicate, defaultMessage) {
         return function () {
-            var message, error;
+            var error;
 
-            if (!predicate.apply(null, arguments)) {
-                message = arguments[arguments.length - 1];
-                error = new Error(unemptyString(message) ? message : defaultMessage);
+            try {
+                assertPredicate(predicate, arguments, defaultMessage);
+            } catch (e) {
+                error = e;
             }
 
             return {
@@ -501,14 +506,11 @@
 
             function delayedAssert (result, key) {
                 result[key] = function () {
-                    if (!error) {
-                        return assert[key].apply(null, arguments);
-                    }
-
-                    if (predicates[key].apply(null, arguments)) {
+                    if (error && !predicates[key].apply(null, arguments)) {
                         throw error;
                     }
                 };
+
                 return result;
             }
         };
