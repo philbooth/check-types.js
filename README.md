@@ -124,7 +124,7 @@ are broadly split into four types.
   of the equivalent predicate.
 
 * `check.either.xxx(thing).or.yyy(thang)`:
-  The `either...or` modifier
+  The `either` modifier
   returns `true` if either predicate is true,
   it will only return `false`
   when both predicates are false.
@@ -356,13 +356,18 @@ check.even(3);
 ```
 
 ```javascript
-check.maybe.even(null);
+check.not.even(3);
 // Returns true
 ```
 
 ```javascript
-check.not.even(3);
+check.maybe.even(null);
 // Returns true
+
+```javascript
+check.either.even(3).or.odd(3);
+// Returns true
+```
 ```
 
 ```javascript
