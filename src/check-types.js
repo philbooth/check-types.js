@@ -547,8 +547,6 @@
      * Public modifier `either`.
      *
      * Returns `true` if either predicate is true.
-     *
-     * Negates `predicate`.
      */
     function eitherModifier (predicate) {
         return function () {
