@@ -437,11 +437,11 @@ Everywhere else should be fine.
 
 If those versions of IE
 are important to you,
-there is hope!
+worry not!
 The 1.x versions
 all support old IE
 and any future 1.x versions
-will adhere to that.
+will adhere to that too.
 
 See the [releases]
 for more information.
