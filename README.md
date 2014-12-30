@@ -78,7 +78,7 @@ Browserify
 or another CommonJS-style
 environment,
 you can `require`
-check-types.js like so:
+check-types like so:
 
 ```javascript
 var check = require('check-types');
