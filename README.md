@@ -393,7 +393,7 @@ check.assert.either.unemptyString(error, 'Invalid error').or.instance(error, Err
 
 ```javascript
 check.apply([ 'foo', 'bar', '' ], check.unemptyString);
-// Returns false
+// Returns [ true, true, false ]
 ```
 
 ```javascript
