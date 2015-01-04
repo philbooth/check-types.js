@@ -322,7 +322,7 @@ These are implemented by
 #### Batch operations
 
 * `check.apply(things, predicates)`:
-  Applies each value from the array of things
+  Applies each value from the `things` array
   to the corresponding predicate
   and returns the array of results.
   Passing a single predicate
@@ -331,9 +331,10 @@ These are implemented by
   to that predicate.
 
 * `check.map(things, predicates)`:
-  Maps each value from the data
+  Maps each value from the `things` object
   to the corresponding predicate
-  and returns a results object.
+  and returns an object
+  containing the results.
   Supports nested objects.
 
 * `check.all(results)`:
