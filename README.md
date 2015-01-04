@@ -241,7 +241,7 @@ These are implemented by
 
 * `check.date(thing)`:
   Returns `true`
-  if `thing` is a date,
+  if `thing` is a valid date,
   `false` otherwise.
 
 #### Object functions

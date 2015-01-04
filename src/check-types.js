@@ -209,12 +209,13 @@
     /**
      * Public function `date`.
      *
-     * Returns `true` something is a date,
+     * Returns `true` something is a valid date,
      * `false` otherwise.
      *
      */
     function date (data) {
-        return Object.prototype.toString.call(data) === '[object Date]';
+        return Object.prototype.toString.call(data) === '[object Date]'
+            && !isNaN(data.getTime());
     }
 
     /**

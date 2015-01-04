@@ -320,6 +320,10 @@
             assert.isTrue(check.date(new Date()));
         });
 
+        test('date with invalid date returns false', function () {
+            assert.isFalse(check.date(new Date('foo')));
+        });
+
         test('date with object returns false', function () {
             assert.isFalse(check.date({}));
         });
