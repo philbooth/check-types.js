@@ -214,8 +214,8 @@
      *
      */
     function date (data) {
-        return Object.prototype.toString.call(data) === '[object Date]'
-            && !isNaN(data.getTime());
+        return Object.prototype.toString.call(data) === '[object Date]' &&
+            !isNaN(data.getTime());
     }
 
     /**
