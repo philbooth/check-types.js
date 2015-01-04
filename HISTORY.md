@@ -1,5 +1,9 @@
 # History
 
+## 2.2
+
+* Ensure `date` predicate returns `false` for invalid dates.
+
 ## 2.1
 
 * Add `either`.
