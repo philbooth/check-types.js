@@ -542,6 +542,7 @@ Specifically:
 * The predicate `less` was implemented.
 * The predicate `zero` was implemented.
 * The predicate `emptyArray` was implemented.
+* The predicate `error` was implemented.
 * `map` was fixed to stop erroneously throwing when the property counts do not match.
 
 See the [history][history3]
