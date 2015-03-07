@@ -1,5 +1,19 @@
 # History
 
+## 3.0
+
+* Breaking changes:
+  * Fix errant check that property counts match in `map`.
+  * Drop `webUrl`. (sorry @bahmutov)
+  * Implement `match` for general regex-matching. Possibly of interest to former users of `webUrl`, `gitUrl` and `email`.
+  * Implement `contains`.
+  * Implement `between`.
+  * Implement `greater`.
+  * Implement `less`.
+  * Implement `zero`.
+  * Implement `emptyArray`.
+  * Turn `assert`, `not` and `maybe` into standalone functions as well as modifiers.
+
 ## 2.2
 
 * Ensure `date` predicate returns `false` for invalid dates.
