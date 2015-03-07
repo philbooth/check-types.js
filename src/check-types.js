@@ -23,6 +23,8 @@
         array: 'Invalid array',
         date: 'Invalid date',
         fn: 'Invalid function',
+        match: 'Invalid string',
+        contains: 'Invalid string',
         unemptyString: 'Invalid string',
         string: 'Invalid string',
         odd: 'Invalid number',
@@ -51,6 +53,8 @@
         array: array,
         date: date,
         function: isFunction,
+        match: match,
+        contains: contains,
         unemptyString: unemptyString,
         string: string,
         odd: odd,
@@ -249,10 +253,32 @@
     }
 
     /**
+     * Public function `match`.
+     *
+     * Returns `true` if something is a string
+     * that matches `regex`, `false` otherwise.
+     *
+     */
+    function match (data, regex) {
+        return string(data) && !!data.match(regex);
+    }
+
+    /**
+     * Public function `contains`.
+     *
+     * Returns `true` if something is a string
+     * that contains `substring`, `false` otherwise.
+     *
+     */
+    function contains (data, substring) {
+        return string(data) && data.indexOf(substring) !== -1;
+    }
+
+    /**
      * Public function `unemptyString`.
      *
-     * Returns `true` if something is a non-empty string, `false`
-     * otherwise.
+     * Returns `true` if something is a non-empty string,
+     * `false` otherwise.
      *
      */
     function unemptyString (data) {
