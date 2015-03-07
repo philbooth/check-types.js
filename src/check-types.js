@@ -29,6 +29,7 @@
         even: 'Invalid number',
         positive: 'Invalid number',
         negative: 'Invalid number',
+        zero: 'Invalid number',
         integer: 'Invalid number',
         number: 'Invalid number',
         boolean: 'Invalid boolean'
@@ -53,6 +54,7 @@
         even: even,
         positive: positive,
         negative: negative,
+        zero: zero,
         integer : integer,
         number: number,
         boolean: boolean
@@ -315,6 +317,18 @@
      */
     function negative (data) {
         return number(data) && data < 0;
+    }
+
+    /**
+     * Public function `zero`.
+     *
+     * Returns `true` if something is zero,
+     * `false` otherwise.
+     *
+     * @param data          The thing to test.
+     */
+    function zero (data) {
+        return data === 0;
     }
 
     /**
