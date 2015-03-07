@@ -240,56 +240,56 @@
             assert.isFalse(check.object(new Date()));
         });
 
-        test('length function is defined', function () {
-            assert.isFunction(check.length);
+        test('hasLength function is defined', function () {
+            assert.isFunction(check.hasLength);
         });
 
-        test('length without length argument throws', function () {
+        test('hasLength without length argument throws', function () {
             assert.throws(function () {
-                check.length({});
+                check.hasLength({});
             });
         });
 
-        test('length with length argument does not throw', function () {
+        test('hasLength with length argument does not throw', function () {
             assert.doesNotThrow(function () {
-                check.length({}, 5);
+                check.hasLength({}, 5);
             });
         });
 
-        test('length with zero on empty array returns true', function () {
-            assert.isTrue(check.length([], 0));
+        test('hasLength with zero on empty array returns true', function () {
+            assert.isTrue(check.hasLength([], 0));
         });
 
-        test('length with zero on empty string returns true', function () {
-            assert.isTrue(check.length('', 0));
+        test('hasLength with zero on empty string returns true', function () {
+            assert.isTrue(check.hasLength('', 0));
         });
 
-        test('length with zero on empty object returns false', function () {
-            assert.isFalse(check.length({}, 0));
+        test('hasLength with zero on empty object returns false', function () {
+            assert.isFalse(check.hasLength({}, 0));
         });
 
-        test('length with matching length on array returns true', function () {
-            assert.isTrue(check.length([ 'foo', 'bar' ], 2));
+        test('hasLength with matching length on array returns true', function () {
+            assert.isTrue(check.hasLength([ 'foo', 'bar' ], 2));
         });
 
-        test('length with contrasting length on array returns false', function () {
-            assert.isFalse(check.length([ 'foo', 'bar', 'baz' ], 2));
+        test('hasLength with contrasting length on array returns false', function () {
+            assert.isFalse(check.hasLength([ 'foo', 'bar', 'baz' ], 2));
         });
 
-        test('length with matching length on string returns true', function () {
-            assert.isTrue(check.length('foo', 3));
+        test('hasLength with matching length on string returns true', function () {
+            assert.isTrue(check.hasLength('foo', 3));
         });
 
-        test('length with contrasting length on string returns false', function () {
-            assert.isFalse(check.length('foobar', 3));
+        test('hasLength with contrasting length on string returns false', function () {
+            assert.isFalse(check.hasLength('foobar', 3));
         });
 
-        test('length with matching length on object returns true', function () {
-            assert.isTrue(check.length({ length: 1 }, 1));
+        test('hasLength with matching length on object returns true', function () {
+            assert.isTrue(check.hasLength({ length: 1 }, 1));
         });
 
-        test('length with contrasting length on object returns false', function () {
-            assert.isFalse(check.length({ length: 2 }, 1));
+        test('hasLength with contrasting length on object returns false', function () {
+            assert.isFalse(check.hasLength({ length: 2 }, 1));
         });
 
         test('array function is defined', function () {
@@ -896,7 +896,7 @@
         });
 
         test('assert modifier is defined', function() {
-            assert.isObject(check.assert);
+            assert.isFunction(check.assert);
         });
 
         test('assert modifier is applied to predicates', function () {
@@ -907,7 +907,7 @@
             assert.isFunction(check.assert.null);
             assert.isFunction(check.assert.undefined);
             assert.isFunction(check.assert.assigned);
-            assert.isFunction(check.assert.length);
+            assert.isFunction(check.assert.hasLength);
             assert.isFunction(check.assert.emptyArray);
             assert.isFunction(check.assert.array);
             assert.isFunction(check.assert.date);
@@ -926,7 +926,7 @@
 
         test('assert modifier is not applied to batch operations', function () {
             assert.isUndefined(check.assert.map);
-            assert.isUndefined(check.assert.apply);
+            assert.strictEqual(check.assert.apply, Function.apply);
             assert.isUndefined(check.assert.all);
             assert.isUndefined(check.assert.any);
         });
@@ -998,8 +998,18 @@
             }
         });
 
+        test('assert modifier runs standalone', function () {
+            assert.doesNotThrow(function () {
+                check.assert(true);
+            });
+
+            assert.throws(function () {
+                check.assert(false);
+            });
+        });
+
         test('not modifier is defined', function () {
-            assert.isObject(check.not);
+            assert.isFunction(check.not);
         });
 
         test('not modifier is not applied to itself', function () {
@@ -1030,8 +1040,13 @@
             assert.isFalse(check.not.unemptyString('1'));
         });
 
+        test('not modifier runs standalone', function () {
+            assert.isFalse(check.not(true));
+            assert.isTrue(check.not(false));
+        });
+
         test('maybe modifier is defined', function () {
-            assert.isObject(check.maybe);
+            assert.isFunction(check.maybe);
         });
 
         test('maybe modifier is not applied to itself', function () {
@@ -1069,6 +1084,12 @@
 
         test('maybe modifier with falsey values evaluates predicate', function() {
             assert.isFalse(check.maybe.positive(0));
+        });
+
+        test('maybe modifier runs standalone', function () {
+            assert.isTrue(check.maybe(null));
+            assert.isTrue(check.maybe(undefined));
+            assert.isFalse(check.maybe(false));
         });
 
         test('either modifier is defined', function () {

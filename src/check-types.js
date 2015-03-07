@@ -18,7 +18,7 @@
         assigned: 'Invalid value',
         undefined: 'Invalid value',
         null: 'Invalid value',
-        length: 'Invalid length',
+        hasLength: 'Invalid length',
         emptyArray: 'Invalid array',
         array: 'Invalid array',
         date: 'Invalid date',
@@ -45,7 +45,7 @@
         assigned: assigned,
         undefined: isUndefined,
         null: isNull,
-        length: length,
+        hasLength: hasLength,
         emptyArray: emptyArray,
         array: array,
         date: date,
@@ -72,9 +72,9 @@
     };
 
     functions = mixin(functions, predicates);
-    assert = createModifiedPredicates(assertModifier);
-    not = createModifiedPredicates(notModifier);
-    maybe = createModifiedPredicates(maybeModifier);
+    assert = createModifiedPredicates(assertModifier, assertImpl);
+    not = createModifiedPredicates(notModifier, notImpl);
+    maybe = createModifiedPredicates(maybeModifier, maybeImpl);
     either = createModifiedPredicates(eitherModifier);
     assert.not = createModifiedFunctions(assertModifier, not);
     assert.maybe = createModifiedFunctions(assertModifier, maybe);
@@ -189,13 +189,13 @@
     }
 
     /**
-     * Public function `length`.
+     * Public function `hasLength`.
      *
      * Returns `true` if something is has a length property
      * that equals `value`, `false` otherwise.
      *
      */
-    function length (data, value) {
+    function hasLength (data, value) {
         assert.not.undefined(value);
 
         return assigned(data) && data.length === value;
@@ -399,7 +399,7 @@
         }
 
         assert.array(predicates);
-        assert.length(data, predicates.length);
+        assert.hasLength(data, predicates.length);
 
         return data.map(function (value, index) {
             return predicates[index](value);
@@ -522,11 +522,13 @@
     }
 
     function assertPredicate (predicate, args, defaultMessage) {
-        var message;
+        var message = args[args.length - 1];
+        assertImpl(predicate.apply(null, args), unemptyString(message) ? message : defaultMessage);
+    }
 
-        if (!predicate.apply(null, args)) {
-            message = args[args.length - 1];
-            throw new Error(unemptyString(message) ? message : defaultMessage);
+    function assertImpl (value, message) {
+        if (value === false) {
+            throw new Error(message || 'Assertion failed');
         }
     }
 
@@ -563,8 +565,12 @@
      */
     function notModifier (predicate) {
         return function () {
-            return !predicate.apply(null, arguments);
+            return notImpl(predicate.apply(null, arguments));
         };
+    }
+
+    function notImpl (value) {
+        return !value;
     }
 
     /**
@@ -581,6 +587,14 @@
 
             return predicate.apply(null, arguments);
         };
+    }
+
+    function maybeImpl (value) {
+        if (assigned(value) === false) {
+            return true;
+        }
+
+        return value;
     }
 
     /**
@@ -607,15 +621,20 @@
         }
     }
 
-    function createModifiedPredicates (modifier) {
-        return createModifiedFunctions(modifier, predicates);
+    function createModifiedPredicates (modifier, object) {
+        return createModifiedFunctions(modifier, predicates, object);
     }
 
-    function createModifiedFunctions (modifier, functions) {
-        var result = {};
+    function createModifiedFunctions (modifier, functions, object) {
+        var result = object || {};
 
         Object.keys(functions).forEach(function (key) {
-            result[key] = modifier(functions[key], messages[key]);
+            Object.defineProperty(result, key, {
+                configurable: false,
+                enumerable: true,
+                writable: false,
+                value: modifier(functions[key], messages[key])
+            });
         });
 
         return result;
