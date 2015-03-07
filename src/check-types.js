@@ -196,6 +196,17 @@
     }
 
     /**
+     * Public function `emptyArray`.
+     *
+     * Returns `true` if something is an empty array,
+     * `false` otherwise.
+     *
+     */
+    function emptyArray (data) {
+        return array(data) && data.length === 0;
+    }
+
+    /**
      * Public function `array`.
      *
      * Returns `true` something is an array,

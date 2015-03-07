@@ -312,6 +312,26 @@
             assert.isFalse(check.array(arguments));
         });
 
+        test('emptyArray function is defined', function () {
+            assert.isFunction(check.emptyArray);
+        });
+
+        test('emptyArray with empty array returns true', function () {
+            assert.isTrue(check.emptyArray([]));
+        });
+
+        test('emptyArray with empty object returns false', function () {
+            assert.isFalse(check.emptyArray({}));
+        });
+
+        test('emptyArray with null returns false', function () {
+            assert.isFalse(check.emptyArray(null));
+        });
+
+        test('emptyArray with non-empty array returns false', function () {
+            assert.isFalse(check.emptyArray([ 'foo' ]));
+        });
+
         test('date function is defined', function () {
             assert.isFunction(check.date);
         });
