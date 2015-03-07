@@ -19,6 +19,7 @@
         undefined: 'Invalid value',
         null: 'Invalid value',
         length: 'Invalid length',
+        emptyArray: 'Invalid array',
         array: 'Invalid array',
         date: 'Invalid date',
         fn: 'Invalid function',
