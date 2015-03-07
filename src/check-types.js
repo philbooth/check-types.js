@@ -22,7 +22,6 @@
         array: 'Invalid array',
         date: 'Invalid date',
         fn: 'Invalid function',
-        webUrl: 'Invalid URL',
         unemptyString: 'Invalid string',
         string: 'Invalid string',
         odd: 'Invalid number',
@@ -43,10 +42,10 @@
         undefined: isUndefined,
         null: isNull,
         length: length,
+        emptyArray: emptyArray,
         array: array,
         date: date,
         function: isFunction,
-        webUrl: webUrl,
         unemptyString: unemptyString,
         string: string,
         odd: odd,
@@ -238,17 +237,6 @@
      */
     function isFunction (data) {
         return typeof data === 'function';
-    }
-
-    /**
-     * Public function `webUrl`.
-     *
-     * Returns `true` if something is an HTTP or HTTPS URL,
-     * `false` otherwise.
-     *
-     */
-    function webUrl (data) {
-        return unemptyString(data) && /^(https?:)?\/\/([\w-\.~:@]+)(\/[\w-\.~\/\?#\[\]&\(\)\*\+,;=%]*)?$/.test(data);
     }
 
     /**

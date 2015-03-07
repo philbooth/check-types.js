@@ -360,60 +360,6 @@
             assert.isFalse(check.function({}));
         });
 
-        test('webUrl function is defined', function () {
-            assert.isFunction(check.webUrl);
-        });
-
-        test('webUrl with http scheme returns true', function () {
-            assert.isTrue(check.webUrl('http://127.0.0.1:8080/'));
-        });
-
-        test('webUrl with ftp scheme returns false', function () {
-            assert.isFalse(check.webUrl('ftp://example.com/'));
-        });
-
-        test('webUrl with https scheme returns true', function () {
-            assert.isTrue(check.webUrl('https://example.com/'));
-        });
-
-        test('webUrl with httpss scheme returns false', function () {
-            assert.isFalse(check.webUrl('httpss://'));
-        });
-
-        test('webUrl with object returns false', function () {
-            assert.isFalse(
-                check.webUrl({
-                    toString: function () {
-                        return 'https://example.com/';
-                    }
-                })
-            );
-        });
-
-        test('webUrl with no scheme returns true', function () {
-            assert.isTrue(check.webUrl('//example.com/'));
-        });
-
-        test('webUrl without domain returns false', function () {
-            assert.isFalse(check.webUrl('http:///'));
-        });
-
-        test('webUrl with single-word domain returns true', function () {
-            assert.isTrue(check.webUrl('http://ws/'));
-        });
-
-        test('webUrl without path returns true', function () {
-            assert.isTrue(check.webUrl('http://example.com'));
-        });
-
-        test('webUrl with bad character returns false', function () {
-            assert.isFalse(check.webUrl('http://example.com/`'));
-        });
-
-        test('webUrl with percent-encoding returns true', function () {
-            assert.isTrue(check.webUrl('http://example.com/%20'));
-        });
-
         test('unemptyString function is defined', function () {
             assert.isFunction(check.unemptyString);
         });
@@ -874,10 +820,10 @@
             assert.isFunction(check.assert.undefined);
             assert.isFunction(check.assert.assigned);
             assert.isFunction(check.assert.length);
+            assert.isFunction(check.assert.emptyArray);
             assert.isFunction(check.assert.array);
             assert.isFunction(check.assert.date);
             assert.isFunction(check.assert.function);
-            assert.isFunction(check.assert.webUrl);
             assert.isFunction(check.assert.unemptyString);
             assert.isFunction(check.assert.string);
             assert.isFunction(check.assert.odd);
