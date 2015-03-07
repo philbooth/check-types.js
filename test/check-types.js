@@ -460,36 +460,44 @@
             assert.isFalse(check.even('2'));
         });
 
-        test('positive function is defined', function () {
-            assert.isFunction(check.positive);
+        test('between function is defined', function () {
+            assert.isFunction(check.between);
         });
 
-        test('positive with positive integer returns true', function () {
-            assert.isTrue(check.positive(1));
+        test('between with 1, 0, 1 returns false', function () {
+            assert.isFalse(check.between(1, 0, 1));
         });
 
-        test('positive with negative integer returns false', function () {
-            assert.isFalse(check.positive(-1));
+        test('between with 1, 0, 2 returns true', function () {
+            assert.isTrue(check.between(1, 0, 2));
         });
 
-        test('positive with positive fraction returns true', function () {
-            assert.isTrue(check.positive(1/2));
+        test('between with 1, 2, 0 returns true', function () {
+            assert.isTrue(check.between(1, 2, 0));
         });
 
-        test('positive with negative fraction returns false', function () {
-            assert.isFalse(check.positive(-1/2));
+        test('between works with fractions', function () {
+            assert.isTrue(check.between(1/2, 1/4, 1));
         });
 
-        test('positive with positive infinity returns false', function () {
-            assert.isFalse(check.positive(Number.POSITIVE_INFINITY));
+        test('between works with negative numbers', function () {
+            assert.isTrue(check.between(-2, -3, -1));
         });
 
-        test('positive with NaN returns false', function () {
-            assert.isFalse(check.positive(NaN));
+        test('between with positive infinity returns false', function () {
+            assert.isFalse(check.between(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY));
         });
 
-        test('positive with string returns false', function () {
-            assert.isFalse(check.positive('1'));
+        test('between with negative infinity returns false', function () {
+            assert.isFalse(check.between(Number.NEGATIVE_INFINITY, 0, Number.NEGATIVE_INFINITY));
+        });
+
+        test('between with NaN returns false', function () {
+            assert.isFalse(check.between(NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY));
+        });
+
+        test('between with string returns false', function () {
+            assert.isFalse(check.between('-1', 0, -2));
         });
 
         test('greater function is defined', function () {
@@ -524,38 +532,6 @@
             assert.isFalse(check.greater('1', 0));
         });
 
-        test('negative function is defined', function () {
-            assert.isFunction(check.negative);
-        });
-
-        test('negative with positive integer returns false', function () {
-            assert.isFalse(check.negative(1));
-        });
-
-        test('negative with negative integer returns true', function () {
-            assert.isTrue(check.negative(-1));
-        });
-
-        test('negative with positive fraction returns false', function () {
-            assert.isFalse(check.negative(1/2));
-        });
-
-        test('negative with negative fraction returns true', function () {
-            assert.isTrue(check.negative(-1/2));
-        });
-
-        test('negative with negative infinity returns false', function () {
-            assert.isFalse(check.negative(Number.NEGATIVE_INFINITY));
-        });
-
-        test('negative with NaN returns false', function () {
-            assert.isFalse(check.negative(NaN));
-        });
-
-        test('negative with string returns false', function () {
-            assert.isFalse(check.negative('-1'));
-        });
-
         test('less function is defined', function () {
             assert.isFunction(check.less);
         });
@@ -586,6 +562,70 @@
 
         test('less with string returns false', function () {
             assert.isFalse(check.less('-1', 0));
+        });
+
+        test('positive function is defined', function () {
+            assert.isFunction(check.positive);
+        });
+
+        test('positive with positive integer returns true', function () {
+            assert.isTrue(check.positive(1));
+        });
+
+        test('positive with negative integer returns false', function () {
+            assert.isFalse(check.positive(-1));
+        });
+
+        test('positive with positive fraction returns true', function () {
+            assert.isTrue(check.positive(1/2));
+        });
+
+        test('positive with negative fraction returns false', function () {
+            assert.isFalse(check.positive(-1/2));
+        });
+
+        test('positive with positive infinity returns false', function () {
+            assert.isFalse(check.positive(Number.POSITIVE_INFINITY));
+        });
+
+        test('positive with NaN returns false', function () {
+            assert.isFalse(check.positive(NaN));
+        });
+
+        test('positive with string returns false', function () {
+            assert.isFalse(check.positive('1'));
+        });
+
+        test('negative function is defined', function () {
+            assert.isFunction(check.negative);
+        });
+
+        test('negative with positive integer returns false', function () {
+            assert.isFalse(check.negative(1));
+        });
+
+        test('negative with negative integer returns true', function () {
+            assert.isTrue(check.negative(-1));
+        });
+
+        test('negative with positive fraction returns false', function () {
+            assert.isFalse(check.negative(1/2));
+        });
+
+        test('negative with negative fraction returns true', function () {
+            assert.isTrue(check.negative(-1/2));
+        });
+
+        test('negative with negative infinity returns false', function () {
+            assert.isFalse(check.negative(Number.NEGATIVE_INFINITY));
+        });
+
+        test('negative with NaN returns false', function () {
+            assert.isFalse(check.negative(NaN));
+        });
+
+        test('negative with string returns false', function () {
+            assert.isFalse(check.negative('-1'));
         });
 
         test('integer function is defined', function () {
@@ -937,21 +977,21 @@
 
         test('assert modifier is applied to not', function () {
             assert.isObject(check.assert.not);
-            assert.lengthOf(Object.keys(check.assert.not), 24);
+            assert.lengthOf(Object.keys(check.assert.not), 25);
         });
 
         test('assert modifier is applied to maybe', function () {
             assert.isObject(check.assert.maybe);
-            assert.lengthOf(Object.keys(check.assert.maybe), 24);
+            assert.lengthOf(Object.keys(check.assert.maybe), 25);
         });
 
         test('assert modifier is applied to either', function () {
             assert.isObject(check.assert.either);
-            assert.lengthOf(Object.keys(check.assert.either), 24);
+            assert.lengthOf(Object.keys(check.assert.either), 25);
         });
 
         test('assert modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.assert), 27);
+            assert.lengthOf(Object.keys(check.assert), 28);
         });
 
         test('assert modifier throws when value is wrong', function () {
@@ -1029,7 +1069,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.not), 24);
+            assert.lengthOf(Object.keys(check.not), 25);
         });
 
         test('not modifier returns true when predicate returns false', function() {
@@ -1066,7 +1106,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.maybe), 24);
+            assert.lengthOf(Object.keys(check.maybe), 25);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -1113,13 +1153,13 @@
         });
 
         test('either modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.either), 24);
+            assert.lengthOf(Object.keys(check.either), 25);
         });
 
         test('either modifier returns or object', function () {
             assert.isObject(check.either.string(''));
             assert.isObject(check.either.string('').or);
-            assert.lengthOf(Object.keys(check.either.string('').or), 24);
+            assert.lengthOf(Object.keys(check.either.string('').or), 25);
         });
 
         test('either returns true when first predicate is true', function () {

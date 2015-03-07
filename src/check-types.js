@@ -27,10 +27,11 @@
         string: 'Invalid string',
         odd: 'Invalid number',
         even: 'Invalid number',
-        positive: 'Invalid number',
+        between: 'Invalid number',
         greater: 'Invalid number',
-        negative: 'Invalid number',
         less: 'Invalid number',
+        positive: 'Invalid number',
+        negative: 'Invalid number',
         integer: 'Invalid number',
         zero: 'Invalid number',
         number: 'Invalid number',
@@ -54,10 +55,11 @@
         string: string,
         odd: odd,
         even: even,
-        positive: positive,
+        between: between,
         greater: greater,
-        negative: negative,
         less: less,
+        positive: positive,
+        negative: negative,
         integer : integer,
         zero: zero,
         number: number,
@@ -301,14 +303,18 @@
     }
 
     /**
-     * Public function `positive`.
+     * Public function `between`.
      *
-     * Returns `true` if something is a positive number,
-     * `false` otherwise.
+     * Returns `true` if something is a number
+     * between `a` and `b`, `false` otherwise.
      *
      */
-    function positive (data) {
-        return greater(data, 0);
+    function between (data, a, b) {
+        if (a < b) {
+            return greater(data, a) && less(data, b);
+        }
+
+        return less(data, a) && greater(data, b);
     }
 
     /**
@@ -323,6 +329,28 @@
     }
 
     /**
+     * Public function `less`.
+     *
+     * Returns `true` if something is a number
+     * less than `value`, `false` otherwise.
+     *
+     */
+    function less (data, value) {
+        return number(data) && data < value;
+    }
+
+    /**
+     * Public function `positive`.
+     *
+     * Returns `true` if something is a positive number,
+     * `false` otherwise.
+     *
+     */
+    function positive (data) {
+        return greater(data, 0);
+    }
+
+    /**
      * Public function `negative`.
      *
      * Returns `true` if something is a negative number,
@@ -332,17 +360,6 @@
      */
     function negative (data) {
         return less(data, 0);
-    }
-
-    /**
-     * Public function `less`.
-     *
-     * Returns `true` if something is a number
-     * less than `value`, `false` otherwise.
-     *
-     */
-    function less (data, value) {
-        return number(data) && data < value;
     }
 
     /**
