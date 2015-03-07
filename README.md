@@ -17,6 +17,7 @@ and values.
         * [Function functions](#function-functions)
         * [Array functions](#array-functions)
         * [Date functions](#date-functions)
+        * [Error functions](#error-functions)
         * [Object functions](#object-functions)
         * [Boolean functions](#boolean-functions)
         * [Modifiers](#modifiers)
@@ -291,6 +292,13 @@ These are implemented by
 * `check.date(thing)`:
   Returns `true`
   if `thing` is a valid date,
+  `false` otherwise.
+
+#### Error functions
+
+* `check.error(thing)`:
+  Returns `true`
+  if `thing` is an error,
   `false` otherwise.
 
 #### Object functions

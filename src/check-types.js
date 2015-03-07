@@ -22,6 +22,7 @@
         emptyArray: 'Invalid array',
         array: 'Invalid array',
         date: 'Invalid date',
+        error: 'Invalid error',
         fn: 'Invalid function',
         match: 'Invalid string',
         contains: 'Invalid string',
@@ -52,6 +53,7 @@
         emptyArray: emptyArray,
         array: array,
         date: date,
+        error: error,
         function: isFunction,
         match: match,
         contains: contains,
@@ -239,6 +241,17 @@
     function date (data) {
         return Object.prototype.toString.call(data) === '[object Date]' &&
             !isNaN(data.getTime());
+    }
+
+    /**
+     * Public function `error`.
+     *
+     * Returns `true` if something is a plain-old JS object,
+     * `false` otherwise.
+     *
+     */
+    function error (data) {
+        return Object.prototype.toString.call(data) === '[object Error]';
     }
 
     /**

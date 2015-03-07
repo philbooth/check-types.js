@@ -12,6 +12,7 @@
   * Implement `less`.
   * Implement `zero`.
   * Implement `emptyArray`.
+  * Implement `error`.
   * Rename `length` => `hasLength`.
   * Turn `assert`, `not` and `maybe` into standalone functions as well as modifiers.
 

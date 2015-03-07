@@ -240,6 +240,10 @@
             assert.isFalse(check.object(new Date()));
         });
 
+        test('object with error returns false', function () {
+            assert.isFalse(check.object(new Error()));
+        });
+
         test('hasLength function is defined', function () {
             assert.isFunction(check.hasLength);
         });
@@ -346,6 +350,18 @@
 
         test('date with object returns false', function () {
             assert.isFalse(check.date({}));
+        });
+
+        test('error function is defined', function () {
+            assert.isFunction(check.error);
+        });
+
+        test('error with error returns true', function () {
+            assert.isTrue(check.error(new Error()));
+        });
+
+        test('error with object returns false', function () {
+            assert.isFalse(check.error({}));
         });
 
         test('function function is defined', function () {
@@ -995,6 +1011,7 @@
             assert.isFunction(check.assert.emptyArray);
             assert.isFunction(check.assert.array);
             assert.isFunction(check.assert.date);
+            assert.isFunction(check.assert.error);
             assert.isFunction(check.assert.function);
             assert.isFunction(check.assert.match);
             assert.isFunction(check.assert.contains);
@@ -1026,21 +1043,21 @@
 
         test('assert modifier is applied to not', function () {
             assert.isObject(check.assert.not);
-            assert.lengthOf(Object.keys(check.assert.not), 27);
+            assert.lengthOf(Object.keys(check.assert.not), 28);
         });
 
         test('assert modifier is applied to maybe', function () {
             assert.isObject(check.assert.maybe);
-            assert.lengthOf(Object.keys(check.assert.maybe), 27);
+            assert.lengthOf(Object.keys(check.assert.maybe), 28);
         });
 
         test('assert modifier is applied to either', function () {
             assert.isObject(check.assert.either);
-            assert.lengthOf(Object.keys(check.assert.either), 27);
+            assert.lengthOf(Object.keys(check.assert.either), 28);
         });
 
         test('assert modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.assert), 30);
+            assert.lengthOf(Object.keys(check.assert), 31);
         });
 
         test('assert modifier throws when value is wrong', function () {
@@ -1118,7 +1135,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.not), 27);
+            assert.lengthOf(Object.keys(check.not), 28);
         });
 
         test('not modifier returns true when predicate returns false', function() {
@@ -1155,7 +1172,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.maybe), 27);
+            assert.lengthOf(Object.keys(check.maybe), 28);
         });
 
         test('maybe modifier returns when true value is undefined', function() {
@@ -1202,13 +1219,13 @@
         });
 
         test('either modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.either), 27);
+            assert.lengthOf(Object.keys(check.either), 28);
         });
 
         test('either modifier returns or object', function () {
             assert.isObject(check.either.string(''));
             assert.isObject(check.either.string('').or);
-            assert.lengthOf(Object.keys(check.either.string('').or), 27);
+            assert.lengthOf(Object.keys(check.either.string('').or), 28);
         });
 
         test('either returns true when first predicate is true', function () {
