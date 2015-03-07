@@ -28,9 +28,11 @@
         odd: 'Invalid number',
         even: 'Invalid number',
         positive: 'Invalid number',
+        greater: 'Invalid number',
         negative: 'Invalid number',
-        zero: 'Invalid number',
+        less: 'Invalid number',
         integer: 'Invalid number',
+        zero: 'Invalid number',
         number: 'Invalid number',
         boolean: 'Invalid boolean'
     };
@@ -53,9 +55,11 @@
         odd: odd,
         even: even,
         positive: positive,
+        greater: greater,
         negative: negative,
-        zero: zero,
+        less: less,
         integer : integer,
+        zero: zero,
         number: number,
         boolean: boolean
     };
@@ -304,7 +308,18 @@
      *
      */
     function positive (data) {
-        return number(data) && data > 0;
+        return greater(data, 0);
+    }
+
+    /**
+     * Public function `greater`.
+     *
+     * Returns `true` if something is a number
+     * greater than `value`, `false` otherwise.
+     *
+     */
+    function greater (data, value) {
+        return number(data) && data > value;
     }
 
     /**
@@ -316,19 +331,18 @@
      * @param data          The thing to test.
      */
     function negative (data) {
-        return number(data) && data < 0;
+        return less(data, 0);
     }
 
     /**
-     * Public function `zero`.
+     * Public function `less`.
      *
-     * Returns `true` if something is zero,
-     * `false` otherwise.
+     * Returns `true` if something is a number
+     * less than `value`, `false` otherwise.
      *
-     * @param data          The thing to test.
      */
-    function zero (data) {
-        return data === 0;
+    function less (data, value) {
+        return number(data) && data < value;
     }
 
     /**
@@ -342,6 +356,18 @@
         return typeof data === 'number' && isNaN(data) === false &&
                data !== Number.POSITIVE_INFINITY &&
                data !== Number.NEGATIVE_INFINITY;
+    }
+
+    /**
+     * Public function `zero`.
+     *
+     * Returns `true` if something is zero,
+     * `false` otherwise.
+     *
+     * @param data          The thing to test.
+     */
+    function zero (data) {
+        return data === 0;
     }
 
     /**
