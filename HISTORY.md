@@ -4,7 +4,7 @@
 
 * Breaking changes:
   * Fix errant check that property counts match in `map`.
-  * Drop `webUrl`. (sorry @bahmutov)
+  * Drop `webUrl`. (sorry @bahmutov!)
   * Implement `match` for general regex-matching. Possibly of interest to former users of `webUrl`, `gitUrl` and `email`.
   * Implement `contains`.
   * Implement `between`.
