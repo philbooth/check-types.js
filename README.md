@@ -520,7 +520,7 @@ for more information.
 
 Breaking changes
 were made to the API
-in version 2.0.0.
+in version 3.0.0.
 
 Specifically:
 
