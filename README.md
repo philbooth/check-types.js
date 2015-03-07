@@ -23,6 +23,7 @@ and values.
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
 * [Where can I use it?](#where-can-i-use-it)
+* [What changed from 3.x to 3.x?](#what-changed-from-2x-to-3x)
 * [What changed from 1.x to 2.x?](#what-changed-from-1x-to-2x)
 * [What changed from 0.x to 1.x?](#what-changed-from-0x-to-1x)
 * [How do I set up the build environment?](#how-do-i-set-up-the-build-environment)
@@ -113,15 +114,24 @@ are broadly split into four types.
 
 * `check.not.xxx(thing)`:
   The `not` modifier
-  negates a predicate,
+  negates predicates,
   returning `true` if the predicate returns `false`
   and `false` if the predicate returns `true`.
+  It is also itself a function,
+  which simply returns
+  the negation of
+  its argument.
 
 * `check.maybe.xxx(thing)`:
   The `maybe` modifier
-  returns `true` if `thing` is `null` or `undefined`,
-  otherwise it returns the result
+  tweaks predicates to
+  return `true` if `thing` is `null` or `undefined`,
+  otherwise return the result
   of the predicate.
+  It is also itself a function,
+  which returns `true`
+  when its argument is `null` or `undefined`,
+  otherwise it returns its argument.
 
 * `check.either.xxx(thing).or.yyy(thang)`:
   The `either` modifier
@@ -131,16 +141,19 @@ are broadly split into four types.
 
 * `check.assert.xxx(thing, message)`:
   The assert modifier
-  calls the equivalent predicate
-  and throws an `Error`
-  if the result is `false`.
-  It can also be applied
+  changes predicates
+  to throw when their result
+  would otherwise be `false`.
+  It can be applied
   to the `not`, `maybe` and `either` modifiers
   using the forms
   `check.assert.not.xxx(thing, message)`,
   `check.assert.maybe.xxx(thing, message)`
   and
   `check.assert.either.xxx(thing, message).or.yyy(thang)`.
+  It is also itself a function,
+  which simply throws
+  when its argument is false.
 
 Additionally, there are some batch operations
 that allow you to apply predicates
@@ -164,12 +177,19 @@ These are implemented by
   if `thing` is a non-empty string,
   `false` otherwise.
 
-* `check.webUrl(thing)`:
+* `check.contains(thing, substring)`:
   Returns `true`
-  if `thing` seems like an HTTP or HTTPS URL,
+  if `thing` is a string
+  that contains `substring`,
   `false` otherwise.
 
-* `check.length(thing, value)`:
+* `check.match(thing, regex)`:
+  Returns `true`
+  if `thing` is a string
+  that matches `regex`,
+  `false` otherwise.
+
+* `check.hasLength(thing, value)`:
   Returns `true`
   if `thing` has a length property
   that equals `value`,
@@ -189,6 +209,25 @@ These are implemented by
   `Number.NEGATIVE_INFINITY`
   are not considered numbers here.
 
+* `check.greater(thing, value)`:
+  Returns `true` if `thing` is a number
+  greater than `value`,
+  `false` otherwise.
+
+* `check.less(thing, value)`:
+  Returns `true` if `thing` is a number
+  less than `value`,
+  `false` otherwise.
+
+* `check.between(thing, a, b)`:
+  Returns `true` if `thing` is a number
+  between than `a` and `b`,
+  `false` otherwise.
+  The arguments `a` and `b`
+  may be in any order,
+  it doesn't matter
+  which is greater.
+
 * `check.positive(thing)`:
   Returns `true` if `thing` is a number
   greater than zero,
@@ -198,6 +237,11 @@ These are implemented by
   Returns `true`
   if `thing` is a number
   less than zero,
+  `false` otherwise.
+
+* `check.zero(thing)`:
+  Returns `true`
+  if `thing` is zero,
   `false` otherwise.
 
 * `check.odd(thing)`:
@@ -229,7 +273,12 @@ These are implemented by
   if `thing` is an array,
   `false` otherwise.
 
-* `check.length(thing, value)`:
+* `check.emptyArray(thing)`:
+  Returns `true`
+  if `thing` is an empty array,
+  `false` otherwise.
+
+* `check.hasLength(thing, value)`:
   Returns `true`
   if `thing` has a length property
   that equals `value`,
@@ -294,9 +343,18 @@ These are implemented by
 
 #### Modifiers
 
+* `check.not(value)`:
+  Returns the negation
+  of `value`.
+
 * `check.not.xxx(...)`:
   Returns the negation
   of the predicate.
+
+* `check.maybe(value)`:
+  Returns `true`
+  if `value` is `null` or `undefined`,
+  otherwise it returns `value`.
 
 * `check.maybe.xxx(...)`:
   Returns `true`
@@ -310,6 +368,12 @@ These are implemented by
   if either predicate is true.
   Returns `false`
   if both predicates are false.
+
+* `check.assert(value, message)`:
+  Throws an `Error`
+  if `value` is `false`,
+  setting `message`
+  on the `Error` instance.
 
 * `check.assert.xxx(...)`:
   Throws an `Error`
@@ -392,6 +456,11 @@ check.assert.either.unemptyString(error, 'Invalid error').or.instance(error, Err
 ```
 
 ```javascript
+check.assert(myFunction(), 'Something went wrong');
+// Throws if myFunction returns `false`
+```
+
+```javascript
 check.apply([ 'foo', 'bar', '' ], check.unemptyString);
 // Returns [ true, true, false ]
 ```
@@ -446,6 +515,28 @@ will adhere to that too.
 
 See the [releases]
 for more information.
+
+## What changed from 2.x to 3.x?
+
+Breaking changes
+were made to the API
+in version 2.0.0.
+
+Specifically:
+
+* `map` was fixed to stop erroneously throwing when the property counts do not match.
+* The predicate `webUrl` was removed.
+* The predicate `match` was implemented for general regex-matching.
+* The predicate `contains` was implemented.
+* The predicate `between` was implemented.
+* The predicate `greater` was implemented.
+* The predicate `less` was implemented.
+* The predicate `zero` was implemented.
+* The predicate `emptyArray` was implemented.
+* The modifiers `assert`, `not` and `maybe` were changed to functions.
+
+See the [history][history3]
+for more details.
 
 ## What changed from 1.x to 2.x?
 
@@ -516,8 +607,9 @@ open `test/check-types.html`.
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
-[history2]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md#20
-[history1]: https://github.com/philbooth/check-types.js/blob/master/HISTORY.md#10
+[history3]: HISTORY.md#30
+[history2]: HISTORY.md#20
+[history1]: HISTORY.md#10
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
