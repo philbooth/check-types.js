@@ -459,11 +459,6 @@ check.assert.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
 ```
 
 ```javascript
-check.assert.either.unemptyString(error, 'Invalid error').or.instance(error, Error);
-// Throws if `error` is not an error string or Error instance
-```
-
-```javascript
 check.assert(myFunction(), 'Something went wrong');
 // Throws if myFunction returns `false`
 ```
