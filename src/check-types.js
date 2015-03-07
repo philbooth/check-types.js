@@ -380,7 +380,6 @@
         assert.object(predicates);
 
         keys = Object.keys(predicates);
-        assert.length(Object.keys(data), keys.length);
 
         keys.forEach(function (key) {
             var predicate = predicates[key];

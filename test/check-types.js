@@ -733,18 +733,6 @@
             });
         });
 
-        test('map with insufficient data throws', function() {
-            assert.throws(function() {
-                check.map({ foo: '' }, { foo: check.string, bar: check.string });
-            });
-        });
-
-        test('map with insufficient predicates throws', function() {
-            assert.throws(function() {
-                check.map({ foo: '' }, {});
-            });
-        });
-
         test('map returns the correct results', function() {
             var result =
                 check.map(
@@ -769,6 +757,20 @@
             assert.throws(function() {
                 check.map({ foo: 'foo', bar: 0 }, check.assert.string);
             });
+        });
+
+        test('map returns the correct results with maybe modifier', function() {
+            var result =
+                check.map(
+                    { foo: null, baz: { qux: '' } },
+                    { foo: check.maybe.string, bar: check.maybe.string, baz: { qux: check.maybe.string } }
+                );
+            assert.lengthOf(Object.keys(result), 3);
+            assert.isTrue(result.foo);
+            assert.isTrue(result.bar);
+            assert.isObject(result.baz);
+            assert.lengthOf(Object.keys(result.baz), 1);
+            assert.isTrue(result.baz.qux);
         });
 
         test('all function is defined', function () {
