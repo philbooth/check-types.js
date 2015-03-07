@@ -1,6 +1,6 @@
 {
     "name": "check-types",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "description": "A tiny library for asserting types and values.",
     "homepage": "https://github.com/philbooth/check-types.js",
     "bugs": "https://github.com/philbooth/check-types.js/issues",
@@ -29,9 +29,9 @@
         "safety"
     ],
     "devDependencies": {
-        "jshint": "2.5.x",
-        "mocha": "2.0.x",
-        "chai": "1.10.x",
+        "jshint": "2.6.x",
+        "mocha": "2.2.x",
+        "chai": "2.1.x",
         "uglify-js": "2.4.x"
     },
     "scripts": {

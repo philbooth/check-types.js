@@ -18,18 +18,24 @@
         assigned: 'Invalid value',
         undefined: 'Invalid value',
         null: 'Invalid value',
-        length: 'Invalid length',
+        hasLength: 'Invalid length',
+        emptyArray: 'Invalid array',
         array: 'Invalid array',
         date: 'Invalid date',
         fn: 'Invalid function',
-        webUrl: 'Invalid URL',
+        match: 'Invalid string',
+        contains: 'Invalid string',
         unemptyString: 'Invalid string',
         string: 'Invalid string',
         odd: 'Invalid number',
         even: 'Invalid number',
+        between: 'Invalid number',
+        greater: 'Invalid number',
+        less: 'Invalid number',
         positive: 'Invalid number',
         negative: 'Invalid number',
         integer: 'Invalid number',
+        zero: 'Invalid number',
         number: 'Invalid number',
         boolean: 'Invalid boolean'
     };
@@ -42,18 +48,24 @@
         assigned: assigned,
         undefined: isUndefined,
         null: isNull,
-        length: length,
+        hasLength: hasLength,
+        emptyArray: emptyArray,
         array: array,
         date: date,
         function: isFunction,
-        webUrl: webUrl,
+        match: match,
+        contains: contains,
         unemptyString: unemptyString,
         string: string,
         odd: odd,
         even: even,
+        between: between,
+        greater: greater,
+        less: less,
         positive: positive,
         negative: negative,
         integer : integer,
+        zero: zero,
         number: number,
         boolean: boolean
     };
@@ -66,9 +78,9 @@
     };
 
     functions = mixin(functions, predicates);
-    assert = createModifiedPredicates(assertModifier);
-    not = createModifiedPredicates(notModifier);
-    maybe = createModifiedPredicates(maybeModifier);
+    assert = createModifiedPredicates(assertModifier, assertImpl);
+    not = createModifiedPredicates(notModifier, notImpl);
+    maybe = createModifiedPredicates(maybeModifier, maybeImpl);
     either = createModifiedPredicates(eitherModifier);
     assert.not = createModifiedFunctions(assertModifier, not);
     assert.maybe = createModifiedFunctions(assertModifier, maybe);
@@ -183,16 +195,27 @@
     }
 
     /**
-     * Public function `length`.
+     * Public function `hasLength`.
      *
      * Returns `true` if something is has a length property
      * that equals `value`, `false` otherwise.
      *
      */
-    function length (data, value) {
+    function hasLength (data, value) {
         assert.not.undefined(value);
 
         return assigned(data) && data.length === value;
+    }
+
+    /**
+     * Public function `emptyArray`.
+     *
+     * Returns `true` if something is an empty array,
+     * `false` otherwise.
+     *
+     */
+    function emptyArray (data) {
+        return array(data) && data.length === 0;
     }
 
     /**
@@ -230,21 +253,32 @@
     }
 
     /**
-     * Public function `webUrl`.
+     * Public function `match`.
      *
-     * Returns `true` if something is an HTTP or HTTPS URL,
-     * `false` otherwise.
+     * Returns `true` if something is a string
+     * that matches `regex`, `false` otherwise.
      *
      */
-    function webUrl (data) {
-        return unemptyString(data) && /^(https?:)?\/\/([\w-\.~:@]+)(\/[\w-\.~\/\?#\[\]&\(\)\*\+,;=%]*)?$/.test(data);
+    function match (data, regex) {
+        return string(data) && !!data.match(regex);
+    }
+
+    /**
+     * Public function `contains`.
+     *
+     * Returns `true` if something is a string
+     * that contains `substring`, `false` otherwise.
+     *
+     */
+    function contains (data, substring) {
+        return string(data) && data.indexOf(substring) !== -1;
     }
 
     /**
      * Public function `unemptyString`.
      *
-     * Returns `true` if something is a non-empty string, `false`
-     * otherwise.
+     * Returns `true` if something is a non-empty string,
+     * `false` otherwise.
      *
      */
     function unemptyString (data) {
@@ -295,6 +329,43 @@
     }
 
     /**
+     * Public function `between`.
+     *
+     * Returns `true` if something is a number
+     * between `a` and `b`, `false` otherwise.
+     *
+     */
+    function between (data, a, b) {
+        if (a < b) {
+            return greater(data, a) && less(data, b);
+        }
+
+        return less(data, a) && greater(data, b);
+    }
+
+    /**
+     * Public function `greater`.
+     *
+     * Returns `true` if something is a number
+     * greater than `value`, `false` otherwise.
+     *
+     */
+    function greater (data, value) {
+        return number(data) && data > value;
+    }
+
+    /**
+     * Public function `less`.
+     *
+     * Returns `true` if something is a number
+     * less than `value`, `false` otherwise.
+     *
+     */
+    function less (data, value) {
+        return number(data) && data < value;
+    }
+
+    /**
      * Public function `positive`.
      *
      * Returns `true` if something is a positive number,
@@ -302,7 +373,7 @@
      *
      */
     function positive (data) {
-        return number(data) && data > 0;
+        return greater(data, 0);
     }
 
     /**
@@ -314,7 +385,7 @@
      * @param data          The thing to test.
      */
     function negative (data) {
-        return number(data) && data < 0;
+        return less(data, 0);
     }
 
     /**
@@ -328,6 +399,18 @@
         return typeof data === 'number' && isNaN(data) === false &&
                data !== Number.POSITIVE_INFINITY &&
                data !== Number.NEGATIVE_INFINITY;
+    }
+
+    /**
+     * Public function `zero`.
+     *
+     * Returns `true` if something is zero,
+     * `false` otherwise.
+     *
+     * @param data          The thing to test.
+     */
+    function zero (data) {
+        return data === 0;
     }
 
     /**
@@ -359,7 +442,7 @@
         }
 
         assert.array(predicates);
-        assert.length(data, predicates.length);
+        assert.hasLength(data, predicates.length);
 
         return data.map(function (value, index) {
             return predicates[index](value);
@@ -380,7 +463,6 @@
         assert.object(predicates);
 
         keys = Object.keys(predicates);
-        assert.length(Object.keys(data), keys.length);
 
         keys.forEach(function (key) {
             var predicate = predicates[key];
@@ -483,11 +565,13 @@
     }
 
     function assertPredicate (predicate, args, defaultMessage) {
-        var message;
+        var message = args[args.length - 1];
+        assertImpl(predicate.apply(null, args), unemptyString(message) ? message : defaultMessage);
+    }
 
-        if (!predicate.apply(null, args)) {
-            message = args[args.length - 1];
-            throw new Error(unemptyString(message) ? message : defaultMessage);
+    function assertImpl (value, message) {
+        if (value === false) {
+            throw new Error(message || 'Assertion failed');
         }
     }
 
@@ -524,8 +608,12 @@
      */
     function notModifier (predicate) {
         return function () {
-            return !predicate.apply(null, arguments);
+            return notImpl(predicate.apply(null, arguments));
         };
+    }
+
+    function notImpl (value) {
+        return !value;
     }
 
     /**
@@ -542,6 +630,14 @@
 
             return predicate.apply(null, arguments);
         };
+    }
+
+    function maybeImpl (value) {
+        if (assigned(value) === false) {
+            return true;
+        }
+
+        return value;
     }
 
     /**
@@ -568,15 +664,20 @@
         }
     }
 
-    function createModifiedPredicates (modifier) {
-        return createModifiedFunctions(modifier, predicates);
+    function createModifiedPredicates (modifier, object) {
+        return createModifiedFunctions(modifier, predicates, object);
     }
 
-    function createModifiedFunctions (modifier, functions) {
-        var result = {};
+    function createModifiedFunctions (modifier, functions, object) {
+        var result = object || {};
 
         Object.keys(functions).forEach(function (key) {
-            result[key] = modifier(functions[key], messages[key]);
+            Object.defineProperty(result, key, {
+                configurable: false,
+                enumerable: true,
+                writable: false,
+                value: modifier(functions[key], messages[key])
+            });
         });
 
         return result;
