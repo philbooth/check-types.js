@@ -525,20 +525,11 @@ Breaking changes
 were made to the API
 in version 3.0.0.
 
-Specifically:
-
-* The modifiers `assert`, `not` and `maybe` were changed to functions.
-* The predicate `webUrl` was removed.
-* The predicate `length` was renamed `hasLength`.
-* The predicate `match` was implemented for general regex-matching.
-* The predicate `contains` was implemented.
-* The predicate `between` was implemented.
-* The predicate `greater` was implemented.
-* The predicate `less` was implemented.
-* The predicate `zero` was implemented.
-* The predicate `emptyArray` was implemented.
-* The predicate `error` was implemented.
-* `map` was fixed to stop erroneously throwing when the property counts do not match.
+Specifically,
+the predicate `length`
+was renamed to `hasLength`
+and the predicate `webUrl`
+was removed.
 
 See the [history][history3]
 for more details.
@@ -563,7 +554,6 @@ Specifically:
 * `bool` was renamed to `boolean`.
 * `defined` was swapped to become `undefined`.
 * `webUrl` was tightened to reject more cases.
-* The `assigned` predicate and the `apply` batch operation were added.
 
 See the [history][history2]
 for more details.

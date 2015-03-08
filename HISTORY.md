@@ -3,18 +3,18 @@
 ## 3.0
 
 * Breaking changes:
-  * Fix errant check that property counts match in `map`.
-  * Drop `webUrl`. (sorry @bahmutov!)
-  * Implement `match` for general regex-matching. Possibly of interest to former users of `webUrl`, `gitUrl` and `email`.
-  * Implement `contains`.
-  * Implement `between`.
-  * Implement `greater`.
-  * Implement `less`.
-  * Implement `zero`.
-  * Implement `emptyArray`.
-  * Implement `error`.
   * Rename `length` => `hasLength`.
-  * Turn `assert`, `not` and `maybe` into standalone functions as well as modifiers.
+  * Drop `webUrl`. (sorry @bahmutov!)
+* Turn `assert`, `not` and `maybe` into standalone functions as well as modifiers.
+* Implement `match` for general regex-matching. Possibly of interest to former users of `webUrl`, `gitUrl` and `email`.
+* Implement `contains`.
+* Implement `between`.
+* Implement `greater`.
+* Implement `less`.
+* Implement `zero`.
+* Implement `emptyArray`.
+* Implement `error`.
+* Fix errant check that property counts match in `map`.
 
 ## 2.2
 
