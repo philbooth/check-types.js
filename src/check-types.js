@@ -134,6 +134,8 @@
      *
      */
     function instance (data, prototype) {
+        // TODO: Throw if prototype is not a function
+
         if (data && isFunction(prototype) && data instanceof prototype) {
             return true;
         }
@@ -273,6 +275,8 @@
      *
      */
     function match (data, regex) {
+        // TODO: Throw if regex is not a regex?
+
         return string(data) && !!data.match(regex);
     }
 
@@ -284,6 +288,8 @@
      *
      */
     function contains (data, substring) {
+        // TODO: Throw if substring is not a string?
+
         return string(data) && data.indexOf(substring) !== -1;
     }
 
@@ -349,6 +355,8 @@
      *
      */
     function between (data, a, b) {
+        // TODO: Throw is a and b are not numbers?
+
         if (a < b) {
             return greater(data, a) && less(data, b);
         }
@@ -364,6 +372,8 @@
      *
      */
     function greater (data, value) {
+        // TODO: Throw is value is not a number?
+
         return number(data) && data > value;
     }
 
@@ -375,6 +385,8 @@
      *
      */
     function less (data, value) {
+        // TODO: Throw is value is not a number?
+
         return number(data) && data < value;
     }
 
