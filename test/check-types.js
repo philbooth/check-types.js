@@ -40,36 +40,6 @@
             assert.isFunction(check.like);
         });
 
-        test('like without arguments throws', function () {
-            assert.throws(function () {
-                check.like();
-            });
-        });
-
-        test('like with two empty objects does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.like({}, {});
-            });
-        });
-
-        test('like with null, empty object throws', function () {
-            assert.throws(function () {
-                check.like(null, {});
-            });
-        });
-
-        test('like with empty function, empty object throws', function () {
-            assert.throws(function () {
-                check.like(function () {}, {});
-            });
-        });
-
-        test('like with empty object, null throws', function () {
-            assert.throws(function () {
-                check.like({}, null);
-            });
-        });
-
         test('like with two empty object arguments returns true', function () {
             assert.isTrue(check.like({}, {}));
         });
@@ -246,18 +216,6 @@
 
         test('hasLength function is defined', function () {
             assert.isFunction(check.hasLength);
-        });
-
-        test('hasLength without length argument throws', function () {
-            assert.throws(function () {
-                check.hasLength({});
-            });
-        });
-
-        test('hasLength with length argument does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.hasLength({}, 5);
-            });
         });
 
         test('hasLength with zero on empty array returns true', function () {

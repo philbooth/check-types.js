@@ -101,15 +101,11 @@
      * Tests whether an object 'quacks like a duck'.
      * Returns `true` if the first argument has all of
      * the properties of the second, archetypal argument
-     * (the 'duck'). Returns `false` otherwise. If either
-     * argument is not an object, an exception is thrown.
+     * (the 'duck'). Returns `false` otherwise.
      *
      */
     function like (data, duck) {
         var name;
-
-        assert.object(data);
-        assert.object(duck);
 
         for (name in duck) {
             if (duck.hasOwnProperty(name)) {
@@ -134,8 +130,6 @@
      *
      */
     function instance (data, prototype) {
-        // TODO: Throw if prototype is not a function
-
         if (data && isFunction(prototype) && data instanceof prototype) {
             return true;
         }
@@ -162,7 +156,7 @@
      *
      */
     function object (data) {
-        return assigned(data) && Object.prototype.toString.call(data) === '[object Object]';
+        return Object.prototype.toString.call(data) === '[object Object]';
     }
 
     /**
@@ -206,8 +200,6 @@
      *
      */
     function hasLength (data, value) {
-        assert.not.undefined(value);
-
         return assigned(data) && data.length === value;
     }
 
@@ -275,8 +267,6 @@
      *
      */
     function match (data, regex) {
-        // TODO: Throw if regex is not a regex?
-
         return string(data) && !!data.match(regex);
     }
 
@@ -288,8 +278,6 @@
      *
      */
     function contains (data, substring) {
-        // TODO: Throw if substring is not a string?
-
         return string(data) && data.indexOf(substring) !== -1;
     }
 
@@ -355,8 +343,6 @@
      *
      */
     function between (data, a, b) {
-        // TODO: Throw is a and b are not numbers?
-
         if (a < b) {
             return greater(data, a) && less(data, b);
         }
@@ -372,8 +358,6 @@
      *
      */
     function greater (data, value) {
-        // TODO: Throw is value is not a number?
-
         return number(data) && data > value;
     }
 
@@ -385,8 +369,6 @@
      *
      */
     function less (data, value) {
-        // TODO: Throw is value is not a number?
-
         return number(data) && data < value;
     }
 
