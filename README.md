@@ -414,7 +414,8 @@ These are implemented by
   Passing a single predicate
   instead of an object
   applies all of the values
-  to the same predicate.
+  to the same predicate,
+  ignore nested objects.
 
 * `check.all(results)`:
   Returns `true`
