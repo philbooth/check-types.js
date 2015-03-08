@@ -3,12 +3,7 @@
 ## 3.1
 
 * Accept a single predicate in `map`.
-* Throw from `instance` if prototype is not a function.
-* Throw from `match` if regex is not a regular expression.
-* Throw from `contains` if substring is not a string.
-* Throw from `between` if a and b are not numbers.
-* Throw from `greater` if value is not a number.
-* Throw from `less` if value is not a number.
+* Remove assertions from `hasLength` and `like`.
 
 ## 3.0
 

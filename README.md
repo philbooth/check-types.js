@@ -196,8 +196,6 @@ These are implemented by
   if `thing` has a length property
   that equals `value`,
   `false` otherwise.
-  If `value` is undefined,
-  an exception is thrown.
 
 #### Number predicates
 
@@ -285,8 +283,6 @@ These are implemented by
   if `thing` has a length property
   that equals `value`,
   `false` otherwise.
-  If `value` is undefined,
-  an exception is thrown.
 
 #### Object predicates
 
@@ -310,8 +306,6 @@ These are implemented by
   Returns `true`
   if `thing` has all of the properties of `duck`,
   `false` otherwise.
-  If either argument is not an object,
-  an exception is thrown.
 
 #### Date predicates
 
@@ -339,8 +333,6 @@ These are implemented by
   if `thing` has a length property
   that equals `value`,
   `false` otherwise.
-  If `value` is undefined,
-  an exception is thrown.
 
 #### Other predicates
 
@@ -409,9 +401,9 @@ These are implemented by
   to the corresponding predicate
   and returns the array of results.
   Passing a single predicate
-  instead of an array of them
+  instead of an array
   applies all of the values
-  to that predicate.
+  to the same predicate.
 
 * `check.map(things, predicates)`:
   Maps each value from the `things` object
@@ -419,6 +411,10 @@ These are implemented by
   and returns an object
   containing the results.
   Supports nested objects.
+  Passing a single predicate
+  instead of an object
+  applies all of the values
+  to the same predicate.
 
 * `check.all(results)`:
   Returns `true`
