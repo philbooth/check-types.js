@@ -12,14 +12,15 @@ and values.
 * [How do I use it?](#how-do-i-use-it)
     * [Loading the library](#loading-the-library)
     * [Calling the exported functions](#calling-the-exported-functions)
-        * [String functions](#string-functions)
-        * [Number functions](#number-functions)
-        * [Function functions](#function-functions)
-        * [Array functions](#array-functions)
-        * [Date functions](#date-functions)
-        * [Error functions](#error-functions)
-        * [Object functions](#object-functions)
-        * [Boolean functions](#boolean-functions)
+        * [String predicates](#string-predicates)
+        * [Number predicates](#number-predicates)
+        * [Boolean predicates](#boolean-predicates)
+        * [Array predicates](#array-predicates)
+        * [Object predicates](#object-predicates)
+        * [Date predicates](#date-predicates)
+        * [Error predicates](#error-predicates)
+        * [Function predicates](#function-predicates)
+        * [Other predicates](#other-predicates)
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
@@ -127,8 +128,8 @@ are broadly split into four types.
   The `maybe` modifier
   tweaks predicates to
   return `true` if `thing` is `null` or `undefined`,
-  otherwise return the result
-  of the predicate.
+  otherwise their normal result
+  is returned.
   It is also itself a function,
   which returns `true`
   when its argument is `null` or `undefined`,
@@ -166,7 +167,7 @@ These are implemented by
 `check.any` and
 `check.every`.
 
-#### String functions
+#### String predicates
 
 * `check.string(thing)`:
   Returns `true`
@@ -198,7 +199,7 @@ These are implemented by
   If `value` is undefined,
   an exception is thrown.
 
-#### Number functions
+#### Number predicates
 
 * `check.number(thing)`:
   Returns `true`
@@ -260,14 +261,14 @@ These are implemented by
   if `thing` is an integer,
   `false` otherwise.
 
-#### Function functions
+#### Boolean predicates
 
-* `check.function(thing)`:
+* `check.boolean(thing)`:
   Returns `true`
-  if `thing` is a function,
+  if `thing` is a boolean,
   `false` otherwise.
 
-#### Array functions
+#### Array predicates
 
 * `check.array(thing)`:
   Returns `true`
@@ -287,21 +288,7 @@ These are implemented by
   If `value` is undefined,
   an exception is thrown.
 
-#### Date functions
-
-* `check.date(thing)`:
-  Returns `true`
-  if `thing` is a valid date,
-  `false` otherwise.
-
-#### Error functions
-
-* `check.error(thing)`:
-  Returns `true`
-  if `thing` is an error,
-  `false` otherwise.
-
-#### Object functions
+#### Object predicates
 
 * `check.object(thing)`:
   Returns `true`
@@ -326,6 +313,37 @@ These are implemented by
   If either argument is not an object,
   an exception is thrown.
 
+#### Date predicates
+
+* `check.date(thing)`:
+  Returns `true`
+  if `thing` is a valid date,
+  `false` otherwise.
+
+#### Error predicates
+
+* `check.error(thing)`:
+  Returns `true`
+  if `thing` is an error,
+  `false` otherwise.
+
+#### Function predicates
+
+* `check.function(thing)`:
+  Returns `true`
+  if `thing` is a function,
+  `false` otherwise.
+
+* `check.hasLength(thing, value)`:
+  Returns `true`
+  if `thing` has a length property
+  that equals `value`,
+  `false` otherwise.
+  If `value` is undefined,
+  an exception is thrown.
+
+#### Other predicates
+
 * `check.null(thing)`:
   Returns `true`
   if `thing` is `null`,
@@ -340,13 +358,6 @@ These are implemented by
   Returns `true`
   if `thing` is not
   `null` or `undefined`,
-  `false` otherwise.
-
-#### Boolean functions
-
-* `check.boolean(thing)`:
-  Returns `true`
-  if `thing` is a boolean,
   `false` otherwise.
 
 #### Modifiers
