@@ -64,12 +64,12 @@
             assert.isFalse(check.like({ foo: function () {}, bar: {} }, { foo: function () {}, bar: function () {} }));
         });
 
-        test('like with different nested objects returns false', function() {
+        test('like with different nested objects returns false', function () {
             assert.isFalse(check.like({ foo: { bar: { qux: 'string' }, baz: 23 }},
                                       { foo: { bar: { qux: 123      }, baz: 66 }}));
         });
 
-        test('like with similar nested objects returns true', function() {
+        test('like with similar nested objects returns true', function () {
             assert.isTrue(check.like({ foo: { bar: { qux: 'string' }, baz: 23 }},
                                      { foo: { bar: { qux: 'other'  }, baz: 66 }}));
         });
@@ -762,43 +762,43 @@
             assert.isFunction(check.apply);
         });
 
-        test('apply with non-array data throws', function() {
+        test('apply with non-array data throws', function () {
             assert.throws(function () {
                 check.apply({}, []);
             });
         });
 
-        test('apply with non-array predicates throws', function() {
-            assert.throws(function() {
+        test('apply with non-array predicates throws', function () {
+            assert.throws(function () {
                 check.apply([], {});
             });
         });
 
-        test('apply with array data and predicates does not throw', function() {
-            assert.doesNotThrow(function() {
+        test('apply with array data and predicates does not throw', function () {
+            assert.doesNotThrow(function () {
                 check.apply([], []);
             });
         });
 
-        test('apply with one predicate does not throw', function() {
-            assert.doesNotThrow(function() {
+        test('apply with one predicate does not throw', function () {
+            assert.doesNotThrow(function () {
                 check.apply([ '', '', ''], check.string);
             });
         });
 
-        test('apply with insufficient data throws', function() {
-            assert.throws(function() {
+        test('apply with insufficient data throws', function () {
+            assert.throws(function () {
                 check.apply([ '' ], [ check.string, check.string ]);
             });
         });
 
-        test('apply with insufficient predicates throws', function() {
-            assert.throws(function() {
+        test('apply with insufficient predicates throws', function () {
+            assert.throws(function () {
                 check.apply([ '', '', '' ], [ check.string, check.string ]);
             });
         });
 
-        test('apply returns the correct results', function() {
+        test('apply returns the correct results', function () {
             var result =
                 check.apply(
                     [ '', 0, '', 0 ],
@@ -811,14 +811,14 @@
             assert.isTrue(result[3]);
         });
 
-        test('apply with assertion does not throw with valid data', function() {
-            assert.doesNotThrow(function() {
+        test('apply with assertion does not throw with valid data', function () {
+            assert.doesNotThrow(function () {
                 check.apply([ 'foo' ], check.assert.string);
             });
         });
 
-        test('apply with assertion throws with invalid data', function() {
-            assert.throws(function() {
+        test('apply with assertion throws with invalid data', function () {
+            assert.throws(function () {
                 check.apply([ 'foo', 0 ], check.assert.string);
             });
         });
@@ -827,25 +827,19 @@
             assert.isFunction(check.map);
         });
 
-        test('map with non-object data throws', function() {
+        test('map with non-object data throws', function () {
             assert.throws(function () {
                 check.map([], {});
             });
         });
 
-        test('map with non-object predicates throws', function() {
-            assert.throws(function() {
-                check.map({}, function () {});
-            });
-        });
-
-        test('map with object data and predicates does not throw', function() {
-            assert.doesNotThrow(function() {
+        test('map with object data does not throw', function () {
+            assert.doesNotThrow(function () {
                 check.map({}, {});
             });
         });
 
-        test('map returns the correct results', function() {
+        test('map returns the correct results', function () {
             var result =
                 check.map(
                     { foo: '', bar: 0, baz: { qux: 0 } },
@@ -859,19 +853,19 @@
             assert.isTrue(result.baz.qux);
         });
 
-        test('map with assertion does not throw with valid data', function() {
-            assert.doesNotThrow(function() {
+        test('map with assertion does not throw with valid data', function () {
+            assert.doesNotThrow(function () {
                 check.map({ foo: 'bar' }, { foo: check.assert.string });
             });
         });
 
-        test('map with assertion throws with invalid data', function() {
-            assert.throws(function() {
+        test('map with assertion throws with invalid data', function () {
+            assert.throws(function () {
                 check.map({ foo: 'foo', bar: 0 }, check.assert.string);
             });
         });
 
-        test('map returns the correct results with maybe modifier', function() {
+        test('map returns the correct results with maybe modifier', function () {
             var result =
                 check.map(
                     { foo: null, baz: { qux: '' } },
@@ -885,35 +879,43 @@
             assert.isTrue(result.baz.qux);
         });
 
+        test('map works with a single predicate', function () {
+            var result = check.map({ foo: {}, bar: { baz: 'qux' } }, check.object);
+
+            assert.lengthOf(Object.keys(result), 2);
+            assert.isTrue(result.foo);
+            assert.isTrue(result.bar);
+        });
+
         test('all function is defined', function () {
             assert.isFunction(check.all);
         });
 
-        test('all with invalid data throws', function() {
-            assert.throws(function() {
+        test('all with invalid data throws', function () {
+            assert.throws(function () {
                 check.all('foo');
             });
         });
 
-        test('all with object data does not throw', function() {
-            assert.doesNotThrow(function() {
+        test('all with object data does not throw', function () {
+            assert.doesNotThrow(function () {
                 check.all({ foo: true });
             });
         });
 
-        test('all with array data does not throw', function() {
-            assert.doesNotThrow(function() {
+        test('all with array data does not throw', function () {
+            assert.doesNotThrow(function () {
                 check.all([ true ]);
             });
         });
 
-        test('all returns true when data is all true', function() {
+        test('all returns true when data is all true', function () {
             assert.isTrue(check.all({ foo: true, bar: true, baz: true, qux: true }));
             assert.isTrue(check.all([ true, true, true, true ]));
             assert.isTrue(check.all({ foo: { bar: { baz: { qux: true }}}}));
         });
 
-        test('all returns false when some data is not true', function() {
+        test('all returns false when some data is not true', function () {
             assert.isFalse(check.all({ foo: true, bar: true, baz: true, qux: false }));
             assert.isFalse(check.all([ true, true, false, true ]));
             assert.isFalse(check.all({ foo: { bar: { baz: false }, qux: true } }));
@@ -923,37 +925,37 @@
             assert.isFunction(check.any);
         });
 
-        test('any with invalid data throws', function() {
-            assert.throws(function() {
+        test('any with invalid data throws', function () {
+            assert.throws(function () {
                 check.any('foo');
             });
         });
 
-        test('any with object data does not throw', function() {
-            assert.doesNotThrow(function() {
+        test('any with object data does not throw', function () {
+            assert.doesNotThrow(function () {
                 check.any({ foo: true });
             });
         });
 
-        test('any with array data does not throw', function() {
-            assert.doesNotThrow(function() {
+        test('any with array data does not throw', function () {
+            assert.doesNotThrow(function () {
                 check.any([ true ]);
             });
         });
 
-        test('any returns true when some data is true', function() {
+        test('any returns true when some data is true', function () {
             assert.isTrue(check.any({ foo: false, bar: true }));
             assert.isTrue(check.any([ false, true ]));
             assert.isTrue(check.any({ foo: { bar: true }}));
         });
 
-        test('any returns false when all data is not true', function() {
+        test('any returns false when all data is not true', function () {
             assert.isFalse(check.any({ foo: false, bar: false }));
             assert.isFalse(check.any([ false, false ]));
             assert.isFalse(check.any({ foo: { bar: false }}));
         });
 
-        test('assert modifier is defined', function() {
+        test('assert modifier is defined', function () {
             assert.isFunction(check.assert);
         });
 
@@ -1096,11 +1098,11 @@
             assert.lengthOf(Object.keys(check.not), 28);
         });
 
-        test('not modifier returns true when predicate returns false', function() {
+        test('not modifier returns true when predicate returns false', function () {
             assert.isTrue(check.not.object(undefined));
         });
 
-        test('not modifier returns false when predicate returns true', function() {
+        test('not modifier returns false when predicate returns true', function () {
             assert.isFalse(check.not.unemptyString('1'));
         });
 
@@ -1133,20 +1135,20 @@
             assert.lengthOf(Object.keys(check.maybe), 28);
         });
 
-        test('maybe modifier returns when true value is undefined', function() {
+        test('maybe modifier returns when true value is undefined', function () {
             assert.isTrue(check.maybe.object(undefined));
         });
 
-        test('maybe modifier returns true when value is null', function() {
+        test('maybe modifier returns true when value is null', function () {
             assert.isTrue(check.maybe.object(null));
         });
 
-        test('maybe modifier returns predicate result on value', function() {
+        test('maybe modifier returns predicate result on value', function () {
             assert.isFalse(check.maybe.odd(2));
             assert.isTrue(check.maybe.odd(1));
         });
 
-        test('maybe modifier with falsey values evaluates predicate', function() {
+        test('maybe modifier with falsey values evaluates predicate', function () {
             assert.isFalse(check.maybe.positive(0));
         });
 
@@ -1196,50 +1198,50 @@
             assert.isFalse(check.either.odd(2).or.even(5));
         });
 
-        test('assert modifier with not throws when value is correct', function() {
-            assert.throws(function() {
+        test('assert modifier with not throws when value is correct', function () {
+            assert.throws(function () {
                 check.assert.not.negative(-1);
             });
         });
 
-        test('assert modifier with not does not throw when value is wrong', function() {
-            assert.doesNotThrow(function() {
+        test('assert modifier with not does not throw when value is wrong', function () {
+            assert.doesNotThrow(function () {
                 check.assert.not.negative(1);
             });
         });
 
-        test('assert modifier with maybe does not throw when value is correct', function() {
-            assert.doesNotThrow(function() {
+        test('assert modifier with maybe does not throw when value is correct', function () {
+            assert.doesNotThrow(function () {
                 check.assert.maybe.positive(1);
             });
         });
 
-        test('assert modifier with maybe throws when value is wrong', function() {
-            assert.throws(function() {
+        test('assert modifier with maybe throws when value is wrong', function () {
+            assert.throws(function () {
                 check.assert.maybe.positive(-1);
             });
         });
 
-        test('assert modifier with either does not throw when second value is correct', function() {
-            assert.doesNotThrow(function() {
+        test('assert modifier with either does not throw when second value is correct', function () {
+            assert.doesNotThrow(function () {
                 check.assert.either.negative(1).or.positive(3);
             });
         });
 
-        test('assert modifier with either does not throw when first value is correct', function() {
-            assert.doesNotThrow(function() {
+        test('assert modifier with either does not throw when first value is correct', function () {
+            assert.doesNotThrow(function () {
                 check.assert.either.odd(7).or.even(5);
             });
         });
 
-        test('assert modifier with either does not throw when both values are correct', function() {
-            assert.doesNotThrow(function() {
+        test('assert modifier with either does not throw when both values are correct', function () {
+            assert.doesNotThrow(function () {
                 check.assert.either.string('').or.number(0);
             });
         });
 
-        test('assert modifier with either throws when both values are wrong', function() {
-            assert.throws(function() {
+        test('assert modifier with either throws when both values are wrong', function () {
+            assert.throws(function () {
                 check.assert.either.number('').or.string(0);
             });
         });

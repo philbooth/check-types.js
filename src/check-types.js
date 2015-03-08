@@ -460,24 +460,43 @@
      * Public function `map`.
      *
      * Maps each value from the data to the corresponding predicate and returns
-     * the result object. Supports nested objects.
+     * the result object. Supports nested objects. If the data is not nested and
+     * the same function is to be applied across all of it, a single predicate
+     * function may be passed in.
      *
      */
     function map (data, predicates) {
-        var result = {}, keys;
-
         assert.object(data);
+
+        if (isFunction(predicates)) {
+            return mapSimple(data, predicates);
+        }
+
         assert.object(predicates);
 
-        keys = Object.keys(predicates);
+        return mapComplex(data, predicates);
+    }
 
-        keys.forEach(function (key) {
+    function mapSimple (data, predicate) {
+        var result = {};
+
+        Object.keys(data).forEach(function (key) {
+            result[key] = predicate(data[key]);
+        });
+
+        return result;
+    }
+
+    function mapComplex (data, predicates) {
+        var result = {};
+
+        Object.keys(predicates).forEach(function (key) {
             var predicate = predicates[key];
 
             if (isFunction(predicate)) {
                 result[key] = predicate(data[key]);
             } else if (object(predicate)) {
-                result[key] = map(data[key], predicate);
+                result[key] = mapComplex(data[key], predicate);
             }
         });
 
