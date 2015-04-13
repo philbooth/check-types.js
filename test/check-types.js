@@ -919,6 +919,7 @@
                     { foo: null, baz: { qux: '' } },
                     { foo: check.maybe.string, bar: check.maybe.string, baz: { qux: check.maybe.string } }
                 );
+
             assert.lengthOf(Object.keys(result), 3);
             assert.isTrue(result.foo);
             assert.isTrue(result.bar);
@@ -933,6 +934,24 @@
             assert.lengthOf(Object.keys(result), 2);
             assert.isTrue(result.foo);
             assert.isTrue(result.bar);
+        });
+
+        test('map works with undefined data and maybe', function () {
+            var result = check.map({}, { foo: { bar: check.maybe.string } });
+
+            assert.lengthOf(Object.keys(result), 1);
+            assert.isObject(result.foo);
+            assert.lengthOf(Object.keys(result.foo), 1);
+            assert.isTrue(result.foo.bar);
+        });
+
+        test('map works with undefined data and clashing predicate', function () {
+            var result = check.map({}, { foo: { bar: check.not.assigned } });
+
+            assert.lengthOf(Object.keys(result), 1);
+            assert.isObject(result.foo);
+            assert.lengthOf(Object.keys(result.foo), 1);
+            assert.isFalse(result.foo.bar);
         });
 
         test('all function is defined', function () {
