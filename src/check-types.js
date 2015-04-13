@@ -21,6 +21,8 @@
         hasLength: 'Invalid length',
         emptyArray: 'Invalid array',
         array: 'Invalid array',
+        arrayLike: 'Invalid array-like object',
+        iterable: 'Invalid iterable',
         date: 'Invalid date',
         error: 'Invalid error',
         fn: 'Invalid function',
@@ -52,6 +54,8 @@
         hasLength: hasLength,
         emptyArray: emptyArray,
         array: array,
+        arrayLike: arrayLike,
+        iterable: iterable,
         date: date,
         error: error,
         function: isFunction,
@@ -223,6 +227,31 @@
      */
     function array (data) {
         return Array.isArray(data);
+    }
+
+    /**
+     * Public function `arrayLike`.
+     *
+     * Returns `true` something is an array-like object,
+     * `false` otherwise.
+     *
+     */
+    function arrayLike (data) {
+        return assigned(data) && number(data.length);
+    }
+
+    /**
+     * Public function `iterable`.
+     *
+     * Returns `true` something is an iterable,
+     * `false` otherwise.
+     *
+     */
+    function iterable (data) {
+        console.log(isFunction(Symbol));
+        console.log(assigned(data));
+        console.log(isFunction(data[Symbol.iterator]));
+        return isFunction(Symbol) && assigned(data) && isFunction(data[Symbol.iterator]);
     }
 
     /**

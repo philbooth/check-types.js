@@ -294,6 +294,42 @@
             assert.isFalse(check.emptyArray([ 'foo' ]));
         });
 
+        test('arrayLike function is defined', function () {
+            assert.isFunction(check.arrayLike);
+        });
+
+        test('arrayLike with array returns true', function () {
+            assert.isTrue(check.arrayLike([]));
+        });
+
+        test('arrayLike with string returns true', function () {
+            assert.isTrue(check.arrayLike(''));
+        });
+
+        test('arrayLike with object returns false', function () {
+            assert.isFalse(check.arrayLike({}));
+        });
+
+        test('arrayLike with arguments object returns true', function () {
+            assert.isTrue(check.arrayLike(arguments));
+        });
+
+        test('iterable function is defined', function () {
+            assert.isFunction(check.iterable);
+        });
+
+        test('iterable with array returns true', function () {
+            assert.isTrue(check.iterable([]));
+        });
+
+        test('iterable with object returns false', function () {
+            assert.isFalse(check.iterable({}));
+        });
+
+        test('iterable with Set returns true', function () {
+            assert.isTrue(check.iterable(new Set()));
+        });
+
         test('date function is defined', function () {
             assert.isFunction(check.date);
         });
@@ -970,6 +1006,8 @@
             assert.isFunction(check.assert.hasLength);
             assert.isFunction(check.assert.emptyArray);
             assert.isFunction(check.assert.array);
+            assert.isFunction(check.assert.arrayLike);
+            assert.isFunction(check.assert.iterable);
             assert.isFunction(check.assert.date);
             assert.isFunction(check.assert.error);
             assert.isFunction(check.assert.function);
@@ -1003,21 +1041,21 @@
 
         test('assert modifier is applied to not', function () {
             assert.isObject(check.assert.not);
-            assert.lengthOf(Object.keys(check.assert.not), 28);
+            assert.lengthOf(Object.keys(check.assert.not), 30);
         });
 
         test('assert modifier is applied to maybe', function () {
             assert.isObject(check.assert.maybe);
-            assert.lengthOf(Object.keys(check.assert.maybe), 28);
+            assert.lengthOf(Object.keys(check.assert.maybe), 30);
         });
 
         test('assert modifier is applied to either', function () {
             assert.isObject(check.assert.either);
-            assert.lengthOf(Object.keys(check.assert.either), 28);
+            assert.lengthOf(Object.keys(check.assert.either), 30);
         });
 
         test('assert modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.assert), 31);
+            assert.lengthOf(Object.keys(check.assert), 33);
         });
 
         test('assert modifier throws when value is wrong', function () {
@@ -1095,7 +1133,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.not), 28);
+            assert.lengthOf(Object.keys(check.not), 30);
         });
 
         test('not modifier returns true when predicate returns false', function () {
@@ -1132,7 +1170,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.maybe), 28);
+            assert.lengthOf(Object.keys(check.maybe), 30);
         });
 
         test('maybe modifier returns when true value is undefined', function () {
@@ -1179,13 +1217,13 @@
         });
 
         test('either modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.either), 28);
+            assert.lengthOf(Object.keys(check.either), 30);
         });
 
         test('either modifier returns or object', function () {
             assert.isObject(check.either.string(''));
             assert.isObject(check.either.string('').or);
-            assert.lengthOf(Object.keys(check.either.string('').or), 28);
+            assert.lengthOf(Object.keys(check.either.string('').or), 30);
         });
 
         test('either returns true when first predicate is true', function () {
