@@ -248,10 +248,12 @@
      *
      */
     function iterable (data) {
-        console.log(isFunction(Symbol));
-        console.log(assigned(data));
-        console.log(isFunction(data[Symbol.iterator]));
-        return isFunction(Symbol) && assigned(data) && isFunction(data[Symbol.iterator]);
+        if (typeof Symbol === 'undefined') {
+            // Fall back to arrayLike predicate in pre-ES6 environments.
+            return arrayLike(data);
+        }
+
+        return assigned(data) && isFunction(data[Symbol.iterator]);
     }
 
     /**

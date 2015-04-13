@@ -322,12 +322,18 @@
             assert.isTrue(check.iterable([]));
         });
 
+        test('iterable with string returns true', function () {
+            assert.isTrue(check.iterable(''));
+        });
+
         test('iterable with object returns false', function () {
             assert.isFalse(check.iterable({}));
         });
 
-        test('iterable with Set returns true', function () {
-            assert.isTrue(check.iterable(new Set()));
+        test('iterable with Set returns true in ES6 environments', function () {
+            if (typeof Symbol !== 'undefined') {
+                assert.isTrue(check.iterable(new Set()));
+            }
         });
 
         test('date function is defined', function () {
