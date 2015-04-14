@@ -1295,6 +1295,76 @@
                 check.assert.either.number('').or.string(0);
             });
         });
+
+        test('array.of modifier is defined', function () {
+            assert.isObject(check.array.of);
+        });
+
+        test('array.of has predicates defined', function () {
+            assert.lengthOf(Object.keys(check.array.of), 30);
+            assert.isFunction(check.array.of.like);
+            assert.isFunction(check.array.of.instance);
+            assert.isFunction(check.array.of.emptyObject);
+            assert.isFunction(check.array.of.object);
+            assert.isFunction(check.array.of.null);
+            assert.isFunction(check.array.of.undefined);
+            assert.isFunction(check.array.of.assigned);
+            assert.isFunction(check.array.of.hasLength);
+            assert.isFunction(check.array.of.emptyArray);
+            assert.isFunction(check.array.of.array);
+            assert.isFunction(check.array.of.arrayLike);
+            assert.isFunction(check.array.of.iterable);
+            assert.isFunction(check.array.of.date);
+            assert.isFunction(check.array.of.error);
+            assert.isFunction(check.array.of.function);
+            assert.isFunction(check.array.of.match);
+            assert.isFunction(check.array.of.contains);
+            assert.isFunction(check.array.of.unemptyString);
+            assert.isFunction(check.array.of.string);
+            assert.isFunction(check.array.of.odd);
+            assert.isFunction(check.array.of.even);
+            assert.isFunction(check.array.of.between);
+            assert.isFunction(check.array.of.greater);
+            assert.isFunction(check.array.of.less);
+            assert.isFunction(check.array.of.positive);
+            assert.isFunction(check.array.of.negative);
+            assert.isFunction(check.array.of.zero);
+            assert.isFunction(check.array.of.integer);
+            assert.isFunction(check.array.of.number);
+            assert.isFunction(check.array.of.boolean);
+        });
+
+        test('check.array.of returns true when predicate is true for all items', function () {
+            assert.isTrue(check.array.of.unemptyString([ 'foo', 'bar', 'baz' ]));
+        });
+
+        test('check.array.of returns false when predicate is false for one item', function () {
+            assert.isFalse(check.array.of.positive([ 1, 0, 2 ]));
+        });
+
+        test('check.array.of returns true for multi-argument predicates', function () {
+            assert.isTrue(check.array.of.between([ 1, 0, -1 ], 2, -2));
+        });
+
+        test('check.array.of returns false for multi-argument predicates', function () {
+            assert.isFalse(check.array.of.greater([ 1, 2, 3 ], 4));
+        });
+
+        test('check.assert.array.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.array.of.instance([ new Error(), new Error() ], Error);
+            });
+        });
+
+        test('check.assert.array.of throws', function () {
+            assert.throws(function () {
+                check.assert.array.of.instance([ new Error(), {} ], Error);
+            });
+        });
+
+        test('check.maybe.array.of returns true', function () {
+            assert.isTrue(check.maybe.array.of.instance([ new Error(), null ], Error));
+        });
     });
 }(typeof require === 'function' ? require : undefined));
 
