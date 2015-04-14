@@ -315,7 +315,9 @@
         });
 
         test('arrayLike with map returns false', function () {
-            assert.isFalse(check.arrayLike(new Map()));
+            if (typeof Map !== 'undefined') {
+                assert.isFalse(check.arrayLike(new Map()));
+            }
         });
 
         test('iterable function is defined', function () {
@@ -332,10 +334,6 @@
 
         test('iterable with object returns false', function () {
             assert.isFalse(check.iterable({}));
-        });
-
-        test('iterable with arguments returns false', function () {
-            assert.isFalse(check.iterable(arguments));
         });
 
         test('iterable with set returns true in ES6 environments', function () {
