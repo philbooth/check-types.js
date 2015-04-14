@@ -1248,6 +1248,46 @@
             assert.isFalse(check.either.odd(2).or.even(5));
         });
 
+        test('of modifier is defined', function () {
+            assert.isObject(check.of);
+        });
+
+        test('of modifier is not applied to itself', function () {
+            assert.isUndefined(check.of.of);
+        });
+
+        test('of modifier is not applied to assert', function () {
+            assert.isUndefined(check.of.assert);
+        });
+
+        test('of modifier is not applied to either', function () {
+            assert.isUndefined(check.of.either);
+        });
+
+        test('of modifier has correct number of keys', function () {
+            assert.lengthOf(Object.keys(check.of), 30);
+        });
+
+        test('of returns true when predicate is true for all items', function () {
+            assert.isTrue(check.of.odd([ 1, 3 ]));
+        });
+
+        test('of returns false when predicate is not true for all items', function () {
+            assert.isFalse(check.of.odd([ 1, 2 ]));
+        });
+
+        test('of works on objects', function () {
+            assert.isTrue(check.of.unemptyString({ foo: 'bar', baz: 'qux' }));
+        });
+
+        test('of works with maybe', function () {
+            assert.isTrue(check.of.maybe.positive({ foo: 1, baz: null }));
+        });
+
+        test('of works with not', function () {
+            assert.isTrue(check.of.not.positive([ -1 ]));
+        });
+
         test('assert modifier with not throws when value is correct', function () {
             assert.throws(function () {
                 check.assert.not.negative(-1);
@@ -1293,6 +1333,18 @@
         test('assert modifier with either throws when both values are wrong', function () {
             assert.throws(function () {
                 check.assert.either.number('').or.string(0);
+            });
+        });
+
+        test('assert modifier with of does not throw when values are correct', function () {
+            assert.doesNotThrow(function () {
+                check.assert.of.string([ '', '' ]);
+            });
+        });
+
+        test('assert modifier with of throws when a value is wrong', function () {
+            assert.throws(function () {
+                check.assert.of.even([ 2, 3 ]);
             });
         });
     });
