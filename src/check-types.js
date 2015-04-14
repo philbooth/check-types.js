@@ -93,9 +93,9 @@
     assert.either = createModifiedModifier(assertEitherModifier, predicates);
 
     array.of = createModifiedOfPredicates(array);
-    arrayLike.of = createModifiedOfPredicates(arrayLike);
-    iterable.of = createModifiedOfPredicates(iterable);
-    object.of = createModifiedOfPredicates(object);
+    //arrayLike.of = createModifiedOfPredicates(arrayLike);
+    //iterable.of = createModifiedOfPredicates(iterable);
+    //object.of = createModifiedOfPredicates(object);
     createOfModifiers(assert, assertModifier);
     createOfModifiers(not, notModifier);
     createOfModifiers(maybe, maybeModifier);
@@ -792,9 +792,9 @@
 
     function createOfModifiers (base, modifier) {
         base.array.of = createModifiedModifier(modifier, array.of);
-        base.arrayLike.of = createModifiedModifier(modifier, arrayLike.of);
-        base.iterable.of = createModifiedModifier(modifier, iterable.of);
-        base.object.of = createModifiedModifier(modifier, object.of);
+        //base.arrayLike.of = createModifiedModifier(modifier, arrayLike.of);
+        //base.iterable.of = createModifiedModifier(modifier, iterable.of);
+        //base.object.of = createModifiedModifier(modifier, object.of);
     }
 
     function exportFunctions (functions) {
