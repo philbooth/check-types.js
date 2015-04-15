@@ -1,9 +1,9 @@
+/*globals define, module, Symbol */
+
 /**
  * This module exports functions for checking types
  * and throwing exceptions.
  */
-
-/*globals define, module */
 
 (function (globals) {
     'use strict';
@@ -88,9 +88,17 @@
     not = createModifiedPredicates(notModifier, notImpl);
     maybe = createModifiedPredicates(maybeModifier, maybeImpl);
     either = createModifiedPredicates(eitherModifier);
-    assert.not = createModifiedFunctions(assertModifier, not);
-    assert.maybe = createModifiedFunctions(assertModifier, maybe);
-    assert.either = createModifiedFunctions(assertEitherModifier, predicates);
+    assert.not = createModifiedModifier(assertModifier, not);
+    assert.maybe = createModifiedModifier(assertModifier, maybe);
+    assert.either = createModifiedModifier(assertEitherModifier, predicates);
+
+    array.of = createModifiedOfPredicates(array);
+    //arrayLike.of = createModifiedOfPredicates(arrayLike);
+    //iterable.of = createModifiedOfPredicates(iterable);
+    //object.of = createModifiedOfPredicates(object);
+    createOfModifiers(assert, assertModifier);
+    createOfModifiers(not, notModifier);
+    createOfModifiers(maybe, maybeModifier);
 
     exportFunctions(mixin(functions, {
         assert: assert,
@@ -721,23 +729,72 @@
         }
     }
 
-    function createModifiedPredicates (modifier, object) {
-        return createModifiedFunctions(modifier, predicates, object);
+    /**
+     * Public modifier `of`.
+     *
+     * Applies the chained predicate to members of the collection.
+     */
+    function ofModifier (type, predicate) {
+        return function () {
+            var collection, key;
+
+            collection = arguments[0];
+
+            if (!type(collection)) {
+                return false;
+            }
+
+            for (key in collection) {
+                if (
+                    collection.hasOwnProperty(key) &&
+                    !predicate.apply(null, [ collection[key] ].concat(Array.prototype.slice.call(arguments, 1)))
+                ) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
     }
 
-    function createModifiedFunctions (modifier, functions, object) {
-        var result = object || {};
+    function createModifiedPredicates (modifier, object) {
+        return createModifiedFunctions([ modifier, predicates, object ]);
+    }
+
+    function createModifiedFunctions (args) {
+        var modifier, object, functions, result;
+
+        modifier = args.shift();
+        object = args.pop();
+        functions = args.pop();
+
+        result = object || {};
 
         Object.keys(functions).forEach(function (key) {
             Object.defineProperty(result, key, {
                 configurable: false,
                 enumerable: true,
                 writable: false,
-                value: modifier(functions[key], messages[key])
+                value: modifier.apply(null, args.concat(functions[key], messages[key]))
             });
         });
 
         return result;
+    }
+
+    function createModifiedModifier (modifier, modified) {
+        return createModifiedFunctions([ modifier, modified, null ]);
+    }
+
+    function createModifiedOfPredicates (type) {
+        return createModifiedFunctions([ ofModifier, type, predicates, null ]);
+    }
+
+    function createOfModifiers (base, modifier) {
+        base.array.of = createModifiedModifier(modifier, array.of);
+        //base.arrayLike.of = createModifiedModifier(modifier, arrayLike.of);
+        //base.iterable.of = createModifiedModifier(modifier, iterable.of);
+        //base.object.of = createModifiedModifier(modifier, object.of);
     }
 
     function exportFunctions (functions) {
