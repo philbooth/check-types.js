@@ -1334,36 +1334,152 @@
             assert.isFunction(check.array.of.boolean);
         });
 
-        test('check.array.of returns true when predicate is true for all items', function () {
+        test('array.of returns true when predicate is true for all items', function () {
             assert.isTrue(check.array.of.unemptyString([ 'foo', 'bar', 'baz' ]));
         });
 
-        test('check.array.of returns false when predicate is false for one item', function () {
+        test('array.of returns false when predicate is false for one item', function () {
             assert.isFalse(check.array.of.positive([ 1, 0, 2 ]));
         });
 
-        test('check.array.of returns true for multi-argument predicates', function () {
+        test('array.of returns true for multi-argument predicates', function () {
             assert.isTrue(check.array.of.between([ 1, 0, -1 ], 2, -2));
         });
 
-        test('check.array.of returns false for multi-argument predicates', function () {
+        test('array.of returns false for multi-argument predicates', function () {
             assert.isFalse(check.array.of.greater([ 1, 2, 3 ], 4));
         });
 
-        test('check.assert.array.of does not throw', function () {
+        test('assert.array.of does not throw', function () {
             assert.doesNotThrow(function () {
                 check.assert.array.of.instance([ new Error(), new Error() ], Error);
             });
         });
 
-        test('check.assert.array.of throws', function () {
+        test('assert.array.of throws', function () {
             assert.throws(function () {
                 check.assert.array.of.instance([ new Error(), {} ], Error);
             });
         });
 
-        test('check.maybe.array.of returns true', function () {
+        test('maybe.array.of returns true', function () {
             assert.isTrue(check.maybe.array.of.instance([ new Error(), null ], Error));
+        });
+
+        test('maybe.array.of returns false', function () {
+            assert.isFalse(check.maybe.array.of.instance([ new Error(), {} ], Error));
+        });
+
+        test('not.array.of returns true', function () {
+            assert.isTrue(check.not.array.of.instance([ new Error(), null ], Error));
+        });
+
+        test('not.array.of returns false', function () {
+            assert.isFalse(check.not.array.of.instance([ new Error() ], Error));
+        });
+
+        test('assert.maybe.array.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.maybe.array.of.instance([ new Error(), null ], Error);
+            });
+        });
+
+        test('assert.maybe.array.of throws', function () {
+            assert.throws(function () {
+                check.assert.maybe.array.of.instance([ new Error(), {} ], Error);
+            });
+        });
+
+        test('assert.not.array.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.not.array.of.instance([ {} ], Error);
+            });
+        });
+
+        test('assert.not.array.of throws', function () {
+            assert.throws(function () {
+                check.assert.not.array.of.instance([ new Error(), new Error() ], Error);
+            });
+        });
+
+        test('array.of returns false for array-like objects', function () {
+            assert.isFalse(check.array.of.unemptyString({ 1: 'foo', 2: 'bar', length: 2 }));
+        });
+
+        test('arrayLike.of modifier is defined', function () {
+            assert.isObject(check.arrayLike.of);
+        });
+
+        test('arrayLike.of has predicates defined', function () {
+            assert.lengthOf(Object.keys(check.arrayLike.of), 30);
+        });
+
+        test('arrayLike.of returns true when predicate is true for all items', function () {
+            assert.isTrue(check.arrayLike.of.unemptyString({ 1: 'foo', 2: 'bar', length: 2 }));
+        });
+
+        test('arrayLike.of returns false when predicate is false for one item', function () {
+            assert.isFalse(check.arrayLike.of.unemptyString({ 0: 'foo', 1: '', length     : 2 }));
+        });
+
+        test('arrayLike.of returns true for multi-argument predicates', function () {
+            assert.isTrue(check.arrayLike.of.between({ 0: 1, 1: 0, length: 2 }, 2, -1));
+        });
+
+        test('arrayLike.of returns false for multi-argument predicates', function () {
+            assert.isFalse(check.arrayLike.of.greater({ 0: 1, 1: 2, length: 2 }, 2));
+        });
+
+        test('assert.arrayLike.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.arrayLike.of.instance({ 0: new Error(), 1: new Error(), length: 2 }, Error);
+            });
+        });
+
+        test('assert.arrayLike.of throws', function () {
+            assert.throws(function () {
+                check.assert.arrayLike.of.instance({ 0: new Error(), 1: {}, length: 2 }, Error);
+            });
+        });
+
+        test('maybe.arrayLike.of returns true', function () {
+            assert.isTrue(check.maybe.arrayLike.of.instance({ 0: new Error(), 1: null, length: 2 }, Error));
+        });
+
+        test('maybe.arrayLike.of returns false', function () {
+            assert.isFalse(check.maybe.arrayLike.of.instance({ 0: new Error(), 1: {}, length: 2 }, Error));
+        });
+
+        test('not.arrayLike.of returns true', function () {
+            assert.isTrue(check.not.arrayLike.of.instance({ 0: new Error(), 1: null, length: 2 }, Error));
+        });
+
+        test('not.arrayLike.of returns false', function () {
+            assert.isFalse(check.not.arrayLike.of.instance({ 0: new Error(), length: 1 }, Error));
+        });
+
+        test('assert.maybe.arrayLike.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.maybe.arrayLike.of.instance({ 0: new Error(), 1: null, length: 2 }, Error);
+            });
+        });
+
+        test('assert.maybe.arrayLike.of throws', function () {
+            assert.throws(function () {
+                check.assert.maybe.arrayLike.of.instance({ 0: new Error(), 1: {}, length: 2 }, Error);
+            });
+        });
+
+        test('assert.not.arrayLike.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.not.arrayLike.of.instance({ 0: {}, length: 1 }, Error);
+            });
+        });
+
+        test('assert.not.arrayLike.of throws', function () {
+            assert.throws(function () {
+                check.assert.not.arrayLike.of.instance({ 0: new Error(), 1: new Error(), length: 2 }, Error);
+            });
         });
     });
 }(typeof require === 'function' ? require : undefined));

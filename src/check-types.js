@@ -93,12 +93,14 @@
     assert.either = createModifiedModifier(assertEitherModifier, predicates);
 
     array.of = createModifiedOfPredicates(array);
-    //arrayLike.of = createModifiedOfPredicates(arrayLike);
+    arrayLike.of = createModifiedOfPredicates(arrayLike);
     //iterable.of = createModifiedOfPredicates(iterable);
     //object.of = createModifiedOfPredicates(object);
     createOfModifiers(assert, assertModifier);
     createOfModifiers(not, notModifier);
-    createOfModifiers(maybe, maybeModifier);
+    maybe.array.of = createModifiedFunctions([ ofModifier.bind(null, 'maybe'), array, predicates, null ]);
+    assert.maybe.array.of = createModifiedModifier(assertModifier, maybe.array.of);
+    assert.not.array.of = createModifiedModifier(assertModifier, not.array.of);
 
     exportFunctions(mixin(functions, {
         assert: assert,
@@ -734,7 +736,7 @@
      *
      * Applies the chained predicate to members of the collection.
      */
-    function ofModifier (type, predicate) {
+    function ofModifier (target, type, predicate) {
         return function () {
             var collection, key;
 
@@ -747,6 +749,7 @@
             for (key in collection) {
                 if (
                     collection.hasOwnProperty(key) &&
+                    (target !== 'maybe' || assigned(collection[key])) &&
                     !predicate.apply(null, [ collection[key] ].concat(Array.prototype.slice.call(arguments, 1)))
                 ) {
                     return false;
@@ -787,12 +790,12 @@
     }
 
     function createModifiedOfPredicates (type) {
-        return createModifiedFunctions([ ofModifier, type, predicates, null ]);
+        return createModifiedFunctions([ ofModifier.bind(null, null), type, predicates, null ]);
     }
 
     function createOfModifiers (base, modifier) {
         base.array.of = createModifiedModifier(modifier, array.of);
-        //base.arrayLike.of = createModifiedModifier(modifier, arrayLike.of);
+        base.arrayLike.of = createModifiedModifier(modifier, arrayLike.of);
         //base.iterable.of = createModifiedModifier(modifier, iterable.of);
         //base.object.of = createModifiedModifier(modifier, object.of);
     }
