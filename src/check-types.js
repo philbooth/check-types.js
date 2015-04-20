@@ -94,13 +94,19 @@
 
     array.of = createModifiedOfPredicates(array);
     arrayLike.of = createModifiedOfPredicates(arrayLike);
-    //iterable.of = createModifiedOfPredicates(iterable);
+    iterable.of = createModifiedOfPredicates(iterable);
     //object.of = createModifiedOfPredicates(object);
     createOfModifiers(assert, assertModifier);
     createOfModifiers(not, notModifier);
-    maybe.array.of = createModifiedFunctions([ ofModifier.bind(null, 'maybe'), array, predicates, null ]);
+    maybe.array.of = createModifiedFunctions([ arrayOfModifier.bind(null, 'maybe'), array, predicates, null ]);
     assert.maybe.array.of = createModifiedModifier(assertModifier, maybe.array.of);
     assert.not.array.of = createModifiedModifier(assertModifier, not.array.of);
+    maybe.arrayLike.of = createModifiedFunctions([ arrayOfModifier.bind(null, 'maybe'), arrayLike, predicates, null ]);
+    assert.maybe.arrayLike.of = createModifiedModifier(assertModifier, maybe.arrayLike.of);
+    assert.not.arrayLike.of = createModifiedModifier(assertModifier, not.arrayLike.of);
+    maybe.iterable.of = createModifiedFunctions([ iterableOfModifier.bind(null, 'maybe'), iterable, predicates, null ]);
+    assert.maybe.iterable.of = createModifiedModifier(assertModifier, maybe.iterable.of);
+    assert.not.iterable.of = createModifiedModifier(assertModifier, not.iterable.of);
 
     exportFunctions(mixin(functions, {
         assert: assert,
@@ -736,21 +742,56 @@
      *
      * Applies the chained predicate to members of the collection.
      */
-    function ofModifier (target, type, predicate) {
+    function arrayOfModifier (target, type, predicate) {
         return function () {
-            var collection, key;
+            var collection, i;
 
             collection = arguments[0];
+
+            console.log('--');
+            console.log('of: ' + type.name + ' ? ' + type(collection));
 
             if (!type(collection)) {
                 return false;
             }
 
-            for (key in collection) {
+            console.log('of: ' + target);
+
+            for (i = 0; i < collection.length; i += 1) {
                 if (
-                    collection.hasOwnProperty(key) &&
-                    (target !== 'maybe' || assigned(collection[key])) &&
-                    !predicate.apply(null, [ collection[key] ].concat(Array.prototype.slice.call(arguments, 1)))
+                    (target !== 'maybe' || assigned(collection[i])) &&
+                    !predicate.apply(null, [ collection[i] ].concat(Array.prototype.slice.call(arguments, 1)))
+                ) {
+                    console.log('of: i=' + i + ', collection[i]=' + collection[i]);
+                    return false;
+                }
+            }
+
+            return true;
+        };
+    }
+
+    function iterableOfModifier (target, type, predicate) {
+        return function () {
+            var collection, iterator, item;
+
+            collection = arguments[0];
+
+            console.log('--');
+            console.log('of iterable: ' + type.name + ' ? ' + type(collection));
+
+            if (!type(collection)) {
+                return false;
+            }
+
+            console.log('of iterable: ' + target);
+
+            iterator = collection[Symbol.iterator]();
+
+            for (; item = iterator.next(); item.done !== true) {
+                if (
+                    (target !== 'maybe' || assigned(item)) &&
+                    !predicate.apply(null, [ item ].concat(Array.prototype.slice.call(arguments, 1)))
                 ) {
                     return false;
                 }
@@ -790,13 +831,21 @@
     }
 
     function createModifiedOfPredicates (type) {
-        return createModifiedFunctions([ ofModifier.bind(null, null), type, predicates, null ]);
+        var modifier;
+
+        if (type === iterable) {
+            modifier = iterableOfModifier;
+        } else {
+            modifier = arrayOfModifier;
+        }
+
+        return createModifiedFunctions([ modifier.bind(null, null), type, predicates, null ]);
     }
 
     function createOfModifiers (base, modifier) {
         base.array.of = createModifiedModifier(modifier, array.of);
         base.arrayLike.of = createModifiedModifier(modifier, arrayLike.of);
-        //base.iterable.of = createModifiedModifier(modifier, iterable.of);
+        base.iterable.of = createModifiedModifier(modifier, iterable.of);
         //base.object.of = createModifiedModifier(modifier, object.of);
     }
 
