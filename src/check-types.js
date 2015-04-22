@@ -811,16 +811,8 @@
     }
 
     function createOfPredicates (key) {
-        var modifier;
-
-        //if (type === object) {
-        //    modifier = objectOfModifier;
-        //} else {
-            modifier = ofModifier;
-        //}
-
         predicates[key].of = createModifiedFunctions(
-            [ modifier.bind(null, null), predicates[key], predicates, null ]
+            [ ofModifier.bind(null, null), predicates[key], predicates, null ]
         );
     }
 
@@ -828,7 +820,6 @@
         collections.forEach(function (key) {
             base[key].of = createModifiedModifier(modifier, predicates[key].of);
         });
-        //base.object.of = createModifiedModifier(modifier, object.of);
     }
 
     function createMaybeOfModifiers (key) {
