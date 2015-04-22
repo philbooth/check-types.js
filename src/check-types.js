@@ -1,14 +1,14 @@
+/*globals define, module, Symbol */
+
 /**
  * This module exports functions for checking types
  * and throwing exceptions.
  */
 
-/*globals define, module */
-
 (function (globals) {
     'use strict';
 
-    var messages, predicates, functions, assert, not, maybe, either;
+    var messages, predicates, functions, assert, not, maybe, either, collections, slice;
 
     messages = {
         like: 'Invalid type',
@@ -83,14 +83,22 @@
         any: any
     };
 
+    collections = [ 'array', 'arrayLike', 'iterable', 'object' ];
+    slice = Array.prototype.slice;
+
     functions = mixin(functions, predicates);
     assert = createModifiedPredicates(assertModifier, assertImpl);
     not = createModifiedPredicates(notModifier, notImpl);
     maybe = createModifiedPredicates(maybeModifier, maybeImpl);
     either = createModifiedPredicates(eitherModifier);
-    assert.not = createModifiedFunctions(assertModifier, not);
-    assert.maybe = createModifiedFunctions(assertModifier, maybe);
-    assert.either = createModifiedFunctions(assertEitherModifier, predicates);
+    assert.not = createModifiedModifier(assertModifier, not);
+    assert.maybe = createModifiedModifier(assertModifier, maybe);
+    assert.either = createModifiedModifier(assertEitherModifier, predicates);
+
+    collections.forEach(createOfPredicates);
+    createOfModifiers(assert, assertModifier);
+    createOfModifiers(not, notModifier);
+    collections.forEach(createMaybeOfModifiers);
 
     exportFunctions(mixin(functions, {
         assert: assert,
@@ -721,23 +729,105 @@
         }
     }
 
-    function createModifiedPredicates (modifier, object) {
-        return createModifiedFunctions(modifier, predicates, object);
+    /**
+     * Public modifier `of`.
+     *
+     * Applies the chained predicate to members of the collection.
+     */
+    function ofModifier (target, type, predicate) {
+        return function () {
+            var collection, args;
+
+            collection = arguments[0];
+
+            if (!type(collection)) {
+                return false;
+            }
+
+            collection = coerceCollection(type, collection);
+            args = slice.call(arguments, 1);
+
+            try {
+                collection.forEach(function (item) {
+                    if (
+                        (target !== 'maybe' || assigned(item)) &&
+                        !predicate.apply(null, [ item ].concat(args))
+                    ) {
+                        // HACK: Ideally we'd use a for...of loop and return here,
+                        //       but that syntax is not supported by ES5. We could
+                        //       use a transpiler and a build step but I'm happy
+                        //       enough with this until ES6 is the baseline.
+                        throw 0;
+                    }
+                });
+            } catch (ignore) {
+                return false;
+            }
+
+            return true;
+        };
     }
 
-    function createModifiedFunctions (modifier, functions, object) {
-        var result = object || {};
+    function coerceCollection (type, collection) {
+        switch (type) {
+            case arrayLike:
+                return slice.call(collection);
+            case object:
+                return Object.keys(collection).map(function (key) {
+                    return collection[key];
+                });
+            default:
+                return collection;
+        }
+    }
+
+    function createModifiedPredicates (modifier, object) {
+        return createModifiedFunctions([ modifier, predicates, object ]);
+    }
+
+    function createModifiedFunctions (args) {
+        var modifier, object, functions, result;
+
+        modifier = args.shift();
+        object = args.pop();
+        functions = args.pop();
+
+        result = object || {};
 
         Object.keys(functions).forEach(function (key) {
             Object.defineProperty(result, key, {
                 configurable: false,
                 enumerable: true,
                 writable: false,
-                value: modifier(functions[key], messages[key])
+                value: modifier.apply(null, args.concat(functions[key], messages[key]))
             });
         });
 
         return result;
+    }
+
+    function createModifiedModifier (modifier, modified) {
+        return createModifiedFunctions([ modifier, modified, null ]);
+    }
+
+    function createOfPredicates (key) {
+        predicates[key].of = createModifiedFunctions(
+            [ ofModifier.bind(null, null), predicates[key], predicates, null ]
+        );
+    }
+
+    function createOfModifiers (base, modifier) {
+        collections.forEach(function (key) {
+            base[key].of = createModifiedModifier(modifier, predicates[key].of);
+        });
+    }
+
+    function createMaybeOfModifiers (key) {
+        maybe[key].of = createModifiedFunctions(
+            [ ofModifier.bind(null, 'maybe'), predicates[key], predicates, null ]
+        );
+        assert.maybe[key].of = createModifiedModifier(assertModifier, maybe[key].of);
+        assert.not[key].of = createModifiedModifier(assertModifier, not[key].of);
     }
 
     function exportFunctions (functions) {
