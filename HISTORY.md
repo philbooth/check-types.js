@@ -1,5 +1,14 @@
 # History
 
+## 3.2 (coming soon)
+
+* Implement `arrayLike`
+* Implement `iterable`
+* Implement `array.of`
+* Implement `arrayLike.of`
+* Implement `iterable.of`
+* Implement `object.of`
+
 ## 3.1
 
 * Accept a single predicate in `map`.
