@@ -8,7 +8,7 @@
 (function (globals) {
     'use strict';
 
-    var messages, predicates, functions, assert, not, maybe, either;
+    var messages, predicates, functions, assert, not, maybe, either, collections, slice;
 
     messages = {
         like: 'Invalid type',
@@ -83,6 +83,9 @@
         any: any
     };
 
+    collections = [ 'array', 'arrayLike', 'iterable' ];
+    slice = Array.prototype.slice;
+
     functions = mixin(functions, predicates);
     assert = createModifiedPredicates(assertModifier, assertImpl);
     not = createModifiedPredicates(notModifier, notImpl);
@@ -92,21 +95,10 @@
     assert.maybe = createModifiedModifier(assertModifier, maybe);
     assert.either = createModifiedModifier(assertEitherModifier, predicates);
 
-    array.of = createModifiedOfPredicates(array);
-    arrayLike.of = createModifiedOfPredicates(arrayLike);
-    iterable.of = createModifiedOfPredicates(iterable);
-    //object.of = createModifiedOfPredicates(object);
+    collections.forEach(createOfPredicates);
     createOfModifiers(assert, assertModifier);
     createOfModifiers(not, notModifier);
-    maybe.array.of = createModifiedFunctions([ arrayOfModifier.bind(null, 'maybe'), array, predicates, null ]);
-    assert.maybe.array.of = createModifiedModifier(assertModifier, maybe.array.of);
-    assert.not.array.of = createModifiedModifier(assertModifier, not.array.of);
-    maybe.arrayLike.of = createModifiedFunctions([ arrayOfModifier.bind(null, 'maybe'), arrayLike, predicates, null ]);
-    assert.maybe.arrayLike.of = createModifiedModifier(assertModifier, maybe.arrayLike.of);
-    assert.not.arrayLike.of = createModifiedModifier(assertModifier, not.arrayLike.of);
-    maybe.iterable.of = createModifiedFunctions([ iterableOfModifier.bind(null, 'maybe'), iterable, predicates, null ]);
-    assert.maybe.iterable.of = createModifiedModifier(assertModifier, maybe.iterable.of);
-    assert.not.iterable.of = createModifiedModifier(assertModifier, not.iterable.of);
+    collections.forEach(createMaybeOfModifiers);
 
     exportFunctions(mixin(functions, {
         assert: assert,
@@ -742,59 +734,37 @@
      *
      * Applies the chained predicate to members of the collection.
      */
-    function arrayOfModifier (target, type, predicate) {
+    function ofModifier (target, type, predicate) {
         return function () {
-            var collection, i;
+            var collection, args;
 
             collection = arguments[0];
-
-            console.log('--');
-            console.log('of: ' + type.name + ' ? ' + type(collection));
 
             if (!type(collection)) {
                 return false;
             }
 
-            console.log('of: ' + target);
-
-            for (i = 0; i < collection.length; i += 1) {
-                if (
-                    (target !== 'maybe' || assigned(collection[i])) &&
-                    !predicate.apply(null, [ collection[i] ].concat(Array.prototype.slice.call(arguments, 1)))
-                ) {
-                    console.log('of: i=' + i + ', collection[i]=' + collection[i]);
-                    return false;
-                }
+            if (type === arrayLike) {
+                collection = slice.call(collection);
             }
 
-            return true;
-        };
-    }
+            args = slice.call(arguments, 1);
 
-    function iterableOfModifier (target, type, predicate) {
-        return function () {
-            var collection, iterator, item;
-
-            collection = arguments[0];
-
-            console.log('--');
-            console.log('of iterable: ' + type.name + ' ? ' + type(collection));
-
-            if (!type(collection)) {
+            try {
+                collection.forEach(function (item) {
+                    if (
+                        (target !== 'maybe' || assigned(item)) &&
+                        !predicate.apply(null, [ item ].concat(args))
+                    ) {
+                        // HACK: Ideally we'd use a for...of loop and return here,
+                        //       but that syntax is not supported by ES5. We could
+                        //       use a transpiler and a build step but I'm happy
+                        //       enough with this until ES6 is the baseline.
+                        throw 0;
+                    }
+                });
+            } catch (ignore) {
                 return false;
-            }
-
-            console.log('of iterable: ' + target);
-
-            iterator = collection[Symbol.iterator]();
-
-            for (; item = iterator.next(); item.done !== true) {
-                if (
-                    (target !== 'maybe' || assigned(item)) &&
-                    !predicate.apply(null, [ item ].concat(Array.prototype.slice.call(arguments, 1)))
-                ) {
-                    return false;
-                }
             }
 
             return true;
@@ -830,23 +800,33 @@
         return createModifiedFunctions([ modifier, modified, null ]);
     }
 
-    function createModifiedOfPredicates (type) {
+    function createOfPredicates (key) {
         var modifier;
 
-        if (type === iterable) {
-            modifier = iterableOfModifier;
-        } else {
-            modifier = arrayOfModifier;
-        }
+        //if (type === object) {
+        //    modifier = objectOfModifier;
+        //} else {
+            modifier = ofModifier;
+        //}
 
-        return createModifiedFunctions([ modifier.bind(null, null), type, predicates, null ]);
+        predicates[key].of = createModifiedFunctions(
+            [ modifier.bind(null, null), predicates[key], predicates, null ]
+        );
     }
 
     function createOfModifiers (base, modifier) {
-        base.array.of = createModifiedModifier(modifier, array.of);
-        base.arrayLike.of = createModifiedModifier(modifier, arrayLike.of);
-        base.iterable.of = createModifiedModifier(modifier, iterable.of);
+        collections.forEach(function (key) {
+            base[key].of = createModifiedModifier(modifier, predicates[key].of);
+        });
         //base.object.of = createModifiedModifier(modifier, object.of);
+    }
+
+    function createMaybeOfModifiers (key) {
+        maybe[key].of = createModifiedFunctions(
+            [ ofModifier.bind(null, 'maybe'), predicates[key], predicates, null ]
+        );
+        assert.maybe[key].of = createModifiedModifier(assertModifier, maybe[key].of);
+        assert.not[key].of = createModifiedModifier(assertModifier, not[key].of);
     }
 
     function exportFunctions (functions) {

@@ -1425,7 +1425,7 @@
         });
 
         test('arrayLike.of returns false when predicate is false for one item', function () {
-            assert.isFalse(check.arrayLike.of.unemptyString({ 0: 'foo', 1: '', length     : 2 }));
+            assert.isFalse(check.arrayLike.of.unemptyString({ 0: 'foo', 1: '', length: 2 }));
         });
 
         test('arrayLike.of returns true for multi-argument predicates', function () {
@@ -1506,81 +1506,81 @@
             assert.lengthOf(Object.keys(check.iterable.of), 30);
         });
 
-        test('iterable.of returns true when predicate is true for all items', function () {
-            assert.isTrue(check.iterable.of.unemptyString({ 1: 'foo', 2: 'bar', length: 2 }));
-        });
-
-        test('iterable.of returns false when predicate is false for one item', function () {
-            assert.isFalse(check.iterable.of.unemptyString({ 0: 'foo', 1: '', length     : 2 }));
-        });
-
-        test('iterable.of returns true for multi-argument predicates', function () {
-            assert.isTrue(check.iterable.of.between({ 0: 1, 1: 0, length: 2 }, 2, -1));
-        });
-
-        test('iterable.of returns false for multi-argument predicates', function () {
-            assert.isFalse(check.iterable.of.greater({ 0: 1, 1: 2, length: 2 }, 2));
-        });
-
-        test('assert.iterable.of does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.assert.iterable.of.instance({ 0: new Error(), 1: new Error(), length: 2 }, Error);
-            });
-        });
-
-        test('assert.iterable.of throws', function () {
-            assert.throws(function () {
-                check.assert.iterable.of.instance({ 0: new Error(), 1: {}, length: 2 }, Error);
-            });
-        });
-
-        test('maybe.iterable.of returns true', function () {
-            assert.isTrue(check.maybe.iterable.of.instance({ 0: new Error(), 1: null, length: 2 }, Error));
-        });
-
-        test('maybe.iterable.of returns false', function () {
-            assert.isFalse(check.maybe.iterable.of.instance({ 0: new Error(), 1: {}, length: 2 }, Error));
-        });
-
-        test('not.iterable.of returns true', function () {
-            assert.isTrue(check.not.iterable.of.instance({ 0: new Error(), 1: null, length: 2 }, Error));
-        });
-
-        test('not.iterable.of returns false', function () {
-            assert.isFalse(check.not.iterable.of.instance({ 0: new Error(), length: 1 }, Error));
-        });
-
-        test('assert.maybe.iterable.of does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.assert.maybe.iterable.of.instance({ 0: new Error(), 1: null, length: 2 }, Error);
-            });
-        });
-
-        test('assert.maybe.iterable.of throws', function () {
-            assert.throws(function () {
-                check.assert.maybe.iterable.of.instance({ 0: new Error(), 1: {}, length: 2 }, Error);
-            });
-        });
-
-        test('assert.not.iterable.of does not throw', function () {
-            assert.doesNotThrow(function () {
-                check.assert.not.iterable.of.instance({ 0: {}, length: 1 }, Error);
-            });
-        });
-
-        test('assert.not.iterable.of throws', function () {
-            assert.throws(function () {
-                check.assert.not.iterable.of.instance({ 0: new Error(), 1: new Error(), length: 2 }, Error);
-            });
-        });
-
-        test('iterable.of returns true for arrays', function () {
-            assert.isTrue(check.iterable.of.unemptyString([ 'foo', 'bar' ]));
-        });
-
         if (typeof Symbol !== 'undefined') {
+            test('iterable.of returns true when predicate is true for all items', function () {
+                assert.isTrue(check.iterable.of.unemptyString(new Set([ 'foo', 'bar' ])));
+            });
+
+            test('iterable.of returns false when predicate is false for one item', function () {
+                assert.isFalse(check.iterable.of.unemptyString(new Set([ 'foo', '' ])));
+            });
+
+            test('iterable.of returns true for multi-argument predicates', function () {
+                assert.isTrue(check.iterable.of.between(new Map([['foo', 1], ['bar', 0]]), 2, -1));
+            });
+
+            test('iterable.of returns false for multi-argument predicates', function () {
+                assert.isFalse(check.iterable.of.less(new Map([['foo', 1], ['bar', 2]]), 2));
+            });
+
+            test('assert.iterable.of does not throw', function () {
+                assert.doesNotThrow(function () {
+                    check.assert.iterable.of.instance(new Set([ new Error(), new Error() ]), Error);
+                });
+            });
+
+            test('assert.iterable.of throws', function () {
+                assert.throws(function () {
+                    check.assert.iterable.of.instance(new Set([ new Error(), {} ]), Error);
+                });
+            });
+
+            test('maybe.iterable.of returns true', function () {
+                assert.isTrue(check.maybe.iterable.of.instance(new Set([ new Error(), null ]), Error));
+            });
+
+            test('maybe.iterable.of returns false', function () {
+                assert.isFalse(check.maybe.iterable.of.instance(new Set([ new Error(), {} ]), Error));
+            });
+
+            test('not.iterable.of returns true', function () {
+                assert.isTrue(check.not.iterable.of.instance(new Set([ new Error(), null ]), Error));
+            });
+
+            test('not.iterable.of returns false', function () {
+                assert.isFalse(check.not.iterable.of.instance(new Set([ new Error() ]), Error));
+            });
+
+            test('assert.maybe.iterable.of does not throw', function () {
+                assert.doesNotThrow(function () {
+                    check.assert.maybe.iterable.of.instance(new Set([ new Error(), null ]), Error);
+                });
+            });
+
+            test('assert.maybe.iterable.of throws', function () {
+                assert.throws(function () {
+                    check.assert.maybe.iterable.of.instance(new Set([ new Error(), {} ]), Error);
+                });
+            });
+
+            test('assert.not.iterable.of does not throw', function () {
+                assert.doesNotThrow(function () {
+                    check.assert.not.iterable.of.instance(new Set([ new Error(), {} ]), Error);
+                });
+            });
+
+            test('assert.not.iterable.of throws', function () {
+                assert.throws(function () {
+                    check.assert.not.iterable.of.instance(new Set([ new Error(), new Error() ]), Error);
+                });
+            });
+
+            test('iterable.of returns true for arrays', function () {
+                assert.isTrue(check.iterable.of.unemptyString([ 'foo', 'bar' ]));
+            });
+
             test('iterable.of returns false for array-like objects', function () {
-                assert.isFalse(check.arrayLike.of.unemptyString({ 0: 'foo', 1: 'bar', length: 2 }));
+                assert.isFalse(check.iterable.of.unemptyString({ 0: 'foo', 1: 'bar', length: 2 }));
             });
         }
     });
