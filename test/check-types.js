@@ -1124,6 +1124,18 @@
             });
         });
 
+        test('assert modifier throws for multi-argument predicates', function () {
+            assert.throws(function () {
+                check.assert.between(1, 2, 1);
+            });
+        });
+
+        test('assert modifier does not throw for multi-argument predicates', function () {
+            assert.doesNotThrow(function () {
+                check.assert.between(1, 2, 0);
+            });
+        });
+
         test('not modifier is defined', function () {
             assert.isFunction(check.not);
         });
@@ -1161,6 +1173,14 @@
             assert.isTrue(check.not(false));
         });
 
+        test('not modifier returns true for multi-argument predicates', function () {
+            assert.isTrue(check.not.between(1, 2, 1));
+        });
+
+        test('not modifier returns false for multi-argument predicates', function () {
+            assert.isFalse(check.not.between(1, 2, 0));
+        });
+
         test('maybe modifier is defined', function () {
             assert.isFunction(check.maybe);
         });
@@ -1185,7 +1205,7 @@
             assert.lengthOf(Object.keys(check.maybe), 30);
         });
 
-        test('maybe modifier returns when true value is undefined', function () {
+        test('maybe modifier returns true when value is undefined', function () {
             assert.isTrue(check.maybe.object(undefined));
         });
 
@@ -1206,6 +1226,10 @@
             assert.isTrue(check.maybe(null));
             assert.isTrue(check.maybe(undefined));
             assert.isFalse(check.maybe(false));
+        });
+
+        test('maybe modifier shortcuts for multi-argument predicates', function () {
+            assert.isTrue(check.maybe.instance(null, Error));
         });
 
         test('either modifier is defined', function () {
@@ -1248,51 +1272,57 @@
             assert.isFalse(check.either.odd(2).or.even(5));
         });
 
+        test('either works for multi-argument predicates', function () {
+            assert.isTrue(check.either.between(1, 2, 0).or.between(1, 2, 1));
+            assert.isTrue(check.either.between(1, 2, 1).or.between(1, 2, 0));
+            assert.isFalse(check.either.between(1, 2, 1).or.between(1, 2, 1));
+        });
+
         test('assert modifier with not throws when value is correct', function () {
             assert.throws(function () {
-                check.assert.not.negative(-1);
+                check.assert.not.between(1, 2, 0);
             });
         });
 
         test('assert modifier with not does not throw when value is wrong', function () {
             assert.doesNotThrow(function () {
-                check.assert.not.negative(1);
+                check.assert.not.between(1, 2, 1);
             });
         });
 
         test('assert modifier with maybe does not throw when value is correct', function () {
             assert.doesNotThrow(function () {
-                check.assert.maybe.positive(1);
+                check.assert.maybe.between(1, 2, 0);
+            });
+        });
+
+        test('assert modifier with maybe does not throw when value is null', function () {
+            assert.doesNotThrow(function () {
+                check.assert.maybe.between(null, 2, 1);
             });
         });
 
         test('assert modifier with maybe throws when value is wrong', function () {
             assert.throws(function () {
-                check.assert.maybe.positive(-1);
+                check.assert.maybe.between(1, 2, 1);
             });
         });
 
         test('assert modifier with either does not throw when second value is correct', function () {
             assert.doesNotThrow(function () {
-                check.assert.either.negative(1).or.positive(3);
+                check.assert.either.between(1, 2, 1).or.between(1, 2, 0);
             });
         });
 
         test('assert modifier with either does not throw when first value is correct', function () {
             assert.doesNotThrow(function () {
-                check.assert.either.odd(7).or.even(5);
-            });
-        });
-
-        test('assert modifier with either does not throw when both values are correct', function () {
-            assert.doesNotThrow(function () {
-                check.assert.either.string('').or.number(0);
+                check.assert.either.between(1, 2, 0).or.between(1, 2, 1);
             });
         });
 
         test('assert modifier with either throws when both values are wrong', function () {
             assert.throws(function () {
-                check.assert.either.number('').or.string(0);
+                check.assert.either.between(1, 2, 1).or.between(1, 2, 1);
             });
         });
 
