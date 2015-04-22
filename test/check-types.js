@@ -1442,6 +1442,10 @@
             });
         }
 
+        test('array.of returns false for objects', function () {
+            assert.isFalse(check.array.of.unemptyString({ 'foo': 'bar', 'baz': 'qux' }));
+        });
+
         test('arrayLike.of modifier is defined', function () {
             assert.isObject(check.arrayLike.of);
         });
@@ -1528,6 +1532,10 @@
             });
         }
 
+        test('arrayLike.of returns false for objects', function () {
+            assert.isFalse(check.arrayLike.of.unemptyString({ 'foo': 'bar', 'baz': 'qux' }));
+        });
+
         test('iterable.of modifier is defined', function () {
             assert.isObject(check.iterable.of);
         });
@@ -1611,6 +1619,100 @@
 
             test('iterable.of returns false for array-like objects', function () {
                 assert.isFalse(check.iterable.of.unemptyString({ 0: 'foo', 1: 'bar', length: 2 }));
+            });
+
+            test('iterable.of returns false for objects', function () {
+                assert.isFalse(check.iterable.of.unemptyString({ 'foo': 'bar', 'baz': 'qux' }));
+            });
+        }
+
+        test('object.of modifier is defined', function () {
+            assert.isObject(check.object.of);
+        });
+
+        test('object.of has predicates defined', function () {
+            assert.lengthOf(Object.keys(check.object.of), 30);
+        });
+
+        test('object.of returns true when predicate is true for all items', function () {
+            assert.isTrue(check.object.of.unemptyString({ 'foo': 'bar', 'baz': 'qux' }));
+        });
+
+        test('object.of returns false when predicate is false for one item', function () {
+            assert.isFalse(check.object.of.unemptyString({ 'foo': 'bar', 'baz': '' }));
+        });
+
+        test('object.of returns true for multi-argument predicates', function () {
+            assert.isTrue(check.object.of.between({ 'foo': 1, 'bar': 0 }, 2, -1));
+        });
+
+        test('object.of returns false for multi-argument predicates', function () {
+            assert.isFalse(check.object.of.greater({ 'foo': 1, 'bar': 2 }, 2));
+        });
+
+        test('assert.object.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.object.of.instance({ 'foo': new Error(), 'bar': new Error() }, Error);
+            });
+        });
+
+        test('assert.object.of throws', function () {
+            assert.throws(function () {
+                check.assert.object.of.instance({ 'foo': new Error(), 'bar': {} }, Error);
+            });
+        });
+
+        test('maybe.object.of returns true', function () {
+            assert.isTrue(check.maybe.object.of.instance({ 'foo': new Error(), 'bar': null }, Error));
+        });
+
+        test('maybe.object.of returns false', function () {
+            assert.isFalse(check.maybe.object.of.instance({ 'foo': new Error(), 'bar': {} }, Error));
+        });
+
+        test('not.object.of returns true', function () {
+            assert.isTrue(check.not.object.of.instance({ 'foo': new Error(), 'bar': null }, Error));
+        });
+
+        test('not.object.of returns false', function () {
+            assert.isFalse(check.not.object.of.instance({ 'foo': new Error() }, Error));
+        });
+
+        test('assert.maybe.object.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.maybe.object.of.instance({ 'foo': new Error(), 'bar': null }, Error);
+            });
+        });
+
+        test('assert.maybe.object.of throws', function () {
+            assert.throws(function () {
+                check.assert.maybe.object.of.instance({ 'foo': new Error(), 'bar': {} }, Error);
+            });
+        });
+
+        test('assert.not.object.of does not throw', function () {
+            assert.doesNotThrow(function () {
+                check.assert.not.object.of.instance({ 'foo': {} }, Error);
+            });
+        });
+
+        test('assert.not.object.of throws', function () {
+            assert.throws(function () {
+                check.assert.not.object.of.instance({ 'foo': new Error(), 'bar': new Error() }, Error);
+            });
+        });
+
+        test('object.of returns false for arrays', function () {
+            assert.isFalse(check.object.of.unemptyString([ 'foo', 'bar' ]));
+        });
+
+        test('object.of returns false for array-likes', function () {
+            assert.isFalse(check.object.of.unemptyString({ 0: 'foo', 1: 'bar', length: 2 }));
+        });
+
+        if (typeof Symbol !== 'undefined') {
+            test('object.of returns false for iterables', function () {
+                assert.isFalse(check.object.of.unemptyString(new Set([ 'foo', 'bar' ])));
             });
         }
     });

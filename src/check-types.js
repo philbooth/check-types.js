@@ -83,7 +83,7 @@
         any: any
     };
 
-    collections = [ 'array', 'arrayLike', 'iterable' ];
+    collections = [ 'array', 'arrayLike', 'iterable', 'object' ];
     slice = Array.prototype.slice;
 
     functions = mixin(functions, predicates);
@@ -744,10 +744,7 @@
                 return false;
             }
 
-            if (type === arrayLike) {
-                collection = slice.call(collection);
-            }
-
+            collection = coerceCollection(type, collection);
             args = slice.call(arguments, 1);
 
             try {
@@ -769,6 +766,19 @@
 
             return true;
         };
+    }
+
+    function coerceCollection (type, collection) {
+        switch (type) {
+            case arrayLike:
+                return slice.call(collection);
+            case object:
+                return Object.keys(collection).map(function (key) {
+                    return collection[key];
+                });
+            default:
+                return collection;
+        }
     }
 
     function createModifiedPredicates (modifier, object) {
