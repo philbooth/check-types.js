@@ -194,7 +194,7 @@ in a number of different contexts:
 * `check.object.of.xxx(thing)`:
   The `object.of` modifier
   is synonymous with `array.of`,
-  except it operates on an objects properties.
+  except it operates on an object's properties.
 
 Additionally, there are some batch operations
 that allow you to apply different predicates
