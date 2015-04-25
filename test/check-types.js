@@ -945,7 +945,16 @@
             assert.isTrue(result.foo.bar);
         });
 
-        test('map works with undefined data and clashing predicate', function () {
+        test('map works with undefined data and undefined', function () {
+            var result = check.map({}, { foo: { bar: check.undefined } });
+
+            assert.lengthOf(Object.keys(result), 1);
+            assert.isObject(result.foo);
+            assert.lengthOf(Object.keys(result.foo), 1);
+            assert.isFalse(result.foo.bar);
+        });
+
+        test('map works with undefined data and not.assigned', function () {
             var result = check.map({}, { foo: { bar: check.not.assigned } });
 
             assert.lengthOf(Object.keys(result), 1);

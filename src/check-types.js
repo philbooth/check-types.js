@@ -533,7 +533,11 @@
             var predicate = predicates[key];
 
             if (isFunction(predicate)) {
-                result[key] = predicate(data[key]);
+                if (not.assigned(data)) {
+                    result[key] = !!predicate._isMaybefied;
+                } else {
+                    result[key] = predicate(data[key]);
+                }
             } else if (object(predicate)) {
                 result[key] = mapComplex(data[key], predicate);
             }
@@ -688,13 +692,21 @@
      * otherwise propagates the return value from `predicate`.
      */
     function maybeModifier (predicate) {
-        return function () {
+        var modifiedPredicate = function () {
             if (!assigned(arguments[0])) {
                 return true;
             }
 
             return predicate.apply(null, arguments);
         };
+
+        // Hackishly indicate that this is a maybe.xxx predicate.
+        // Without this flag, the alternative would be to iterate
+        // through the maybe predicates or use indexOf to check,
+        // which would be time-consuming.
+        modifiedPredicate._isMaybefied = true;
+
+        return modifiedPredicate;
     }
 
     function maybeImpl (value) {
