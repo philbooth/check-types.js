@@ -1,6 +1,6 @@
 # History
 
-## 3.2 (coming soon)
+## 3.2
 
 * Implement `arrayLike`
 * Implement `iterable`
@@ -8,6 +8,7 @@
 * Implement `arrayLike.of`
 * Implement `iterable.of`
 * Implement `object.of`
+* Fix unhandled exception when dereferencing undefined data inside `map`.
 
 ## 3.1
 
