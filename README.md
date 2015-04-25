@@ -105,12 +105,13 @@ in your application,
 a whole bunch of functions are available
 to call.
 
-For the most part,
-the exported functions
-are broadly split into four types.
+Most of the functions
+are predicates,
+which can be executed
+in a number of different contexts:
 
 * `check.xxx(thing)`:
-  These functions are predicates,
+  These functions are basic predicates,
   returning true or false
   depending on the type and value of `thing`.
 
@@ -142,7 +143,7 @@ are broadly split into four types.
   when both predicates are false.
 
 * `check.assert.xxx(thing, message)`:
-  The assert modifier
+  The `assert` modifier
   changes predicates
   to throw when their result
   would otherwise be `false`.
@@ -157,10 +158,48 @@ are broadly split into four types.
   which simply throws
   when its argument is false.
 
+* `check.array.of.xxx(thing)`:
+  The `array.of` modifier
+  first checks that
+  it is operating on an array
+  and then applies
+  the modified predicate
+  to each item
+  of the array.
+  If the predicate fails
+  for any item,
+  it returns `false`,
+  otherwise it returns `true`.
+  It can also be prefixed
+  by other modifiers,
+  so `check.maybe.array.of`,
+  `check.not.array.of`,
+  `check.assert.array.of`,
+  `check.assert.maybe.array.of` and
+  `check.assert.not.array.of`
+  all work
+  as you would expect
+  them to.
+
+* `check.arrayLike.of.xxx(thing)`:
+  The `arrayLike.of` modifier
+  is synonymous with `array.of`,
+  except it operates on array-like objects.
+
+* `check.iterable.of.xxx(thing)`:
+  The `iterable.of` modifier
+  is synonymous with `array.of`,
+  except it operates on iterables.
+
+* `check.object.of.xxx(thing)`:
+  The `object.of` modifier
+  is synonymous with `array.of`,
+  except it operates on an objects properties.
+
 Additionally, there are some batch operations
-that allow you to apply predicates
-across multiple values
-inside arrays or objects.
+that allow you to apply different predicates
+to each value
+in an array or object.
 These are implemented by
 `check.apply`,
 `check.map`,
@@ -283,6 +322,19 @@ These are implemented by
   if `thing` has a length property
   that equals `value`,
   `false` otherwise.
+
+* `check.arrayLike(thing)`:
+  Returns `true`
+  if `thing` has a numeric length property,
+  `false` otherwise.
+
+* `check.iterable(thing)`:
+  Returns `true`
+  if `thing` implements the iterable protocol,
+  `false` otherwise.
+  In pre-ES6 environments,
+  this predicate falls back
+  to `arrayLike` behaviour.
 
 #### Object predicates
 
