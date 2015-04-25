@@ -2,12 +2,12 @@
 
 [![Build status][ci-image]][ci-status]
 
-A tiny JavaScript library
+A little JavaScript library
 for asserting types
 and values.
 
 * [Why would I want that?](#why-would-i-want-that)
-* [How tiny is it?](#how-tiny-is-it)
+* [How little is it?](#how-little-is-it)
 * [How do I install it?](#how-do-i-install-it)
 * [How do I use it?](#how-do-i-use-it)
     * [Loading the library](#loading-the-library)
@@ -48,9 +48,9 @@ from JavaScript application developers
 in an efficient and robust manner,
 abstracted by a simple API.
 
-## How tiny is it?
+## How little is it?
 
-17 kb unminified with comments, 4.4 kb minified, 1.6 kb minified + gzipped.
+21 kb unminified with comments, 5.5 kb minified, 1.9 kb minified + gzipped.
 
 ## How do I install it?
 
