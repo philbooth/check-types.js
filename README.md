@@ -432,6 +432,28 @@ These are implemented by
   Returns `false`
   if both predicates are false.
 
+* `check.array.of.xxx(value)`:
+  Returns `true`
+  if `value` is an array
+  and the predicate is true
+  for every item.
+  Also works with the `not` and `maybe` modifiers.
+
+* `check.arrayLike.of.xxx(thing)`:
+  The `arrayLike.of` modifier
+  is synonymous with `array.of`,
+  except it operates on array-like objects.
+
+* `check.iterable.of.xxx(thing)`:
+  The `iterable.of` modifier
+  is synonymous with `array.of`,
+  except it operates on iterables.
+
+* `check.object.of.xxx(thing)`:
+  The `object.of` modifier
+  is synonymous with `array.of`,
+  except it operates on an object's properties.
+
 * `check.assert(value, message)`:
   Throws an `Error`
   if `value` is `false`,
@@ -444,7 +466,7 @@ These are implemented by
   The last argument
   is an optional message
   to be set on the `Error` instance.
-  Also works with the `not`, `maybe` and `either` modifiers.
+  Also works with the `not`, `maybe`, `either` and `...of` modifiers.
 
 #### Batch operations
 
