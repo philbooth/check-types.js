@@ -690,7 +690,7 @@ open `test/check-types.html`.
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
-[mocha]: http://visionmedia.github.com/mocha
+[mocha]: http://mochajs.org/
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
 [license]: https://github.com/philbooth/check-types.js/blob/master/COPYING
