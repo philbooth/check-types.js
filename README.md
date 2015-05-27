@@ -204,7 +204,7 @@ These are implemented by
 `check.apply`,
 `check.map`,
 `check.any` and
-`check.every`.
+`check.all`.
 
 #### String predicates
 
