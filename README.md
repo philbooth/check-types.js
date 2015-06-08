@@ -253,14 +253,33 @@ These are implemented by
   greater than `value`,
   `false` otherwise.
 
+* `check.greaterOrEqual(thing, value)`:
+  Returns `true` if `thing` is a number
+  greater than or equal to `value`,
+  `false` otherwise.
+
 * `check.less(thing, value)`:
   Returns `true` if `thing` is a number
   less than `value`,
   `false` otherwise.
 
+* `check.lessOrEqual(thing, value)`:
+  Returns `true` if `thing` is a number
+  less than or equal to `value`,
+  `false` otherwise.
+
 * `check.between(thing, a, b)`:
   Returns `true` if `thing` is a number
   between than `a` and `b`,
+  `false` otherwise.
+  The arguments `a` and `b`
+  may be in any order,
+  it doesn't matter
+  which is greater.
+
+* `check.inRange(thing, a, b)`:
+  Returns `true` if `thing` is a number
+  in the range `a` .. `b`,
   `false` otherwise.
   The arguments `a` and `b`
   may be in any order,
