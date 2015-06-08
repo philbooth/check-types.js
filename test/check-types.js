@@ -526,6 +526,110 @@
             assert.isFalse(check.even('2'));
         });
 
+        test('inRange function is defined', function () {
+            assert.isFunction(check.inRange);
+        });
+
+        test('inRange with 2, 0, 1 returns false', function () {
+            assert.isFalse(check.inRange(2, 0, 1));
+        });
+
+        test('inRange with 1, 0, 1 returns true', function () {
+            assert.isTrue(check.inRange(1, 0, 1));
+        });
+
+        test('inRange with 1, 1, 0 returns true', function () {
+            assert.isTrue(check.inRange(1, 1, 0));
+        });
+
+        test('inRange works with fractions', function () {
+            assert.isTrue(check.inRange(1/2, 1/4, 1/2));
+        });
+
+        test('inRange works with negative numbers', function () {
+            assert.isTrue(check.inRange(-2, -2, -1));
+        });
+
+        test('inRange with positive infinity returns false', function () {
+            assert.isFalse(check.inRange(Number.POSITIVE_INFINITY, 0, Number.POSITIVE_INFINITY));
+        });
+
+        test('inRange with negative infinity returns false', function () {
+            assert.isFalse(check.inRange(Number.NEGATIVE_INFINITY, 0, Number.NEGATIVE_INFINITY));
+        });
+
+        test('inRange with NaN returns false', function () {
+            assert.isFalse(check.inRange(NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY));
+        });
+
+        test('inRange with string returns false', function () {
+            assert.isFalse(check.inRange('-1', 0, -2));
+        });
+
+        test('greaterOrEqual function is defined', function () {
+            assert.isFunction(check.greaterOrEqual);
+        });
+
+        test('greaterOrEqual with 0, 1 returns false', function () {
+            assert.isFalse(check.greaterOrEqual(0, 1));
+        });
+
+        test('greaterOrEqual with 1, 1 returns true', function () {
+            assert.isTrue(check.greaterOrEqual(1, 1));
+        });
+
+        test('greaterOrEqual works with fractions', function () {
+            assert.isTrue(check.greaterOrEqual(1/2, 1/2));
+        });
+
+        test('greaterOrEqual works with negative numbers', function () {
+            assert.isFalse(check.greaterOrEqual(-1, 0));
+        });
+
+        test('greaterOrEqual with positive infinity returns false', function () {
+            assert.isFalse(check.greaterOrEqual(Number.POSITIVE_INFINITY, 0));
+        });
+
+        test('greaterOrEqual with NaN returns false', function () {
+            assert.isFalse(check.greaterOrEqual(NaN, -1));
+        });
+
+        test('greaterOrEqual with string returns false', function () {
+            assert.isFalse(check.greaterOrEqual('1', 1));
+        });
+
+        test('lessOrEqual function is defined', function () {
+            assert.isFunction(check.lessOrEqual);
+        });
+
+        test('lessOrEqual with 1, 0 returns false', function () {
+            assert.isFalse(check.lessOrEqual(1, 0));
+        });
+
+        test('lessOrEqual with 1, 1 returns true', function () {
+            assert.isTrue(check.lessOrEqual(1, 1));
+        });
+
+        test('lessOrEqual works with fractions', function () {
+            assert.isFalse(check.lessOrEqual(1/2, 1/4));
+        });
+
+        test('lessOrEqual works with negative numbers', function () {
+            assert.isTrue(check.lessOrEqual(-2, -2));
+        });
+
+        test('lessOrEqual with negative infinity returns false', function () {
+            assert.isFalse(check.lessOrEqual(Number.NEGATIVE_INFINITY, 0));
+        });
+
+        test('lessOrEqual with NaN returns false', function () {
+            assert.isFalse(check.lessOrEqual(NaN, 1));
+        });
+
+        test('lessOrEqual with string returns false', function () {
+            assert.isFalse(check.lessOrEqual('-1', -1));
+        });
+
         test('between function is defined', function () {
             assert.isFunction(check.between);
         });
@@ -1081,21 +1185,21 @@
 
         test('assert modifier is applied to not', function () {
             assert.isObject(check.assert.not);
-            assert.lengthOf(Object.keys(check.assert.not), 30);
+            assert.lengthOf(Object.keys(check.assert.not), 33);
         });
 
         test('assert modifier is applied to maybe', function () {
             assert.isObject(check.assert.maybe);
-            assert.lengthOf(Object.keys(check.assert.maybe), 30);
+            assert.lengthOf(Object.keys(check.assert.maybe), 33);
         });
 
         test('assert modifier is applied to either', function () {
             assert.isObject(check.assert.either);
-            assert.lengthOf(Object.keys(check.assert.either), 30);
+            assert.lengthOf(Object.keys(check.assert.either), 33);
         });
 
         test('assert modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.assert), 33);
+            assert.lengthOf(Object.keys(check.assert), 36);
         });
 
         test('assert modifier throws when value is wrong', function () {
@@ -1185,7 +1289,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.not), 30);
+            assert.lengthOf(Object.keys(check.not), 33);
         });
 
         test('not modifier returns true when predicate returns false', function () {
@@ -1230,7 +1334,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.maybe), 30);
+            assert.lengthOf(Object.keys(check.maybe), 33);
         });
 
         test('maybe modifier returns true when value is undefined', function () {
@@ -1281,13 +1385,13 @@
         });
 
         test('either modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.either), 30);
+            assert.lengthOf(Object.keys(check.either), 33);
         });
 
         test('either modifier returns or object', function () {
             assert.isObject(check.either.string(''));
             assert.isObject(check.either.string('').or);
-            assert.lengthOf(Object.keys(check.either.string('').or), 30);
+            assert.lengthOf(Object.keys(check.either.string('').or), 33);
         });
 
         test('either returns true when first predicate is true', function () {
@@ -1359,7 +1463,7 @@
         });
 
         test('array.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.array.of), 30);
+            assert.lengthOf(Object.keys(check.array.of), 33);
             assert.isFunction(check.array.of.like);
             assert.isFunction(check.array.of.instance);
             assert.isFunction(check.array.of.emptyObject);
@@ -1381,6 +1485,9 @@
             assert.isFunction(check.array.of.string);
             assert.isFunction(check.array.of.odd);
             assert.isFunction(check.array.of.even);
+            assert.isFunction(check.array.of.inRange);
+            assert.isFunction(check.array.of.greaterOrEqual);
+            assert.isFunction(check.array.of.lessOrEqual);
             assert.isFunction(check.array.of.between);
             assert.isFunction(check.array.of.greater);
             assert.isFunction(check.array.of.less);
@@ -1479,7 +1586,7 @@
         });
 
         test('arrayLike.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.arrayLike.of), 30);
+            assert.lengthOf(Object.keys(check.arrayLike.of), 33);
         });
 
         test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -1569,7 +1676,7 @@
         });
 
         test('iterable.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.iterable.of), 30);
+            assert.lengthOf(Object.keys(check.iterable.of), 33);
         });
 
         if (typeof Symbol !== 'undefined') {
@@ -1659,7 +1766,7 @@
         });
 
         test('object.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.object.of), 30);
+            assert.lengthOf(Object.keys(check.object.of), 33);
         });
 
         test('object.of returns true when predicate is true for all items', function () {

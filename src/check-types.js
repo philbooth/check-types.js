@@ -32,6 +32,9 @@
         string: 'Invalid string',
         odd: 'Invalid number',
         even: 'Invalid number',
+        inRange: 'Invalid number',
+        greaterOrEqual: 'Invalid number',
+        lessOrEqual: 'Invalid number',
         between: 'Invalid number',
         greater: 'Invalid number',
         less: 'Invalid number',
@@ -65,6 +68,9 @@
         string: string,
         odd: odd,
         even: even,
+        inRange: inRange,
+        greaterOrEqual: greaterOrEqual,
+        lessOrEqual: lessOrEqual,
         between: between,
         greater: greater,
         less: less,
@@ -372,6 +378,43 @@
      */
     function integer (data) {
         return number(data) && data % 1 === 0;
+    }
+
+    /**
+     * Public function `inRange`.
+     *
+     * Returns `true` if something is a number in
+     * the range `a` .. `b`, `false` otherwise.
+     *
+     */
+    function inRange (data, a, b) {
+        if (a < b) {
+            return greaterOrEqual(data, a) && lessOrEqual(data, b);
+        }
+
+        return lessOrEqual(data, a) && greaterOrEqual(data, b);
+    }
+
+    /**
+     * Public function `greaterOrEqual`.
+     *
+     * Returns `true` if something is a number greater
+     * than or equal to `value`, `false` otherwise.
+     *
+     */
+    function greaterOrEqual (data, value) {
+        return number(data) && data >= value;
+    }
+
+    /**
+     * Public function `lessOrEqual`.
+     *
+     * Returns `true` if something is a number less
+     * than or equal to `value`, `false` otherwise.
+     *
+     */
+    function lessOrEqual (data, value) {
+        return number(data) && data <= value;
     }
 
     /**
