@@ -1,5 +1,11 @@
 # History
 
+## 3.3
+
+* Implement `greaterOrEqual`.
+* Implement `lessOrEqual`.
+* Implement `inRange`.
+
 ## 3.2
 
 * Implement `arrayLike`
