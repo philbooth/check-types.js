@@ -25,7 +25,7 @@
         iterable: 'Invalid iterable',
         date: 'Invalid date',
         error: 'Invalid error',
-        fn: 'Invalid function',
+        function: 'Invalid function',
         match: 'Invalid string',
         contains: 'Invalid string',
         unemptyString: 'Invalid string',
