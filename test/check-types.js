@@ -1246,6 +1246,43 @@
             }
         });
 
+        test('assert throws errors with the correct messages', function () {
+            assert.throws(function () { check.assert.like({a: 5}, {b: 2}) }, 'Invalid type');
+            assert.throws(function () { check.assert.instance() }, 'Invalid type');
+            assert.throws(function () { check.assert.emptyObject() }, 'Invalid object');
+            assert.throws(function () { check.assert.object() }, 'Invalid object');
+            assert.throws(function () { check.assert.assigned() }, 'Invalid value');
+            assert.throws(function () { check.assert.undefined(5) }, 'Invalid value');
+            assert.throws(function () { check.assert.null() }, 'Invalid value');
+            assert.throws(function () { check.assert.hasLength() }, 'Invalid length');
+            assert.throws(function () { check.assert.emptyArray() }, 'Invalid array');
+            assert.throws(function () { check.assert.array() }, 'Invalid array');
+            assert.throws(function () { check.assert.arrayLike() }, 'Invalid array-like object');
+            assert.throws(function () { check.assert.iterable() }, 'Invalid iterable');
+            assert.throws(function () { check.assert.date() }, 'Invalid date');
+            assert.throws(function () { check.assert.error() }, 'Invalid error');
+            assert.throws(function () { check.assert.function() }, 'Invalid function');
+            assert.throws(function () { check.assert.match() }, 'Invalid string');
+            assert.throws(function () { check.assert.contains() }, 'Invalid string');
+            assert.throws(function () { check.assert.unemptyString() }, 'Invalid string');
+            assert.throws(function () { check.assert.string() }, 'Invalid string');
+            assert.throws(function () { check.assert.odd() }, 'Invalid number');
+            assert.throws(function () { check.assert.even() }, 'Invalid number');
+            assert.throws(function () { check.assert.inRange() }, 'Invalid number');
+            assert.throws(function () { check.assert.greaterOrEqual() }, 'Invalid number');
+            assert.throws(function () { check.assert.lessOrEqual() }, 'Invalid number');
+            assert.throws(function () { check.assert.between() }, 'Invalid number');
+            assert.throws(function () { check.assert.greater() }, 'Invalid number');
+            assert.throws(function () { check.assert.less() }, 'Invalid number');
+            assert.throws(function () { check.assert.positive() }, 'Invalid number');
+            assert.throws(function () { check.assert.negative() }, 'Invalid number');
+            assert.throws(function () { check.assert.integer() }, 'Invalid number');
+            assert.throws(function () { check.assert.zero() }, 'Invalid number');
+            assert.throws(function () { check.assert.number() }, 'Invalid number');
+            assert.throws(function () { check.assert.boolean() }, 'Invalid boolean');
+        });
+
+
         test('assert modifier runs standalone', function () {
             assert.doesNotThrow(function () {
                 check.assert(true);
