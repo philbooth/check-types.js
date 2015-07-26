@@ -5,6 +5,7 @@
 * Implement `greaterOrEqual`.
 * Implement `lessOrEqual`.
 * Implement `inRange`.
+* Fix default error message for `function`. Thanks to [Paul Jolly][myitcv].
 
 ## 3.2
 
@@ -106,4 +107,5 @@
 [rodrigo]: https://github.com/roro89
 [ialex]: https://github.com/ialex
 [clintonskakun]: https://github.com/clintonskakun
+[myitcv]: https://github.com/myitcv
 
