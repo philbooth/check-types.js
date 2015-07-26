@@ -1,6 +1,6 @@
 {
     "name": "check-types",
-    "version": "3.3.0",
+    "version": "3.3.1",
     "description": "A little library for asserting types and values.",
     "homepage": "https://github.com/philbooth/check-types.js",
     "bugs": "https://github.com/philbooth/check-types.js/issues",
