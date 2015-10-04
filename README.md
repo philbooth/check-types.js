@@ -508,7 +508,7 @@ These are implemented by
   instead of an object
   applies all of the values
   to the same predicate,
-  ignore nested objects.
+  ignoring nested objects.
 
 * `check.all(results)`:
   Returns `true`
