@@ -366,6 +366,15 @@
             assert.isTrue(check.error(new Error()));
         });
 
+        test('error with derived error returns true', function () {
+            function DerivedError () {
+                Error.call(this);
+            }
+            DerivedError.prototype = new Error();
+            DerivedError.prototype.constructor = DerivedError;
+            assert.isTrue(check.error(new DerivedError()));
+        });
+
         test('error with object returns false', function () {
             assert.isFalse(check.error({}));
         });

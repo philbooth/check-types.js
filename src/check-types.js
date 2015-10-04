@@ -290,7 +290,7 @@
      *
      */
     function error (data) {
-        return Object.prototype.toString.call(data) === '[object Error]';
+        return data instanceof Error || Object.prototype.toString.call(data) === '[object Error]';
     }
 
     /**
