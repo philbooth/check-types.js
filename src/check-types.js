@@ -28,7 +28,7 @@
         function: 'Invalid function',
         match: 'Invalid string',
         contains: 'Invalid string',
-        unemptyString: 'Invalid string',
+        nonEmptyString: 'Invalid string',
         string: 'Invalid string',
         odd: 'Invalid number',
         even: 'Invalid number',
@@ -64,7 +64,7 @@
         function: isFunction,
         match: match,
         contains: contains,
-        unemptyString: unemptyString,
+        nonEmptyString: nonEmptyString,
         string: string,
         odd: odd,
         even: even,
@@ -327,13 +327,13 @@
     }
 
     /**
-     * Public function `unemptyString`.
+     * Public function `nonEmptyString`.
      *
      * Returns `true` if something is a non-empty string,
      * `false` otherwise.
      *
      */
-    function unemptyString (data) {
+    function nonEmptyString (data) {
         return string(data) && data !== '';
     }
 
@@ -678,7 +678,7 @@
 
     function assertPredicate (predicate, args, defaultMessage) {
         var message = args[args.length - 1];
-        assertImpl(predicate.apply(null, args), unemptyString(message) ? message : defaultMessage);
+        assertImpl(predicate.apply(null, args), nonEmptyString(message) ? message : defaultMessage);
     }
 
     function assertImpl (value, message) {

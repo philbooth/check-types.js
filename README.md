@@ -213,7 +213,7 @@ These are implemented by
   if `thing` is a string,
   `false` otherwise.
 
-* `check.unemptyString(thing)`:
+* `check.nonEmptyString(thing)`:
   Returns `true`
   if `thing` is a non-empty string,
   `false` otherwise.
@@ -565,7 +565,7 @@ check.assert(myFunction(), 'Something went wrong');
 ```
 
 ```javascript
-check.apply([ 'foo', 'bar', '' ], check.unemptyString);
+check.apply([ 'foo', 'bar', '' ], check.nonEmptyString);
 // Returns [ true, true, false ]
 ```
 
@@ -575,7 +575,7 @@ check.map({
     bar: { baz: 'qux' }
 }, {
     foo: check.odd,
-    bar: { baz: check.unemptyString }
+    bar: { baz: check.nonEmptyString }
 });
 // Returns { foo: false, bar: { baz: true } }
 ```
