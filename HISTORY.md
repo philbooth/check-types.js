@@ -1,5 +1,11 @@
 # History
 
+## 4.0
+
+* Breaking changes:
+  * Rename `unemptyString` => `nonEmptyString`.
+  * Support derived error objects in `error`.
+
 ## 3.3
 
 * Implement `greaterOrEqual`.
