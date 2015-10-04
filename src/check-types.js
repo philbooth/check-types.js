@@ -148,11 +148,11 @@
      *
      */
     function instance (data, prototype) {
-        if (data && isFunction(prototype) && data instanceof prototype) {
-            return true;
+        try {
+            return data instanceof prototype;
+        } catch (error) {
+            return false;
         }
-
-        return false;
     }
 
     /**

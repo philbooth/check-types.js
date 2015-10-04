@@ -90,6 +90,10 @@
             assert.isFalse(check.instance(null, null));
         });
 
+        test('instance with object and object returns false', function () {
+            assert.isFalse(check.instance({}, {}));
+        });
+
         test('instance with object and Object returns true', function () {
             assert.isTrue(check.instance({}, Object));
         });
@@ -105,6 +109,12 @@
         test('instance with swapped arguments returns false', function () {
             assert.isFalse(check.instance(Object, {}));
         });
+
+        if (typeof document !== 'undefined' && typeof HTMLElement !== 'undefined') {
+            test('instance with element and HTMLElement returns true', function () {
+                assert.isTrue(check.instance(document.createElement('div'), HTMLElement));
+            });
+        }
 
         test('emptyObject function is defined', function () {
             assert.isFunction(check.emptyObject);
