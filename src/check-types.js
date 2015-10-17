@@ -11,6 +11,7 @@
     var messages, predicates, functions, assert, not, maybe, either, collections, slice;
 
     messages = {
+        equal: 'Invalid value',
         like: 'Invalid type',
         instance: 'Invalid type',
         emptyObject: 'Invalid object',
@@ -47,6 +48,7 @@
     };
 
     predicates = {
+        equal: equal,
         like: like,
         instance: instance,
         emptyObject: emptyObject,
@@ -112,6 +114,17 @@
         maybe: maybe,
         either: either
     }));
+
+    /**
+     * Public function `equal`.
+     *
+     * Returns `true` if two values are strictly equal,
+     * without coercion. Returns `false` otherwise.
+     *
+     */
+    function equal (lhs, rhs) {
+        return lhs === rhs;
+    }
 
     /**
      * Public function `like`.

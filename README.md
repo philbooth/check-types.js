@@ -408,6 +408,11 @@ These are implemented by
 
 #### Other predicates
 
+* `check.equal(thing, thang)`:
+  Returns `true`
+  if `thing === thang`,
+  `false` otherwise.
+
 * `check.null(thing)`:
   Returns `true`
   if `thing` is `null`,
