@@ -1,5 +1,9 @@
 # History
 
+## 4.1
+
+* Implement `equal`.
+
 ## 4.0
 
 * Breaking changes:
