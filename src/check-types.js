@@ -20,6 +20,7 @@
         undefined: 'Invalid value',
         null: 'Invalid value',
         hasLength: 'Invalid length',
+        includes: 'Invalid value',
         emptyArray: 'Invalid array',
         array: 'Invalid array',
         arrayLike: 'Invalid array-like object',
@@ -57,6 +58,7 @@
         undefined: isUndefined,
         null: isNull,
         hasLength: hasLength,
+        includes: includes,
         emptyArray: emptyArray,
         array: array,
         arrayLike: arrayLike,
@@ -232,6 +234,50 @@
      */
     function hasLength (data, value) {
         return assigned(data) && data.length === value;
+    }
+
+    /**
+     * Public function `includes`.
+     *
+     * Returns `true` if something contains `value`,
+     * `false` otherwise.
+     *
+     */
+    function includes (data, value) {
+        var iterator, iteration;
+
+        if (not.assigned(data)) {
+            return false;
+        }
+
+        try {
+            if (typeof Symbol !== 'undefined' && data[Symbol.iterator] && isFunction(data.values)) {
+                iterator = data.values();
+
+                do {
+                    iteration = iterator.next();
+
+                    if (iteration.value === value) {
+                        return true;
+                    }
+                } while (! iteration.done);
+
+                return false;
+            }
+
+            Object.keys(data).forEach(function (key) {
+                if (data[key] === value) {
+                    throw 0;
+                }
+            });
+        } catch (ignore) {
+            if (ignore.stack) {
+            console.log(ignore.stack);
+            }
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -821,10 +867,7 @@
                         (target !== 'maybe' || assigned(item)) &&
                         !predicate.apply(null, [ item ].concat(args))
                     ) {
-                        // HACK: Ideally we'd use a for...of loop and return here,
-                        //       but that syntax is not supported by ES5. We could
-                        //       use a transpiler and a build step but I'm happy
-                        //       enough with this until ES6 is the baseline.
+                        // TODO: Replace with for...of when ES6 is required.
                         throw 0;
                     }
                 });

@@ -343,6 +343,11 @@ These are implemented by
   that equals `value`,
   `false` otherwise.
 
+* `check.includes(thing, value)`:
+  Returns `true`
+  if `thing` includes `value`,
+  `false` otherwise.
+
 * `check.arrayLike(thing)`:
   Returns `true`
   if `thing` has a numeric length property,
