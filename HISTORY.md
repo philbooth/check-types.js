@@ -1,5 +1,9 @@
 # History
 
+## 4.2
+
+* Implement `includes`.
+
 ## 4.1
 
 * Implement `equal`.
