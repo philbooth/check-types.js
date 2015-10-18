@@ -9,6 +9,7 @@
 * Breaking changes:
   * Rename `unemptyString` => `nonEmptyString`.
   * Support derived error objects in `error`.
+* Fix HTMLElement instance predicate bug in Safari.
 
 ## 3.3
 
