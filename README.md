@@ -25,6 +25,7 @@ and values.
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
 * [Where can I use it?](#where-can-i-use-it)
+* [What changed from 3.x to 4.x?](#what-changed-from-3x-to-4x)
 * [What changed from 2.x to 3.x?](#what-changed-from-2x-to-3x)
 * [What changed from 1.x to 2.x?](#what-changed-from-1x-to-2x)
 * [What changed from 0.x to 1.x?](#what-changed-from-0x-to-1x)
@@ -50,7 +51,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-22 kb unminified with comments, 5.8 kb minified, 2 kb minified + gzipped.
+23 kb unminified with comments, 6.2 kb minified, 2.1 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -213,7 +214,7 @@ These are implemented by
   if `thing` is a string,
   `false` otherwise.
 
-* `check.unemptyString(thing)`:
+* `check.nonEmptyString(thing)`:
   Returns `true`
   if `thing` is a non-empty string,
   `false` otherwise.
@@ -342,6 +343,11 @@ These are implemented by
   that equals `value`,
   `false` otherwise.
 
+* `check.includes(thing, value)`:
+  Returns `true`
+  if `thing` includes `value`,
+  `false` otherwise.
+
 * `check.arrayLike(thing)`:
   Returns `true`
   if `thing` has a numeric length property,
@@ -406,6 +412,11 @@ These are implemented by
   `false` otherwise.
 
 #### Other predicates
+
+* `check.equal(thing, thang)`:
+  Returns `true`
+  if `thing === thang`,
+  `false` otherwise.
 
 * `check.null(thing)`:
   Returns `true`
@@ -508,7 +519,7 @@ These are implemented by
   instead of an object
   applies all of the values
   to the same predicate,
-  ignore nested objects.
+  ignoring nested objects.
 
 * `check.all(results)`:
   Returns `true`
@@ -565,7 +576,7 @@ check.assert(myFunction(), 'Something went wrong');
 ```
 
 ```javascript
-check.apply([ 'foo', 'bar', '' ], check.unemptyString);
+check.apply([ 'foo', 'bar', '' ], check.nonEmptyString);
 // Returns [ true, true, false ]
 ```
 
@@ -575,7 +586,7 @@ check.map({
     bar: { baz: 'qux' }
 }, {
     foo: check.odd,
-    bar: { baz: check.unemptyString }
+    bar: { baz: check.nonEmptyString }
 });
 // Returns { foo: false, bar: { baz: true } }
 ```
@@ -619,6 +630,19 @@ will adhere to that too.
 
 See the [releases]
 for more information.
+
+## What changed from 3.x to 4.x?
+
+Breaking changes
+were made to the API
+in version 4.0.0.
+
+Specifically,
+the predicate `unemptyString`
+was renamed to `nonEmptyString`
+and the predicate `error`
+was changed to support
+derived Error objects.
 
 ## What changed from 2.x to 3.x?
 

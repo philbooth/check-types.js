@@ -11,6 +11,7 @@
     var messages, predicates, functions, assert, not, maybe, either, collections, slice;
 
     messages = {
+        equal: 'Invalid value',
         like: 'Invalid type',
         instance: 'Invalid type',
         emptyObject: 'Invalid object',
@@ -19,16 +20,17 @@
         undefined: 'Invalid value',
         null: 'Invalid value',
         hasLength: 'Invalid length',
+        includes: 'Invalid value',
         emptyArray: 'Invalid array',
         array: 'Invalid array',
         arrayLike: 'Invalid array-like object',
         iterable: 'Invalid iterable',
         date: 'Invalid date',
         error: 'Invalid error',
-        fn: 'Invalid function',
+        function: 'Invalid function',
         match: 'Invalid string',
         contains: 'Invalid string',
-        unemptyString: 'Invalid string',
+        nonEmptyString: 'Invalid string',
         string: 'Invalid string',
         odd: 'Invalid number',
         even: 'Invalid number',
@@ -47,6 +49,7 @@
     };
 
     predicates = {
+        equal: equal,
         like: like,
         instance: instance,
         emptyObject: emptyObject,
@@ -55,6 +58,7 @@
         undefined: isUndefined,
         null: isNull,
         hasLength: hasLength,
+        includes: includes,
         emptyArray: emptyArray,
         array: array,
         arrayLike: arrayLike,
@@ -65,7 +69,7 @@
         function: isFunction,
         match: match,
         contains: contains,
-        unemptyString: unemptyString,
+        nonEmptyString: nonEmptyString,
         string: string,
         odd: odd,
         even: even,
@@ -115,6 +119,17 @@
     }));
 
     /**
+     * Public function `equal`.
+     *
+     * Returns `true` if two values are strictly equal,
+     * without coercion. Returns `false` otherwise.
+     *
+     */
+    function equal (lhs, rhs) {
+        return lhs === rhs;
+    }
+
+    /**
      * Public function `like`.
      *
      * Tests whether an object 'quacks like a duck'.
@@ -149,11 +164,11 @@
      *
      */
     function instance (data, prototype) {
-        if (data && isFunction(prototype) && data instanceof prototype) {
-            return true;
+        try {
+            return data instanceof prototype;
+        } catch (error) {
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -220,6 +235,50 @@
      */
     function hasLength (data, value) {
         return assigned(data) && data.length === value;
+    }
+
+    /**
+     * Public function `includes`.
+     *
+     * Returns `true` if something contains `value`,
+     * `false` otherwise.
+     *
+     */
+    function includes (data, value) {
+        var iterator, iteration;
+
+        if (not.assigned(data)) {
+            return false;
+        }
+
+        try {
+            if (typeof Symbol !== 'undefined' && data[Symbol.iterator] && isFunction(data.values)) {
+                iterator = data.values();
+
+                do {
+                    iteration = iterator.next();
+
+                    if (iteration.value === value) {
+                        return true;
+                    }
+                } while (! iteration.done);
+
+                return false;
+            }
+
+            Object.keys(data).forEach(function (key) {
+                if (data[key] === value) {
+                    throw 0;
+                }
+            });
+        } catch (ignore) {
+            if (ignore.stack) {
+            console.log(ignore.stack);
+            }
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -301,7 +360,7 @@
      *
      */
     function error (data) {
-        return Object.prototype.toString.call(data) === '[object Error]';
+        return data instanceof Error || Object.prototype.toString.call(data) === '[object Error]';
     }
 
     /**
@@ -338,13 +397,13 @@
     }
 
     /**
-     * Public function `unemptyString`.
+     * Public function `nonEmptyString`.
      *
      * Returns `true` if something is a non-empty string,
      * `false` otherwise.
      *
      */
-    function unemptyString (data) {
+    function nonEmptyString (data) {
         return string(data) && data !== '';
     }
 
@@ -689,7 +748,7 @@
 
     function assertPredicate (predicate, args, defaultMessage) {
         var message = args[args.length - 1];
-        assertImpl(predicate.apply(null, args), unemptyString(message) ? message : defaultMessage);
+        assertImpl(predicate.apply(null, args), nonEmptyString(message) ? message : defaultMessage);
     }
 
     function assertImpl (value, message) {
@@ -819,10 +878,7 @@
                         (target !== 'maybe' || assigned(item)) &&
                         !predicate.apply(null, [ item ].concat(args))
                     ) {
-                        // HACK: Ideally we'd use a for...of loop and return here,
-                        //       but that syntax is not supported by ES5. We could
-                        //       use a transpiler and a build step but I'm happy
-                        //       enough with this until ES6 is the baseline.
+                        // TODO: Replace with for...of when ES6 is required.
                         throw 0;
                     }
                 });
