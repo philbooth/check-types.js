@@ -58,6 +58,7 @@
         emptyArray: emptyArray,
         array: array,
         arrayLike: arrayLike,
+        es6Map: es6Map,
         iterable: iterable,
         date: date,
         error: error,
@@ -255,7 +256,17 @@
     }
 
     /**
-     * Public function `iterable`.
+     * Public function 'Map'
+     *
+     * Returns 'true' if something is a Map,
+     * 'false' otherwise
+     */
+    function es6Map (data) {
+        return Object.prototype.toString.call(data) === '[object Map]';
+    }
+
+    /**
+     * Public function.
      *
      * Returns `true` something is an iterable,
      * `false` otherwise.
