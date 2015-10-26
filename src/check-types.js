@@ -271,9 +271,6 @@
                 }
             });
         } catch (ignore) {
-            if (ignore.stack) {
-            console.log(ignore.stack);
-            }
             return true;
         }
 
