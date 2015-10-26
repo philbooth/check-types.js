@@ -107,7 +107,9 @@
         });
 
         test('instance with new Map and Map returns true', function() {
-            assert.isTrue(check.instance(new Map(), Map));
+            if (typeof Map !== 'undefined') {
+                assert.isTrue(check.instance(new Map(), Map));
+            }
         })
 
         test('instance with swapped arguments returns false', function () {
@@ -378,29 +380,31 @@
             }
         });
 
-        test('es6Map function is defined', function() {
-            assert.isFunction(check.es6Map);
+        test('isMap function is defined', function() {
+            assert.isFunction(check.isMap);
         });
 
-        test('es6Map with map returns true', function(){
-            assert.isTrue(check.es6Map(new Map()));
+        test('isMap with map returns true', function(){
+            if (typeof Map !== 'undefined') {
+                assert.isTrue(check.isMap(new Map()));
+            }
         });
 
-        test('es6Map with string returns false', function(){
-            assert.isFalse(check.es6Map(''));
+        test('isMap with string returns false', function(){
+            assert.isFalse(check.isMap(''));
         });
 
-        test('es6Map with array returns false', function(){
-            assert.isFalse(check.es6Map([]));
+        test('isMap with array returns false', function(){
+            assert.isFalse(check.isMap([]));
         });
 
 
-        test('es6Map with object returns false', function(){
-            assert.isFalse(check.es6Map({}));
+        test('isMap with object returns false', function(){
+            assert.isFalse(check.isMap({}));
         });
 
-        test('es6Map with arguments object returns false', function(){
-            assert.isFalse(check.es6Map(arguments));
+        test('isMap with arguments object returns false', function(){
+            assert.isFalse(check.isMap(arguments));
         })
 
         test('iterable function is defined', function () {

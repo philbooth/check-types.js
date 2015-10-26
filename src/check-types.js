@@ -62,7 +62,7 @@
         emptyArray: emptyArray,
         array: array,
         arrayLike: arrayLike,
-        es6Map: es6Map,
+        isMap: isMap,
         iterable: iterable,
         date: date,
         error: error,
@@ -320,7 +320,7 @@
      * Returns 'true' if something is a Map,
      * 'false' otherwise
      */
-    function es6Map (data) {
+    function isMap (data) {
         return Object.prototype.toString.call(data) === '[object Map]';
     }
 
