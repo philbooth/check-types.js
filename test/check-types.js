@@ -384,28 +384,21 @@
             assert.isFunction(check.isMap);
         });
 
-        test('isMap with map returns true', function(){
-            if (typeof Map !== 'undefined') {
+        if (typeof Map !== 'undefined') {
+            test('isMap with map returns true', function(){
                 assert.isTrue(check.isMap(new Map()));
-            }
-        });
-
-        test('isMap with string returns false', function(){
-            assert.isFalse(check.isMap(''));
-        });
-
-        test('isMap with array returns false', function(){
-            assert.isFalse(check.isMap([]));
-        });
-
+            });
+        }
 
         test('isMap with object returns false', function(){
             assert.isFalse(check.isMap({}));
         });
 
-        test('isMap with arguments object returns false', function(){
-            assert.isFalse(check.isMap(arguments));
-        })
+        if (typeof Set !== 'undefined') {
+            test('isMap with set returns true', function(){
+                assert.isFalse(check.isMap(new Set()));
+            });
+        }
 
         test('iterable function is defined', function () {
             assert.isFunction(check.iterable);
