@@ -62,6 +62,7 @@
         emptyArray: emptyArray,
         array: array,
         arrayLike: arrayLike,
+        isMap: isMap,
         iterable: iterable,
         date: date,
         error: error,
@@ -311,7 +312,17 @@
     }
 
     /**
-     * Public function `iterable`.
+     * Public function 'Map'
+     *
+     * Returns 'true' if something is a Map,
+     * 'false' otherwise
+     */
+    function isMap (data) {
+        return Object.prototype.toString.call(data) === '[object Map]';
+    }
+
+    /**
+     * Public function.
      *
      * Returns `true` something is an iterable,
      * `false` otherwise.
