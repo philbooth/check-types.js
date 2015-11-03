@@ -1,5 +1,9 @@
 # History
 
+## 4.3
+
+* Implement `isMap`. Thanks to [Ryan Temple][ryantemple].
+
 ## 4.2
 
 * Implement `includes`.
@@ -123,4 +127,5 @@
 [ialex]: https://github.com/ialex
 [clintonskakun]: https://github.com/clintonskakun
 [myitcv]: https://github.com/myitcv
+[ryantemple]: https://github.com/ryantemple
 
