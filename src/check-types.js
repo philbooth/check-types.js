@@ -26,6 +26,7 @@
     positive: 'Invalid number',
     negative: 'Invalid number',
     string: 'Invalid string',
+    emptyString: 'Invalid string',
     nonEmptyString: 'Invalid string',
     contains: 'Invalid string',
     match: 'Invalid string',
@@ -65,6 +66,7 @@
     positive: positive,
     negative: negative,
     string: string,
+    emptyString: emptyString,
     nonEmptyString: nonEmptyString,
     contains: contains,
     match: match,
@@ -290,6 +292,15 @@
    */
   function string (data) {
     return typeof data === 'string';
+  }
+
+  /**
+   * Public function `emptyString`.
+   *
+   * Returns true if `data` is the empty string, false otherwise.
+   */
+  function emptyString (data) {
+    return data === '';
   }
 
   /**
