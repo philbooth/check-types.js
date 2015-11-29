@@ -25,6 +25,7 @@ and values.
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
 * [Where can I use it?](#where-can-i-use-it)
+* [What changed from 4.x to 5.x?](#what-changed-from-4x-to-5x)
 * [What changed from 3.x to 4.x?](#what-changed-from-3x-to-4x)
 * [What changed from 2.x to 3.x?](#what-changed-from-2x-to-3x)
 * [What changed from 1.x to 2.x?](#what-changed-from-1x-to-2x)
@@ -637,6 +638,18 @@ will adhere to that too.
 
 See the [releases]
 for more information.
+
+## What changed from 4.x to 5.x?
+
+Breaking changes
+were made to the API
+in version 5.0.0.
+
+Specifically,
+the predicates `isMap` and `error` were removed
+in favour of the new predicate `builtIn`,
+which can be used to test for
+all built-in objects.
 
 ## What changed from 3.x to 4.x?
 
