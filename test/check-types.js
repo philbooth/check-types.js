@@ -779,26 +779,6 @@
       });
     }
 
-    test('isMap function is defined', function() {
-      assert.isFunction(check.isMap);
-    });
-
-    if (typeof Map !== 'undefined') {
-      test('isMap with map returns true', function(){
-        assert.isTrue(check.isMap(new Map()));
-      });
-    }
-
-    test('isMap with object returns false', function(){
-      assert.isFalse(check.isMap({}));
-    });
-
-    if (typeof Set !== 'undefined') {
-      test('isMap with Set returns true', function(){
-        assert.isFalse(check.isMap(new Set()));
-      });
-    }
-
     test('iterable function is defined', function () {
       assert.isFunction(check.iterable);
     });
@@ -919,27 +899,6 @@
 
     test('date with object returns false', function () {
       assert.isFalse(check.date({}));
-    });
-
-    test('error function is defined', function () {
-      assert.isFunction(check.error);
-    });
-
-    test('error with error returns true', function () {
-      assert.isTrue(check.error(new Error()));
-    });
-
-    test('error with derived error returns true', function () {
-      function DerivedError () {
-        Error.call(this);
-      }
-      DerivedError.prototype = new Error();
-      DerivedError.prototype.constructor = DerivedError;
-      assert.isTrue(check.error(new DerivedError()));
-    });
-
-    test('error with object returns false', function () {
-      assert.isFalse(check.error({}));
     });
 
     test('function function is defined', function () {
@@ -1198,7 +1157,6 @@
       assert.isFunction(check.assert.arrayLike);
       assert.isFunction(check.assert.iterable);
       assert.isFunction(check.assert.date);
-      assert.isFunction(check.assert.error);
       assert.isFunction(check.assert.function);
       assert.isFunction(check.assert.match);
       assert.isFunction(check.assert.contains);
@@ -1231,21 +1189,21 @@
 
     test('assert modifier is applied to not', function () {
       assert.isObject(check.assert.not);
-      assert.lengthOf(Object.keys(check.assert.not), 38);
+      assert.lengthOf(Object.keys(check.assert.not), 36);
     });
 
     test('assert modifier is applied to maybe', function () {
       assert.isObject(check.assert.maybe);
-      assert.lengthOf(Object.keys(check.assert.maybe), 38);
+      assert.lengthOf(Object.keys(check.assert.maybe), 36);
     });
 
     test('assert modifier is applied to either', function () {
       assert.isObject(check.assert.either);
-      assert.lengthOf(Object.keys(check.assert.either), 38);
+      assert.lengthOf(Object.keys(check.assert.either), 36);
     });
 
     test('assert modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.assert), 41);
+      assert.lengthOf(Object.keys(check.assert), 39);
     });
 
     test('assert modifier throws when value is wrong', function () {
@@ -1293,41 +1251,42 @@
     });
 
     test('assert throws errors with the correct messages', function () {
-      assert.throws(function () { check.assert.like({a: 5}, {b: 2}) }, 'Invalid type');
-      assert.throws(function () { check.assert.instance() }, 'Invalid type');
-      assert.throws(function () { check.assert.emptyObject() }, 'Invalid object');
-      assert.throws(function () { check.assert.object() }, 'Invalid object');
-      assert.throws(function () { check.assert.assigned() }, 'Invalid value');
+      assert.throws(function () { check.assert.equal(0, 1) }, 'Invalid value');
       assert.throws(function () { check.assert.undefined(5) }, 'Invalid value');
       assert.throws(function () { check.assert.null() }, 'Invalid value');
-      assert.throws(function () { check.assert.hasLength() }, 'Invalid length');
-      assert.throws(function () { check.assert.includes() }, 'Invalid value');
-      assert.throws(function () { check.assert.emptyArray() }, 'Invalid array');
-      assert.throws(function () { check.assert.array() }, 'Invalid array');
-      assert.throws(function () { check.assert.arrayLike() }, 'Invalid array-like object');
-      assert.throws(function () { check.assert.iterable() }, 'Invalid iterable');
-      assert.throws(function () { check.assert.date() }, 'Invalid date');
-      assert.throws(function () { check.assert.error() }, 'Invalid error');
-      assert.throws(function () { check.assert.function() }, 'Invalid function');
-      assert.throws(function () { check.assert.match() }, 'Invalid string');
-      assert.throws(function () { check.assert.contains() }, 'Invalid string');
-      assert.throws(function () { check.assert.nonEmptyString() }, 'Invalid string');
-      assert.throws(function () { check.assert.string() }, 'Invalid string');
-      assert.throws(function () { check.assert.odd() }, 'Invalid number');
-      assert.throws(function () { check.assert.even() }, 'Invalid number');
-      assert.throws(function () { check.assert.inRange() }, 'Invalid number');
-      assert.throws(function () { check.assert.greaterOrEqual() }, 'Invalid number');
-      assert.throws(function () { check.assert.lessOrEqual() }, 'Invalid number');
-      assert.throws(function () { check.assert.between() }, 'Invalid number');
-      assert.throws(function () { check.assert.greater() }, 'Invalid number');
-      assert.throws(function () { check.assert.less() }, 'Invalid number');
-      assert.throws(function () { check.assert.positive() }, 'Invalid number');
-      assert.throws(function () { check.assert.negative() }, 'Invalid number');
-      assert.throws(function () { check.assert.integer() }, 'Invalid number');
+      assert.throws(function () { check.assert.assigned() }, 'Invalid value');
       assert.throws(function () { check.assert.zero() }, 'Invalid number');
       assert.throws(function () { check.assert.number() }, 'Invalid number');
+      assert.throws(function () { check.assert.integer() }, 'Invalid number');
+      assert.throws(function () { check.assert.even() }, 'Invalid number');
+      assert.throws(function () { check.assert.odd() }, 'Invalid number');
+      assert.throws(function () { check.assert.greater() }, 'Invalid number');
+      assert.throws(function () { check.assert.less() }, 'Invalid number');
+      assert.throws(function () { check.assert.between() }, 'Invalid number');
+      assert.throws(function () { check.assert.greaterOrEqual() }, 'Invalid number');
+      assert.throws(function () { check.assert.lessOrEqual() }, 'Invalid number');
+      assert.throws(function () { check.assert.inRange() }, 'Invalid number');
+      assert.throws(function () { check.assert.positive() }, 'Invalid number');
+      assert.throws(function () { check.assert.negative() }, 'Invalid number');
+      assert.throws(function () { check.assert.string() }, 'Invalid string');
+      assert.throws(function () { check.assert.nonEmptyString() }, 'Invalid string');
+      assert.throws(function () { check.assert.contains() }, 'Invalid string');
+      assert.throws(function () { check.assert.match() }, 'Invalid string');
       assert.throws(function () { check.assert.boolean() }, 'Invalid boolean');
-      assert.throws(function () { check.assert.equal(0, 1) }, 'Invalid value');
+      assert.throws(function () { check.assert.object() }, 'Invalid object');
+      assert.throws(function () { check.assert.emptyObject() }, 'Invalid object');
+      assert.throws(function () { check.assert.instance() }, 'Invalid type');
+      assert.throws(function () { check.assert.builtIn() }, 'Invalid type');
+      assert.throws(function () { check.assert.userDefined() }, 'Invalid type');
+      assert.throws(function () { check.assert.like({a: 5}, {b: 2}) }, 'Invalid type');
+      assert.throws(function () { check.assert.array() }, 'Invalid array');
+      assert.throws(function () { check.assert.emptyArray() }, 'Invalid array');
+      assert.throws(function () { check.assert.arrayLike() }, 'Invalid array-like object');
+      assert.throws(function () { check.assert.iterable() }, 'Invalid iterable');
+      assert.throws(function () { check.assert.includes() }, 'Invalid value');
+      assert.throws(function () { check.assert.hasLength() }, 'Invalid length');
+      assert.throws(function () { check.assert.date() }, 'Invalid date');
+      assert.throws(function () { check.assert.function() }, 'Invalid function');
     });
 
 
@@ -1374,7 +1333,7 @@
     });
 
     test('not modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.not), 38);
+      assert.lengthOf(Object.keys(check.not), 36);
     });
 
     test('not modifier returns true when predicate returns false', function () {
@@ -1419,7 +1378,7 @@
     });
 
     test('maybe modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.maybe), 38);
+      assert.lengthOf(Object.keys(check.maybe), 36);
     });
 
     test('maybe modifier returns true when value is undefined', function () {
@@ -1470,13 +1429,13 @@
     });
 
     test('either modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.either), 38);
+      assert.lengthOf(Object.keys(check.either), 36);
     });
 
     test('either modifier returns or object', function () {
       assert.isObject(check.either.string(''));
       assert.isObject(check.either.string('').or);
-      assert.lengthOf(Object.keys(check.either.string('').or), 38);
+      assert.lengthOf(Object.keys(check.either.string('').or), 36);
     });
 
     test('either returns true when first predicate is true', function () {
@@ -1548,44 +1507,43 @@
     });
 
     test('array.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.array.of), 38);
-      assert.isFunction(check.array.of.like);
+      assert.lengthOf(Object.keys(check.array.of), 36);
+      assert.isFunction(check.array.of.equal);
+      assert.isFunction(check.array.of.undefined);
+      assert.isFunction(check.array.of.null);
+      assert.isFunction(check.array.of.assigned);
+      assert.isFunction(check.array.of.zero);
+      assert.isFunction(check.array.of.number);
+      assert.isFunction(check.array.of.integer);
+      assert.isFunction(check.array.of.even);
+      assert.isFunction(check.array.of.odd);
+      assert.isFunction(check.array.of.greater);
+      assert.isFunction(check.array.of.less);
+      assert.isFunction(check.array.of.between);
+      assert.isFunction(check.array.of.greaterOrEqual);
+      assert.isFunction(check.array.of.lessOrEqual);
+      assert.isFunction(check.array.of.inRange);
+      assert.isFunction(check.array.of.positive);
+      assert.isFunction(check.array.of.negative);
+      assert.isFunction(check.array.of.string);
+      assert.isFunction(check.array.of.nonEmptyString);
+      assert.isFunction(check.array.of.contains);
+      assert.isFunction(check.array.of.match);
+      assert.isFunction(check.array.of.boolean);
+      assert.isFunction(check.array.of.object);
+      assert.isFunction(check.array.of.emptyObject);
       assert.isFunction(check.array.of.instance);
       assert.isFunction(check.array.of.builtIn);
       assert.isFunction(check.array.of.userDefined);
-      assert.isFunction(check.array.of.emptyObject);
-      assert.isFunction(check.array.of.object);
-      assert.isFunction(check.array.of.null);
-      assert.isFunction(check.array.of.undefined);
-      assert.isFunction(check.array.of.assigned);
-      assert.isFunction(check.array.of.hasLength);
-      assert.isFunction(check.array.of.includes);
-      assert.isFunction(check.array.of.emptyArray);
+      assert.isFunction(check.array.of.like);
       assert.isFunction(check.array.of.array);
+      assert.isFunction(check.array.of.emptyArray);
       assert.isFunction(check.array.of.arrayLike);
       assert.isFunction(check.array.of.iterable);
+      assert.isFunction(check.array.of.includes);
+      assert.isFunction(check.array.of.hasLength);
       assert.isFunction(check.array.of.date);
-      assert.isFunction(check.array.of.error);
       assert.isFunction(check.array.of.function);
-      assert.isFunction(check.array.of.match);
-      assert.isFunction(check.array.of.contains);
-      assert.isFunction(check.array.of.nonEmptyString);
-      assert.isFunction(check.array.of.string);
-      assert.isFunction(check.array.of.odd);
-      assert.isFunction(check.array.of.even);
-      assert.isFunction(check.array.of.inRange);
-      assert.isFunction(check.array.of.greaterOrEqual);
-      assert.isFunction(check.array.of.lessOrEqual);
-      assert.isFunction(check.array.of.between);
-      assert.isFunction(check.array.of.greater);
-      assert.isFunction(check.array.of.less);
-      assert.isFunction(check.array.of.positive);
-      assert.isFunction(check.array.of.negative);
-      assert.isFunction(check.array.of.zero);
-      assert.isFunction(check.array.of.integer);
-      assert.isFunction(check.array.of.number);
-      assert.isFunction(check.array.of.boolean);
-      assert.isFunction(check.array.of.equal);
     });
 
     test('array.of returns true when predicate is true for all items', function () {
@@ -1675,7 +1633,7 @@
     });
 
     test('arrayLike.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.arrayLike.of), 38);
+      assert.lengthOf(Object.keys(check.arrayLike.of), 36);
     });
 
     test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -1765,7 +1723,7 @@
     });
 
     test('iterable.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.iterable.of), 38);
+      assert.lengthOf(Object.keys(check.iterable.of), 36);
     });
 
     if (typeof Set !== 'undefined') {
@@ -1855,7 +1813,7 @@
     });
 
     test('object.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.object.of), 38);
+      assert.lengthOf(Object.keys(check.object.of), 36);
     });
 
     test('object.of returns true when predicate is true for all items', function () {

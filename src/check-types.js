@@ -43,7 +43,6 @@
     includes: 'Invalid value',
     hasLength: 'Invalid length',
     date: 'Invalid date',
-    error: 'Invalid error',
     function: 'Invalid function'
   };
 
@@ -80,11 +79,9 @@
     emptyArray: emptyArray,
     arrayLike: arrayLike,
     iterable: iterable,
-    isMap: isMap,
     includes: includes,
     hasLength: hasLength,
     date: date,
-    error: error,
     function: isFunction
   };
 
@@ -461,15 +458,6 @@
   }
 
   /**
-   * Public function 'Map'
-   *
-   * Returns true if `data` is a Map, false otherwise.
-   */
-  function isMap (data) {
-    return Object.prototype.toString.call(data) === '[object Map]';
-  }
-
-  /**
    * Public function `includes`.
    *
    * Returns true if `data` contains `value`, false otherwise.
@@ -525,15 +513,6 @@
    */
   function date (data) {
     return builtIn(data, Date) && ! isNaN(data.getTime());
-  }
-
-  /**
-   * Public function `error`.
-   *
-   * Returns true if `data` is an error, false otherwise.
-   */
-  function error (data) {
-    return builtIn(data, Error);
   }
 
   /**
