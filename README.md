@@ -12,15 +12,15 @@ and values.
 * [How do I use it?](#how-do-i-use-it)
     * [Loading the library](#loading-the-library)
     * [Calling the exported functions](#calling-the-exported-functions)
+        * [General predicates](#general-predicates)
         * [String predicates](#string-predicates)
         * [Number predicates](#number-predicates)
         * [Boolean predicates](#boolean-predicates)
-        * [Array predicates](#array-predicates)
         * [Object predicates](#object-predicates)
+        * [Array predicates](#array-predicates)
         * [Date predicates](#date-predicates)
         * [Error predicates](#error-predicates)
         * [Function predicates](#function-predicates)
-        * [Other predicates](#other-predicates)
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
@@ -207,6 +207,35 @@ These are implemented by
 `check.any` and
 `check.all`.
 
+#### General predicates
+
+* `check.equal(thing, thang)`:
+  Returns `true`
+  if `thing === thang`,
+  `false` otherwise.
+
+* `check.null(thing)`:
+  Returns `true`
+  if `thing` is `null`,
+  `false` otherwise.
+
+* `check.undefined(thing)`:
+  Returns `true`
+  if `thing` is `undefined`,
+  `false` otherwise.
+
+* `check.assigned(thing)`:
+  Returns `true`
+  if `thing` is not
+  `null` or `undefined`,
+  `false` otherwise.
+
+* `check.hasLength(thing, value)`:
+  Returns `true`
+  if `thing` has a length property
+  that equals `value`,
+  `false` otherwise.
+
 #### String predicates
 
 * `check.string(thing)`:
@@ -236,12 +265,6 @@ These are implemented by
   that matches `regex`,
   `false` otherwise.
 
-* `check.hasLength(thing, value)`:
-  Returns `true`
-  if `thing` has a length property
-  that equals `value`,
-  `false` otherwise.
-
 #### Number predicates
 
 * `check.number(thing)`:
@@ -253,6 +276,21 @@ These are implemented by
   `Number.POSITIVE_INFINITY` and
   `Number.NEGATIVE_INFINITY`
   are not considered numbers here.
+
+* `check.integer(thing)`:
+  Returns `true`
+  if `thing` is an integer,
+  `false` otherwise.
+
+* `check.zero(thing)`:
+  Returns `true`
+  if `thing` is zero,
+  `false` otherwise.
+
+* `check.infinity(thing)`:
+  Returns `true`
+  if `thing` is positive or negative infinity,
+  `false` otherwise.
 
 * `check.greater(thing, value)`:
   Returns `true` if `thing` is a number
@@ -303,16 +341,6 @@ These are implemented by
   less than zero,
   `false` otherwise.
 
-* `check.zero(thing)`:
-  Returns `true`
-  if `thing` is zero,
-  `false` otherwise.
-
-* `check.infinity(thing)`:
-  Returns `true`
-  if `thing` is positive or negative infinity,
-  `false` otherwise.
-
 * `check.odd(thing)`:
   Returns `true`
   if `thing` is an odd number,
@@ -323,53 +351,12 @@ These are implemented by
   if `thing` is an even number,
   `false` otherwise.
 
-* `check.integer(thing)`:
-  Returns `true`
-  if `thing` is an integer,
-  `false` otherwise.
-
 #### Boolean predicates
 
 * `check.boolean(thing)`:
   Returns `true`
   if `thing` is a boolean,
   `false` otherwise.
-
-#### Array predicates
-
-* `check.array(thing)`:
-  Returns `true`
-  if `thing` is an array,
-  `false` otherwise.
-
-* `check.emptyArray(thing)`:
-  Returns `true`
-  if `thing` is an empty array,
-  `false` otherwise.
-
-* `check.hasLength(thing, value)`:
-  Returns `true`
-  if `thing` has a length property
-  that equals `value`,
-  `false` otherwise.
-
-* `check.includes(thing, value)`:
-  Returns `true`
-  if `thing` includes `value`,
-  `false` otherwise.
-
-* `check.arrayLike(thing)`:
-  Returns `true`
-  if `thing` has a numeric length property,
-  `false` otherwise.
-
-* `check.iterable(thing)`:
-  Returns `true`
-  if `thing` implements the iterable protocol,
-  `false` otherwise.
-  In pre-ES6 environments,
-  this predicate falls back
-  to `arrayLike` behaviour.
 
 #### Object predicates
 
@@ -410,6 +397,36 @@ These are implemented by
   if `thing` has all of the properties of `duck`,
   `false` otherwise.
 
+#### Array predicates
+
+* `check.array(thing)`:
+  Returns `true`
+  if `thing` is an array,
+  `false` otherwise.
+
+* `check.emptyArray(thing)`:
+  Returns `true`
+  if `thing` is an empty array,
+  `false` otherwise.
+
+* `check.arrayLike(thing)`:
+  Returns `true`
+  if `thing` has a numeric length property,
+  `false` otherwise.
+
+* `check.iterable(thing)`:
+  Returns `true`
+  if `thing` implements the iterable protocol,
+  `false` otherwise.
+  In pre-ES6 environments,
+  this predicate falls back
+  to `arrayLike` behaviour.
+
+* `check.includes(thing, value)`:
+  Returns `true`
+  if `thing` includes `value`,
+  `false` otherwise.
+
 #### Date predicates
 
 * `check.date(thing)`:
@@ -422,35 +439,6 @@ These are implemented by
 * `check.function(thing)`:
   Returns `true`
   if `thing` is a function,
-  `false` otherwise.
-
-* `check.hasLength(thing, value)`:
-  Returns `true`
-  if `thing` has a length property
-  that equals `value`,
-  `false` otherwise.
-
-#### Other predicates
-
-* `check.equal(thing, thang)`:
-  Returns `true`
-  if `thing === thang`,
-  `false` otherwise.
-
-* `check.null(thing)`:
-  Returns `true`
-  if `thing` is `null`,
-  `false` otherwise.
-
-* `check.undefined(thing)`:
-  Returns `true`
-  if `thing` is `undefined`,
-  `false` otherwise.
-
-* `check.assigned(thing)`:
-  Returns `true`
-  if `thing` is not
-  `null` or `undefined`,
   `false` otherwise.
 
 #### Modifiers

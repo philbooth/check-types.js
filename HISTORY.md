@@ -1,5 +1,15 @@
 # History
 
+## 5.0
+
+* Breaking changes:
+  * `isMap` predicate removed (see `builtIn`).
+  * `error` predicate removed (see `builtIn`).
+* Implement `builtIn` predicate.
+* Implement `userDefined` predicate.
+* Implement `emptyString` predicate.
+* Implement `infinity` predicate.
+
 ## 4.3
 
 * Implement `isMap`. Thanks to [Ryan Temple][ryantemple].
