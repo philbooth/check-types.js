@@ -417,13 +417,6 @@ These are implemented by
   if `thing` is a valid date,
   `false` otherwise.
 
-#### Error predicates
-
-* `check.error(thing)`:
-  Returns `true`
-  if `thing` is an error,
-  `false` otherwise.
-
 #### Function predicates
 
 * `check.function(thing)`:
