@@ -13,6 +13,7 @@
     null: 'Invalid value',
     assigned: 'Invalid value',
     zero: 'Invalid number',
+    infinity: 'Invalid number',
     number: 'Invalid number',
     integer: 'Invalid number',
     even: 'Invalid number',
@@ -53,6 +54,7 @@
     null: isNull,
     assigned: assigned,
     zero: zero,
+    infinity: infinity,
     number: number,
     integer : integer,
     even: even,
@@ -162,6 +164,15 @@
    */
   function zero (data) {
     return data === 0;
+  }
+
+  /**
+   * Public function `infinity`.
+   *
+   * Returns true if `data` is positive or negative infinity, false otherwise.
+   */
+  function infinity (data) {
+    return data === Number.POSITIVE_INFINITY || data === Number.NEGATIVE_INFINITY;
   }
 
   /**
