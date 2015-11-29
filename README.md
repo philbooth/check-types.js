@@ -214,6 +214,11 @@ These are implemented by
   if `thing` is a string,
   `false` otherwise.
 
+* `check.emptyString(thing)`:
+  Returns `true`
+  if `thing` is the empty string,
+  `false` otherwise.
+
 * `check.nonEmptyString(thing)`:
   Returns `true`
   if `thing` is a non-empty string,
@@ -301,6 +306,11 @@ These are implemented by
 * `check.zero(thing)`:
   Returns `true`
   if `thing` is zero,
+  `false` otherwise.
+
+* `check.infinity(thing)`:
+  Returns `true`
+  if `thing` is positive or negative infinity,
   `false` otherwise.
 
 * `check.odd(thing)`:
