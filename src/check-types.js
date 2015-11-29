@@ -14,6 +14,8 @@
         equal: 'Invalid value',
         like: 'Invalid type',
         instance: 'Invalid type',
+        builtIn: 'Invalid type',
+        userDefined: 'Invalid type',
         emptyObject: 'Invalid object',
         object: 'Invalid object',
         assigned: 'Invalid value',
@@ -52,6 +54,8 @@
         equal: equal,
         like: like,
         instance: instance,
+        builtIn: builtIn,
+        userDefined: userDefined,
         emptyObject: emptyObject,
         object: object,
         assigned: assigned,
@@ -121,9 +125,8 @@
     /**
      * Public function `equal`.
      *
-     * Returns `true` if two values are strictly equal,
-     * without coercion. Returns `false` otherwise.
-     *
+     * Returns `true` if two values are strictly equal, without coercion.
+     * Returns `false` otherwise.
      */
     function equal (lhs, rhs) {
         return lhs === rhs;
@@ -159,13 +162,44 @@
     /**
      * Public function `instance`.
      *
-     * Returns `true` if an object is an instance of a prototype,
-     * `false` otherwise.
-     *
+     * Returns `true` if `object` is an instance of `prototype`, or `false`
+     * otherwise.
      */
-    function instance (data, prototype) {
+    function instance (object, prototype) {
         try {
-            return data instanceof prototype;
+            return object instanceof prototype;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    /**
+     * Public function `builtIn`.
+     *
+     * Returns `true` if `object` is an instance of `prototype`, or `false`
+     * otherwise. Assumes `prototype` is a standard built-in object and
+     * additionally checks the result of `Object.prototype.toString`.
+     */
+    function builtIn (object, prototype) {
+        try {
+            return instance(object, prototype) ||
+                Object.prototype.toString.call(object) === '[object ' + prototype.name + ']';
+        } catch (error) {
+            return false;
+        }
+    }
+
+    /**
+     * Public function `userDefined`.
+     *
+     * Returns `true` if `object` is an instance of `prototype`, `false`
+     * otherwise. Assumes `prototype` is a user-defined object and also
+     * compares the value of `constructor.name`.
+     */
+    function userDefined (object, prototype) {
+        try {
+            return object instanceof prototype
+                || (object.constructor && object.constructor.name === prototype.name);
         } catch (error) {
             return false;
         }

@@ -378,6 +378,22 @@ These are implemented by
   if `thing` is an instance of `prototype`,
   `false` otherwise.
 
+* `check.builtIn(thing, prototype)`:
+  Returns `true`
+  if `thing` is an instance of `prototype`,
+  `false` otherwise.
+  Assumes `thing` is a standard built-in object
+  and tests the result of `Object.prototype.toString.call(thing)`
+  if the `instanceof` test fails.
+
+* `check.userDefined(thing, prototype)`:
+  Returns `true`
+  if `thing` is an instance of `prototype`,
+  `false` otherwise.
+  Assumes `thing` is a user-defined object
+  and tests the value of `thing.constructor.name`
+  if the `instanceof` test fails.
+
 * `check.like(thing, duck)`:
   Duck-typing checker.
   Returns `true`

@@ -78,42 +78,24 @@
             assert.isFunction(check.instance);
         });
 
-        test('instance with new Error and Error returns true', function () {
+        test('instance with valid instance returns true', function () {
             assert.isTrue(check.instance(new Error(), Error));
         });
 
-        test('instance with object and Error returns false', function () {
-            assert.isFalse(check.instance({}, Error));
+        test('instance with invalid instance returns false', function () {
+            assert.isFalse(check.instance(new Error(), Array));
         });
 
-        test('instance with null and null returns false', function () {
-            assert.isFalse(check.instance(null, null));
+        test('instance with derived instance returns true', function () {
+            assert.isTrue(check.instance(new Error(), Object));
         });
 
-        test('instance with object and object returns false', function () {
-            assert.isFalse(check.instance({}, {}));
-        });
-
-        test('instance with object and Object returns true', function () {
-            assert.isTrue(check.instance({}, Object));
-        });
-
-        test('instance with null and Object returns false', function () {
+        test('instance with null object returns false', function () {
             assert.isFalse(check.instance(null, Object));
         });
 
-        test('instance with array and Array returns true', function () {
-            assert.isTrue(check.instance([], Array));
-        });
-
-        test('instance with new Map and Map returns true', function() {
-            if (typeof Map !== 'undefined') {
-                assert.isTrue(check.instance(new Map(), Map));
-            }
-        })
-
-        test('instance with swapped arguments returns false', function () {
-            assert.isFalse(check.instance(Object, {}));
+        test('instance with null prototype returns false', function () {
+            assert.isFalse(check.instance(null, null));
         });
 
         if (typeof document !== 'undefined' && typeof HTMLElement !== 'undefined') {
@@ -121,6 +103,101 @@
                 assert.isTrue(check.instance(document.createElement('div'), HTMLElement));
             });
         }
+
+        test('builtIn function is defined', function () {
+            assert.isFunction(check.builtIn);
+        });
+
+        test('builtIn with valid instance returns true', function () {
+            assert.isTrue(check.builtIn([], Array));
+        });
+
+        test('builtIn with invalid instance returns false', function () {
+            assert.isFalse(check.builtIn({}, Array));
+        });
+
+        test('builtIn with derived instance returns true', function () {
+            assert.isTrue(check.builtIn([], Object));
+        });
+
+        test('userDefined function is defined', function () {
+            assert.isFunction(check.userDefined);
+        });
+
+        test('userDefined with valid instance returns true', function () {
+            assert.isTrue(check.userDefined(/./, RegExp));
+        });
+
+        test('userDefined with invalid instance returns false', function () {
+            assert.isFalse(check.userDefined('', RegExp));
+        });
+
+        test('userDefined with derived instance returns true', function () {
+            assert.isTrue(check.userDefined(/./, Object));
+        });
+
+        suite('mock Object.prototype.toString:', function () {
+            var toString;
+
+            setup(function () {
+                toString = Object.prototype.toString;
+                Object.prototype.toString = function () {
+                    return '[object Array]';
+                };
+            });
+
+            teardown(function () {
+                Object.prototype.toString = toString;
+            });
+
+            test('instance with matching prototype returns false', function () {
+                assert.isFalse(check.instance({}, Array));
+            });
+
+            test('builtIn with matching prototype returns true', function () {
+                assert.isTrue(check.builtIn({}, Array));
+            });
+
+            test('builtIn with non-matching prototype returns false', function () {
+                assert.isFalse(check.builtIn({}, Error));
+            });
+
+            test('userDefined with matching prototype returns false', function () {
+                assert.isFalse(check.userDefined({}, Array));
+            });
+        });
+
+        suite('mock constructor.name:', function () {
+            var object;
+
+            setup(function () {
+                object = {
+                    constructor: {
+                        name: 'Array'
+                    }
+                };
+            });
+
+            teardown(function () {
+                Object.prototype.toString = toString;
+            });
+
+            test('instance with matching prototype returns false', function () {
+                assert.isFalse(check.instance(object, Array));
+            });
+
+            test('builtIn with matching prototype returns false', function () {
+                assert.isFalse(check.builtIn(object, Array));
+            });
+
+            test('userDefined with matching prototype returns true', function () {
+                assert.isTrue(check.userDefined(object, Array));
+            });
+
+            test('userDefined with non-matching prototype returns false', function () {
+                assert.isFalse(check.userDefined(object, Error));
+            });
+        });
 
         test('emptyObject function is defined', function () {
             assert.isFunction(check.emptyObject);
@@ -1292,21 +1369,21 @@
 
         test('assert modifier is applied to not', function () {
             assert.isObject(check.assert.not);
-            assert.lengthOf(Object.keys(check.assert.not), 36);
+            assert.lengthOf(Object.keys(check.assert.not), 38);
         });
 
         test('assert modifier is applied to maybe', function () {
             assert.isObject(check.assert.maybe);
-            assert.lengthOf(Object.keys(check.assert.maybe), 36);
+            assert.lengthOf(Object.keys(check.assert.maybe), 38);
         });
 
         test('assert modifier is applied to either', function () {
             assert.isObject(check.assert.either);
-            assert.lengthOf(Object.keys(check.assert.either), 36);
+            assert.lengthOf(Object.keys(check.assert.either), 38);
         });
 
         test('assert modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.assert), 39);
+            assert.lengthOf(Object.keys(check.assert), 41);
         });
 
         test('assert modifier throws when value is wrong', function () {
@@ -1435,7 +1512,7 @@
         });
 
         test('not modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.not), 36);
+            assert.lengthOf(Object.keys(check.not), 38);
         });
 
         test('not modifier returns true when predicate returns false', function () {
@@ -1480,7 +1557,7 @@
         });
 
         test('maybe modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.maybe), 36);
+            assert.lengthOf(Object.keys(check.maybe), 38);
         });
 
         test('maybe modifier returns true when value is undefined', function () {
@@ -1531,13 +1608,13 @@
         });
 
         test('either modifier has correct number of keys', function () {
-            assert.lengthOf(Object.keys(check.either), 36);
+            assert.lengthOf(Object.keys(check.either), 38);
         });
 
         test('either modifier returns or object', function () {
             assert.isObject(check.either.string(''));
             assert.isObject(check.either.string('').or);
-            assert.lengthOf(Object.keys(check.either.string('').or), 36);
+            assert.lengthOf(Object.keys(check.either.string('').or), 38);
         });
 
         test('either returns true when first predicate is true', function () {
@@ -1609,9 +1686,11 @@
         });
 
         test('array.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.array.of), 36);
+            assert.lengthOf(Object.keys(check.array.of), 38);
             assert.isFunction(check.array.of.like);
             assert.isFunction(check.array.of.instance);
+            assert.isFunction(check.array.of.builtIn);
+            assert.isFunction(check.array.of.userDefined);
             assert.isFunction(check.array.of.emptyObject);
             assert.isFunction(check.array.of.object);
             assert.isFunction(check.array.of.null);
@@ -1734,7 +1813,7 @@
         });
 
         test('arrayLike.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.arrayLike.of), 36);
+            assert.lengthOf(Object.keys(check.arrayLike.of), 38);
         });
 
         test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -1824,7 +1903,7 @@
         });
 
         test('iterable.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.iterable.of), 36);
+            assert.lengthOf(Object.keys(check.iterable.of), 38);
         });
 
         if (typeof Set !== 'undefined') {
@@ -1914,7 +1993,7 @@
         });
 
         test('object.of has predicates defined', function () {
-            assert.lengthOf(Object.keys(check.object.of), 36);
+            assert.lengthOf(Object.keys(check.object.of), 38);
         });
 
         test('object.of returns true when predicate is true for all items', function () {
