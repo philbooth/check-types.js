@@ -1,94 +1,91 @@
 /*globals define, module, Symbol */
 
-/**
- * This module exports functions for checking types
- * and throwing exceptions.
- */
-
 (function (globals) {
   'use strict';
 
-  var messages, predicates, functions, assert, not, maybe, either, collections, slice;
+  var messages, predicates, functions,
+      assert, not, maybe, either,
+      collections, slice;
 
   messages = {
     equal: 'Invalid value',
-    like: 'Invalid type',
+    undefined: 'Invalid value',
+    null: 'Invalid value',
+    assigned: 'Invalid value',
+    zero: 'Invalid number',
+    number: 'Invalid number',
+    integer: 'Invalid number',
+    even: 'Invalid number',
+    odd: 'Invalid number',
+    greater: 'Invalid number',
+    less: 'Invalid number',
+    between: 'Invalid number',
+    greaterOrEqual: 'Invalid number',
+    lessOrEqual: 'Invalid number',
+    inRange: 'Invalid number',
+    positive: 'Invalid number',
+    negative: 'Invalid number',
+    string: 'Invalid string',
+    nonEmptyString: 'Invalid string',
+    contains: 'Invalid string',
+    match: 'Invalid string',
+    boolean: 'Invalid boolean',
+    object: 'Invalid object',
+    emptyObject: 'Invalid object',
     instance: 'Invalid type',
     builtIn: 'Invalid type',
     userDefined: 'Invalid type',
-    emptyObject: 'Invalid object',
-    object: 'Invalid object',
-    assigned: 'Invalid value',
-    undefined: 'Invalid value',
-    null: 'Invalid value',
-    hasLength: 'Invalid length',
-    includes: 'Invalid value',
-    emptyArray: 'Invalid array',
+    like: 'Invalid type',
     array: 'Invalid array',
+    emptyArray: 'Invalid array',
     arrayLike: 'Invalid array-like object',
     iterable: 'Invalid iterable',
+    includes: 'Invalid value',
+    hasLength: 'Invalid length',
     date: 'Invalid date',
     error: 'Invalid error',
-    function: 'Invalid function',
-    match: 'Invalid string',
-    contains: 'Invalid string',
-    nonEmptyString: 'Invalid string',
-    string: 'Invalid string',
-    odd: 'Invalid number',
-    even: 'Invalid number',
-    inRange: 'Invalid number',
-    greaterOrEqual: 'Invalid number',
-    lessOrEqual: 'Invalid number',
-    between: 'Invalid number',
-    greater: 'Invalid number',
-    less: 'Invalid number',
-    positive: 'Invalid number',
-    negative: 'Invalid number',
-    integer: 'Invalid number',
-    zero: 'Invalid number',
-    number: 'Invalid number',
-    boolean: 'Invalid boolean'
+    function: 'Invalid function'
   };
 
   predicates = {
     equal: equal,
-    like: like,
+    undefined: isUndefined,
+    null: isNull,
+    assigned: assigned,
+    zero: zero,
+    number: number,
+    integer : integer,
+    even: even,
+    odd: odd,
+    greater: greater,
+    less: less,
+    between: between,
+    greaterOrEqual: greaterOrEqual,
+    lessOrEqual: lessOrEqual,
+    inRange: inRange,
+    positive: positive,
+    negative: negative,
+    string: string,
+    nonEmptyString: nonEmptyString,
+    contains: contains,
+    match: match,
+    boolean: boolean,
+    object: object,
+    emptyObject: emptyObject,
     instance: instance,
     builtIn: builtIn,
     userDefined: userDefined,
-    emptyObject: emptyObject,
-    object: object,
-    assigned: assigned,
-    undefined: isUndefined,
-    null: isNull,
-    hasLength: hasLength,
-    includes: includes,
-    emptyArray: emptyArray,
+    like: like,
     array: array,
+    emptyArray: emptyArray,
     arrayLike: arrayLike,
-    isMap: isMap,
     iterable: iterable,
+    isMap: isMap,
+    includes: includes,
+    hasLength: hasLength,
     date: date,
     error: error,
-    function: isFunction,
-    match: match,
-    contains: contains,
-    nonEmptyString: nonEmptyString,
-    string: string,
-    odd: odd,
-    even: even,
-    inRange: inRange,
-    greaterOrEqual: greaterOrEqual,
-    lessOrEqual: lessOrEqual,
-    between: between,
-    greater: greater,
-    less: less,
-    positive: positive,
-    negative: negative,
-    integer : integer,
-    zero: zero,
-    number: number,
-    boolean: boolean
+    function: isFunction
   };
 
   functions = {
@@ -125,32 +122,295 @@
   /**
    * Public function `equal`.
    *
-   * Returns `true` if two values are strictly equal, without coercion.
-   * Returns `false` otherwise.
+   * Returns true if `lhs` and `rhs` are strictly equal, without coercion.
+   * Returns false otherwise.
    */
   function equal (lhs, rhs) {
     return lhs === rhs;
   }
 
   /**
+   * Public function `undefined`.
+   *
+   * Returns true if `data` is undefined, false otherwise.
+   */
+  function isUndefined (data) {
+    return data === undefined;
+  }
+
+  /**
+   * Public function `null`.
+   *
+   * Returns true if `data` is null, false otherwise.
+   */
+  function isNull (data) {
+    return data === null;
+  }
+
+  /**
+   * Public function `assigned`.
+   *
+   * Returns true if `data` is not null or undefined, false otherwise.
+   */
+  function assigned (data) {
+    return ! isUndefined(data) && ! isNull(data);
+  }
+
+  /**
+   * Public function `zero`.
+   *
+   * Returns true if `data` is zero, false otherwise.
+   */
+  function zero (data) {
+    return data === 0;
+  }
+
+  /**
+   * Public function `number`.
+   *
+   * Returns true if `data` is a number, false otherwise.
+   */
+  function number (data) {
+    return typeof data === 'number' &&
+      isNaN(data) === false &&
+      data !== Number.POSITIVE_INFINITY &&
+      data !== Number.NEGATIVE_INFINITY;
+  }
+
+  /**
+   * Public function `integer`.
+   *
+   * Returns true if `data` is an integer, false otherwise.
+   */
+  function integer (data) {
+    return number(data) && data % 1 === 0;
+  }
+
+  /**
+   * Public function `even`.
+   *
+   * Returns true if `data` is an even number, false otherwise.
+   */
+  function even (data) {
+    return number(data) && data % 2 === 0;
+  }
+
+  /**
+   * Public function `odd`.
+   *
+   * Returns true if `data` is an odd number, false otherwise.
+   */
+  function odd (data) {
+    return integer(data) && !even(data);
+  }
+
+  /**
+   * Public function `greater`.
+   *
+   * Returns true if `lhs` is a number greater than `rhs`, false otherwise.
+   */
+  function greater (lhs, rhs) {
+    return number(lhs) && lhs > rhs;
+  }
+
+  /**
+   * Public function `less`.
+   *
+   * Returns true if `lhs` is a number less than `rhs`, false otherwise.
+   */
+  function less (lhs, rhs) {
+    return number(lhs) && lhs < rhs;
+  }
+
+  /**
+   * Public function `between`.
+   *
+   * Returns true if `data` is a number between `x` and `y`, false otherwise.
+   */
+  function between (data, x, y) {
+    if (x < y) {
+      return greater(data, x) && less(data, y);
+    }
+
+    return less(data, x) && greater(data, y);
+  }
+
+  /**
+   * Public function `greaterOrEqual`.
+   *
+   * Returns true if `lhs` is a number greater than or equal to `rhs`, false
+   * otherwise.
+   */
+  function greaterOrEqual (lhs, rhs) {
+    return number(lhs) && lhs >= rhs;
+  }
+
+  /**
+   * Public function `lessOrEqual`.
+   *
+   * Returns true if `lhs` is a number less than or equal to `rhs`, false
+   * otherwise.
+   */
+  function lessOrEqual (lhs, rhs) {
+    return number(lhs) && lhs <= rhs;
+  }
+
+  /**
+   * Public function `inRange`.
+   *
+   * Returns true if `data` is a number in the range `x..y`, false otherwise.
+   */
+  function inRange (data, x, y) {
+    if (x < y) {
+      return greaterOrEqual(data, x) && lessOrEqual(data, y);
+    }
+
+    return lessOrEqual(data, x) && greaterOrEqual(data, y);
+  }
+
+  /**
+   * Public function `positive`.
+   *
+   * Returns true if `data` is a positive number, false otherwise.
+   */
+  function positive (data) {
+    return greater(data, 0);
+  }
+
+  /**
+   * Public function `negative`.
+   *
+   * Returns true if `data` is a negative number, false otherwise.
+   */
+  function negative (data) {
+    return less(data, 0);
+  }
+
+  /**
+   * Public function `string`.
+   *
+   * Returns true if `data` is a string, false otherwise.
+   */
+  function string (data) {
+    return typeof data === 'string';
+  }
+
+  /**
+   * Public function `nonEmptyString`.
+   *
+   * Returns true if `data` is a non-empty string, false otherwise.
+   */
+  function nonEmptyString (data) {
+    return string(data) && data !== '';
+  }
+
+  /**
+   * Public function `contains`.
+   *
+   * Returns true if `data` is a string that contains `substring`, false
+   * otherwise.
+   */
+  function contains (data, substring) {
+    return string(data) && data.indexOf(substring) !== -1;
+  }
+
+  /**
+   * Public function `match`.
+   *
+   * Returns true if `data` is a string that matches `regex`, false otherwise.
+   */
+  function match (data, regex) {
+    return string(data) && !! data.match(regex);
+  }
+
+  /**
+   * Public function `boolean`.
+   *
+   * Returns true if `data` is a boolean value, false otherwise.
+   */
+  function boolean (data) {
+    return data === false || data === true;
+  }
+
+  /**
+   * Public function `object`.
+   *
+   * Returns true if `data` is a plain-old JS object, false otherwise.
+   */
+  function object (data) {
+    return Object.prototype.toString.call(data) === '[object Object]';
+  }
+
+  /**
+   * Public function `emptyObject`.
+   *
+   * Returns true if `data` is an empty object, false otherwise.
+   */
+  function emptyObject (data) {
+    return object(data) && Object.keys(data).length === 0;
+  }
+
+  /**
+   * Public function `instance`.
+   *
+   * Returns true if `data` is an instance of `prototype`, false otherwise.
+   */
+  function instance (data, prototype) {
+    try {
+      return data instanceof prototype;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * Public function `builtIn`.
+   *
+   * Returns true if `data` is an instance of `prototype`, false otherwise.
+   * Assumes `prototype` is a standard built-in object and additionally checks
+   * the result of Object.prototype.toString.
+   */
+  function builtIn (data, prototype) {
+    try {
+      return instance(data, prototype) ||
+        Object.prototype.toString.call(data) === '[object ' + prototype.name + ']';
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * Public function `userDefined`.
+   *
+   * Returns true if `data` is an instance of `prototype`, false otherwise.
+   * Assumes `prototype` is a user-defined object and additionally checks the
+   * value of constructor.name.
+   */
+  function userDefined (data, prototype) {
+    try {
+      return instance(data, prototype) ||
+        data.constructor.name === prototype.name;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
    * Public function `like`.
    *
-   * Tests whether an object 'quacks like a duck'.
-   * Returns `true` if the first argument has all of
-   * the properties of the second, archetypal argument
-   * (the 'duck'). Returns `false` otherwise.
-   *
+   * Tests whether `data` 'quacks like a duck'. Returns true if `data` has all
+   * of the properties of `archetype` (the 'duck'), false otherwise.
    */
-  function like (data, duck) {
+  function like (data, archetype) {
     var name;
 
-    for (name in duck) {
-      if (duck.hasOwnProperty(name)) {
-        if (data.hasOwnProperty(name) === false || typeof data[name] !== typeof duck[name]) {
+    for (name in archetype) {
+      if (archetype.hasOwnProperty(name)) {
+        if (data.hasOwnProperty(name) === false || typeof data[name] !== typeof archetype[name]) {
           return false;
         }
 
-        if (object(data[name]) && like(data[name], duck[name]) === false) {
+        if (object(data[name]) && like(data[name], archetype[name]) === false) {
           return false;
         }
       }
@@ -160,123 +420,59 @@
   }
 
   /**
-   * Public function `instance`.
+   * Public function `array`.
    *
-   * Returns `true` if `object` is an instance of `prototype`, or `false`
-   * otherwise.
+   * Returns true if `data` is an array, false otherwise.
    */
-  function instance (object, prototype) {
-    try {
-      return object instanceof prototype;
-    } catch (error) {
-      return false;
+  function array (data) {
+    return Array.isArray(data);
+  }
+
+  /**
+   * Public function `emptyArray`.
+   *
+   * Returns true if `data` is an empty array, false otherwise.
+   */
+  function emptyArray (data) {
+    return array(data) && data.length === 0;
+  }
+
+  /**
+   * Public function `arrayLike`.
+   *
+   * Returns true if `data` is an array-like object, false otherwise.
+   */
+  function arrayLike (data) {
+    return assigned(data) && number(data.length);
+  }
+
+  /**
+   * Public function `iterable`.
+   *
+   * Returns true if `data` is an iterable, false otherwise.
+   */
+  function iterable (data) {
+    if (typeof Symbol === 'undefined') {
+      // Fall back to `arrayLike` predicate in pre-ES6 environments.
+      return arrayLike(data);
     }
+
+    return assigned(data) && isFunction(data[Symbol.iterator]);
   }
 
   /**
-   * Public function `builtIn`.
+   * Public function 'Map'
    *
-   * Returns `true` if `object` is an instance of `prototype`, or `false`
-   * otherwise. Assumes `prototype` is a standard built-in object and
-   * additionally checks the result of `Object.prototype.toString`.
+   * Returns true if `data` is a Map, false otherwise.
    */
-  function builtIn (object, prototype) {
-    try {
-      return instance(object, prototype) ||
-        Object.prototype.toString.call(object) === '[object ' + prototype.name + ']';
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /**
-   * Public function `userDefined`.
-   *
-   * Returns `true` if `object` is an instance of `prototype`, `false`
-   * otherwise. Assumes `prototype` is a user-defined object and also
-   * compares the value of `constructor.name`.
-   */
-  function userDefined (object, prototype) {
-    try {
-      return object instanceof prototype
-        || (object.constructor && object.constructor.name === prototype.name);
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /**
-   * Public function `emptyObject`.
-   *
-   * Returns `true` if something is an empty object,
-   * `false` otherwise.
-   *
-   */
-  function emptyObject (data) {
-    return object(data) && Object.keys(data).length === 0;
-  }
-
-  /**
-   * Public function `object`.
-   *
-   * Returns `true` if something is a plain-old JS object,
-   * `false` otherwise.
-   *
-   */
-  function object (data) {
-    return Object.prototype.toString.call(data) === '[object Object]';
-  }
-
-  /**
-   * Public function `assigned`.
-   *
-   * Returns `true` if something is not null or undefined,
-   * `false` otherwise.
-   *
-   */
-  function assigned (data) {
-    return !isUndefined(data) && !isNull(data);
-  }
-
-  /**
-   * Public function `undefined`.
-   *
-   * Returns `true` if something is undefined,
-   * `false` otherwise.
-   *
-   */
-  function isUndefined (data) {
-    return data === undefined;
-  }
-
-  /**
-   * Public function `null`.
-   *
-   * Returns `true` if something is null,
-   * `false` otherwise.
-   *
-   */
-  function isNull (data) {
-    return data === null;
-  }
-
-  /**
-   * Public function `hasLength`.
-   *
-   * Returns `true` if something is has a length property
-   * that equals `value`, `false` otherwise.
-   *
-   */
-  function hasLength (data, value) {
-    return assigned(data) && data.length === value;
+  function isMap (data) {
+    return Object.prototype.toString.call(data) === '[object Map]';
   }
 
   /**
    * Public function `includes`.
    *
-   * Returns `true` if something contains `value`,
-   * `false` otherwise.
-   *
+   * Returns true if `data` contains `value`, false otherwise.
    */
   function includes (data, value) {
     var iterator, iteration;
@@ -313,311 +509,46 @@
   }
 
   /**
-   * Public function `emptyArray`.
+   * Public function `hasLength`.
    *
-   * Returns `true` if something is an empty array,
-   * `false` otherwise.
-   *
+   * Returns true if `data` has a length property that equals `length`, false
+   * otherwise.
    */
-  function emptyArray (data) {
-    return array(data) && data.length === 0;
-  }
-
-  /**
-   * Public function `array`.
-   *
-   * Returns `true` something is an array,
-   * `false` otherwise.
-   *
-   */
-  function array (data) {
-    return Array.isArray(data);
-  }
-
-  /**
-   * Public function `arrayLike`.
-   *
-   * Returns `true` something is an array-like object,
-   * `false` otherwise.
-   *
-   */
-  function arrayLike (data) {
-    return assigned(data) && number(data.length);
-  }
-
-  /**
-   * Public function 'Map'
-   *
-   * Returns 'true' if something is a Map,
-   * 'false' otherwise
-   */
-  function isMap (data) {
-    return Object.prototype.toString.call(data) === '[object Map]';
-  }
-
-  /**
-   * Public function.
-   *
-   * Returns `true` something is an iterable,
-   * `false` otherwise.
-   *
-   */
-  function iterable (data) {
-    if (typeof Symbol === 'undefined') {
-      // Fall back to arrayLike predicate in pre-ES6 environments.
-      return arrayLike(data);
-    }
-
-    return assigned(data) && isFunction(data[Symbol.iterator]);
+  function hasLength (data, length) {
+    return assigned(data) && data.length === length;
   }
 
   /**
    * Public function `date`.
    *
-   * Returns `true` something is a valid date,
-   * `false` otherwise.
-   *
+   * Returns true if `data` is a valid date, false otherwise.
    */
   function date (data) {
-    return Object.prototype.toString.call(data) === '[object Date]' &&
-      !isNaN(data.getTime());
+    return builtIn(data, Date) && ! isNaN(data.getTime());
   }
 
   /**
    * Public function `error`.
    *
-   * Returns `true` if something is a plain-old JS object,
-   * `false` otherwise.
-   *
+   * Returns true if `data` is an error, false otherwise.
    */
   function error (data) {
-    return data instanceof Error || Object.prototype.toString.call(data) === '[object Error]';
+    return builtIn(data, Error);
   }
 
   /**
    * Public function `function`.
    *
-   * Returns `true` if something is function,
-   * `false` otherwise.
-   *
+   * Returns true if `data` is a function, false otherwise.
    */
   function isFunction (data) {
     return typeof data === 'function';
   }
 
   /**
-   * Public function `match`.
-   *
-   * Returns `true` if something is a string
-   * that matches `regex`, `false` otherwise.
-   *
-   */
-  function match (data, regex) {
-    return string(data) && !!data.match(regex);
-  }
-
-  /**
-   * Public function `contains`.
-   *
-   * Returns `true` if something is a string
-   * that contains `substring`, `false` otherwise.
-   *
-   */
-  function contains (data, substring) {
-    return string(data) && data.indexOf(substring) !== -1;
-  }
-
-  /**
-   * Public function `nonEmptyString`.
-   *
-   * Returns `true` if something is a non-empty string,
-   * `false` otherwise.
-   *
-   */
-  function nonEmptyString (data) {
-    return string(data) && data !== '';
-  }
-
-  /**
-   * Public function `string`.
-   *
-   * Returns `true` if something is a string, `false` otherwise.
-   *
-   */
-  function string (data) {
-    return typeof data === 'string';
-  }
-
-  /**
-   * Public function `odd`.
-   *
-   * Returns `true` if something is an odd number,
-   * `false` otherwise.
-   *
-   */
-  function odd (data) {
-    return integer(data) && !even(data);
-  }
-
-  /**
-   * Public function `even`.
-   *
-   * Returns `true` if something is an even number,
-   * `false` otherwise.
-   *
-   */
-  function even (data) {
-    return number(data) && data % 2 === 0;
-  }
-
-  /**
-   * Public function `integer`.
-   *
-   * Returns `true` if something is an integer,
-   * `false` otherwise.
-   *
-   */
-  function integer (data) {
-    return number(data) && data % 1 === 0;
-  }
-
-  /**
-   * Public function `inRange`.
-   *
-   * Returns `true` if something is a number in
-   * the range `a` .. `b`, `false` otherwise.
-   *
-   */
-  function inRange (data, a, b) {
-    if (a < b) {
-      return greaterOrEqual(data, a) && lessOrEqual(data, b);
-    }
-
-    return lessOrEqual(data, a) && greaterOrEqual(data, b);
-  }
-
-  /**
-   * Public function `greaterOrEqual`.
-   *
-   * Returns `true` if something is a number greater
-   * than or equal to `value`, `false` otherwise.
-   *
-   */
-  function greaterOrEqual (data, value) {
-    return number(data) && data >= value;
-  }
-
-  /**
-   * Public function `lessOrEqual`.
-   *
-   * Returns `true` if something is a number less
-   * than or equal to `value`, `false` otherwise.
-   *
-   */
-  function lessOrEqual (data, value) {
-    return number(data) && data <= value;
-  }
-
-  /**
-   * Public function `between`.
-   *
-   * Returns `true` if something is a number
-   * between `a` and `b`, `false` otherwise.
-   *
-   */
-  function between (data, a, b) {
-    if (a < b) {
-      return greater(data, a) && less(data, b);
-    }
-
-    return less(data, a) && greater(data, b);
-  }
-
-  /**
-   * Public function `greater`.
-   *
-   * Returns `true` if something is a number
-   * greater than `value`, `false` otherwise.
-   *
-   */
-  function greater (data, value) {
-    return number(data) && data > value;
-  }
-
-  /**
-   * Public function `less`.
-   *
-   * Returns `true` if something is a number
-   * less than `value`, `false` otherwise.
-   *
-   */
-  function less (data, value) {
-    return number(data) && data < value;
-  }
-
-  /**
-   * Public function `positive`.
-   *
-   * Returns `true` if something is a positive number,
-   * `false` otherwise.
-   *
-   */
-  function positive (data) {
-    return greater(data, 0);
-  }
-
-  /**
-   * Public function `negative`.
-   *
-   * Returns `true` if something is a negative number,
-   * `false` otherwise.
-   *
-   * @param data      The thing to test.
-   */
-  function negative (data) {
-    return less(data, 0);
-  }
-
-  /**
-   * Public function `number`.
-   *
-   * Returns `true` if data is a number,
-   * `false` otherwise.
-   *
-   */
-  function number (data) {
-    return typeof data === 'number' && isNaN(data) === false &&
-         data !== Number.POSITIVE_INFINITY &&
-         data !== Number.NEGATIVE_INFINITY;
-  }
-
-  /**
-   * Public function `zero`.
-   *
-   * Returns `true` if something is zero,
-   * `false` otherwise.
-   *
-   * @param data      The thing to test.
-   */
-  function zero (data) {
-    return data === 0;
-  }
-
-  /**
-   * Public function `boolean`.
-   *
-   * Returns `true` if data is a boolean value,
-   * `false` otherwise.
-   *
-   */
-  function boolean (data) {
-    return data === false || data === true;
-  }
-
-  /**
    * Public function `apply`.
    *
-   * Maps each value from the data to the corresponding predicate and returns
+   * Maps each value from the `data` to the corresponding predicate and returns
    * the result array. If the same function is to be applied across all of the
    * data, a single predicate function may be passed in.
    *
@@ -642,8 +573,8 @@
   /**
    * Public function `map`.
    *
-   * Maps each value from the data to the corresponding predicate and returns
-   * the result object. Supports nested objects. If the data is not nested and
+   * Maps each value from the `data` to the corresponding predicate and returns
+   * the result object. Supports nested objects. If the `data` is not nested and
    * the same function is to be applied across all of it, a single predicate
    * function may be passed in.
    *
@@ -769,7 +700,7 @@
   /**
    * Public modifier `assert`.
    *
-   * Throws if `predicate` returns `false`.
+   * Throws if `predicate` returns false.
    */
   function assertModifier (predicate, defaultMessage) {
     return function () {
@@ -832,7 +763,7 @@
   /**
    * Public modifier `maybe`.
    *
-   * Returns `true` if predicate argument is  `null` or `undefined`,
+   * Returns true if predicate argument is  null or undefined,
    * otherwise propagates the return value from `predicate`.
    */
   function maybeModifier (predicate) {
@@ -864,7 +795,7 @@
   /**
    * Public modifier `either`.
    *
-   * Returns `true` if either predicate is true.
+   * Returns true if either predicate is true.
    */
   function eitherModifier (predicate) {
     return function () {
