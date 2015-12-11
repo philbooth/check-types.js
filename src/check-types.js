@@ -769,7 +769,7 @@
    */
   function maybeModifier (predicate) {
     var modifiedPredicate = function () {
-      if (!assigned(arguments[0])) {
+      if (not.assigned(arguments[0])) {
         return true;
       }
 
