@@ -651,6 +651,9 @@ in favour of the new predicate `builtIn`,
 which can be used to test for
 all built-in objects.
 
+See the [history][history5]
+for more details.
+
 ## What changed from 3.x to 4.x?
 
 Breaking changes
@@ -663,6 +666,9 @@ was renamed to `nonEmptyString`
 and the predicate `error`
 was changed to support
 derived Error objects.
+
+See the [history][history4]
+for more details.
 
 ## What changed from 2.x to 3.x?
 
@@ -747,6 +753,8 @@ open `test/check-types.html`.
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
+[history5]: HISTORY.md#50
+[history4]: HISTORY.md#40
 [history3]: HISTORY.md#30
 [history2]: HISTORY.md#20
 [history1]: HISTORY.md#10
