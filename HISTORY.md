@@ -1,5 +1,9 @@
 # History
 
+## 5.1
+
+* Fix broken implementation of `maybe.array.of`.
+
 ## 5.0
 
 * Breaking changes:
