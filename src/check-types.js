@@ -828,6 +828,10 @@
 
       collection = arguments[0];
 
+      if (target === 'maybe' && not.assigned(collection)) {
+        return true;
+      }
+
       if (!type(collection)) {
         return false;
       }

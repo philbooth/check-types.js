@@ -1616,7 +1616,11 @@
       });
     });
 
-    test('maybe.array.of returns true', function () {
+    test('maybe.array.of returns true with null array', function () {
+      assert.isTrue(check.maybe.array.of.instance(null, Error));
+    });
+
+    test('maybe.array.of returns true with null values', function () {
       assert.isTrue(check.maybe.array.of.instance([ new Error(), null ], Error));
     });
 
@@ -1632,7 +1636,13 @@
       assert.isFalse(check.not.array.of.instance([ new Error() ], Error));
     });
 
-    test('assert.maybe.array.of does not throw', function () {
+    test('assert.maybe.array.of does not throw with null array', function () {
+      assert.doesNotThrow(function () {
+        check.assert.maybe.array.of.instance(null, Error);
+      });
+    });
+
+    test('assert.maybe.array.of does not throw with null values', function () {
       assert.doesNotThrow(function () {
         check.assert.maybe.array.of.instance([ new Error(), null ], Error);
       });
@@ -1706,7 +1716,11 @@
       });
     });
 
-    test('maybe.arrayLike.of returns true', function () {
+    test('maybe.arrayLike.of returns true with null array-like', function () {
+      assert.isTrue(check.maybe.arrayLike.of.instance(null, Error));
+    });
+
+    test('maybe.arrayLike.of returns true with null values', function () {
       assert.isTrue(check.maybe.arrayLike.of.instance({ 0: new Error(), 1: null, length: 2 }, Error));
     });
 
@@ -1722,7 +1736,13 @@
       assert.isFalse(check.not.arrayLike.of.instance({ 0: new Error(), length: 1 }, Error));
     });
 
-    test('assert.maybe.arrayLike.of does not throw', function () {
+    test('assert.maybe.arrayLike.of does not throw with null array-like', function () {
+      assert.doesNotThrow(function () {
+        check.assert.maybe.arrayLike.of.instance(null, Error);
+      });
+    });
+
+    test('assert.maybe.arrayLike.of does not throw with null values', function () {
       assert.doesNotThrow(function () {
         check.assert.maybe.arrayLike.of.instance({ 0: new Error(), 1: null, length: 2 }, Error);
       });
@@ -1797,7 +1817,11 @@
         });
       });
 
-      test('maybe.iterable.of returns true', function () {
+      test('maybe.iterable.of returns true with null iterable', function () {
+        assert.isTrue(check.maybe.iterable.of.instance(null, Error));
+      });
+
+      test('maybe.iterable.of returns true with null values', function () {
         assert.isTrue(check.maybe.iterable.of.instance(new Set([ new Error(), null ]), Error));
       });
 
@@ -1813,7 +1837,13 @@
         assert.isFalse(check.not.iterable.of.instance(new Set([ new Error() ]), Error));
       });
 
-      test('assert.maybe.iterable.of does not throw', function () {
+      test('assert.maybe.iterable.of does not throw with null iterable', function () {
+        assert.doesNotThrow(function () {
+          check.assert.maybe.iterable.of.instance(null, Error);
+        });
+      });
+
+      test('assert.maybe.iterable.of does not throw with null values', function () {
         assert.doesNotThrow(function () {
           check.assert.maybe.iterable.of.instance(new Set([ new Error(), null ]), Error);
         });
@@ -1886,7 +1916,11 @@
       });
     });
 
-    test('maybe.object.of returns true', function () {
+    test('maybe.object.of returns true with null object', function () {
+      assert.isTrue(check.maybe.object.of.instance(null, Error));
+    });
+
+    test('maybe.object.of returns true with null values', function () {
       assert.isTrue(check.maybe.object.of.instance({ 'foo': new Error(), 'bar': null }, Error));
     });
 
@@ -1902,7 +1936,13 @@
       assert.isFalse(check.not.object.of.instance({ 'foo': new Error() }, Error));
     });
 
-    test('assert.maybe.object.of does not throw', function () {
+    test('assert.maybe.object.of does not throw with null object', function () {
+      assert.doesNotThrow(function () {
+        check.assert.maybe.object.of.instance(null, Error);
+      });
+    });
+
+    test('assert.maybe.object.of does not throw with null values', function () {
       assert.doesNotThrow(function () {
         check.assert.maybe.object.of.instance({ 'foo': new Error(), 'bar': null }, Error);
       });
