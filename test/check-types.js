@@ -1316,7 +1316,7 @@
       assert.throws(function () { check.assert.like({a: 5}, {b: 2}) }, 'Invalid type');
       assert.throws(function () { check.assert.array() }, 'Invalid array');
       assert.throws(function () { check.assert.emptyArray() }, 'Invalid array');
-      assert.throws(function () { check.assert.arrayLike() }, 'Invalid array-like object');
+      assert.throws(function () { check.assert.arrayLike() }, 'Invalid array-like');
       assert.throws(function () { check.assert.iterable() }, 'Invalid iterable');
       assert.throws(function () { check.assert.includes() }, 'Invalid value');
       assert.throws(function () { check.assert.hasLength() }, 'Invalid length');
