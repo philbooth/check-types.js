@@ -138,24 +138,16 @@ in a number of different contexts:
   when its argument is `null` or `undefined`,
   otherwise it returns its argument.
 
-* `check.either.xxx(thing).or.yyy(thang)`:
-  The `either` modifier
-  returns `true` if either predicate is true,
-  it will only return `false`
-  when both predicates are false.
-
 * `check.assert.xxx(thing, message)`:
   The `assert` modifier
   changes predicates
   to throw when their result
   would otherwise be `false`.
   It can be applied
-  to the `not`, `maybe` and `either` modifiers
+  to the `not` and `maybe` modifiers
   using the forms
-  `check.assert.not.xxx(thing, message)`,
-  `check.assert.maybe.xxx(thing, message)`
-  and
-  `check.assert.either.xxx(thing, message).or.yyy(thang)`.
+  `check.assert.not.xxx(thing, message)` and
+  `check.assert.maybe.xxx(thing, message)`.
   It is also itself a function,
   which simply throws
   when its argument is false.
@@ -464,12 +456,6 @@ These are implemented by
   the return value
   from its predicate.
 
-* `check.either.xxx(...).or.yyy(...)`:
-  Returns `true`
-  if either predicate is true.
-  Returns `false`
-  if both predicates are false.
-
 * `check.array.of.xxx(value)`:
   Returns `true`
   if `value` is an array
@@ -504,7 +490,7 @@ These are implemented by
   The last argument
   is an optional message
   to be set on the `Error` instance.
-  Also works with the `not`, `maybe`, `either` and `...of` modifiers.
+  Also works with the `not`, `maybe` and `...of` modifiers.
 
 #### Batch operations
 
@@ -555,11 +541,6 @@ check.not.even(3);
 
 ```javascript
 check.maybe.even(null);
-// Returns true
-```
-
-```javascript
-check.either.even(3).or.odd(3);
 // Returns true
 ```
 

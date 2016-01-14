@@ -4,8 +4,7 @@
   'use strict';
 
   var messages, predicates, functions,
-      assert, not, maybe, either,
-      collections, slice;
+      assert, not, maybe, collections, slice;
 
   messages = {
     equal: 'Invalid value',
@@ -103,10 +102,8 @@
   assert = createModifiedPredicates(assertModifier, assertImpl);
   not = createModifiedPredicates(notModifier, notImpl);
   maybe = createModifiedPredicates(maybeModifier, maybeImpl);
-  either = createModifiedPredicates(eitherModifier);
   assert.not = createModifiedModifier(assertModifier, not);
   assert.maybe = createModifiedModifier(assertModifier, maybe);
-  assert.either = createModifiedModifier(assertEitherModifier, predicates);
 
   collections.forEach(createOfPredicates);
   createOfModifiers(assert, assertModifier);
@@ -116,8 +113,7 @@
   exportFunctions(mixin(functions, {
     assert: assert,
     not: not,
-    maybe: maybe,
-    either: either
+    maybe: maybe
   }));
 
   /**
@@ -720,32 +716,6 @@
     }
   }
 
-  function assertEitherModifier (predicate, defaultMessage) {
-    return function () {
-      var error;
-
-      try {
-        assertPredicate(predicate, arguments, defaultMessage);
-      } catch (e) {
-        error = e;
-      }
-
-      return {
-        or: Object.keys(predicates).reduce(delayedAssert, {})
-      };
-
-      function delayedAssert (result, key) {
-        result[key] = function () {
-          if (error && !predicates[key].apply(null, arguments)) {
-            throw error;
-          }
-        };
-
-        return result;
-      }
-    };
-  }
-
   /**
    * Public modifier `not`.
    *
@@ -791,30 +761,6 @@
     }
 
     return value;
-  }
-
-  /**
-   * Public modifier `either`.
-   *
-   * Returns true if either predicate is true.
-   */
-  function eitherModifier (predicate) {
-    return function () {
-      var shortcut = predicate.apply(null, arguments);
-
-      return {
-        or: Object.keys(predicates).reduce(nopOrPredicate, {})
-      };
-
-      function nopOrPredicate (result, key) {
-        result[key] = shortcut ? nop : predicates[key];
-        return result;
-      }
-    };
-
-    function nop () {
-      return true;
-    }
   }
 
   /**
