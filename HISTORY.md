@@ -1,5 +1,11 @@
 # History
 
+## 6.0
+
+* Breaking change:
+  * `either` modifier removed.
+* Eliminated some string duplication.
+
 ## 5.1
 
 * Fix broken implementation of `maybe.array.of`.
