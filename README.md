@@ -25,6 +25,7 @@ and values.
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
 * [Where can I use it?](#where-can-i-use-it)
+* [What changed from 5.x to 6.x?](#what-changed-from-5x-to-6x)
 * [What changed from 4.x to 5.x?](#what-changed-from-4x-to-5x)
 * [What changed from 3.x to 4.x?](#what-changed-from-3x-to-4x)
 * [What changed from 2.x to 3.x?](#what-changed-from-2x-to-3x)
@@ -620,6 +621,23 @@ will adhere to that too.
 See the [releases]
 for more information.
 
+## What changed from 5.x to 6.x?
+
+Breaking changes
+were made to the API
+in version 6.0.0.
+
+Specifically,
+the `either` modifier was removed.
+Instead,
+calling code can use
+the `any` function,
+or simply express the boolean logic
+in JS.
+
+See the [history][history6]
+for more details.
+
 ## What changed from 4.x to 5.x?
 
 Breaking changes
@@ -734,6 +752,7 @@ open `test/check-types.html`.
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
+[history6]: HISTORY.md#60
 [history5]: HISTORY.md#50
 [history4]: HISTORY.md#40
 [history3]: HISTORY.md#30
