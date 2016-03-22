@@ -38,6 +38,8 @@
         "lint": "jshint ./src/check-types.js",
         "test": "mocha --ui tdd --reporter spec --colors ./test/check-types.js",
         "minify": "uglifyjs ./src/check-types.js --compress --mangle --output ./src/check-types.min.js"
-    }
+    },
+    "files": [
+        "src"
+    ]
 }
-
