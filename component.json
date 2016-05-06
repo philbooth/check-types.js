@@ -1,6 +1,6 @@
 {
     "name": "check-types",
-    "version": "6.0.0",
+    "version": "7.0.0",
     "description": "A tiny library for asserting types and values.",
     "repo": "philbooth/check-types.js",
     "license": "MIT",
