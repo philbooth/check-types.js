@@ -25,6 +25,7 @@ and values.
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
 * [Where can I use it?](#where-can-i-use-it)
+* [What changed from 6.x to 7.x?](#what-changed-from-5x-to-6x)
 * [What changed from 5.x to 6.x?](#what-changed-from-5x-to-6x)
 * [What changed from 4.x to 5.x?](#what-changed-from-4x-to-5x)
 * [What changed from 3.x to 4.x?](#what-changed-from-3x-to-4x)
@@ -53,14 +54,14 @@ abstracted by a simple API.
 
 ## How little is it?
 
-20 kb unminified with comments, 5.9 kb minified, 2.1 kb minified + gzipped.
+20 kb unminified with comments, 5.8 kb minified, 2.1 kb minified + gzipped.
 
 ## How do I install it?
 
-If you're using npm:
+Via npm:
 
 ```
-npm install check-types --save
+npm i check-types --save
 ```
 
 Or if you just want the git repo:
@@ -103,7 +104,7 @@ it will export the interface globally as `check`.
 
 ### Calling the exported functions
 
-Once you have loaded the library
+Once you've loaded the library
 in your application,
 a whole bunch of functions are available
 to call.
@@ -364,25 +365,17 @@ These are implemented by
   if `thing` is an empty object,
   `false` otherwise.
 
+* `check.instanceStrict(thing, prototype)`:
+  Returns `true`
+  if `thing` is an instance of `prototype`,
+  `false` otherwise.
+
 * `check.instance(thing, prototype)`:
   Returns `true`
   if `thing` is an instance of `prototype`,
   `false` otherwise.
-
-* `check.builtIn(thing, prototype)`:
-  Returns `true`
-  if `thing` is an instance of `prototype`,
-  `false` otherwise.
-  Assumes `thing` is a standard built-in object
-  and tests the result of `Object.prototype.toString.call(thing)`
-  if the `instanceof` test fails.
-
-* `check.userDefined(thing, prototype)`:
-  Returns `true`
-  if `thing` is an instance of `prototype`,
-  `false` otherwise.
-  Assumes `thing` is a user-defined object
-  and tests the value of `thing.constructor.name`
+  Falls back to testing
+  `constructor.name` and `Object.prototype.toString`
   if the `instanceof` test fails.
 
 * `check.like(thing, duck)`:
@@ -621,6 +614,22 @@ will adhere to that too.
 See the [releases]
 for more information.
 
+## What changed from 6.x to 7.x?
+
+Breaking changes
+were made to the API
+in version 7.0.0.
+
+Specifically,
+the `instance` predicate
+was renamed to `instanceStrict`
+and the `builtIn` and `userDefined` predicates
+were combined to form
+a new `instance` predicate.
+
+See the [history][history7]
+for more details.
+
 ## What changed from 5.x to 6.x?
 
 Breaking changes
@@ -752,6 +761,7 @@ open `test/check-types.html`.
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
+[history6]: HISTORY.md#70
 [history6]: HISTORY.md#60
 [history5]: HISTORY.md#50
 [history4]: HISTORY.md#40

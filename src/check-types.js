@@ -52,9 +52,8 @@
     { n: 'boolean', f: boolean, s: 'b' },
     { n: 'object', f: object, s: 'o' },
     { n: 'emptyObject', f: emptyObject, s: 'o' },
+    { n: 'instanceStrict', f: instanceStrict, s: 't' },
     { n: 'instance', f: instance, s: 't' },
-    { n: 'builtIn', f: builtIn, s: 't' },
-    { n: 'userDefined', f: userDefined, s: 't' },
     { n: 'like', f: like, s: 't' },
     { n: 'array', f: array, s: 'a' },
     { n: 'emptyArray', f: emptyArray, s: 'a' },
@@ -346,11 +345,11 @@
   }
 
   /**
-   * Public function `instance`.
+   * Public function `instanceStrict`.
    *
    * Returns true if `data` is an instance of `prototype`, false otherwise.
    */
-  function instance (data, prototype) {
+  function instanceStrict (data, prototype) {
     try {
       return data instanceof prototype;
     } catch (error) {
@@ -359,32 +358,17 @@
   }
 
   /**
-   * Public function `builtIn`.
+   * Public function `instance`.
    *
    * Returns true if `data` is an instance of `prototype`, false otherwise.
-   * Assumes `prototype` is a standard built-in object and additionally checks
-   * the result of Object.prototype.toString.
+   * Falls back to testing constructor.name and Object.prototype.toString
+   * if the initial instanceof test fails.
    */
-  function builtIn (data, prototype) {
+  function instance (data, prototype) {
     try {
-      return instance(data, prototype) ||
+      return instanceStrict(data, prototype) ||
+        data.constructor.name === prototype.name ||
         Object.prototype.toString.call(data) === '[object ' + prototype.name + ']';
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /**
-   * Public function `userDefined`.
-   *
-   * Returns true if `data` is an instance of `prototype`, false otherwise.
-   * Assumes `prototype` is a user-defined object and additionally checks the
-   * value of constructor.name.
-   */
-  function userDefined (data, prototype) {
-    try {
-      return instance(data, prototype) ||
-        data.constructor.name === prototype.name;
     } catch (error) {
       return false;
     }
@@ -510,7 +494,11 @@
    * Returns true if `data` is a valid date, false otherwise.
    */
   function date (data) {
-    return builtIn(data, Date) && ! isNaN(data.getTime());
+    try {
+      return instance(data, Date) && integer(data.getTime());
+    } catch (error) {
+      return false;
+    }
   }
 
   /**

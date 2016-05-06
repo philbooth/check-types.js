@@ -1,5 +1,11 @@
 # History
 
+## 7.0
+
+* Breaking changes:
+  * Rename `instance` to `instanceStrict`.
+  * Combine `builtIn` and `userDefined` to form new `instance` predicate.
+
 ## 6.0
 
 * Breaking change:
