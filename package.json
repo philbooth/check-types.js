@@ -30,8 +30,8 @@
     ],
     "devDependencies": {
         "jshint": "2.9.x",
-        "mocha": "2.3.x",
-        "chai": "3.4.x",
+        "mocha": "2.4.x",
+        "chai": "3.5.x",
         "uglify-js": "2.6.x"
     },
     "scripts": {
