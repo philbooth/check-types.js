@@ -1,10 +1,12 @@
 # History
 
+
 ## 7.0
 
 * Breaking changes:
   * Rename `instance` to `instanceStrict`.
   * Combine `builtIn` and `userDefined` to form new `instance` predicate.
+* Exclude non-src files from npm package
 
 ## 6.0
 
