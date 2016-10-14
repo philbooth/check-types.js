@@ -761,7 +761,7 @@ open `test/check-types.html`.
 [ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
-[history6]: HISTORY.md#70
+[history7]: HISTORY.md#70
 [history6]: HISTORY.md#60
 [history5]: HISTORY.md#50
 [history4]: HISTORY.md#40
