@@ -15,6 +15,7 @@ and values.
         * [General predicates](#general-predicates)
         * [String predicates](#string-predicates)
         * [Number predicates](#number-predicates)
+        * [RegExp predicates](#regexp-predicates)
         * [Boolean predicates](#boolean-predicates)
         * [Object predicates](#object-predicates)
         * [Array predicates](#array-predicates)
@@ -344,6 +345,13 @@ These are implemented by
 * `check.even(thing)`:
   Returns `true`
   if `thing` is an even number,
+  `false` otherwise.
+
+#### RegExp predicates
+
+* `check.regexp(thing)`:
+  Returns `true`
+  if `thing` is a regular expression,
   `false` otherwise.
 
 #### Boolean predicates

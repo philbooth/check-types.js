@@ -18,7 +18,8 @@
     i: 'iterable',
     d: 'date',
     f: 'function',
-    l: 'length'
+    l: 'length',
+    r: 'regExp'
   };
 
   messages = {};
@@ -33,6 +34,7 @@
     { n: 'zero', f: zero, s: 'n' },
     { n: 'infinity', f: infinity, s: 'n' },
     { n: 'number', f: number, s: 'n' },
+    { n: 'regexp', f: regexp, s: 'r' },
     { n: 'integer', f: integer, s: 'n' },
     { n: 'even', f: even, s: 'n' },
     { n: 'odd', f: odd, s: 'n' },
@@ -160,6 +162,19 @@
       isNaN(data) === false &&
       data !== Number.POSITIVE_INFINITY &&
       data !== Number.NEGATIVE_INFINITY;
+  }
+
+  /**
+   * Public function `date`.
+   *
+   * Returns true if `data` is a valid date, false otherwise.
+   */
+  function regexp (data) {
+    try {
+      return instance(data, RegExp);
+    } catch (error) {
+      return false;
+    }
   }
 
   /**

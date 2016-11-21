@@ -160,6 +160,22 @@
       assert.isFalse(check.number('1'));
     });
 
+    test('regexp function is defined', function () {
+      assert.isFunction(check.regexp);
+    });
+
+    test('regexp with regexp returns true', function () {
+      assert.isTrue(check.regexp(/foo/));
+    });
+
+    test('regexp with regexp object returns true', function () {
+      assert.isTrue(check.regexp(new RegExp('foo')));
+    });
+
+    test('regexp without regexp returns false', function () {
+      assert.isFalse(check.regexp(12));
+    });
+
     test('integer function is defined', function () {
       assert.isFunction(check.integer);
     });
@@ -1186,6 +1202,7 @@
       assert.isFunction(check.assert.zero);
       assert.isFunction(check.assert.integer);
       assert.isFunction(check.assert.number);
+      assert.isFunction(check.assert.regexp);
       assert.isFunction(check.assert.boolean);
       assert.isFunction(check.assert.equal);
     });
@@ -1203,16 +1220,16 @@
 
     test('assert modifier is applied to not', function () {
       assert.isObject(check.assert.not);
-      assert.lengthOf(Object.keys(check.assert.not), 37);
+      assert.lengthOf(Object.keys(check.assert.not), 38);
     });
 
     test('assert modifier is applied to maybe', function () {
       assert.isObject(check.assert.maybe);
-      assert.lengthOf(Object.keys(check.assert.maybe), 37);
+      assert.lengthOf(Object.keys(check.assert.maybe), 38);
     });
 
     test('assert modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.assert), 39);
+      assert.lengthOf(Object.keys(check.assert), 40);
     });
 
     test('assert modifier throws when value is wrong', function () {
@@ -1267,6 +1284,7 @@
       assert.throws(function () { check.assert.zero() }, 'Invalid number');
       assert.throws(function () { check.assert.infinity() }, 'Invalid number');
       assert.throws(function () { check.assert.number() }, 'Invalid number');
+      assert.throws(function () { check.assert.regexp() }, 'Invalid regExp');
       assert.throws(function () { check.assert.integer() }, 'Invalid number');
       assert.throws(function () { check.assert.even() }, 'Invalid number');
       assert.throws(function () { check.assert.odd() }, 'Invalid number');
@@ -1339,7 +1357,7 @@
     });
 
     test('not modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.not), 37);
+      assert.lengthOf(Object.keys(check.not), 38);
     });
 
     test('not modifier returns true when predicate returns false', function () {
@@ -1380,7 +1398,7 @@
     });
 
     test('maybe modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.maybe), 37);
+      assert.lengthOf(Object.keys(check.maybe), 38);
     });
 
     test('maybe modifier returns true when value is undefined', function () {
@@ -1445,7 +1463,7 @@
     });
 
     test('array.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.array.of), 37);
+      assert.lengthOf(Object.keys(check.array.of), 38);
       assert.isFunction(check.array.of.equal);
       assert.isFunction(check.array.of.undefined);
       assert.isFunction(check.array.of.null);
@@ -1582,7 +1600,7 @@
     });
 
     test('arrayLike.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.arrayLike.of), 37);
+      assert.lengthOf(Object.keys(check.arrayLike.of), 38);
     });
 
     test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -1682,7 +1700,7 @@
     });
 
     test('iterable.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.iterable.of), 37);
+      assert.lengthOf(Object.keys(check.iterable.of), 38);
     });
 
     if (typeof Set !== 'undefined') {
@@ -1782,7 +1800,7 @@
     });
 
     test('object.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.object.of), 37);
+      assert.lengthOf(Object.keys(check.object.of), 38);
     });
 
     test('object.of returns true when predicate is true for all items', function () {
