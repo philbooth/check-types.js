@@ -1,6 +1,8 @@
 # check-types.js
 
-[![Build status][ci-image]][ci-status]
+[![Package status](https://img.shields.io/npm/v/check-types.svg?style=flat-square)](https://www.npmjs.com/package/check-types)
+[![Build status](https://img.shields.io/travis/philbooth/check-types.js.svg?style=flat-square)](https://travis-ci.org/philbooth/check-types.js)
+[![License](https://img.shields.io/github/license/philbooth/check-types.js.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 A little JavaScript library
 for asserting types
@@ -25,7 +27,7 @@ and values.
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
 * [Where can I use it?](#where-can-i-use-it)
-* [What changed from 6.x to 7.x?](#what-changed-from-5x-to-6x)
+* [What changed from 6.x to 7.x?](#what-changed-from-6x-to-7x)
 * [What changed from 5.x to 6.x?](#what-changed-from-5x-to-6x)
 * [What changed from 4.x to 5.x?](#what-changed-from-4x-to-5x)
 * [What changed from 3.x to 4.x?](#what-changed-from-3x-to-4x)
@@ -54,7 +56,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-20.9 kb unminified with comments, 6 kb minified, 2.1 kb minified + gzipped.
+20 kb unminified with comments, 5.5 kb minified, 2 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -773,8 +775,6 @@ open `test/check-types.html`.
 
 [MIT][license]
 
-[ci-image]: https://secure.travis-ci.org/philbooth/check-types.js.png?branch=master
-[ci-status]: http://travis-ci.org/#!/philbooth/check-types.js
 [releases]: https://github.com/philbooth/check-types.js/releases
 [history7]: HISTORY.md#70
 [history6]: HISTORY.md#60

@@ -1,5 +1,12 @@
 # History
 
+## 7.1
+
+* Implement `nonEmptyObject`. Thanks to [Victor Bakke][gipphe].
+* Implement `nonEmptyArray`. Thanks to [Victor Bakke][gipphe].
+* Fix error messages on assertions that take a string as their last argument.
+* Add support for custom error types in assertions.
+* Throw TypeErrors by default.
 
 ## 7.0
 
@@ -156,4 +163,5 @@
 [clintonskakun]: https://github.com/clintonskakun
 [myitcv]: https://github.com/myitcv
 [ryantemple]: https://github.com/ryantemple
+[gipphe]: https://github.com/Gipphe
 
