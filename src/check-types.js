@@ -697,15 +697,17 @@
   function assertPredicate (predicate, args, defaultMessage) {
     var argCount = predicate.length;
     var message = args[argCount];
+    var ErrorType = args[argCount + 1];
     assertImpl(
       predicate.apply(null, args),
-      nonEmptyString(message) ? message : defaultMessage
+      nonEmptyString(message) ? message : defaultMessage,
+      isFunction(ErrorType) ? ErrorType : Error
     );
   }
 
-  function assertImpl (value, message) {
+  function assertImpl (value, message, ErrorType) {
     if (value === false) {
-      throw new Error(message || 'Assertion failed');
+      throw new ErrorType(message || 'Assertion failed');
     }
   }
 

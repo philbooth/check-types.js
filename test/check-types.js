@@ -1270,6 +1270,7 @@
         check.assert.nonEmptyString('');
       } catch (error) {
         assert.instanceOf(error, Error);
+        assert.notInstanceOf(error, SyntaxError);
       }
     });
 
@@ -1294,6 +1295,15 @@
         check.assert.nonEmptyString('', '');
       } catch (error) {
         assert.strictEqual(error.message, 'Invalid string');
+      }
+    });
+
+    test('assert modifer sets custom error types', function () {
+      try {
+        check.assert.nonEmptyString('', 'foo bar', SyntaxError);
+      } catch (error) {
+        assert.instanceOf(error, SyntaxError);
+        assert.strictEqual(error.message, 'foo bar');
       }
     });
 

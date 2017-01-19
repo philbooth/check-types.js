@@ -482,18 +482,23 @@ These are implemented by
   is synonymous with `array.of`,
   except it operates on an object's properties.
 
-* `check.assert(value, message)`:
+* `check.assert(value, message, ErrorType)`:
   Throws an `Error`
-  if `value` is `false`,
-  setting `message`
-  on the `Error` instance.
+  if `value` is `false`.
+  `message` and `ErrorType`
+  are optional arguments
+  that control
+  the message and type
+  of the thrown error object.
 
 * `check.assert.xxx(...)`:
   Throws an `Error`
   if the predicate returns false.
-  The last argument
-  is an optional message
-  to be set on the `Error` instance.
+  The last two arguments
+  are an optional message and error type
+  that control
+  the message and type
+  of the thrown error object.
   Also works with the `not`, `maybe` and `...of` modifiers.
 
 #### Batch operations
@@ -549,23 +554,23 @@ check.maybe.even(null);
 ```
 
 ```javascript
-check.assert.like({ foo: 'bar' }, { baz: 'qux' }, 'Invalid object');
-// Throws new Error('Invalid object')
+check.assert.like({ foo: 'bar' }, { baz: 'qux' });
+// Throws `new Error('Invalid type')`
 ```
 
 ```javascript
-check.assert.not.like({ foo: 'bar' }, { baz: 'qux' }, 'Invalid object');
+check.assert.not.like({ foo: 'bar' }, { baz: 'qux' });
 // Doesn't throw
 ```
 
 ```javascript
-check.assert.maybe.like(undefined, { foo: 'bar' }, 'Invalid object');
+check.assert.maybe.like(undefined, { foo: 'bar' });
 // Doesn't throw
 ```
 
 ```javascript
-check.assert(myFunction(), 'Something went wrong');
-// Throws if myFunction returns `false`
+check.assert(myFunction(), 'Something went wrong', CustomError);
+// Throws `new CustomError('Something went wrong')` if myFunction returns `false`
 ```
 
 ```javascript
