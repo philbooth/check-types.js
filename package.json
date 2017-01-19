@@ -30,9 +30,9 @@
     ],
     "devDependencies": {
         "jshint": "2.9.x",
-        "mocha": "2.5.x",
+        "mocha": "3.2.x",
         "chai": "3.5.x",
-        "uglify-js": "2.6.x"
+        "uglify-js": "2.7.x"
     },
     "scripts": {
         "lint": "jshint ./src/check-types.js",
