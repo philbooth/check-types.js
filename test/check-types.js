@@ -1269,8 +1269,7 @@
       try {
         check.assert.nonEmptyString('');
       } catch (error) {
-        assert.instanceOf(error, Error);
-        assert.notInstanceOf(error, SyntaxError);
+        assert.instanceOf(error, TypeError);
       }
     });
 

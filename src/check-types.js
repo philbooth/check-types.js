@@ -701,7 +701,7 @@
     assertImpl(
       predicate.apply(null, args),
       nonEmptyString(message) ? message : defaultMessage,
-      isFunction(ErrorType) ? ErrorType : Error
+      isFunction(ErrorType) ? ErrorType : TypeError
     );
   }
 

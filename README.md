@@ -483,7 +483,7 @@ These are implemented by
   except it operates on an object's properties.
 
 * `check.assert(value, message, ErrorType)`:
-  Throws an `Error`
+  Throws a `TypeError`
   if `value` is `false`.
   `message` and `ErrorType`
   are optional arguments
@@ -492,7 +492,7 @@ These are implemented by
   of the thrown error object.
 
 * `check.assert.xxx(...)`:
-  Throws an `Error`
+  Throws a `TypeError`
   if the predicate returns false.
   The last two arguments
   are an optional message and error type
@@ -555,7 +555,7 @@ check.maybe.even(null);
 
 ```javascript
 check.assert.like({ foo: 'bar' }, { baz: 'qux' });
-// Throws `new Error('Invalid type')`
+// Throws `new TypeError('Invalid type')`
 ```
 
 ```javascript
