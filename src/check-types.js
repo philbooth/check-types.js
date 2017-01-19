@@ -52,11 +52,13 @@
     { n: 'boolean', f: boolean, s: 'b' },
     { n: 'object', f: object, s: 'o' },
     { n: 'emptyObject', f: emptyObject, s: 'o' },
+    { n: 'nonEmptyObject', f: nonEmptyObject, s: 'o' },
     { n: 'instanceStrict', f: instanceStrict, s: 't' },
     { n: 'instance', f: instance, s: 't' },
     { n: 'like', f: like, s: 't' },
     { n: 'array', f: array, s: 'a' },
     { n: 'emptyArray', f: emptyArray, s: 'a' },
+    { n: 'nonEmptyArray', f: nonEmptyArray, s: 'a' },
     { n: 'arrayLike', f: arrayLike, s: 'al' },
     { n: 'iterable', f: iterable, s: 'i' },
     { n: 'date', f: date, s: 'd' },
@@ -345,6 +347,15 @@
   }
 
   /**
+   * Public function `nonEmptyObject`.
+   *
+   * Returns true if `data` is a non-empty object, false otherwise.
+   */
+  function nonEmptyObject (data) {
+    return object(data) && Object.keys(data).length > 0;
+  }
+
+  /**
    * Public function `instanceStrict`.
    *
    * Returns true if `data` is an instance of `prototype`, false otherwise.
@@ -414,6 +425,15 @@
    */
   function emptyArray (data) {
     return array(data) && data.length === 0;
+  }
+
+  /**
+   * Public function `nonEmptyArray`.
+   *
+   * Returns true if `data` is a non-empty array, false otherwise.
+   */
+  function nonEmptyArray (data) {
+    return array(data) && data.length > 0;
   }
 
   /**

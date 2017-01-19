@@ -54,7 +54,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-20 kb unminified with comments, 5.8 kb minified, 2.1 kb minified + gzipped.
+20.9 kb unminified with comments, 6 kb minified, 2.1 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -365,6 +365,11 @@ These are implemented by
   if `thing` is an empty object,
   `false` otherwise.
 
+* `check.nonEmptyObject(thing)`:
+  Returns `true`
+  if `thing` is a non-empty object,
+  `false` otherwise.
+
 * `check.instanceStrict(thing, prototype)`:
   Returns `true`
   if `thing` is an instance of `prototype`,
@@ -394,6 +399,11 @@ These are implemented by
 * `check.emptyArray(thing)`:
   Returns `true`
   if `thing` is an empty array,
+  `false` otherwise.
+
+* `check.nonEmptyArray(thing)`:
+  Returns `true`
+  if `thing` is a non-empty array,
   `false` otherwise.
 
 * `check.arrayLike(thing)`:
