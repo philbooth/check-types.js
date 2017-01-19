@@ -695,8 +695,12 @@
   }
 
   function assertPredicate (predicate, args, defaultMessage) {
-    var message = args[args.length - 1];
-    assertImpl(predicate.apply(null, args), nonEmptyString(message) ? message : defaultMessage);
+    var argCount = predicate.length;
+    var message = args[argCount];
+    assertImpl(
+      predicate.apply(null, args),
+      nonEmptyString(message) ? message : defaultMessage
+    );
   }
 
   function assertImpl (value, message) {
