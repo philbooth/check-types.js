@@ -595,7 +595,7 @@
 
       if (isFunction(predicate)) {
         if (not.assigned(data)) {
-          result[key] = !!predicate._isMaybefied;
+          result[key] = !!predicate.m;
         } else {
           result[key] = predicate(data[key]);
         }
@@ -695,7 +695,7 @@
   }
 
   function assertPredicate (predicate, args, defaultMessage) {
-    var argCount = predicate.length;
+    var argCount = predicate.l || predicate.length;
     var message = args[argCount];
     var ErrorType = args[argCount + 1];
     assertImpl(
@@ -717,9 +717,11 @@
    * Negates `predicate`.
    */
   function notModifier (predicate) {
-    return function () {
+    var modifiedPredicate = function () {
       return notImpl(predicate.apply(null, arguments));
     };
+    modifiedPredicate.l = predicate.length;
+    return modifiedPredicate;
   }
 
   function notImpl (value) {
@@ -740,12 +742,13 @@
 
       return predicate.apply(null, arguments);
     };
+    modifiedPredicate.l = predicate.length;
 
     // Hackishly indicate that this is a maybe.xxx predicate.
     // Without this flag, the alternative would be to iterate
     // through the maybe predicates or use indexOf to check,
     // which would be time-consuming.
-    modifiedPredicate._isMaybefied = true;
+    modifiedPredicate.m = true;
 
     return modifiedPredicate;
   }
@@ -764,7 +767,7 @@
    * Applies the chained predicate to members of the collection.
    */
   function ofModifier (target, type, predicate) {
-    return function () {
+    var modifiedPredicate = function () {
       var collection, args;
 
       collection = arguments[0];
@@ -796,6 +799,8 @@
 
       return true;
     };
+    modifiedPredicate.l = predicate.length;
+    return modifiedPredicate;
   }
 
   function coerceCollection (type, collection) {

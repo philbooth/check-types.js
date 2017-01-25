@@ -1265,7 +1265,7 @@
       });
     });
 
-    test('assert modifier throws Error instance', function () {
+    test('assert modifier throws TypeError instance', function () {
       try {
         check.assert.nonEmptyString('');
       } catch (error) {
@@ -1273,7 +1273,7 @@
       }
     });
 
-    test('assert modifier sets default message on Error instance', function () {
+    test('assert modifier sets default message on error', function () {
       try {
         check.assert.nonEmptyString('');
       } catch (error) {
@@ -1281,7 +1281,7 @@
       }
     });
 
-    test('assert modifer sets message on Error instance', function () {
+    test('assert modifer sets message on error', function () {
       try {
         check.assert.nonEmptyString('', 'foo bar');
       } catch (error) {
@@ -1471,6 +1471,47 @@
       });
     });
 
+    test('assert modifier with not throws TypeError instance', function () {
+      try {
+        check.assert.not.emptyString('');
+      } catch (error) {
+        assert.instanceOf(error, TypeError);
+      }
+    });
+
+    test('assert modifier with not sets default message on error', function () {
+      try {
+        check.assert.not.emptyString('');
+      } catch (error) {
+        assert.strictEqual(error.message, 'Invalid string');
+      }
+    });
+
+    test('assert modifer with not sets message on error', function () {
+      try {
+        check.assert.not.emptyString('', 'foo bar');
+      } catch (error) {
+        assert.strictEqual(error.message, 'foo bar');
+      }
+    });
+
+    test('assert modifier with not prohibits empty error messages', function () {
+      try {
+        check.assert.not.emptyString('', '');
+      } catch (error) {
+        assert.strictEqual(error.message, 'Invalid string');
+      }
+    });
+
+    test('assert modifer with not sets custom error types', function () {
+      try {
+        check.assert.not.emptyString('', 'foo bar', SyntaxError);
+      } catch (error) {
+        assert.instanceOf(error, SyntaxError);
+        assert.strictEqual(error.message, 'foo bar');
+      }
+    });
+
     test('assert modifier with maybe does not throw when value is correct', function () {
       assert.doesNotThrow(function () {
         check.assert.maybe.between(1, 2, 0);
@@ -1487,6 +1528,23 @@
       assert.throws(function () {
         check.assert.maybe.between(1, 2, 1);
       });
+    });
+
+    test('assert modifer with maybe sets message on error', function () {
+      try {
+        check.assert.maybe.between(1, 2, 3, 'wibble');
+      } catch (error) {
+        assert.strictEqual(error.message, 'wibble');
+      }
+    });
+
+    test('assert modifer with maybe sets custom error types', function () {
+      try {
+        check.assert.maybe.between(1, 2, 3, 'blee', RangeError);
+      } catch (error) {
+        assert.instanceOf(error, RangeError);
+        assert.strictEqual(error.message, 'blee');
+      }
     });
 
     test('array.of modifier is defined', function () {
@@ -1562,6 +1620,32 @@
       assert.throws(function () {
         check.assert.array.of.instance([ new Error(), {} ], Error);
       });
+    });
+
+    test('assert modifer with of sets message on error', function () {
+      try {
+        check.assert.array.of.between([ 2.5, 3 ], 2, 3, 'wibble');
+      } catch (error) {
+        assert.strictEqual(error.message, 'wibble');
+      }
+    });
+
+    test('assert modifer with of sets custom error types', function () {
+      try {
+        check.assert.array.of.between([ 2.5, 3 ], 2, 3, 'blee', RangeError);
+      } catch (error) {
+        assert.instanceOf(error, RangeError);
+        assert.strictEqual(error.message, 'blee');
+      }
+    });
+
+    test('assert modifer with maybe and of sets custom error types', function () {
+      try {
+        check.assert.maybe.array.of.between([ 2.5, 3 ], 2, 3, 'wibble', RangeError);
+      } catch (error) {
+        assert.instanceOf(error, RangeError);
+        assert.strictEqual(error.message, 'wibble');
+      }
     });
 
     test('maybe.array.of returns true with null array', function () {
