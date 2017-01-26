@@ -1357,6 +1357,27 @@
       assert.throws(function () {
         check.assert(false);
       });
+
+      try {
+        check.assert(false);
+      } catch (error) {
+        assert.instanceOf(error, Error);
+        assert.equal(error.message, 'Assertion failed');
+      }
+
+      try {
+        check.assert(false, 'foo');
+      } catch (error) {
+        assert.instanceOf(error, Error);
+        assert.equal(error.message, 'foo');
+      }
+
+      try {
+        check.assert(false, 'bar', SyntaxError);
+      } catch (error) {
+        assert.instanceOf(error, SyntaxError);
+        assert.equal(error.message, 'bar');
+      }
     });
 
     test('assert modifier throws for multi-argument predicates', function () {

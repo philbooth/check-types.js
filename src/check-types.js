@@ -707,7 +707,7 @@
 
   function assertImpl (value, message, ErrorType) {
     if (value === false) {
-      throw new ErrorType(message || 'Assertion failed');
+      throw new (ErrorType || Error)(message || 'Assertion failed');
     }
   }
 
