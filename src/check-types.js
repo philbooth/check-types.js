@@ -1,4 +1,5 @@
 /*globals define, module, Symbol */
+/*jshint -W056 */
 
 (function (globals) {
   'use strict';
