@@ -145,8 +145,8 @@ in a number of different contexts:
 * `check.assert.xxx(thing, message)`:
   The `assert` modifier
   changes predicates
-  to throw when their result
-  would otherwise be `false`.
+  to throw when their result is `false`,
+  otherwise it returns `thing`.
   It can be applied
   to the `not` and `maybe` modifiers
   using the forms
@@ -486,7 +486,8 @@ These are implemented by
 
 * `check.assert(value, message, ErrorType)`:
   Throws a `TypeError`
-  if `value` is `false`.
+  if `value` is `false`,
+  otherwise it returns `value`.
   `message` and `ErrorType`
   are optional arguments
   that control
@@ -495,7 +496,8 @@ These are implemented by
 
 * `check.assert.xxx(...)`:
   Throws a `TypeError`
-  if the predicate returns false.
+  if the predicate returns false,
+  otherwise it returns the subject value.
   The last two arguments
   are an optional message and error type
   that control
@@ -562,12 +564,12 @@ check.assert.like({ foo: 'bar' }, { baz: 'qux' });
 
 ```javascript
 check.assert.not.like({ foo: 'bar' }, { baz: 'qux' });
-// Doesn't throw
+// Doesn't throw, returns `{ foo: 'bar' }`
 ```
 
 ```javascript
 check.assert.maybe.like(undefined, { foo: 'bar' });
-// Doesn't throw
+// Doesn't throw, returns `undefined`
 ```
 
 ```javascript

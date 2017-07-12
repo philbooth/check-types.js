@@ -1380,6 +1380,14 @@
       }
     });
 
+    test('assert modifier returns value when value is correct', function () {
+      assert.equal(check.assert.nonEmptyString('foo'), 'foo');
+      assert.equal(check.assert('bar'), 'bar');
+      assert.equal(check.assert.not.emptyString('baz'), 'baz');
+      assert.equal(check.assert.maybe.nonEmptyString('qux'), 'qux');
+      assert.deepEqual(check.assert.array.of.nonEmptyString([ 'foo', 'bar' ]), [ 'foo', 'bar' ]);
+    });
+
     test('assert modifier throws for multi-argument predicates', function () {
       assert.throws(function () {
         check.assert.between(1, 2, 1);

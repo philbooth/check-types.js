@@ -691,7 +691,7 @@
    */
   function assertModifier (predicate, defaultMessage) {
     return function () {
-      assertPredicate(predicate, arguments, defaultMessage);
+      return assertPredicate(predicate, arguments, defaultMessage);
     };
   }
 
@@ -704,12 +704,14 @@
       nonEmptyString(message) ? message : defaultMessage,
       isFunction(ErrorType) ? ErrorType : TypeError
     );
+    return args[0];
   }
 
   function assertImpl (value, message, ErrorType) {
     if (value === false) {
       throw new (ErrorType || Error)(message || 'Assertion failed');
     }
+    return value;
   }
 
   /**
