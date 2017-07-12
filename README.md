@@ -762,8 +762,9 @@ The build environment relies on
 [NPM],
 [JSHint],
 [Mocha],
-[Chai] and
-[UglifyJS].
+[Chai],
+[UglifyJS] and
+[please-release-me].
 Assuming that you already have Node.js and NPM set up,
 you just need to run `npm install` to
 install all of the dependencies as listed in `package.json`.
@@ -791,5 +792,6 @@ open `test/check-types.html`.
 [mocha]: http://mochajs.org/
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
+[please-release-me]: https://github.com/philbooth/please-release-me
 [license]: https://github.com/philbooth/check-types.js/blob/master/COPYING
 
