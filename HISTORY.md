@@ -1,5 +1,11 @@
 # History
 
+## 7.2.0
+
+* feature: return the target value from assertions (73da792)
+* chore: add release script dependency (cacc348)
+* fix: make assert throw for any falsy value (4f15c73)
+
 ## 7.1
 
 * Implement `nonEmptyObject`. Thanks to [Victor Bakke][gipphe].
