@@ -1358,6 +1358,34 @@
         check.assert(false);
       });
 
+      assert.doesNotThrow(function () {
+        check.assert(' ');
+      });
+
+      assert.throws(function () {
+        check.assert('');
+      });
+
+      assert.doesNotThrow(function () {
+        check.assert(-1);
+      });
+
+      assert.throws(function () {
+        check.assert(0);
+      });
+
+      assert.throws(function () {
+        check.assert(NaN);
+      });
+
+      assert.throws(function () {
+        check.assert(null);
+      });
+
+      assert.throws(function () {
+        check.assert(undefined);
+      });
+
       try {
         check.assert(false);
       } catch (error) {

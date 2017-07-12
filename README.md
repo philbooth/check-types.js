@@ -486,7 +486,7 @@ These are implemented by
 
 * `check.assert(value, message, ErrorType)`:
   Throws a `TypeError`
-  if `value` is `false`,
+  if `value` is *falsy*,
   otherwise it returns `value`.
   `message` and `ErrorType`
   are optional arguments
