@@ -1,5 +1,9 @@
 # History
 
+## 7.3.0
+
+* feature: add primitive predicate (3114d7f)
+
 ## 7.2.1
 
 * fix: perf tweaks for tight loops (8a9919d)
