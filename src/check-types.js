@@ -4,8 +4,8 @@
 (function (globals) {
   'use strict';
 
-  var strings, messages, predicates, functions,
-      assert, not, maybe, collections, slice;
+  var strings, messages, predicates, functions, assert, not, maybe,
+      collections, slice, neginf, posinf, isArray, haveSymbols;
 
   strings = {
     v: 'value',
@@ -80,6 +80,10 @@
 
   collections = [ 'array', 'arrayLike', 'iterable', 'object' ];
   slice = Array.prototype.slice;
+  neginf = Number.NEGATIVE_INFINITY;
+  posinf = Number.POSITIVE_INFINITY;
+  isArray = Array.isArray;
+  haveSymbols = typeof Symbol === 'function';
 
   functions = mixin(functions, predicates);
   assert = createModifiedPredicates(assertModifier, assertImpl);
@@ -133,7 +137,7 @@
    * Returns true if `data` is not null or undefined, false otherwise.
    */
   function assigned (data) {
-    return ! isUndefined(data) && ! isNull(data);
+    return data !== undefined && data !== null;
   }
 
   /**
@@ -151,7 +155,7 @@
    * Returns true if `data` is positive or negative infinity, false otherwise.
    */
   function infinity (data) {
-    return data === Number.POSITIVE_INFINITY || data === Number.NEGATIVE_INFINITY;
+    return data === neginf || data === posinf;
   }
 
   /**
@@ -160,10 +164,7 @@
    * Returns true if `data` is a number, false otherwise.
    */
   function number (data) {
-    return typeof data === 'number' &&
-      isNaN(data) === false &&
-      data !== Number.POSITIVE_INFINITY &&
-      data !== Number.NEGATIVE_INFINITY;
+    return typeof data === 'number' && data > neginf && data < posinf;
   }
 
   /**
@@ -172,7 +173,7 @@
    * Returns true if `data` is an integer, false otherwise.
    */
   function integer (data) {
-    return number(data) && data % 1 === 0;
+    return typeof data === 'number' && data % 1 === 0;
   }
 
   /**
@@ -181,7 +182,7 @@
    * Returns true if `data` is an even number, false otherwise.
    */
   function even (data) {
-    return number(data) && data % 2 === 0;
+    return typeof data === 'number' && data % 2 === 0;
   }
 
   /**
@@ -190,7 +191,7 @@
    * Returns true if `data` is an odd number, false otherwise.
    */
   function odd (data) {
-    return integer(data) && !even(data);
+    return integer(data) && data % 2 !== 0;
   }
 
   /**
@@ -218,10 +219,10 @@
    */
   function between (data, x, y) {
     if (x < y) {
-      return greater(data, x) && less(data, y);
+      return greater(data, x) && data < y;
     }
 
-    return less(data, x) && greater(data, y);
+    return less(data, x) && data > y;
   }
 
   /**
@@ -251,10 +252,10 @@
    */
   function inRange (data, x, y) {
     if (x < y) {
-      return greaterOrEqual(data, x) && lessOrEqual(data, y);
+      return greaterOrEqual(data, x) && data <= y;
     }
 
-    return lessOrEqual(data, x) && greaterOrEqual(data, y);
+    return lessOrEqual(data, x) && data >= y;
   }
 
   /**
@@ -417,7 +418,7 @@
    * Returns true if `data` is an array, false otherwise.
    */
   function array (data) {
-    return Array.isArray(data);
+    return isArray(data);
   }
 
   /**
@@ -435,7 +436,7 @@
    * Returns true if `data` is a non-empty array, false otherwise.
    */
   function nonEmptyArray (data) {
-    return array(data) && data.length > 0;
+    return array(data) && greater(data.length, 0);
   }
 
   /**
@@ -444,7 +445,7 @@
    * Returns true if `data` is an array-like object, false otherwise.
    */
   function arrayLike (data) {
-    return assigned(data) && number(data.length);
+    return assigned(data) && greaterOrEqual(data.length, 0);
   }
 
   /**
@@ -453,7 +454,7 @@
    * Returns true if `data` is an iterable, false otherwise.
    */
   function iterable (data) {
-    if (typeof Symbol === 'undefined') {
+    if (! haveSymbols) {
       // Fall back to `arrayLike` predicate in pre-ES6 environments.
       return arrayLike(data);
     }
@@ -467,34 +468,32 @@
    * Returns true if `data` contains `value`, false otherwise.
    */
   function includes (data, value) {
-    var iterator, iteration;
+    var iterator, iteration, keys, length, i;
 
-    if (not.assigned(data)) {
+    if (! assigned(data)) {
       return false;
     }
 
-    try {
-      if (typeof Symbol !== 'undefined' && data[Symbol.iterator] && isFunction(data.values)) {
-        iterator = data.values();
+    if (haveSymbols && data[Symbol.iterator] && isFunction(data.values)) {
+      iterator = data.values();
 
-        do {
-          iteration = iterator.next();
+      do {
+        iteration = iterator.next();
 
-          if (iteration.value === value) {
-            return true;
-          }
-        } while (! iteration.done);
-
-        return false;
-      }
-
-      Object.keys(data).forEach(function (key) {
-        if (data[key] === value) {
-          throw 0;
+        if (iteration.value === value) {
+          return true;
         }
-      });
-    } catch (ignore) {
-      return true;
+      } while (! iteration.done);
+
+      return false;
+    }
+
+    keys = Object.keys(data);
+    length = keys.length;
+    for (i = 0; i < length; ++i) {
+      if (data[keys[i]] === value) {
+        return true;
+      }
     }
 
     return false;
@@ -516,11 +515,7 @@
    * Returns true if `data` is a valid date, false otherwise.
    */
   function date (data) {
-    try {
-      return instance(data, Date) && integer(data.getTime());
-    } catch (error) {
-      return false;
-    }
+    return instanceStrict(data, Date) && integer(data.getTime());
   }
 
   /**

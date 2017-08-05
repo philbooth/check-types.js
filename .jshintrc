@@ -14,7 +14,7 @@
     "noempty": true,
     "nonbsp": true,
     "nonew": true,
-    "plusplus": true,
+    "plusplus": false,
     "quotmark": "single",
     "strict": true,
     "trailing": true,
