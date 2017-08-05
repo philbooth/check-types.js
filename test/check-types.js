@@ -124,9 +124,11 @@
       assert.isTrue(check.primitive(0));
     });
 
-    test('primitive with symbol returns true', function () {
-      assert.isTrue(check.primitive(Symbol()));
-    });
+    if (typeof Symbol !== 'undefined') {
+      test('primitive with symbol returns true', function () {
+        assert.isTrue(check.primitive(Symbol()));
+      });
+    }
 
     test('primitive with object returns false', function () {
       assert.isFalse(check.primitive({}));
