@@ -1,5 +1,10 @@
 # History
 
+## 7.2.1
+
+* fix: perf tweaks for tight loops (8a9919d)
+* chore: update ci config (136f185)
+
 ## 7.2.0
 
 * feature: return the target value from assertions (73da792)
