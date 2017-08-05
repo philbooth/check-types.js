@@ -56,7 +56,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-20 kb unminified with comments, 6 kb minified, 2.1 kb minified + gzipped.
+21 kb unminified with comments, 6.1 kb minified, 2.2 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -226,6 +226,13 @@ These are implemented by
   if `thing` is not
   `null` or `undefined`,
   `false` otherwise.
+
+* `check.primitive(thing)`:
+  Returns `true`
+  if `thing` is a primitive type,
+  `false` otherwise.
+  Primitive types are
+  `null`, `undefined`, booleans, numbers, strings and symbols.
 
 * `check.hasLength(thing, value)`:
   Returns `true`

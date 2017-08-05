@@ -30,6 +30,7 @@
     { n: 'undefined', f: isUndefined, s: 'v' },
     { n: 'null', f: isNull, s: 'v' },
     { n: 'assigned', f: assigned, s: 'v' },
+    { n: 'primitive', f: primitive, s: 'v' },
     { n: 'includes', f: includes, s: 'v' },
     { n: 'zero', f: zero },
     { n: 'infinity', f: infinity },
@@ -138,6 +139,26 @@
    */
   function assigned (data) {
     return data !== undefined && data !== null;
+  }
+
+  /**
+   * Public function `primitive`.
+   *
+   * Returns true if `data` is a primitive type, false otherwise.
+   */
+  function primitive (data) {
+    var type;
+
+    switch (data) {
+      case null:
+      case undefined:
+      case false:
+      case true:
+        return true;
+    }
+
+    type = typeof data;
+    return type === 'string' || type === 'number' || (haveSymbols && type === 'symbol');
   }
 
   /**
