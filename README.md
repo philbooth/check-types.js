@@ -318,8 +318,8 @@ These are implemented by
 
 * `check.between(thing, a, b)`:
   Returns `true` if `thing` is a number
-  between than `a` and `b`
-  (i.e. excluding `a` and `b`),
+  between `a` and `b`
+  (excluding `a` and `b`),
   `false` otherwise.
   The arguments `a` and `b`
   may be in any order,
@@ -329,7 +329,7 @@ These are implemented by
 * `check.inRange(thing, a, b)`:
   Returns `true` if `thing` is a number
   in the range `a` .. `b`
-  (i.e. including `a` and `b`),
+  (including `a` and `b`),
   `false` otherwise.
   The arguments `a` and `b`
   may be in any order,
