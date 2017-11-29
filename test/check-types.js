@@ -2112,6 +2112,22 @@
       assert.isFalse(check.object.of.nonEmptyString({ 0: 'foo', 1: 'bar', length: 2 }));
     });
 
+    test('promise returns true when `then` is a function', function () {
+      assert.isTrue(check.promise({ then: function () {} }));
+    });
+
+    test('promise returns false when `then` is not a function', function () {
+        assert.isTrue(check.promise({ then: 0 }));
+    });
+
+    test('promise returns false when an object does not contain a `then` property', function () {
+        assert.isTrue(check.promise({}));
+    });
+
+    test('promise returns false when undefined is passed', function () {
+        assert.isTrue(check.promise(undefined));
+    });
+
     if (typeof Set !== 'undefined') {
       test('object.of returns false for iterables', function () {
         assert.isFalse(check.object.of.nonEmptyString(new Set([ 'foo', 'bar' ])));
