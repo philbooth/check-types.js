@@ -362,6 +362,15 @@
   }
 
   /**
+   * Public function `promise`.
+   *
+   * Returns true if there is a `then` property that is a function.
+   */
+  function promise (variable) {
+    return object(variable) && isFunction(variable.then)
+  }
+
+  /**
    * Public function `emptyObject`.
    *
    * Returns true if `data` is an empty object, false otherwise.
