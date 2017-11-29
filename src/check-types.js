@@ -13,6 +13,7 @@
     s: 'string',
     b: 'boolean',
     o: 'object',
+    p: 'promise',
     t: 'type',
     a: 'array',
     al: 'array-like',
@@ -53,6 +54,7 @@
     { n: 'match', f: match, s: 's' },
     { n: 'boolean', f: boolean, s: 'b' },
     { n: 'object', f: object, s: 'o' },
+    { n: 'promise', f: promise, s: 'p' },
     { n: 'emptyObject', f: emptyObject, s: 'o' },
     { n: 'nonEmptyObject', f: nonEmptyObject, s: 'o' },
     { n: 'instanceStrict', f: instanceStrict, s: 't' },
@@ -367,7 +369,7 @@
    * Returns true if there is a `then` property that is a function.
    */
   function promise (variable) {
-    return object(variable) && isFunction(variable.then)
+    return object(variable) && isFunction(variable.then);
   }
 
   /**
