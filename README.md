@@ -607,7 +607,7 @@ check.all(
     check.map(
         { foo: 0, bar: '' },
         { foo: check.number, bar: check.string }
-    );
+    )
 );
 // Returns true
 ```
