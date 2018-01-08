@@ -26,6 +26,7 @@ and values.
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
         * [Some examples](#some-examples)
+* [Are there TypeScript definitions?](#are-there-typescript-definitions)
 * [Where can I use it?](#where-can-i-use-it)
 * [What changed from 6.x to 7.x?](#what-changed-from-6x-to-7x)
 * [What changed from 5.x to 6.x?](#what-changed-from-5x-to-6x)
@@ -622,6 +623,20 @@ check.any(
 // Returns true
 ```
 
+## Are there TypeScript definitions?
+
+[Yes](https://www.npmjs.com/package/@types/check-types)!
+
+Thanks to [@idchlife](https://github.com/idchlife),
+type definitions [were added](https://github.com/DefinitelyTyped/DefinitelyTyped/commit/d19ddb855dea08105a3d7450a98696c7bcd62f60)
+to [DefinitelyTyped].
+You can add them to your project
+via npm:
+
+```
+npm i @types/check-types --save-dev
+```
+
 ## Where can I use it?
 
 As of version 2.0,
@@ -787,6 +802,7 @@ open `test/check-types.html`.
 
 [MIT][license]
 
+[definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 [releases]: https://github.com/philbooth/check-types.js/releases
 [history7]: HISTORY.md#70
 [history6]: HISTORY.md#60
